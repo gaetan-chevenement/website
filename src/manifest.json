@@ -1,0 +1,14 @@
+{
+  "name": "Chez Nestor - Paris, Lyon, Montpellier",
+  "short_name": "Chez Nestor",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff",
+  "theme_color": "#1C2B4A",
+  "icons": [{
+    "src": "/assets/icons/android-chrome-196x196.png",
+    "type": "image/png",
+    "sizes": "192x192"
+  }]
+}
