@@ -1,4 +1,4 @@
-import { IntlProvider, Text } from 'preact-i18n';
+import { IntlProvider } from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
@@ -7,10 +7,8 @@ import capitalize             from 'lodash/capitalize';
 import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import { List, ListItem, ListSubHeader } from 'react-toolbox/lib/list';
 import { Button }             from 'react-toolbox/lib/button';
-import { Dialog }             from 'react-toolbox/lib/dialog';
-import * as actions           from '../../../actions';
-import { PACK_PRICES }        from '../../../const';
-import theme                  from './theme';
+import * as actions           from '~/actions';
+import { PACK_PRICES }        from '~/const';
 
 const _ = { capitalize };
 
@@ -27,11 +25,6 @@ class PackPicker extends PureComponent {
     this.props.actions.updateBooking({ [event.target.name]: event.target.value });
   }
 
-  @autobind
-  handleDialogToggle() {
-    this.setState({ isDialogActive: !this.state.isDialogActive });
-  }
-
   renderCardActions(packName) {
     return (
       <CardActions>
@@ -41,32 +34,32 @@ class PackPicker extends PureComponent {
           value={packName}
           onClick={this.handlePackChange}
         />
-        <Button raised
-          icon="info"
-          label="Details"
-          onClick={this.handleDialogToggle}
-        />
       </CardActions>
     );
   }
 
-  render({ lang }) {
-    const { city, pack } = this.props;
+  render() {
+    const {
+      lang,
+      apartment: { addressCity },
+      booking: { pack },
+    } = this.props;
+    const packPrices = PACK_PRICES[addressCity];
 
     return (
       <IntlProvider definition={definition[lang]}>
-        <div class="grid has-gutter">
+        <p class="grid-3-large-1 has-gutter">
           <Card raised={pack === 'basic'}>
             <CardTitle
               title="★ Basic"
               subtitle={`
                 All essential services for a stress-free stay in your apartment
-                - ${PACK_PRICES[city].basic / 100}€
+                - ${packPrices.basic / 100}€
               `}
             />
             <CardText>
               <List>
-                <ListSubHeader><Text>Main services including</Text>:</ListSubHeader>
+                <ListSubHeader caption="Main services including" />
                 <ListItem caption="Fast check-in" />
                 <ListItem caption="Customized individual contract" />
                 <ListItem caption="Pillow and duvet" />
@@ -81,7 +74,7 @@ class PackPicker extends PureComponent {
               title="★★ Comfort"
               subtitle={`
                 An easier move in for more comfort and serenity
-                - ${PACK_PRICES[city].comfort / 100}€
+                - ${packPrices.comfort / 100}€
               `}
             />
             <CardText>
@@ -101,41 +94,34 @@ class PackPicker extends PureComponent {
               title="★★★ Privilege"
               subtitle={`
                 Personalized services for a complete and careful support
-                - ${PACK_PRICES[city].privilege / 100}€
+                - ${packPrices.privilege / 100}€
               `}
             />
             <CardText>
               <List>
                 <ListSubHeader caption="All Comfort services plus:" />
-                <ListItem caption="Check-in 24/7 at home" />
-                <ListItem caption="Sheets, pillow & duvet cases" />
-                <ListItem caption="Food pack" />
-                <ListItem caption="Booking priority" />
-                <ListItem caption="Cancellation insurance - 1 month" />
+                <ListItem caption="Private driver from airport/train station" />
+                <ListItem caption="Unlimited luggage service" />
+                <ListItem caption="Keys assistance 24/7" />
+                <ListItem caption="Checkout 24/7" />
+                <ListItem caption="Cancellation insurance - 7 days" />
               </List>
             </CardText>
             {this.renderCardActions('privilege')}
           </Card>
-          <Dialog
-            active={this.state.isDialogActive}
-            onEscKeyDown={this.handleDialogToggle}
-            onOverlayClick={this.handleDialogToggle}
-            title="Housing Pack Comparison"
-            actions={[
-              { label: 'Got it!', onClick: this.handleDialogToggle, raised: true },
-            ]}
-            theme={theme}
-          >
-            <img style="width: 100%;" src="../../assets/Housing-Packs-FR-2017-3.png" />
-          </Dialog>
-        </div>
+        </p>
       </IntlProvider>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return { ...state.booking };
+function mapStateToProps({ route: { lang, roomId }, booking, rooms, apartments }) {
+  return {
+    lang,
+    booking,
+    room: rooms[roomId],
+    apartment: rooms[roomId] && apartments[rooms[roomId].ApartmentId],
+  };
 }
 
 function mapDispatchToProps(dispatch) {

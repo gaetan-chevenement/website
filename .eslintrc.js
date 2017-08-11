@@ -35,6 +35,8 @@ module.exports = {
     'indent': ['error', 2],
     'key-spacing': ['error', { mode: 'minimum' }],
 
-    'react/jsx-indent-props': ['error', 2]
+    'react/jsx-indent-props': ['error', 2],
+
+    'no-console': ['warn'],
   },
 };

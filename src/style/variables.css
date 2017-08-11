@@ -1,0 +1,35 @@
+@value paletteGrey50: rgb(250, 250, 250);
+@value paletteGrey100: rgb(245, 245, 245);
+@value paletteGrey200: rgb(238, 238, 238);
+@value paletteGrey300: rgb(224, 224, 224);
+@value paletteGrey400: rgb(189, 189, 189);
+@value paletteGrey500: rgb(158, 158, 158);
+@value paletteGrey600: rgb(117, 117, 117);
+@value paletteGrey700: rgb(97, 97, 97);
+@value paletteGrey800: rgb(66, 66, 66);
+@value paletteGrey900: rgb(33, 33, 33);
+
+@value colorDivider: paletteGrey200;
+@value colorBackground: colorWhite;
+@value colorText: paletteGrey900;
+@value colorTextSecondary: paletteGrey600;
+@value colorPrimary: paletteIndigo500;
+@value colorPrimaryDark: paletteIndigo700;
+@value colorAccent: palettePinkA200;
+@value colorAccentDark: palettePink700;
+@value colorPrimaryContrast: colorDarkContrast;
+@value colorAccentContrast: colorDarkContrast;
+@value unit: 10px;
+@value preferredFont: 'Roboto', 'Helvetica', 'Arial', sansSerif;
+@value fontSize: calc(1.6 * unit);
+@value fontSizeTiny: calc(1.2 * unit);
+@value fontSizeSmall: calc(1.4 * unit);
+@value fontSizeNormal: fontSize;
+@value fontSizeBig: calc(1.8 * unit);
+@value fontWeightThin: 300;
+@value fontWeightNormal: 400;
+@value fontWeightSemiBold: 500;
+@value fontWeightBold: 700;
+
+@value largerThanXxsViewport: (min-width: 480px);
+@value largerThanXsViewport: (min-width: 600px);

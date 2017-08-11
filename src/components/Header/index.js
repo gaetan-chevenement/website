@@ -7,11 +7,17 @@ export default class Header extends Component {
     return (
       <header class={style.header}>
         <div class={style.wrapper}>
-          <h1>Chez Nestor</h1>
+          <img src="/assets/logo370x130.png" alt="Chez Nestor" style="height: 80px;" />
           <nav>
-            <Link activeClassName={style.active} href="/">Home</Link>
-            <Link activeClassName={style.active} href="/profile">Me</Link>
-            <Link activeClassName={style.active} href="/profile/john">John</Link>
+            <Link href="http://chez-nestor.com/included-services" target="_blank">
+              Included Services
+            </Link>
+            <Link href="http://chez-nestor.com/book" target="_blank">
+              Booking
+            </Link>
+            <Link href="http://chez-nestor.com/contact-en" target="_blank">
+              Contact
+            </Link>
           </nav>
         </div>
       </header>

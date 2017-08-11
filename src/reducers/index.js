@@ -1,9 +1,15 @@
 import { combineReducers } from 'redux';
 
-import booking from './booking';
+import route               from './route';
+import booking             from './booking';
+import rooms               from './rooms';
+import apartments          from './apartments';
 
 const reducers = {
+  route,
   booking,
+  rooms,
+  apartments,
 };
 const combinedReducers = combineReducers(reducers);
 

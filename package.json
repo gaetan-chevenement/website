@@ -7,7 +7,8 @@
     "lint": "eslint src",
     "test": "eslint src && jest __tests__",
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "build": "preact build",
+    "build": "npm run build:holidays && preact build",
+    "build:holidays": "node serializeFrenchHolidays > src/holidays.json",
     "serve": "preact build && preact serve",
     "dev": "preact watch"
   },
@@ -16,6 +17,8 @@
   "license": "MPL v2.0",
   "devDependencies": {
     "autobind-decorator": "^2.1.0",
+    "babel-plugin-root-import": "^5.1.0",
+    "date-holidays": "^1.0.1",
     "eslint": "^4.2.0",
     "eslint-config-synacor": "^1.0.1",
     "eslint-import-resolver-babel-root-import": "0.0.2",
@@ -27,19 +30,21 @@
     "eslint-plugin-react": "^7.0.1",
     "if-env": "^1.0.0",
     "jest": "^20.0.4",
+    "modules-values-extract": "^1.0.3",
     "node-sass": "^4.5.3",
+    "postcss": "^6.0.8",
     "postcss-cssnext": "^3.0.2",
+    "postcss-custom-properties": "^6.1.0",
+    "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.6",
+    "postcss-modules-values": "^1.3.0",
     "preact-cli": "^1.4.0",
     "prettier": "^1.5.3",
     "sass-loader": "^6.0.6"
   },
   "dependencies": {
     "date-fns": "^1.28.5",
-    "date-holidays": "^1.0.1",
-    "formik": "^0.7.2",
     "lodash": "^4.17.4",
-    "material-design-icons": "^3.0.1",
     "preact": "^8.2.1",
     "preact-compat": "^3.16.0",
     "preact-i18n": "^1.0.0",
@@ -48,6 +53,8 @@
     "react-toolbox": "^2.0.0-beta.12",
     "redux": "^3.7.2",
     "redux-act": "^1.3.0",
+    "redux-thunk": "^2.2.0",
+    "shoelace-css": "^1.0.0-beta10",
     "yup": "^0.21.3"
   }
 }

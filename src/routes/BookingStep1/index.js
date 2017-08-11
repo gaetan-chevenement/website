@@ -1,15 +1,12 @@
 import { IntlProvider, Text } from 'preact-i18n';
-import { PureComponent }   from 'react';
+import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import autobind               from 'autobind-decorator';
-import { DatePicker }         from 'react-toolbox/lib/date_picker';
-import { TimePicker }         from 'react-toolbox/lib/time_picker';
-import { Input }              from 'react-toolbox/lib/input';
+import { batch }              from 'redux-act';
 import { Button }             from 'react-toolbox/lib/button';
-import * as actions           from '../../actions';
-import PackPicker							from '../../containers/booking/PackPicker';
-import style                  from './style';
+import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
+import Form							      from '~/containers/booking/Form';
+import * as actions           from '~/actions';
 
 const definition = { 'fr-FR': {
   title: 'Réservation de la chambre',
@@ -23,87 +20,84 @@ const definition = { 'fr-FR': {
 } };
 
 class BookingStep1 extends PureComponent {
-  @autobind
-  handleChange(value, event) {
-    this.props.actions.updateBooking({ [event.target.name]: value });
+  componentWillMount() {
+    const {
+      room,
+      roomId,
+      actions: { fetchRoom, receiveRoom, receiveApartment },
+    } = this.props;
+
+    if ( !room ) {
+      fetchRoom({ id: roomId });
+      fetch(
+        `http://localhost:3000/forest/Room/${roomId}`
+      )
+        .then((result) => result.json())
+        .then((response) =>
+          batch(
+            receiveRoom(response.data),
+            receiveApartment(response.included[0])
+          )
+        )
+        .catch(console.error);
+    }
   }
 
   // Note: `user` comes from the URL, courtesy of our router
-  render({ lang, room }) {
-    const {
-      checkinDate,
-      checkinTime,
-      firstName,
-      lastName,
-      email,
-      rentAmount,
-    } = this.props;
+  render() {
+    const { lang, roomId, room } = this.props;
+
+    if ( !room ) {
+      return (
+        <IntlProvider definition={definition[lang]}>
+          <h1 class="content">
+            <Text>
+              Sorry, there was an error preparing your booking for this room.
+            </Text>
+          </h1>
+        </IntlProvider>
+      );
+    }
+
+    if ( room.isLoading ) {
+      return (
+        <div class="content text-center">
+          <ProgressBar type="circular" mode="indeterminate" />
+        </div>
+      );
+    }
 
     return (
       <IntlProvider definition={definition[lang]}>
-        <div class={style.profile}>
-          <h1><Text id="title">Booking details for room</Text> {room}</h1>
+        <div class="content">
+          <h1>
+            <Text id="title">Booking details for room</Text><br />
+            <em>{room.name}</em>
+          </h1>
 
-          <section>
-            <p>
-              <Text id="description">This room is available immediatly for a total of</Text>
-              <b> {rentAmount / 100}€ </b>
-              <Text id="perMonth">per month.</Text>
-            </p>
+          { /* room.availability */ true ?
+            <Form lang={lang} /> :
+            <p>Sorry, this room isn't available for booking.</p>
+          }
 
-            <Input type="text"
-              label="First Name"
-              name="firstName"
-              value={firstName}
-              onChange={this.handleChange}
-            />
-            <Input type="text"
-              label="Last Name"
-              name="lastName"
-              value={lastName}
-              onChange={this.handleChange}
-            />
-            <Input type="email"
-              label="Email address"
-              name="email"
-              value={email}
-              onChange={this.handleChange}
-            />
-            <DatePicker
-              label="Check-in Date"
-              name="checkinDate"
-              locale={lang.split('-')[0]}
-              value={checkinDate}
-              onChange={this.handleChange}
-            />
-            <TimePicker
-              label="Check-in Time (Paris time)"
-              name="checkinTime"
-              value={checkinTime}
-              onChange={this.handleChange}
-            />
-          </section>
-
-          <section>
-            <h3>Choose Your Housing Pack</h3>
-            <PackPicker />
-          </section>
-
-          <section style="margin-top: 2rem; text-align: center;">
+          <nav class="text-center">
             <Button raised primary
               label="Next"
               icon="forward"
-              href={`/${lang}/booking/${room}/2`}
+              href={`/${lang}/booking/${roomId}/2`}
             />
-          </section>
+          </nav>
         </div>
       </IntlProvider>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return { ...state.booking };
+function mapStateToProps({ route, rooms }) {
+  return {
+    ...route,
+    room: rooms[route.roomId],
+  };
 }
 
 function mapDispatchToProps(dispatch) {
