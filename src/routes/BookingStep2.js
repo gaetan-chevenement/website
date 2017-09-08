@@ -1,33 +1,53 @@
 import { IntlProvider, Text } from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { connect }            from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { route }              from 'preact-router';
 import { Button }             from 'react-toolbox/lib/button';
+import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
+import * as actions           from '~/actions';
 import Summary                from '~/containers/booking/Summary';
 
-const definition = { 'fr-FR': {
-} };
-
 class BookingStep2 extends PureComponent {
+  state = {
+    isValidating: true,
+  };
+
   componentWillMount() {
-    const { room, lang, roomId } = this.props;
+    const { room, lang, roomId, booking, actions } = this.props;
     if ( !room ) {
       route(`/${lang}/booking/${roomId}/`);
     }
+
+    actions.validateBooking(booking);
   }
 
-  // Note: `user` comes from the URL, courtesy of our router
-  render({ lang, roomId }) {
-    const { room } = this.props;
+  render(route) {
+    const {
+      lang,
+      roomId,
+    } = route;
+    const {
+      roomName,
+      isValidating,
+    } = this.props;
+
+    if ( isValidating ) {
+      return (
+        <div class="content text-center">
+          <ProgressBar type="circular" mode="indeterminate" />
+        </div>
+      );
+    }
 
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="content">
           <h1>
             <Text id="title">Booking summary for room</Text><br />
-            <em>{room.name}</em>
+            <em>{roomName}</em>
           </h1>
-          <Summary />
+          <Summary {...route} />
 
           <nav class="text-center">
             <section style="margin-top: 2rem; text-align: center;">
@@ -38,7 +58,7 @@ class BookingStep2 extends PureComponent {
               />
               {' '}
               <Button raised primary
-                label="Confirm"
+                label="Continue"
                 icon="forward"
                 href={`/${lang}/booking/${roomId}/3`}
               />
@@ -50,11 +70,18 @@ class BookingStep2 extends PureComponent {
   }
 }
 
-function mapStateToProps({ route, rooms }) {
+const definition = { 'fr-FR': {
+} };
+
+function mapStateToProps({ rooms, booking }) {
   return {
-    ...route,
-    room: rooms[route.roomId],
+    roomName: (rooms[route.roomId] || {}).name,
+    isValidating: booking.isValidating,
   };
 }
 
-export default connect(mapStateToProps)(BookingStep2);
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookingStep2);

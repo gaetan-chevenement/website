@@ -12,12 +12,9 @@ import {
   PACK_PRICES,
   DEPOSIT_PRICES,
 }                             from '~/const';
-import style                  from './style';
+import theme                  from './theme';
 
 const _ = { capitalize };
-
-const definition = { 'fr-FR': {
-} };
 
 class BookingStep2 extends PureComponent {
   componentWillMount() {
@@ -43,6 +40,8 @@ class BookingStep2 extends PureComponent {
   render() {
     const {
       lang,
+      room,
+      apartment,
       booking: {
         bookingDate,
         checkinDate,
@@ -51,26 +50,18 @@ class BookingStep2 extends PureComponent {
         lastName,
         email,
       },
-      room,
-      room: {
-        'current price': currentPrice,
-        'service fees': serviceFees,
-      },
-      apartment,
+      totalRent,
+      checkinPrice,
+      proratedRent,
+      firstMonths,
     } = this.props;
-    const totalRent = currentPrice + serviceFees;
-    const proratedRent = Utils.prorateFirstRent(totalRent, bookingDate.getTime());
-    const [firstMonth, secondMonth, thirdMonth] = [0, 1, 2].map((offset) =>
-      D.format(D.addMonths(bookingDate, offset), 'MMM')
-    );
-    const checkinPrice = Utils.getCheckinPrice(checkinDate, pack);
 
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="grid has-gutter-xl">
           <div class="two-thirds">
             <section>
-              <h3>Housing Pack</h3>
+              <h4>Housing Pack</h4>
               <p>
                 You have selected a {_.capitalize(pack)} housing-pack.
               </p>
@@ -91,7 +82,7 @@ class BookingStep2 extends PureComponent {
               </p>
             </section>
             <section>
-              <h3>Check-in</h3>
+              <h4>Check-in</h4>
               <p>
                 Your checkin is scheduled on the
                 <b> {new Date(checkinDate).toLocaleDateString(lang)} </b>
@@ -126,21 +117,24 @@ class BookingStep2 extends PureComponent {
               )}
             </section>
             <section>
-              <h3>Monthly Rent</h3>
+              <h4>Monthly Rent</h4>
               <p>
-                <Text id="description">
-                 This room is available immediatly and rent starts on the
-                </Text>
+                <Text id="description">This room is available</Text>
+                { D.compareDesc( bookingDate, new Date() ) === 1 ?
+                  ' immediatly ' :
+                  ` from the ${bookingDate.toLocaleDateString()} `
+                }
+                <Text>and rent starts on the</Text>
                 <b>{' '}{new Date(bookingDate).toLocaleDateString(lang)}</b>.
                 The first rents (including water, eletricity, gas, unlimited
                 wifi, housing insurance and maintenance) would be:
               </p>
               <p>{this.renderDetails([
-                <span>{firstMonth}. <Text>rent</Text>:</span>,
+                <span>{firstMonths[0]}. <Text>rent</Text>:</span>,
                 <b>{proratedRent / 100}€</b>,
-                <span>{secondMonth}. <Text>rent</Text>:</span>,
+                <span>{firstMonths[1]}. <Text>rent</Text>:</span>,
                 <b>{totalRent / 100}€</b>,
-                <span>{thirdMonth}. <Text>rent</Text>:</span>,
+                <span>{firstMonths[2]}. <Text>rent</Text>:</span>,
                 <b>{totalRent / 100}€</b>,
                 <Text>Due date:</Text>,
                 <Text>
@@ -150,7 +144,7 @@ class BookingStep2 extends PureComponent {
               ])}</p>
             </section>
             <section>
-              <h3>Security deposit</h3>
+              <h4>Security deposit</h4>
               <p>
                 <Text id="description">
                  The security deposit is 100% reimbursed at the end of your
@@ -169,16 +163,16 @@ class BookingStep2 extends PureComponent {
 
           <div class="one-third">
             <section>
-              <h3><Text>Accommodation details</Text></h3>
-              <ul class={style.unstyled}>
+              <h4><Text>Accommodation details</Text></h4>
+              <ul class={theme.unstyled}>
                 <li>{room.name.split('-')[1]}</li>
                 <li>{apartment.addressStreet}</li>
                 <li>{apartment.addressCity} {apartment.addressZipcode}</li>
               </ul>
             </section>
             <section>
-              <h3><Text>Personal details</Text></h3>
-              <ul class={style.unstyled}>
+              <h4><Text>Personal details</Text></h4>
+              <ul class={theme.unstyled}>
                 <li>{firstName} {lastName}</li>
                 <li>{email}</li>
               </ul>
@@ -190,12 +184,23 @@ class BookingStep2 extends PureComponent {
   }
 }
 
+const definition = { 'fr-FR': {
+} };
+
 function mapStateToProps({ route: { lang, roomId }, booking, rooms, apartments }) {
+  const room = rooms[roomId];
+  const totalRent = room['current price'] + room['service fees'];
+  const { bookingDate, checkinDate, pack } = booking;
+
   return {
     lang,
-    room: rooms[roomId],
-    apartment: rooms[roomId] && apartments[rooms[roomId].ApartmentId],
+    room,
+    apartment: room && apartments[room.ApartmentId],
     booking,
+    totalRent,
+    proratedRent: Utils.prorateFirstRent(totalRent, bookingDate.getTime()),
+    firstMonths: Utils.getFirstMonths(bookingDate),
+    checkinPrice: Utils.getCheckinPrice(checkinDate, pack),
   };
 }
 

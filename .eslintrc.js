@@ -12,6 +12,7 @@ module.exports = {
     'plugin:promise/recommended',
   ],
   plugins: [
+    'babel',
     'react',
     'mocha',
     'import',

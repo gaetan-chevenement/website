@@ -2,52 +2,41 @@ import { IntlProvider, Text } from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { batch }              from 'redux-act';
 import { Button }             from 'react-toolbox/lib/button';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
-import Form							      from '~/containers/booking/Form';
+import BookingForm					  from '~/containers/booking/BookingForm';
 import * as actions           from '~/actions';
-
-const definition = { 'fr-FR': {
-  title: 'Réservation de la chambre',
-  datetime: 'Date et heure',
-  description: 'Cette chambre est disponible immédiatement et la location commencera au',
-  pack: {
-    basic: 'Basique',
-    comfort: 'Confort',
-    privilege: 'Privilège',
-  },
-} };
+import Utils                  from '~/utils';
 
 class BookingStep1 extends PureComponent {
   componentWillMount() {
     const {
       room,
       roomId,
-      actions: { fetchRoom, receiveRoom, receiveApartment },
+      actions,
     } = this.props;
 
     if ( !room ) {
-      fetchRoom({ id: roomId });
-      fetch(
-        `http://localhost:3000/forest/Room/${roomId}`
-      )
-        .then((result) => result.json())
-        .then((response) =>
-          batch(
-            receiveRoom(response.data),
-            receiveApartment(response.included[0])
-          )
-        )
-        .catch(console.error);
+      actions.getRoom(roomId);
     }
   }
 
   // Note: `user` comes from the URL, courtesy of our router
-  render() {
-    const { lang, roomId, room } = this.props;
+  render(route) {
+    const {
+      lang,
+      roomId,
+    } = route;
+    const {
+      roomName,
+      roomError,
+      isRoomLoading,
+      isEligible,
+      hasErrors,
+      isRoomAvailable,
+    } = this.props;
 
-    if ( !room ) {
+    if ( roomError ) {
       return (
         <IntlProvider definition={definition[lang]}>
           <h1 class="content">
@@ -59,7 +48,7 @@ class BookingStep1 extends PureComponent {
       );
     }
 
-    if ( room.isLoading ) {
+    if ( isRoomLoading ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -72,19 +61,20 @@ class BookingStep1 extends PureComponent {
         <div class="content">
           <h1>
             <Text id="title">Booking details for room</Text><br />
-            <em>{room.name}</em>
+            <em>{roomName}</em>
           </h1>
 
-          { /* room.availability */ true ?
-            <Form lang={lang} /> :
+          { isRoomAvailable ?
+            <BookingForm {...route} /> :
             <p>Sorry, this room isn't available for booking.</p>
           }
 
           <nav class="text-center">
             <Button raised primary
-              label="Next"
+              label="Continue"
               icon="forward"
               href={`/${lang}/booking/${roomId}/2`}
+              disabled={!isEligible || hasErrors}
             />
           </nav>
         </div>
@@ -93,10 +83,27 @@ class BookingStep1 extends PureComponent {
   }
 }
 
-function mapStateToProps({ route, rooms }) {
+const definition = { 'fr-FR': {
+  title: 'Réservation de la chambre',
+  datetime: 'Date et heure',
+  description: 'Cette chambre est disponible immédiatement et la location commencera au',
+  pack: {
+    basic: 'Basique',
+    comfort: 'Confort',
+    privilege: 'Privilège',
+  },
+} };
+
+function mapStateToProps({ rooms, booking }, { roomId }) {
+  const room = rooms[roomId];
+
   return {
-    ...route,
-    room: rooms[route.roomId],
+    roomName: room && room.name,
+    roomError: room && room.error,
+    roomIsLoading: room && room.isLoading,
+    hasErrors: Object.keys(booking.errors).length > 0,
+    isEligible: booking.isEligible,
+    isRoomAvailable: room && Utils.isRoomAvailable( room ),
   };
 }
 

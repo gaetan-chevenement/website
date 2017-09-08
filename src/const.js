@@ -11,9 +11,9 @@ module.exports = {
       privilege:  89000,
     },
     paris: {
-      basic:      79000,
-      comfort:    99000,
-      privilege: 119000,
+      basic:      89000,
+      comfort:   109000,
+      privilege: 129000,
     },
   },
 
@@ -30,4 +30,12 @@ module.exports = {
     2:       4000, // 2 rooms
     default: 3000, // 3 or more rooms
   },
+
+  UNAVAILABLE_DATE: new Date(1E14),
+
+  API_BASE_URL: process.env.NODE_ENV !== 'production' ?
+    'http://localhost:3000/forest' :
+    'https://scqg8r1bs4.execute-api.eu-west-1.amazonaws.com/latest/forest',
+  PAYMENT_FORM_URL: 'https://payment.chez-nestor.com/view',
+  IDENTITY_FORM_URL: 'https://forms.chez-nestor.com/50392735671964',
 };
