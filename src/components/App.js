@@ -1,8 +1,9 @@
 import { h, Component } from 'preact';
 import { Router }       from 'preact-router';
 import { Provider }     from 'react-redux';
+import { batch }        from 'redux-act';
+import reduce           from 'lodash/reduce';
 // import { ThemeProvider } from 'react-css-themr';
-
 
 import configureStore   from '~/stores';
 import Home             from '~/routes/Home';
@@ -13,25 +14,34 @@ import BookingStep3     from '~/routes/BookingStep3';
 import Renting          from '~/routes/Renting';
 import Payment          from '~/routes/Payment';
 import {
-  updateRoute,
   updateBooking,
+  updateRoute,
+  updatePayment,
 }                       from '~/actions';
 import Header           from './Header';
 // import Home from 'async!./home';
 // import Profile from 'async!./profile';
 
+const _ = { reduce };
+
 const store = configureStore({
-  route: {},
+  route: {
+    lang: 'en-US',
+  },
   booking: {
-    errors: {},
+    minPack: 'basic',
     pack: 'comfort',
+    errors: {},
     // bookingDate: new Date(),
     // firstName: {},
     // lastName: {},
     // email: {},
     // checkinDate: {},
+    // roomId: null,
   },
-  card: { errors: {} },
+  payment: {
+    errors: {},
+  },
   orders: {},
   rooms: {},
   apartments: {},
@@ -41,10 +51,25 @@ export default class App extends Component {
 
   // Store route parameters in the state when route changes
   handleRoute = (e) => {
-    store.dispatch(updateRoute(e.current.attributes));
-    if ( 'pack' in e.current.attributes ) {
-      store.dispatch(updateBooking({ minPack: e.current.attributes.pack }));
-    }
+    const {
+      lang,
+      minPack,
+      roomId,
+      rentingId,
+      clientId,
+      orderId,
+    } = e.current.attributes;
+
+    // route params are only relevant when they're defined, so we'll filter-out
+    // all undefined values.
+    batch(
+      store.dispatch(updateRoute(filterOutUndef(
+        { lang, rentingId, clientId, minPack }
+      ))),
+      store.dispatch(updateBooking(filterOutUndef({ roomId }))),
+      store.dispatch(updatePayment(filterOutUndef({ orderId })))
+    );
+
   };
 
   render() {
@@ -67,4 +92,14 @@ export default class App extends Component {
       </Provider>
     );
   }
+}
+
+function filterOutUndef(collection) {
+  return _.reduce(collection, ( result, value, key ) => {
+    if ( value !== undefined ) {
+      result[key] = value;
+    }
+
+    return result;
+  }, {});
 }

@@ -2,7 +2,6 @@ import { IntlProvider, Text } from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { route }              from 'preact-router';
 import autobind               from 'autobind-decorator';
 import capitalize             from 'lodash/capitalize';
 import D                      from 'date-fns';
@@ -16,14 +15,7 @@ import theme                  from './theme';
 
 const _ = { capitalize };
 
-class BookingStep2 extends PureComponent {
-  componentWillMount() {
-    const { room, lang, roomId } = this.props;
-    if ( !room ) {
-      route(`/${lang}/booking/${roomId}/`);
-    }
-  }
-
+class Summary extends PureComponent {
   @autobind
   renderDetails(children) {
     return (
@@ -40,7 +32,7 @@ class BookingStep2 extends PureComponent {
   render() {
     const {
       lang,
-      room,
+      roomName,
       apartment,
       booking: {
         bookingDate,
@@ -120,12 +112,12 @@ class BookingStep2 extends PureComponent {
               <h4>Monthly Rent</h4>
               <p>
                 <Text id="description">This room is available</Text>
-                { D.compareDesc( bookingDate, new Date() ) === 1 ?
+                { D.compareAsc( bookingDate, new Date() ) === -1 ?
                   ' immediatly ' :
-                  ` from the ${bookingDate.toLocaleDateString()} `
+                  ` from the ${bookingDate.toLocaleDateString(lang)} `
                 }
                 <Text>and rent starts on the</Text>
-                <b>{' '}{new Date(bookingDate).toLocaleDateString(lang)}</b>.
+                <b>{' '}{bookingDate.toLocaleDateString(lang)}</b>.
                 The first rents (including water, eletricity, gas, unlimited
                 wifi, housing insurance and maintenance) would be:
               </p>
@@ -165,7 +157,7 @@ class BookingStep2 extends PureComponent {
             <section>
               <h4><Text>Accommodation details</Text></h4>
               <ul class={theme.unstyled}>
-                <li>{room.name.split('-')[1]}</li>
+                <li>{roomName.split('-')[1]}</li>
                 <li>{apartment.addressStreet}</li>
                 <li>{apartment.addressCity} {apartment.addressZipcode}</li>
               </ul>
@@ -187,14 +179,14 @@ class BookingStep2 extends PureComponent {
 const definition = { 'fr-FR': {
 } };
 
-function mapStateToProps({ route: { lang, roomId }, booking, rooms, apartments }) {
-  const room = rooms[roomId];
-  const totalRent = room['current price'] + room['service fees'];
+function mapStateToProps({ route: { lang }, booking, rooms, apartments }) {
+  const room = rooms[booking.roomId];
+  const totalRent = room ? room['current price'] + room['service fees'] : 0;
   const { bookingDate, checkinDate, pack } = booking;
 
   return {
     lang,
-    room,
+    roomName: room && room.name,
     apartment: room && apartments[room.ApartmentId],
     booking,
     totalRent,
@@ -208,4 +200,4 @@ function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookingStep2);
+export default connect(mapStateToProps, mapDispatchToProps)(Summary);

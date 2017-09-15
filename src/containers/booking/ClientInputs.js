@@ -10,17 +10,20 @@ import * as actions           from '~/actions';
 class ClientInputs extends PureComponent {
   @autobind
   handleChange(value, event) {
-    const { updateBooking, deleteBookingError } = this.props.actions;
+    const { actions } = this.props;
 
     batch(
-      updateBooking({ [event.target.name]: value }),
-      deleteBookingError(event.target.name)
+      actions.updateBooking({ [event.target.name]: value }),
+      actions.deleteBookingError(event.target.name)
     );
   }
 
-  render({ lang }) {
-    const { booking } = this.props;
-    const { errors } = booking;
+  render() {
+    const {
+      lang,
+      booking: { errors },
+      booking,
+    } = this.props;
 
     return (
       <IntlProvider definition={definition[lang]}>
@@ -55,8 +58,11 @@ class ClientInputs extends PureComponent {
 const definition = { 'fr-FR': {
 } };
 
-function mapStateToProps({ booking }) {
-  return { booking };
+function mapStateToProps({ route: { lang }, booking }) {
+  return {
+    lang,
+    booking,
+  };
 }
 
 function mapDispatchToProps(dispatch) {

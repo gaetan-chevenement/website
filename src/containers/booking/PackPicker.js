@@ -31,15 +31,16 @@ class PackPicker extends PureComponent {
     );
   }
 
-  render(route) {
+  render() {
     const {
+      lang,
       pack,
       minPack,
       packPrices,
     } = this.props;
 
     return (
-      <IntlProvider definition={definition[route.lang]}>
+      <IntlProvider definition={definition[lang]}>
         <p class="grid-3-large-1 has-gutter">
           { minPack !== 'comfort' && minPack !== 'privilege' ?
             <Card raised={pack === 'basic'}>
@@ -116,11 +117,13 @@ class PackPicker extends PureComponent {
 const definition = { 'fr-FR': {
 } };
 
-function mapStateToProps({ booking, rooms, apartments }, { roomId }) {
-  const { pack, minPack = 'basic' } = booking;
+function mapStateToProps({ route, booking, rooms, apartments }) {
+  const { lang, minPack } = route;
+  const { roomId, pack } = booking;
   const room = rooms[roomId];
 
   return {
+    lang,
     pack,
     minPack,
     packPrices: PACK_PRICES[room && apartments[room.ApartmentId].addressCity],

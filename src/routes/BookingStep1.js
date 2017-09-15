@@ -11,32 +11,42 @@ import Utils                  from '~/utils';
 class BookingStep1 extends PureComponent {
   componentWillMount() {
     const {
-      room,
+      roomName,
+      hasErrors,
       roomId,
       actions,
     } = this.props;
 
-    if ( !room ) {
+    if ( roomName === undefined ) {
       actions.getRoom(roomId);
+    }
+
+    if ( hasErrors ) {
+      scrollTo(0, 0);
     }
   }
 
   // Note: `user` comes from the URL, courtesy of our router
-  render(route) {
+  render() {
     const {
       lang,
       roomId,
-    } = route;
-    const {
       roomName,
-      roomError,
       isRoomLoading,
+      isRoomAvailable,
       isEligible,
       hasErrors,
-      isRoomAvailable,
     } = this.props;
 
-    if ( roomError ) {
+    if ( isRoomLoading ) {
+      return (
+        <div class="content text-center">
+          <ProgressBar type="circular" mode="indeterminate" />
+        </div>
+      );
+    }
+
+    if ( roomName === undefined ) {
       return (
         <IntlProvider definition={definition[lang]}>
           <h1 class="content">
@@ -45,14 +55,6 @@ class BookingStep1 extends PureComponent {
             </Text>
           </h1>
         </IntlProvider>
-      );
-    }
-
-    if ( isRoomLoading ) {
-      return (
-        <div class="content text-center">
-          <ProgressBar type="circular" mode="indeterminate" />
-        </div>
       );
     }
 
@@ -65,7 +67,7 @@ class BookingStep1 extends PureComponent {
           </h1>
 
           { isRoomAvailable ?
-            <BookingForm {...route} /> :
+            <BookingForm lang={lang} /> :
             <p>Sorry, this room isn't available for booking.</p>
           }
 
@@ -94,16 +96,17 @@ const definition = { 'fr-FR': {
   },
 } };
 
-function mapStateToProps({ rooms, booking }, { roomId }) {
-  const room = rooms[roomId];
+function mapStateToProps({ route: { lang }, rooms, booking }) {
+  const room = rooms[booking.roomId];
 
   return {
+    lang,
     roomName: room && room.name,
     roomError: room && room.error,
-    roomIsLoading: room && room.isLoading,
-    hasErrors: Object.keys(booking.errors).length > 0,
-    isEligible: booking.isEligible,
+    isRoomLoading: !room || room.isLoading,
     isRoomAvailable: room && Utils.isRoomAvailable( room ),
+    hasErrors: Utils.hasErrors(booking),
+    isEligible: booking.isEligible,
   };
 }
 

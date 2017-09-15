@@ -9,30 +9,35 @@ import * as actions           from '~/actions';
 import Summary                from '~/containers/booking/Summary';
 
 class BookingStep2 extends PureComponent {
-  state = {
-    isValidating: true,
-  };
-
   componentWillMount() {
-    const { room, lang, roomId, booking, actions } = this.props;
-    if ( !room ) {
-      route(`/${lang}/booking/${roomId}/`);
-    }
+    const {
+      lang,
+      roomName,
+      booking,
+      actions,
+    } = this.props;
 
-    actions.validateBooking(booking);
+    Promise.resolve()
+      // refetch the room if necessary (if the price has changed for example)
+      .then(() => roomName === undefined && actions.getRoom(booking.roomId))
+      // validateBooking has to heppen after fetching the room,
+      // as the bookingDate validity might change.
+      .then(() => actions.validateBooking(booking))
+      .catch((error) => {
+        route(`/${lang}/booking/${booking.roomId}/`);
+      });
   }
 
-  render(route) {
+  render() {
     const {
       lang,
       roomId,
-    } = route;
-    const {
       roomName,
-      isValidating,
+      isRoomLoading,
+      booking,
     } = this.props;
 
-    if ( isValidating ) {
+    if ( isRoomLoading || booking.isValidating ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -47,7 +52,8 @@ class BookingStep2 extends PureComponent {
             <Text id="title">Booking summary for room</Text><br />
             <em>{roomName}</em>
           </h1>
-          <Summary {...route} />
+
+          <Summary />
 
           <nav class="text-center">
             <section style="margin-top: 2rem; text-align: center;">
@@ -73,10 +79,14 @@ class BookingStep2 extends PureComponent {
 const definition = { 'fr-FR': {
 } };
 
-function mapStateToProps({ rooms, booking }) {
+function mapStateToProps({ route: { lang }, booking, rooms }) {
+  const room = rooms[booking.roomId];
+
   return {
-    roomName: (rooms[route.roomId] || {}).name,
-    isValidating: booking.isValidating,
+    lang,
+    booking,
+    roomName: room && room.name,
+    isRoomLoading: !room || room.isLoading,
   };
 }
 

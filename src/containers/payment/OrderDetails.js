@@ -4,7 +4,6 @@ import { connect }            from 'react-redux';
 import { IntlProvider }       from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import * as actions           from '~/actions';
-import Utils                  from '~/utils';
 
 class OrderDetails extends PureComponent {
   @autobind
@@ -12,48 +11,58 @@ class OrderDetails extends PureComponent {
     return (
       <tr>
         <td>{label}</td>
-        <td>{Utils.roundBy100(unitPrice)}</td>
+        <td class="text-right">{unitPrice / 100}€</td>
         <td>{quantity}</td>
-        <td>{Utils.roundBy100(unitPrice * quantity)}€</td>
+        <td class="text-right">{unitPrice * quantity / 100}€</td>
       </tr>
     );
   }
 
   render() {
-    const { order, lang } = this.props;
+    const {
+      lang,
+      order,
+    } = this.props;
 
     return (
       <IntlProvider definition={definition[lang]}>
-        <table>
-          <thead>
-            <tr>
-              <td>Item</td>
-              <td>Unit Price</td>
-              <td>Quantity</td>
-              <td>Total</td>
-            </tr>
-          </thead>
-          <tbody>
-            { order.orderItems.map(this.renderOrderItem) }
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="2">
-                {order.conditions}
-              </td>
-              <td>
-                <p>Total</p>
-                <p>Paid</p>
-                <p>Balance</p>
-              </td>
-              <td>
-                <p>{Utils.roundBy100(order.amount)}</p>
-                <p>{Utils.roundBy100(order.totalPaid)}</p>
-                <p>{Utils.roundBy100(order.balance)}</p>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th class="text-right">Unit Price</th>
+                <th>Quantity</th>
+                <th class="text-right">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              { order.OrderItems.map(this.renderOrderItem) }
+            </tbody>
+            <tfoot>
+              <tr>
+                <th colspan="2" style="vertical-align: bottom; font-weight: normal;">
+                  <p>
+                    {order.conditions}
+                  </p>
+                  <p>
+                    <em>Order ref. {order.id}</em>
+                  </p>
+                </th>
+                <th>
+                  <p>Total</p>
+                  <p>Paid</p>
+                  <p>Balance</p>
+                </th>
+                <th class="text-right">
+                  <p>{order.amount / 100}€</p>
+                  <p>{order.totalPaid / 100}€</p>
+                  <p>{order.balance / 100}€</p>
+                </th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
       </IntlProvider>
     );
   }
@@ -63,10 +72,10 @@ const definition = { 'fr-FR': {
 
 } };
 
-function mapStateToProps({ route, orders }, { orderId }) {
+function mapStateToProps({ route: { lang }, orders, payment }) {
   return {
-    ...route,
-    order: orders[orderId],
+    lang,
+    order: orders[payment.orderId],
   };
 }
 

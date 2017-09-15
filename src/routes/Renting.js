@@ -5,39 +5,34 @@ import { connect }            from 'react-redux';
 import { batch }              from 'redux-act';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import * as actions           from '~/actions';
-import Utils                  from '~/utils';
 import {
   IDENTITY_FORM_URL,
 }                             from '~/const';
+import Utils                  from '~/utils';
 
 class Renting extends PureComponent {
   componentWillMount() {
-    const { rentingId } = this.props;
-    const {
-      fetchRenting,
-      receiveRenting,
-      receiveOrders,
-    } = this.props.actions;
+    const { rentingId, actions } = this.props;
 
-    fetchRenting({ id: rentingId });
-    Promise.all([
-      Utils.fetchRenting(rentingId)
-        .tap(console.log),
-      Utils.fetchOrdersByRenting(rentingId)
-        .tap(console.log),
-    ])
-      .then(([renting, orders]) => batch(
-        receiveRenting(renting),
-        receiveOrders(orders)
-      ))
-      .catch(console.error);
-
+    batch(
+      actions.getRenting( rentingId ),
+      actions.listOrders({ rentingId })
+    );
   }
 
-  render({ lang }) {
-    const { renting, room, packOrder } = this.props;
+  render() {
+    const {
+      lang,
+      isRentingLoading,
+      roomName,
+      rentingId,
+      clientId,
+      packOrder = {},
+    } = this.props;
+    const paymentUrl =
+      `/${lang}/payment/${packOrder.id}?returnUrl=/${lang}/renting/${rentingId}`;
 
-    if ( renting.isLoading ) {
+    if ( isRentingLoading ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -47,24 +42,24 @@ class Renting extends PureComponent {
 
     return (
       <IntlProvider definition={definition[lang]}>
-        <div class="content text-center">
+        <div class="content">
           <h1>
             <Text id="title">Complete your booking for room</Text><br />
-            <em>{room.name}</em>
+            <em>{roomName}</em>
           </h1>
 
           <section>
             <p>
               To complete your booking, please pay your Housing Pack invoice
               on our secure platform:<br />
-              <a href={`/${lang}/payment/${packOrder.id}/3`}>
-                Pay {packOrder.balance}€ now.
+              <a href={paymentUrl}>
+                Pay {-packOrder.balance / 100}€ now.
               </a>
             </p>
             <p>
               After that, please fill in this short identity form:<br />
-              <a href={`${IDENTITY_FORM_URL}/${'a'}`}>
-                {IDENTITY_FORM_URL}/{'a'}
+              <a href={`${IDENTITY_FORM_URL}?clientId=${clientId}`}>
+                {IDENTITY_FORM_URL}?clientId={clientId}
               </a>
             </p>
 
@@ -87,10 +82,19 @@ class Renting extends PureComponent {
 const definition = { 'fr-FR': {
 } };
 
-function mapStateToProps({ route, rooms }) {
+function mapStateToProps({ route: { lang, rentingId }, rentings, orders, rooms }) {
+  const renting = rentings[rentingId];
+  const room = renting && rooms[renting.roomId];
+  const { pack: packOrder } =
+    Utils.classifyRentingOrders({ rentingId, orders });
+
   return {
-    ...route,
-    room: rooms[route.roomId],
+    lang,
+    rentingId,
+    clientId: renting && renting.clientId,
+    isRentingLoading: renting && renting.isLoading,
+    roomName: room && room.name,
+    packOrder,
   };
 }
 

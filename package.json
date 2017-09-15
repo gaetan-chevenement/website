@@ -48,6 +48,7 @@
     "date-fns": "^1.28.5",
     "lodash": "^4.17.4",
     "memoize-immutable": "^3.0.0",
+    "namedtuplemap": "^1.0.0",
     "preact": "^8.2.4",
     "preact-compat": "^3.17.0",
     "preact-i18n": "^1.0.1",

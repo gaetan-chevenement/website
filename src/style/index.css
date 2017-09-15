@@ -17,6 +17,10 @@ html, body, #app {
 	color: #222;
 }
 
+body {
+  overflow-y: scroll;
+}
+
 .content {
 	padding: calc(var(--header-height) + 20px) 10px 40px;
 	min-height: 100%;
@@ -25,7 +29,9 @@ html, body, #app {
 	margin: 0 auto;
 }
 
-h1,
+h1 {
+  margin-bottom: 3rem;
+}
 section {
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
 }

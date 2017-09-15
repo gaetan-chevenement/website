@@ -4,40 +4,90 @@ import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { route }              from 'preact-router';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
+import { Button }             from 'react-toolbox/lib/button';
 import * as actions           from '~/actions';
 import Utils                  from '~/utils';
 
 class BookingStep3 extends PureComponent {
   componentWillMount() {
-    const { room, lang, roomId, booking, actions } = this.props;
-    const { fetchRoom, receiveRoom } = actions;
-    if ( !room ) {
-      route(`/${lang}/booking/${roomId}/`);
+    const {
+      lang,
+      room,
+      booking,
+      actions,
+    } = this.props;
+
+    if ( room === undefined ) {
+      route(`/${lang}/booking/${booking.roomId}/2`);
     }
 
-    fetchRoom({ id: roomId });
-    Utils.fetchRoom(roomId)
-      .then((response) => {
-        const refetchedRoom = response.data[0].attributes;
-
-        if ( !Utils.isRoomAvailable(refetchedRoom) ) {
-          return route(`/${lang}/booking/${roomId}/`);
-        }
-
-        if ( refetchedRoom['current price'] > room['current price'] ) {
-          receiveRoom(response.data[0]);
-          return route(`/${lang}/booking/${roomId}/2?warning=priceChanged`);
-        }
-
-        /* eslint-disable promise/no-nesting */
-        return Utils.createRenting({ room, booking })
-          .then((response) => route(`/${lang}/renting/${response.rentingId}`));
-        /* eslint-enable promise/no-nesting */
-      })
+    return actions.saveBooking({ room, booking })
+      .then(({ response: { rentingId } }) => (
+        route(`/${lang}/renting/${rentingId}`)
+      ))
       .catch(console.error);
   }
 
-  render({ lang, roomId }) {
+  render() {
+    const {
+      lang,
+      hasErrors,
+      room,
+      booking: { errors },
+    } = this.props;
+
+    if ( hasErrors ) {
+      return (
+        <IntlProvider definition={definition[lang]}>
+          <div class="content">
+            <h1>
+              <Text id="title">Booking failed for room</Text><br />
+              <em>{room.name}</em>
+            </h1>
+
+            { errors.isUnavailable ? (
+              <section>
+                <p>
+                  This room is no longer available.<br />
+                  Please choose another room.
+                </p>
+              </section>
+            ) : '' }
+
+            { errors.hasPriceChanged ? (
+              <div>
+                <section>
+                  <p>
+                    The price of the room has changed.<br />
+                    Please check the updated price before continuing.
+                  </p>
+                </section>
+
+                <nav class="text-center">
+                  <section style="margin-top: 2rem; text-align: center;">
+                    <Button raised
+                      label="Back to Booking Summary"
+                      icon="arrow_backward"
+                      href={`/${lang}/booking/${room.id}/2`}
+                    />
+                  </section>
+                </nav>
+              </div>
+            ) : '' }
+
+            { errors.unexpected ? (
+              <section>
+                <p>
+                  An unexpected error occured.<br />
+                  { errors.unexpected }
+                </p>
+              </section>
+            ) : '' }
+          </div>
+        </IntlProvider>
+      );
+    }
+
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="content text-center">
@@ -52,11 +102,12 @@ class BookingStep3 extends PureComponent {
 const definition = { 'fr-FR': {
 } };
 
-function mapStateToProps({ route, rooms, booking }) {
+function mapStateToProps({ route: { lang }, rooms, booking }) {
   return {
-    ...route,
-    room: rooms[route.roomId],
+    lang,
+    room: rooms[booking.roomId],
     booking,
+    hasErrors: Utils.hasErrors(booking),
   };
 }
 

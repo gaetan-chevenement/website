@@ -82,6 +82,9 @@ const pureUtils = {
   getCurrYear(now = new Date()) {
     return now.getFullYear() % 100;
   },
+  hasErrors(object) {
+    return Object.keys(object.errors).length > 0;
+  },
 };
 
 const currYear = pureUtils.getCurrYear();

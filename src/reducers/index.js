@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 import { createReducer }   from 'redux-act';
 import R                   from 'ramda';
+import memoize             from 'memoize-immutable';
+import NamedTupleMap       from 'namedtuplemap';
 
 import {
   updateRoute,
@@ -8,10 +10,11 @@ import {
   setBookingErrors,
   deleteBookingError,
   validateBooking,
-  updateCard,
-  setCardErrors,
-  deleteCardError,
-  validateCard,
+  saveBooking,
+  updatePayment,
+  setPaymentErrors,
+  deletePaymentError,
+  validatePayment,
   getApartment,
   getRoom,
   getOrder,
@@ -19,8 +22,13 @@ import {
   getRenting,
 }                           from '~/actions';
 
+const noErrors = {};
+
 const routeReducer = createReducer({
-  [updateRoute]: (state, payload) => ({ ...payload }),
+  [updateRoute]: (state, payload) => ({
+    ...state,
+    ...payload,
+  }),
 }, {});
 
 const bookingReducer = createReducer({
@@ -34,20 +42,38 @@ const bookingReducer = createReducer({
     ...state,
     bookingDate,
   }),
-}, { errors: {} });
-
-const cardReducer = createReducer({
-  ...createFormReducer({
-    update: updateCard,
-    setErrors: setCardErrors,
-    deleteError: deleteCardError,
-    validate: validateCard,
+  [saveBooking.request]: (state) => ({
+    ...state,
+    isSaving: true,
   }),
-}, { errors: {} });
+  [saveBooking.ok]: (state) => ({
+    ...state,
+    isSaving: false,
+    errors: noErrors,
+  }),
+  [saveBooking.error]: (state, payload) => ({
+    ...state,
+    isSaving: false,
+    errors: payload.errors,
+  }),
+}, { errors: noErrors });
+
+const paymentReducer = createReducer({
+  ...createFormReducer({
+    update: updatePayment,
+    setErrors: setPaymentErrors,
+    deleteError: deletePaymentError,
+    validate: validatePayment,
+  }),
+}, { errors: noErrors });
 
 const roomsReducer = createReducer({
   ...createGetReducer(getRoom),
   [getRoom.ok]: (state, { room }) => ({
+    ...state,
+    [room.id]: room,
+  }),
+  [getRenting.ok]: (state, { _room: room }) => ({
     ...state,
     [room.id]: room,
   }),
@@ -68,7 +94,7 @@ const rentingsReducer = createReducer({
 const ordersReducer = createReducer({
   ...createGetReducer(getOrder),
 
-  [listOrders]: (state, payload) => ({
+  [listOrders.ok]: (state, payload) => ({
     ...state,
     ...payload.reduce((orders, order) => {
       orders[order.id] = order;
@@ -78,34 +104,57 @@ const ordersReducer = createReducer({
 }, {});
 
 const reducers = {
-  route: routeReducer,
-  booking: bookingReducer,
-  card: cardReducer,
+
+  // /* generally modified by the router */
+  // route: (routeReducer),
+  //
+  // /* generally modified by user-interactions */
+  // booking: (bookingReducer),
+  // payment: (paymentReducer),
+
+  /* generally modified by the router */
+  route: avoidUselessMutations(routeReducer),
+
+  /* generally modified by user-interactions */
+  booking: avoidUselessMutations(bookingReducer),
+  payment: avoidUselessMutations(paymentReducer),
+
+  /* generally modified by interacting with our REST API */
   rooms: roomsReducer,
   apartments: apartmentsReducer,
   rentings: rentingsReducer,
   orders: ordersReducer,
 };
+
+const memoizedIdentity = memoize((state) => ( state ), { cache: new NamedTupleMap() });
+
 const combinedReducers = combineReducers(reducers);
 
 export default function(state = {}, action) {
   return combinedReducers(state, action);
 }
 
+export function avoidUselessMutations(reducer) {
+  return function(state, action) {
+    return memoizedIdentity(reducer(state, action));
+  };
+}
+
 export function createGetReducer(actionAsync) {
   return {
-    [actionAsync.request]: (state, { request }) => ({
+    [actionAsync.request]: (state, payload) => ({
       ...state,
-      [request]: { isLoading: true },
+      [payload]: { isLoading: true },
     }),
-    [actionAsync.ok]: (state, { response }) => ({
+    [actionAsync.ok]: (state, payload) => ({
       ...state,
-      [response.id]: response,
+      [payload.id]: payload,
     }),
     [actionAsync.error]: (state, { request, error }) => ({
       ...state,
-      [request]: {
-        ...state[request],
+      [request[0]]: {
+        ...state[request[0]],
+        isLoading: false,
         error,
       },
     }),
@@ -131,12 +180,12 @@ export function createFormReducer({ update, setErrors, deleteError, validate }) 
       ...state,
       ...response.data,
       isValidating: false,
-      errors: {},
+      errors: noErrors,
     }),
-    [validate.error]: (state, { request, error }) => ({
+    [validate.error]: (state, payload) =>  ({
       ...state,
       isValidating: false,
-      errors: error,
+      errors: payload,
     }),
   };
 }

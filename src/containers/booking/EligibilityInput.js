@@ -12,16 +12,19 @@ import theme                  from './theme';
 class EligibilityInputs extends PureComponent {
   @autobind
   handleChange(value, event) {
-    const { updateBooking, deleteBookingError } = this.props.actions;
+    const { actions } = this.props;
 
     batch(
-      updateBooking({ [event.target.name]: value }),
-      deleteBookingError(event.target.name)
+      actions.updateBooking({ [event.target.name]: value }),
+      actions.deleteBookingError(event.target.name)
     );
   }
 
-  render({ lang }) {
-    const { isEligible } = this.props;
+  render() {
+    const {
+      lang,
+      isEligible,
+    } = this.props;
 
     return (
       <IntlProvider definition={definition[lang]}>
@@ -65,8 +68,11 @@ class EligibilityInputs extends PureComponent {
 const definition = { 'fr-FR': {
 } };
 
-function mapStateToProps({ booking: { isEligible } }) {
-  return { isEligible };
+function mapStateToProps({ route: { lang }, booking: { isEligible } }) {
+  return {
+    lang,
+    isEligible,
+  };
 }
 
 function mapDispatchToProps(dispatch) {

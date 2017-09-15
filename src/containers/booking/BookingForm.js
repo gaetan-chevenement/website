@@ -5,33 +5,33 @@ import CheckinInputs			    from './CheckinInputs';
 import ClientInputs			      from './ClientInputs';
 import EligibilityInput		   	from './EligibilityInput';
 
-export default function(route) {
+export default function({ lang }) {
   return (
-    <IntlProvider definition={definition[route.lang]}>
+    <IntlProvider definition={definition[lang]}>
       <div>
         <section>
-          <ClientInputs {...route} />
+          <ClientInputs />
         </section>
 
         <section>
           <h3>Choose Your Housing Pack</h3>
-          <PackPicker {...route} />
+          <PackPicker />
         </section>
 
         <section>
           <h3>Detailed comparison</h3>
-          <FeatureList {...route} />
+          <FeatureList />
         </section>
 
         <section>
           <h3>Planned date and time of check-in</h3>
           <p>(This can be changed at any time.)</p>
-          <CheckinInputs {...route} />
+          <CheckinInputs />
         </section>
 
         <section>
           <h3>Eligibility, Terms and Conditions</h3>
-          <EligibilityInput {...route} />
+          <EligibilityInput />
         </section>
       </div>
     </IntlProvider>

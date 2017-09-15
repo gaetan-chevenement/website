@@ -12,11 +12,11 @@ import * as actions           from '~/actions';
 class CheckinInputs extends PureComponent {
   @autobind
   handleChange(value, event) {
-    const { updateBooking, deleteBookingError } = this.props.actions;
+    const { actions } = this.props;
 
     batch(
-      updateBooking({ [event.target.name]: value }),
-      deleteBookingError(event.target.name)
+      actions.updateBooking({ [event.target.name]: value }),
+      actions.deleteBookingError(event.target.name)
     );
   }
 
@@ -26,8 +26,13 @@ class CheckinInputs extends PureComponent {
     this.handleChange(value, { target: { name: 'checkinDate' } });
   }
 
-  render({ lang }) {
-    const { bookingDate, checkinDate, checkinDateError } = this.props;
+  render() {
+    const {
+      lang,
+      bookingDate,
+      checkinDate,
+      checkinDateError,
+    } = this.props;
 
     return (
       <IntlProvider definition={definition[lang]}>
@@ -57,8 +62,11 @@ class CheckinInputs extends PureComponent {
 const definition = { 'fr-FR': {
 } };
 
-function mapStateToProps({ booking: { checkinDate, bookingDate, errors } }) {
+function mapStateToProps({ route: { lang }, booking }) {
+  const { checkinDate, bookingDate, errors } = booking;
+
   return {
+    lang,
     checkinDate,
     bookingDate,
     checkinDateError: errors.checkinDate,
