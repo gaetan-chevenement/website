@@ -7,7 +7,7 @@
     "lint": "eslint src",
     "test": "eslint src && jest __tests__",
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "build": "npm run build:holidays && preact build",
+    "build": "npm run build:holidays && preact build && cp src/_redirects build/_redirects",
     "build:holidays": "node serializeFrenchHolidays > src/holidays.json",
     "serve": "preact build && preact serve",
     "dev": "preact watch"
