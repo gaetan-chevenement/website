@@ -33,9 +33,16 @@ module.exports = {
 
   UNAVAILABLE_DATE: new Date(1E14),
 
-  API_BASE_URL: process.env.NODE_ENV !== 'production' ?
-    'http://localhost:3000/forest' :
-    'https://scqg8r1bs4.execute-api.eu-west-1.amazonaws.com/latest/forest',
-  PAYMENT_FORM_URL: 'https://payment.chez-nestor.com/view',
+  API_BASE_URL: ((environment) => {
+    switch (environment) {
+    case 'production':
+      return 'https://scqg8r1bs4.execute-api.eu-west-1.amazonaws.com/latest/forest';
+    case 'staging':
+      return 'https://7789dwm2t3.execute-api.eu-west-1.amazonaws.com/latest/forest';
+    default:
+      return 'http://localhost:3000/forest';
+    }
+  })(process.env.NODE_ENV),
+
   IDENTITY_FORM_URL: 'https://forms.chez-nestor.com/50392735671964',
 };
