@@ -59,7 +59,7 @@ class Summary extends PureComponent {
               </p>
               <p>{this.renderDetails([
                 <Text>Amount:</Text>,
-                <b>{PACK_PRICES[apartment.addressCity].basic / 100}€</b>,
+                <b>{PACK_PRICES[apartment.addressCity][pack] / 100}€</b>,
                 <Text>Due date:</Text>,
                 <span><b>Immediately</b>*</span>,
               ])}</p>
