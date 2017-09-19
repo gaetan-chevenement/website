@@ -1,4 +1,5 @@
 import path from 'path';
+import envVars from 'preact-cli-plugin-env-vars';
 
 const reactToolboxPath = path.resolve('./node_modules', 'react-toolbox');
 const containersPath = path.resolve('src', 'containers');
@@ -25,4 +26,9 @@ export default (config, env, helpers) => {
    */
   cssModulesRule.include.push(containersPath);
   globalCssRule.exclude.push(containersPath);
+
+  /* Make it possible to use env vars in our code,
+   * see https://github.com/robinvdvleuten/preact-cli-plugin-env-vars
+   */
+  envVars(config);
 };

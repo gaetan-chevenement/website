@@ -42,7 +42,7 @@ module.exports = {
     default:
       return 'http://localhost:3000/forest';
     }
-  })(process.env.NODE_ENV),
+  })(process.env.PREACT_APP_ENV),
 
   IDENTITY_FORM_URL: 'https://forms.chez-nestor.com/50392735671964',
 };
