@@ -2,7 +2,7 @@ export default [
   ['My arrival'],
   ['Welcome Bag', 'Transport map, welcome gifts…',                    1, 1, 1],
   ['Fast check-in', 'Less than 10 minutes',                           1, 1, 1],
-  ['Pillow & duvet', 'Provided for your stay',                        1, 1, 1],
+  ['Pillow & duvet', 'Provided during your stay',                        1, 1, 1],
   [
     'Sheets, pillow & duvet cases',
     'Brand new. Bed prepared before your arrival',

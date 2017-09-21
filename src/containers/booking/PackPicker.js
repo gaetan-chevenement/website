@@ -22,7 +22,7 @@ class PackPicker extends PureComponent {
     return (
       <CardActions>
         <Button raised
-          label={`Pick ${_.capitalize(packName)}`}
+          label={`Choose ${_.capitalize(packName)}`}
           name="pack"
           value={packName}
           onClick={this.handlePackChange}
