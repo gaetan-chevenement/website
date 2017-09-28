@@ -2,7 +2,7 @@ import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { batch }              from 'redux-act';
-import { IntlProvider }       from 'preact-i18n';
+import { IntlProvider, Text }       from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import { Input }              from 'react-toolbox/lib/input';
 import * as actions           from '~/actions';
@@ -12,7 +12,6 @@ class CardForm extends PureComponent {
   @autobind
   handleChange(value, event) {
     const { actions } = this.props;
-
     batch(
       actions.updatePayment({ [event.target.name]: value }),
       actions.deletePaymentError(event.target.name)
@@ -23,17 +22,67 @@ class CardForm extends PureComponent {
     const {
       lang,
       payment: { errors },
+      orderBalance,
       payment,
       currYear,
+      hasErrors,
     } = this.props;
 
+    if (orderBalance === 0) {
+      return (
+        <section>
+          <div class="handleError">
+              <h4>
+              This order has already been paid.
+              </h4>
+          </div>
+        </section>
+      )
+    }
+    if ( payment.isValidated ) {
+      return (
+        <div class="text-center">
+          <h3>
+            Your payment has been approved.<br />
+            The Chez Nestor Team would like to wish you a great day!
+          </h3>
+        </div>
+      )
+    }
+    if ( errors.payment ) {
+      return (
+        <section>
+          <div class="handleError">
+            { errors.payment.hasWrongBalance ? (
+              <h4>
+              This order has already been paid.
+              </h4>
+            ) : '' }
+
+            { errors.payment.hasNoOrder ? (
+              <h4>
+              We cannot retrieve this order<br />
+              Please contact the Chez Nestor Support Team.
+              </h4>
+            ) : '' }
+
+            { errors.payment.unexpected ? (
+              <h4>
+              An unexpected error has occured.<br />
+              { errors.payment.unexpected }
+              </h4>
+            ) : '' }
+          </div>
+        </section>
+      )
+    }
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
           <section>
-            <Input type="text"
+            <Input type="number"
               label="Card Number"
-              name="cradNumber"
+              name="cardNumber"
               value={payment.cardNumber}
               onChange={this.handleChange}
               error={errors.cardNumber}
@@ -79,10 +128,15 @@ const definition = { 'fr-FR': {
 
 } };
 
-function mapStateToProps({ route: { lang }, payment }) {
+function mapStateToProps({ route: { lang }, orders, payment }) {
+  const { orderId } = payment;
+  const order = orders[orderId];
+
   return {
     lang,
     payment,
+    orderBalance: order && order.balance,
+    hasErrors: Utils.hasErrors(payment),
     currYear: Utils.getCurrYear(),
   };
 }

@@ -15,6 +15,7 @@ import {
   setPaymentErrors,
   deletePaymentError,
   validatePayment,
+  savePayment,
   getApartment,
   getRoom,
   getOrder,
@@ -64,6 +65,21 @@ const paymentReducer = createReducer({
     setErrors: setPaymentErrors,
     deleteError: deletePaymentError,
     validate: validatePayment,
+  }),
+  [savePayment.request]: (state) => ({
+    ...state,
+    isSaving: true,
+  }),
+  [savePayment.ok]: (state) => ({
+    ...state,
+    isSaving: false,
+    isValidated: true,
+    errors: noErrors,
+  }),
+  [savePayment.error]: (state, payload) => ({
+    ...state,
+    isSaving: false,
+    errors: payload.errors,
   }),
 }, { errors: noErrors });
 
