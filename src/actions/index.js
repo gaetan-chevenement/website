@@ -142,6 +142,57 @@ export const listPictures =
       .then(result => Object.assign(result, { roomId }))
   ));
 
+export const savePayment =
+  createActionAsync(
+    'save Payment and associated Order in the backoffice',
+    (payment) => {
+      const {
+        cardNumber,
+        cvv,
+        expiryMonth,
+        expiryYear,
+        holderName,
+        orderId,
+      } = payment;
+
+      return fetchJson(
+        '/actions/public/create-payment',
+        {
+          method: 'post',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            cardNumber,
+            cvv,
+            expiryMonth,
+            expiryYear,
+            holderName,
+            orderId,
+          }),
+        },
+      );
+    },
+    { error: { payloadReducer: (payload) => {
+      if ( /Balance/.test(payload.error) ) {
+        return { errors: { payment: { hasWrongBalance: true } } };
+      }
+      if ( /Order/.test(payload.error) ) {
+        return { errors: { payment: { hasNoOrder: true  } } };
+      }
+      if ( /Card Type/.test(payload.error) ) {
+        return { errors: { cardNumber: 'Invalid card type (only Visa and Mastercard are allowed)' } };
+      }
+      if ( /Invalid card/.test(payload.error) ) {
+        return { errors: { cardNumber: 'Invalid card number' } };
+      }
+      if ( /CVV2/i.test(payload.error) ) {
+        return { errors: { cvv: 'Invalid cvv' } };
+      }
+      return { errors: { payment: { unexpected: payload.error } } };
+    } } },
+  );
+
 function fetchJson(url, options) {
   return fetch(`${API_BASE_URL}${url}`, options)
     .then((response) => {
@@ -191,7 +242,7 @@ function createFormAction(formName, schema) {
     [`delete${formName}Error`]: createAction(`Delete a specific ${formName} error`),
     [`validate${formName}`]: createActionAsync(
       `Validate ${formName}`,
-      (booking) => schema.validate(booking, { abortEarly: false }),
+      (content) => schema.validate(content, { abortEarly: false }),
       { error: { payloadReducer: ({ error }) => (
         error.inner.reduce((errors, error) => {
           errors[error.path] = error.message;

@@ -108,7 +108,7 @@ const Utils = {
     }),
   }),
 
-  cardSchema: yup.object().shape({
+  paymentSchema: yup.object().shape({
     holderName: yup.string().required().trim(),
     cardNumber:
       yup.string().transform(pureUtils.transformCardNumber).required().matches(/^(\d{4} ){4}$/),
