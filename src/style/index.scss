@@ -12,6 +12,10 @@
   --headings-font-family: var(--font-sans-serif);
 }
 
+[class*="brandico-"]:before {
+  font-family: 'brandico', sans-serif;
+}
+
 html, body, #app {
 	height: 100%;
 	background: #FAFAFA;
@@ -49,7 +53,9 @@ section {
   background-color: grey;
 }
 
-a,
+a {
+  color: inherit;
+}
 a:hover {
   color: inherit;
   text-decoration: underline;

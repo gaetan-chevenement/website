@@ -1,7 +1,25 @@
 .footer {
+  padding: 1px 0 70px;
   background-color: #1c2b4a;
+  color: white;
+}
+
+.footer nav {
+  padding: 20px 0 40px;
+  border-top: 1px solid white;
+}
+
+.footer ul {
+  padding: 0;
+  list-style: none;
 }
 
 .footer a {
-  display: block;
+  line-height: 1.7rem;
+}
+
+.social [class^="brandico-"] {
+  text-decoration: nonde;
+  font-size: 2rem;
+  padding-right: 20px;
 }
