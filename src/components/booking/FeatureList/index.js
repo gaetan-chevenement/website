@@ -12,7 +12,7 @@ import {
   featureCell,
   featureLabel,
   featureDetails,
-}                        from './style';
+}                        from './style.css';
 
 const features = splitOnTitles(featuresEn);
 const TooltipButton = Tooltip(Button);

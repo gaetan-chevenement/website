@@ -1,10 +1,12 @@
-import { createAction }        from 'redux-act';
-import { createActionAsync }   from 'redux-act-async';
-import D                       from 'date-fns';
-import Utils                   from '~/utils';
+import { createAction }         from 'redux-act';
+import { createActionAsync }    from 'redux-act-async';
+import D                        from 'date-fns';
+import queryString              from 'query-string';
+import Utils                    from '~/utils';
 import {
   API_BASE_URL,
-}                              from '~/const';
+  ROOM_SEGMENTS,
+}                               from '~/const';
 
 export const updateRoute = createAction('Update route object');
 
@@ -77,6 +79,10 @@ export const listOrders =
           ...order.attributes,
           OrderItems: mapOrderItems(data, order.id),
         }))
+        .reduce((orders, order) => {
+          orders[order.id] = order;
+          return orders;
+        }, {})
     ) } }
   );
 export const saveBooking =
@@ -113,6 +119,28 @@ export const saveBooking =
       return { errors: { unexpected: payload.error } };
     } } },
   );
+
+export const listRooms =
+  createActionAsync('List Rooms', ({ city }) => {
+    if ( city === undefined ) {
+      return Promise.reject('Can only list Rooms by city for now');
+    }
+
+    const params = {
+      segment: ROOM_SEGMENTS[city.toLowerCase()],
+      'page[number]': 1,
+      'page[size]': 10,
+    };
+    const qs = queryString.stringify(params, { encode: false });
+
+    return fetchJson(`${API_BASE_URL}/forest/Room?${qs}`);
+  });
+
+export const listPictures =
+  createActionAsync('List pictures', ({ picturesUrl, roomId }) => (
+    fetchJson(`${API_BASE_URL}${picturesUrl}`)
+      .then(result => Object.assign(result, { roomId }))
+  ));
 
 function fetchJson(url, options) {
   return fetch(`${API_BASE_URL}${url}`, options)

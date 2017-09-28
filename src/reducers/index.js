@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { createReducer }   from 'redux-act';
-import R                   from 'ramda';
 import memoize             from 'memoize-immutable';
 import NamedTupleMap       from 'namedtuplemap';
 
@@ -17,9 +16,11 @@ import {
   validatePayment,
   getApartment,
   getRoom,
+  listRooms,
   getOrder,
   listOrders,
   getRenting,
+  listPictures,
 }                           from '~/actions';
 
 const noErrors = {};
@@ -77,6 +78,10 @@ const roomsReducer = createReducer({
     ...state,
     [room.id]: room,
   }),
+  [listRooms.ok]: (state, { rooms }) => ({
+    ...state,
+    ...rooms,
+  }),
 }, {});
 
 const apartmentsReducer = createReducer({
@@ -94,12 +99,16 @@ const rentingsReducer = createReducer({
 const ordersReducer = createReducer({
   ...createGetReducer(getOrder),
 
-  [listOrders.ok]: (state, payload) => ({
+  [listOrders.ok]: (state, orders) => ({
     ...state,
-    ...payload.reduce((orders, order) => {
-      orders[order.id] = order;
-      return orders;
-    }, {}),
+    ...orders,
+  }),
+}, {});
+
+const picturesReducer = createReducer({
+  [listPictures.ok]: (state, pictures) => ({
+    ...state,
+    ...pictures,
   }),
 }, {});
 
@@ -124,6 +133,7 @@ const reducers = {
   apartments: apartmentsReducer,
   rentings: rentingsReducer,
   orders: ordersReducer,
+  pictures: picturesReducer,
 };
 
 const memoizedIdentity = memoize((state) => ( state ), { cache: new NamedTupleMap() });
@@ -170,7 +180,7 @@ export function createFormReducer({ update, setErrors, deleteError, validate }) 
     }),
     [deleteError]: (state, payload) => ({
       ...state,
-      errors: R.dissoc(payload, state.errors),
+      errors: dissoc(payload, state.errors),
     }),
     [validate.request]: (state) => ({
       ...state,
@@ -188,4 +198,13 @@ export function createFormReducer({ update, setErrors, deleteError, validate }) 
       errors: payload,
     }),
   };
+}
+
+// delete a property from an object (equivalent to Ramda.dissoc)
+function dissoc(propName, object) {
+  const clone = { ...object };
+
+  delete clone[propName];
+
+  return clone;
 }

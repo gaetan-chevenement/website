@@ -1,0 +1,73 @@
+.testimonies {
+  background: rgb(225, 225, 225);
+  margin-bottom: 0;
+}
+
+.testimony {
+  margin-bottom: 70px;
+  width: 85%;
+  clear: both;
+
+  @media screen and (max-width:990px) {
+    width: 100%;
+  }
+}
+
+.testimony:nth-child(even) {
+  float: right;
+}
+
+.testimony:nth-child(even) img {
+  float: right;
+
+  @media screen and (max-width:990px) {
+    float:none;
+  }
+}
+
+.testimony:nth-child(even) .notes {
+  float: right;
+  margin-left: 20px;
+  @media screen and (max-width:990px) {
+    float:none;
+    margin-left:0;
+  }
+}
+
+.testimony:nth-child(even) h3 {
+  text-align: right;
+  @media screen and (max-width:990px) {
+    text-align: center;
+  }
+}
+
+.testimony:nth-child(even) .authors {
+  text-align: right;
+}
+
+.testimony img {
+  float: left;
+  width: 160px;
+  border-radius: 50%;
+  margin: 0 20px;
+  @media screen and (max-width:990px) {
+    float:none;
+    margin: 0;
+  }
+}
+
+.testimony h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.testimony h3 i {
+  display: inline-block;
+  width: 1em;
+  color: #fac917;
+}
+
+.authors {
+  font-family: 'Lato', sans-serif;
+  font-weight: 900;
+}

@@ -4,6 +4,7 @@
 @import url('shoelace-css/source/css/tables.css');
 @import url('shoelace-css/source/css/utilities.css');
 @import url('./grillade.css');
+@import url('../components/Carousel/style.scss');
 
 :root {
   --header-height: 80px;
@@ -21,8 +22,13 @@ body {
   overflow-y: scroll;
 }
 
+header + * {
+  margin-top: var(--header-height);
+  margin-bottom: 40px;
+}
+
 .content {
-	padding: calc(var(--header-height) + 20px) 10px 40px;
+	padding: 0 10px;
 	min-height: 100%;
 	width: 100%;
 	max-width: 1024px;
@@ -32,6 +38,19 @@ body {
 h1 {
   margin-bottom: 3rem;
 }
+h2 {
+  margin: 3rem 0;
+}
 section {
   margin-bottom: 4rem;
+}
+
+.carousel {
+  background-color: grey;
+}
+
+a,
+a:hover {
+  color: inherit;
+  text-decoration: underline;
 }

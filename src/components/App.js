@@ -19,6 +19,7 @@ import {
   updatePayment,
 }                       from '~/actions';
 import Header           from './Header';
+import Footer           from './Footer';
 // import Home from 'async!./home';
 // import Profile from 'async!./profile';
 
@@ -45,6 +46,7 @@ const store = configureStore({
   orders: {},
   rooms: {},
   apartments: {},
+  pictures: {},
 });
 
 export default class App extends Component {
@@ -88,6 +90,7 @@ export default class App extends Component {
             <Renting path="/:lang/renting/:rentingId" />
             <Payment path="/:lang/payment/:orderId" />
           </Router>
+          <Footer />
         </div>
       </Provider>
     );

@@ -1,5 +1,5 @@
 import 'babel-polyfill';
-import './style';
+import './style/index.scss';
 import App from './components/App';
 
 export default App;

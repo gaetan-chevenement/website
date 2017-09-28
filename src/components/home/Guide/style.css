@@ -1,0 +1,27 @@
+.guide {
+  margin: 70px 10% 70px;
+  @media screen and (max-width: 990px) {
+    margin: 0 0 70px 0;
+    text-align: center;
+  }
+}
+
+.guide p {
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+.guide img {
+  width: 45%;
+  float:left;
+  margin-right: 5%;
+  @media screen and (max-width: 990px) {
+    display: none;
+  }
+}
+
+.button {
+  margin-top: 40px;
+  background-color: rgb(56, 178, 166);
+  color: white !important;
+  font-size: 12px;
+}

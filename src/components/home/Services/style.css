@@ -1,0 +1,27 @@
+.service {
+  text-align: center;
+  min-width: 150px;
+  margin-bottom: 30px;
+
+  & img {
+    width: 100px;
+  }
+  & h3 {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 5px;
+  }
+  & h4 {
+    margin: 0;
+    font-weight: normal;
+    font-size: 16px;
+    text-align: center;
+  }
+}
+
+.button {
+  margin-top: 30px;
+  background-color: rgb(56, 178, 166);
+  color: white !important;
+}

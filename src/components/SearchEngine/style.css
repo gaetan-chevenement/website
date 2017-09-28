@@ -1,0 +1,16 @@
+.searchEngine {
+  background: rgba(0, 0, 0, 0.3);
+  text-align: center;
+  padding: 20px 50px;
+  color: white;
+}
+
+.searchEngine h2 {
+  color: white;
+  font-weight: bolder;
+}
+
+.subtitle {
+  font-family: 'Lato', sans-serif;
+}
+

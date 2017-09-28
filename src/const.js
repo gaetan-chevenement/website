@@ -45,5 +45,11 @@ module.exports = {
     }
   })(process.env.PREACT_APP_ENV),
 
+  ROOM_SEGMENTS: {
+    lyon: 'Available%20Rooms%20Lyon',
+    paris: 'Available%20Rooms%20Paris',
+    montpellier: 'Available%20Rooms%20Montpellier',
+  },
+
   IDENTITY_FORM_URL: 'https://forms.chez-nestor.com/50392735671964',
 };
