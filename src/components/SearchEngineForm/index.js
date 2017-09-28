@@ -67,7 +67,7 @@ export default class SearchEngineForm extends Component {
         ].join(' ')}
       >
         <div>
-          <img src={ContentSearchEngine.icons.place} />
+          <i class="material-icons">location_city</i>
           <Dropdown
             onChange={this._handleCityChange}
             label="Ville"
@@ -79,7 +79,7 @@ export default class SearchEngineForm extends Component {
           />
         </div>
         <div>
-          <img src={ContentSearchEngine.icons.date} />
+          <i class="material-icons">date_range</i>
           <DatePicker
             locale="fr"
             label="Date d'arrivée"
@@ -89,7 +89,7 @@ export default class SearchEngineForm extends Component {
           />
         </div>
         <div>
-          <img src={ContentSearchEngine.icons.amount} />
+          <i class="material-icons">attach_money</i>
           <Input
             type="text"
             label="Tous les loyers"

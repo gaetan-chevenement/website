@@ -78,8 +78,6 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <div id="app">
-          <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans|Material+Icons" />
-          <link rel="stylesheet" href="//weloveiconfonts.com/api/?family=brandico" />
           <Header />
           <Router onChange={this.handleRoute}>
             <Home path="/:lang/" />
@@ -92,6 +90,8 @@ export default class App extends Component {
             <Payment path="/:lang/payment/:orderId" />
           </Router>
           <Footer />
+          <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans|Material+Icons" />
+          <link rel="stylesheet" href="//weloveiconfonts.com/api/?family=brandico" />
         </div>
       </Provider>
     );

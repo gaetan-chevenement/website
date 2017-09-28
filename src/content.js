@@ -63,11 +63,6 @@ export const ContentSearchEngine = {
       "Trouvez aujourd'hui votre colocation meublée, équipée, tout inclus, en plein centre. ",
     'button-search': 'Rechercher',
   },
-  icons: {
-    place: require('./assets/search/Picto search 1.png'),
-    date: require('./assets/search/Picto search 2.png'),
-    amount: require('./assets/search/Picto search 3.png'),
-  },
 };
 
 export const ContentTowns = {

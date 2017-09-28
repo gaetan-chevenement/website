@@ -52,6 +52,15 @@
   top: 4px;
   left: 10px;
 }
+.form > div > i {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  height: 30px;
+  width: 30px;
+  font-size: 2rem;
+  color: #999;
+}
 
 .form div[data-react-toolbox=input]{
   padding: 0 10px;
