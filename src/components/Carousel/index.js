@@ -2,15 +2,7 @@ import React, { PureComponent }   from 'react';
 import { h }                      from 'preact';
 import autobind                   from 'autobind-decorator';
 
-function cloneWithClass(elem, name) {
-  const clone = React.cloneElement(elem);
-
-  clone.props.className += ` carousel-${name}`;
-
-  return clone;
-}
-
-export default class Carousel extends PureComponent {
+class Carousel extends PureComponent {
   @autobind
   step(diff) {
     const { length } = this.props.children;
@@ -66,4 +58,27 @@ export default class Carousel extends PureComponent {
       </div>
     );
   }
+}
+
+export default Carousel;
+
+function cloneWithClass(elem, name) {
+  const clone = React.cloneElement(elem);
+  const lazySrc = clone.props['lazy-src'];
+
+  clone.props.className += ` carousel-${name}`;
+
+  if ( lazySrc ) {
+    if ( clone.nodeName === 'img' ) {
+      clone.props.src = lazySrc;
+    }
+    else {
+      clone.props.style = {
+        ...clone.props.style,
+        backgroundImage: `url(${lazySrc})`,
+      };
+    }
+  }
+
+  return clone;
 }

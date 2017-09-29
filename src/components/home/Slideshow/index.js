@@ -11,9 +11,9 @@ import {
 export default function Slideshow({ children }) {
   return (
     <div>
-      <Carousel autoplay autoplayInterval={7000} fade className={carousel}>
-        {SlideshowOptions.images.map(i =>
-          <div class={image} style={{ backgroundImage: `url(${i})` }} />,
+      <Carousel autoplay autoplayInterval={2000} slide className={carousel}>
+        {SlideshowOptions.images.map(imgUrl =>
+          <div class={image} lazy-src={imgUrl} />,
         )}
       </Carousel>
       <div class={searchEngineContainer}>
