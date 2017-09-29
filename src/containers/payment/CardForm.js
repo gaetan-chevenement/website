@@ -27,8 +27,8 @@ class CardForm extends PureComponent {
       currYear,
       hasErrors,
     } = this.props;
-
-    if (orderBalance === 0) {
+console.log(errors.payment);
+    if (!payment.isValidated && orderBalance === 0) {
       return (
         <section>
           <div class="handleError">
@@ -63,6 +63,12 @@ class CardForm extends PureComponent {
               <h4>
               We cannot retrieve this order<br />
               Please contact the Chez Nestor Support Team.
+              </h4>
+            ) : '' }
+
+            { errors.payment.isBooked ? (
+              <h4>
+                { errors.payment.isBooked }
               </h4>
             ) : '' }
 

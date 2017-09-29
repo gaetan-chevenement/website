@@ -116,7 +116,7 @@ export const saveBooking =
         return { errors: { hasPriceChanged: true } };
       }
 
-      return { errors: { unexpected: payload.error } };
+      return { errors: { unexpected: payload.error.message } };
     } } },
   );
 
@@ -189,7 +189,10 @@ export const savePayment =
       if ( /CVV2/i.test(payload.error) ) {
         return { errors: { cvv: 'Invalid cvv' } };
       }
-      return { errors: { payment: { unexpected: payload.error } } };
+      if ( /booked/i.test(payload.error) ) {
+        return { errors: { payment: { isBooked: 'This room has been booked by someone else.' } } };
+      }
+      return { errors: { payment: { unexpected: payload.error.message } } };
     } } },
   );
 
