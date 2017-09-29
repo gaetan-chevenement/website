@@ -11,7 +11,7 @@ import {
 export default function Slideshow({ children }) {
   return (
     <div>
-      <Carousel autoplay autoplayInterval={2000} slide className={carousel}>
+      <Carousel autoplay autoplayInterval={7000} slide className={carousel}>
         {SlideshowOptions.images.map(imgUrl =>
           <div class={image} lazy-src={imgUrl} />,
         )}
