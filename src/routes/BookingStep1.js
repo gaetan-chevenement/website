@@ -50,7 +50,7 @@ class BookingStep1 extends PureComponent {
       return (
         <IntlProvider definition={definition[lang]}>
           <h1 class="content">
-            <Text id='errors.room'>
+            <Text id="errors.room">
               Sorry, there was an error preparing your booking for this room.
             </Text>
           </h1>
@@ -76,7 +76,7 @@ class BookingStep1 extends PureComponent {
               label="Continue"
               icon="forward"
               href={`/${lang}/booking/${roomId}/2`}
-              disabled={!isEligible || hasErrors}
+              disabled={!isEligible}
             />
           </nav>
         </div>

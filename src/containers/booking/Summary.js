@@ -53,117 +53,113 @@ class Summary extends PureComponent {
         <div class="grid has-gutter-xl">
           <div class="two-thirds">
             <section>
-              <h4>Housing Pack</h4>
+              <h4><Text id="housingPack.title">Housing Pack</Text></h4>
               <p>
-                You have selected a {_.capitalize(pack)} housing-pack.
+                <Text id="housingPack.subtitle.first">You have selected a</Text> {lang === 'en-US' ? _.capitalize(pack) : pack === 'comfort' ? 'Confort' : pack === 'basic' ? 'Basique': pack === 'privilege' ? 'Privilège' : ''}<Text id="housingPack.subtitle.second"> housing-pack.</Text>
               </p>
               <p>{this.renderDetails([
-                <Text>Amount:</Text>,
+                <Text id="amount">Amount:</Text>,
                 <b>{PACK_PRICES[apartment.addressCity][pack] / 100}€</b>,
-                <Text>Due date:</Text>,
-                <span><b>Immediately</b>*</span>,
+                <Text id="dueDate.title">Due date:</Text>,
+                <span><b><Text id="dueDate.now">Immediately</Text></b>*</span>,
               ])}</p>
               <p>
                 <i>
-                  * Until your Housing Pack is paid, the bedroom remains
+                  <Text id="housingPack.description">* Until your Housing Pack is paid, the bedroom remains
                   available and can be booked by someone else. From July to
                   October, we recommend that you confirm your booking
                   quickly as we receive tens of accommodation requests every
-                  week.
+                  week.</Text>
                 </i>
               </p>
             </section>
             <section>
-              <h4>Check-in</h4>
+              <h4><Text id="checkIn.title">Check-in</Text></h4>
               <p>
-                Your checkin is scheduled on the
+                <Text id="checkIn.subtitle.first">Your checkin is scheduled on the</Text>
                 <b> {new Date(checkinDate).toLocaleDateString(lang)} </b>
-                at
-                <b> {D.format(checkinDate, 'HH:mm')} (Paris time) </b>
+                <Text id="checkIn.subtitle.second">at</Text>
+                <b> {D.format(checkinDate, 'HH:mm')} (<Text id="checkIn.subtitle.third">Paris time</Text>). </b>
                 {checkinPrice !== 0 ? (
-                  <span>An extra-fee is applied when checking-in outside of
+                  <span><Text id="checkIn.price">An extra-fee is applied when checking-in outside of
                     working hours. You can go back and select a different
-                    check-in time or upgrade to a different Housing Pack.
+                    check-in time or upgrade to a different Housing Pack.</Text>
                   </span>
                 ) : ''}
               </p>
               {pack !== 'basic' ? (
                 <p>
-                  The price of a check-in at any time is included in
-                  your housing pack.
+                  <Text id="checkIn.priceIncluded">The price of a check-in at any time is included in
+                  your housing pack.</Text>
                 </p>
               ) : (
                 checkinPrice === 0 ? (
                   <p>
-                    The price of a check-in during working hours is included
-                    in your housing pack.
+                    <Text id="checkIn.free">The price of a check-in during working hours is included
+                    in your housing pack.</Text>
                   </p>
                 ) : (
                   <p>{this.renderDetails([
-                    <Text>Amount:</Text>,
+                    <Text id="amount">Amount:</Text>,
                     <b>{checkinPrice / 100}€</b>,
-                    <Text>Due date:</Text>,
-                    <Text>Prior to the checkin</Text>,
+                    <Text id="dueDate.title">Due date:</Text>,
+                    <Text id="dueDate.checkIn">Prior to the checkin</Text>,
                   ])}</p>
                 )
               )}
             </section>
             <section>
-              <h4>Monthly Rent</h4>
+              <h4><Text id="rent.title">Monthly Rent</Text></h4>
               <p>
-                <Text id="description">This room is available</Text>
+                <Text id="rent.subtitle.first">This room is available</Text>
                 { D.compareAsc( bookingDate, new Date() ) === -1 ?
-                  ' immediatly ' :
-                  ` from the ${bookingDate.toLocaleDateString(lang)} `
+                  <Text id="rent.subtitle.second"> immediatly </Text> :
+                  <div><Text id="rent.subtitle.third"> from the </Text>{bookingDate.toLocaleDateString(lang)} </div>
                 }
-                <Text>and rent starts on the</Text>
+                <Text id="rent.subtitle.fourth">and rent starts on the</Text>
                 <b>{' '}{bookingDate.toLocaleDateString(lang)}</b>.
-                The first rents (including water, eletricity, gas, unlimited
-                wifi, housing insurance and maintenance) would be:
+                <Text id="rent.detail">The first rents (including water, eletricity, gas, unlimited
+                wifi, housing insurance and maintenance) would be:</Text>
               </p>
-              <p>{this.renderDetails([
-                <span>{firstMonths[0]}. <Text>rent</Text>:</span>,
-                <b>{proratedRent / 100}€</b>,
-                <span>{firstMonths[1]}. <Text>rent</Text>:</span>,
-                <b>{totalRent / 100}€</b>,
-                <span>{firstMonths[2]}. <Text>rent</Text>:</span>,
-                <b>{totalRent / 100}€</b>,
-                <Text>Due date:</Text>,
-                <Text>
-                  First rent is due prior to the checkin and subsequent rents
-                  are due on the first of the month.
-                </Text>,
-              ])}</p>
             </section>
+
+            <p>{this.renderDetails([
+              <span><Text id="rent.fr"></Text>{firstMonths[0]}.<Text id="rent.en">rent:</Text></span>,
+              <b>{proratedRent / 100}€</b>,
+              <span><Text id="rent.fr"></Text>{firstMonths[1]}.<Text id="rent.en"> rent:</Text></span>,
+              <b>{totalRent / 100}€</b>,
+              <span><Text id="rent.fr"></Text>{firstMonths[2]}.<Text id="rent.en"> rent:</Text></span>,
+              <b>{totalRent / 100}€</b>,
+              <Text id="dueDate.title">Due date:</Text>,
+              <Text id="dueDate.rent">First rent is due prior to the checkin and subsequent rents are due on the first of the month.</Text>,
+            ])}</p>
             <section>
-              <h4>Security deposit</h4>
+              <h4><Text id="deposit.title">Security deposit</Text></h4>
               <p>
-                <Text id="description">
-                 The security deposit is 100% reimbursed at the end of your
+                <Text id="deposit.subtitle">The security deposit is 100% reimbursed at the end of your
                  stay if there are no fees to be withheld (damages,
-                overconsumption, etc.).
-                </Text>
+                overconsumption, etc.).</Text>
               </p>
               <p>{this.renderDetails([
-                <Text>Amount:</Text>,
+                <Text id="amount">Amount:</Text>,
                 <b>{DEPOSIT_PRICES[apartment.addressCity] / 100}€</b>,
-                <Text>Due date:</Text>,
-                <Text>Prior to the checkin</Text>,
+                <Text id="dueDate.title">Due date:</Text>,
+                <Text id="dueDate.checkIn">Prior to the checkin</Text>,
               ])}</p>
             </section>
           </div>
 
           <div class="one-third">
             <section>
-              <h4><Text>Accommodation details</Text></h4>
+              <h4><Text id="acommodation.title">Accommodation details</Text></h4>
               <ul class={theme.unstyled}>
                 <li>{roomName.split('-')[1]}</li>
                 <li>{apartment.addressStreet}</li>
-                <li>{apartment.addressCity} {apartment.addressZipcode}</li>
+                <li>{_.capitalize(apartment.addressCity)} {apartment.addressZipcode}</li>
               </ul>
             </section>
             <section>
-              <h4><Text>Personal details</Text></h4>
+              <h4><Text id="personal.title">Personal details</Text></h4>
               <ul class={theme.unstyled}>
                 <li>{firstName} {lastName}</li>
                 <li>{email}</li>
@@ -177,6 +173,61 @@ class Summary extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
+  housingPack: {
+    title: 'Pack Logement',
+    subtitle: {
+      first: 'Vous avez choisi un pack logement ',
+      second: ' ',
+    },
+    description: `* Tant que votre pack logement n'est pas payé, la chambre reste
+                  disponible et peut être réservée par quelqu'un d'autre. De juillet à
+                  Octobre, nous vous recommandons de confirmer votre réservation
+                  rapidement car nous recevons des dizaines de demandes de logement chaque semaine.`,
+  },
+  checkIn: {
+    title: 'Checkin',
+    subtitle: {
+      first: 'Votre checkin est prévu le ',
+      second: 'à',
+      third: 'heure locale',
+    },
+    price: `Une taxe supplémentaire est appliquée lors d'un checkin en dehors des
+            heures de travail. Vous pouvez revenir en arrière et sélectionner une autre
+            heure d'arrivée ou choisir un pack logement supérieur.`,
+    priceIncluded: 'Le prix d\'un checkin à toute heure est inclus dans votre pack de logement.',
+    free: 'Le prix d\'un checkin pendant les heures de travail est inclus dans votre pack de logement.',
+  },
+  rent: {
+    title: 'Loyer mensuel',
+    subtitle: {
+      first: 'Cette chambre est disponible',
+      second: ' immédiatement ',
+      third: ' à partir du ',
+      fourth: 'et le loyer commence le ',
+    },
+    detail: 'Les premiers loyers (comprenant l\'eau, l\'électricité, le gaz, wifi illimitée, assurance habitation et maintenance) seraient:',
+    fr: 'Loyer ',
+    en: ' :',
+  },
+  deposit: {
+    title: 'Dépôt de garantie',
+    subtitle: `Le dépôt de garantie est remboursé à 100% à la fin de votre
+              séjour s'il n'y a pas de frais à retenir (dommages,
+              surconsommation, etc.).`,
+  },
+  acommodation: {
+    title: 'Détails du logement',
+  },
+  personal: {
+    tile: 'Détails personnels',
+  },
+  amount: 'Montant:',
+  dueDate: {
+    title: 'Échéance:',
+    now: 'Immédiatement',
+    checkIn: 'Avant le checkin',
+    rent: 'Le premier loyer est dû avant le checkin et les loyers suivants sont exigibles le premier du mois.',
+  },
 } };
 
 function mapStateToProps({ route: { lang }, booking, rooms, apartments }) {

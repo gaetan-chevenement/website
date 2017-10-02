@@ -67,7 +67,7 @@ class CardForm extends PureComponent {
               { errors.payment.hasNoOrder ? (
                 <h4>
                 <Text id='errors.noOrder.first'>We cannot retrieve this order.</Text><br />
-                <Text id='errors.noOrder.last'>Please contact the Chez Nestor Support Team.</Text>
+                <Text id='errors.noOrder.second'>Please contact the Chez Nestor Support Team.</Text>
                 </h4>
               ) : '' }
 
@@ -141,7 +141,7 @@ const definition = { 'fr-FR': {
     paid: 'Cette facture a déjà été payée',
     noOrder: {
       first: 'Nous ne parvenons pas à retrouver cette facture.',
-      last: 'Veuillez contacter l\'équipe Chez Nestor.',
+      second: 'Veuillez contacter l\'équipe Chez Nestor.',
     },
     isBooked: 'Cette chambre a été réservée par un autre client.',
     unexpected: 'Une erreur est survenue.',
@@ -149,7 +149,7 @@ const definition = { 'fr-FR': {
   payment: {
     ok: {
       first: 'votre paiement a été validé.',
-      last: 'l\'équipe Chez Nestor vous souhaite une excellente journée',
+      second: 'l\'équipe Chez Nestor vous souhaite une excellente journée',
     },
   },
   card: {
