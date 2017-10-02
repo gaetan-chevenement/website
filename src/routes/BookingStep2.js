@@ -58,13 +58,13 @@ class BookingStep2 extends PureComponent {
           <nav class="text-center">
             <section style="margin-top: 2rem; text-align: center;">
               <Button raised
-                label="Back"
+                label=/*{<Text id="back">*/"Back"//</Text>}
                 icon="arrow_backward"
                 href={`/${lang}/booking/${roomId}/1`}
               />
               {' '}
               <Button raised primary
-                label="Continue"
+                label=/*{<Text id="forward">*/"Continue"//</Text> }
                 icon="forward"
                 href={`/${lang}/booking/${roomId}/3`}
               />
@@ -77,6 +77,9 @@ class BookingStep2 extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
+  title: 'Récapitulatif de la réservation pour la chambre',
+  back: 'Retour',
+  forward: 'Continuer',
 } };
 
 function mapStateToProps({ route: { lang }, booking, rooms }) {

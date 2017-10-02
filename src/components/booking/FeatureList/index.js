@@ -1,6 +1,8 @@
 import { h }             from 'preact';
+import { IntlProvider, Text }       from 'preact-i18n';
 import memoize           from 'memoize-immutable';
 import featuresEn        from './features-en';
+import featuresFr        from './features-fr';
 import { Button }        from 'react-toolbox/lib/button';
 import Tooltip           from 'react-toolbox/lib/tooltip';
 import {
@@ -14,19 +16,19 @@ import {
   featureDetails,
 }                        from './style';
 
-const features = splitOnTitles(featuresEn);
 const TooltipButton = Tooltip(Button);
 
 // Memoization is simpler at this level instead of FeatureList level as element
 // receive arguments more likely to change.
-const renderSublist = memoize(([header, features]) => (
+const renderSublist = memoize(([header, features], lang) => (
+  <IntlProvider definition={definition[lang]}>
   <table class={sublist}>
     <thead>
       <tr>
         <th>{header}</th>
-        <th class={valueCellHeader}>Basic</th>
-        <th class={valueCellHeader}>Comfort</th>
-        <th class={valueCellHeader}>Privilege</th>
+        <th class={valueCellHeader}><Text id="basic">Basic</Text></th>
+        <th class={valueCellHeader}><Text id="comfort">Comfort</Text></th>
+        <th class={valueCellHeader}><Text id="privilege">Privilege</Text></th>
       </tr>
     </thead>
     <tbody>
@@ -55,15 +57,26 @@ const renderSublist = memoize(([header, features]) => (
       ))}
     </tbody>
   </table>
+  </IntlProvider>
 ));
 
-export default function FeatureList() {
+export default function FeatureList({lang}) {
+   const features =
+   lang.split('-')[0] === 'fr' ? splitOnTitles(featuresFr) : splitOnTitles(featuresEn);
+
   return (
     <div>
-      {features.map(renderSublist)}
+      {features.map((feature) => { return renderSublist(feature, lang) } ) }
     </div>
   );
 }
+
+const definition = { 'fr-FR': {
+  basic: 'Basique',
+  comfort: 'Confort',
+  privilege: 'Privilège',
+} };
+
 
 function splitOnTitles(features) {
   return features

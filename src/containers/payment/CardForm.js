@@ -27,59 +27,65 @@ class CardForm extends PureComponent {
       currYear,
       hasErrors,
     } = this.props;
-console.log(errors.payment);
     if (!payment.isValidated && orderBalance === 0) {
       return (
-        <section>
-          <div class="handleError">
-              <h4>
-              This order has already been paid.
-              </h4>
-          </div>
-        </section>
+        <IntlProvider definition={definition[lang]}>
+          <section>
+            <div class="handleError">
+                <h4>
+                <Text id='errors.paid'>This order has already been paid.</Text>
+                </h4>
+            </div>
+          </section>
+        </IntlProvider>
       )
     }
     if ( payment.isValidated ) {
       return (
-        <div class="text-center">
-          <h3>
-            Your payment has been approved.<br />
-            The Chez Nestor Team would like to wish you a great day!
-          </h3>
-        </div>
+        <IntlProvider definition={definition[lang]}>
+          <div class="text-center">
+            <h3>
+            <Text id='payment.ok.first'>  Your payment has been approved.</Text>
+            <br />
+            <Text id='payment.ok.second'>The Chez Nestor Team would like to wish you a great day!</Text>
+            </h3>
+            </div>
+        </IntlProvider>
       )
     }
     if ( errors.payment ) {
       return (
-        <section>
-          <div class="handleError">
-            { errors.payment.hasWrongBalance ? (
-              <h4>
-              This order has already been paid.
-              </h4>
-            ) : '' }
+        <IntlProvider definition={definition[lang]}>
+          <section>
+            <div class="handleError">
+              { errors.payment.hasWrongBalance ? (
+                <h4>
+                <Text id='errors.paid'>This order has already been paid.</Text>
+                </h4>
+              ) : '' }
 
-            { errors.payment.hasNoOrder ? (
-              <h4>
-              We cannot retrieve this order<br />
-              Please contact the Chez Nestor Support Team.
-              </h4>
-            ) : '' }
+              { errors.payment.hasNoOrder ? (
+                <h4>
+                <Text id='errors.noOrder.first'>We cannot retrieve this order.</Text><br />
+                <Text id='errors.noOrder.last'>Please contact the Chez Nestor Support Team.</Text>
+                </h4>
+              ) : '' }
 
-            { errors.payment.isBooked ? (
-              <h4>
-                { errors.payment.isBooked }
-              </h4>
-            ) : '' }
+              { errors.payment.isBooked ? (
+                <h4>
+                <Text id='errors.isBooked'>This room has been booked by someone else.</Text>
+                </h4>
+              ) : '' }
 
-            { errors.payment.unexpected ? (
-              <h4>
-              An unexpected error has occured.<br />
-              { errors.payment.unexpected }
-              </h4>
-            ) : '' }
-          </div>
-        </section>
+              { errors.payment.unexpected ? (
+                <h4>
+                <Text id='errors.unexpectd'>An unexpected error has occured.</Text><br />
+                { errors.payment.unexpected }
+                </h4>
+              ) : '' }
+            </div>
+          </section>
+        </IntlProvider>
       )
     }
     return (
@@ -87,14 +93,14 @@ console.log(errors.payment);
         <div>
           <section>
             <Input type="number"
-              label="Card Number"
+              label={<Text id="card.number">Card Number</Text> }
               name="cardNumber"
               value={payment.cardNumber}
               onChange={this.handleChange}
               error={errors.cardNumber}
             />
             <Input type="text"
-              label="Holder Name"
+              label={<Text id="card.holder">Holder Name</Text> }
               name="holderName"
               value={payment.holderName}
               onChange={this.handleChange}
@@ -102,21 +108,21 @@ console.log(errors.payment);
             />
             <p class="grid-3-large-1 has-gutter">
               <Input type="number" min="1" max="12" step="1"
-                label="Expiry Month"
+                label={<Text id="card.expiry.month">Expiry Month</Text> }
                 name="expiryMonth"
                 value={payment.expiryMonth}
                 onChange={this.handleChange}
                 error={errors.expiryMonth}
               />
               <Input type="number" min={currYear} max={currYear + 10} step="1"
-                label="Expiry Year"
+                label={<Text id="card.expiry.year">Expiry Year</Text> }
                 name="expiryYear"
                 value={payment.expiryYear}
                 onChange={this.handleChange}
                 error={errors.expiryYear}
               />
               <Input type="number" min="0" max="999" step="1"
-                label="CVV"
+                label={<Text id="card.cvv">CVV</Text> }
                 name="cvv"
                 value={payment.cvv}
                 onChange={this.handleChange}
@@ -131,7 +137,30 @@ console.log(errors.payment);
 }
 
 const definition = { 'fr-FR': {
-
+  errors: {
+    paid: 'Cette facture a déjà été payée',
+    noOrder: {
+      first: 'Nous ne parvenons pas à retrouver cette facture.',
+      last: 'Veuillez contacter l\'équipe Chez Nestor.',
+    },
+    isBooked: 'Cette chambre a été réservée par un autre client.',
+    unexpected: 'Une erreur est survenue.',
+  },
+  payment: {
+    ok: {
+      first: 'votre paiement a été validé.',
+      last: 'l\'équipe Chez Nestor vous souhaite une excellente journée',
+    },
+  },
+  card: {
+    number: 'Numéro de carte bleue',
+    holder: 'titulaire de la carte bleue',
+    expiry: {
+      month: 'mois d\'expiration',
+      year: 'année d\'expiration',
+    },
+    cvv: 'cryptogramme',
+  },
 } };
 
 function mapStateToProps({ route: { lang }, orders, payment }) {

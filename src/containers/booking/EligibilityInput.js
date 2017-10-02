@@ -2,7 +2,7 @@ import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { batch }              from 'redux-act';
-import { IntlProvider }       from 'preact-i18n';
+import { IntlProvider, Text }       from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import { Button }             from 'react-toolbox/lib/button';
 import { Checkbox }           from 'react-toolbox/lib/checkbox';
@@ -30,14 +30,14 @@ class EligibilityInputs extends PureComponent {
       <IntlProvider definition={definition[lang]}>
         <div>
           <p>
-            Before booking, you need to ensure you are eligibile for an
-            accommodation with Chez Nestor:
+            <Text id="ensure">Before booking, you need to ensure you are eligibile for an
+            accommodation with Chez Nestor:</Text>
             <Button
               icon="launch"
               href="https://forms.chez-nestor.com/72003771604953"
               target="_blank"
             >
-              Test your eligibility
+              <Text id="eligibility">Test your eligibility</Text>
             </Button>
           </p>
           <p>
@@ -47,15 +47,15 @@ class EligibilityInputs extends PureComponent {
               onChange={this.handleChange}
               field={theme.eligible}
             >
-              &nbsp;I confirm that I am eligible,
+              &nbsp;<Text id="confirm">I confirm that I am eligible,
               that I am able to provide all the required documents,
-              and that I have read and accepted the{' '}
+              and that I have read and accepted the</Text>{' '}
               <a
                 href="https://drive.google.com/file/d/0B8dLiyBmm3wJa1IwbWsxbk85LWs/view"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                terms and conditions.
+                <Text id="terms">terms and conditions.</Text>
               </a>
             </Checkbox>
           </p>
@@ -66,6 +66,10 @@ class EligibilityInputs extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
+  ensure: 'Avant de réserver, vous devez vous assurer que vous êtes admissible à un logement Chez Nestor:',
+  eligibility: 'Testez votre éligibilité',
+  confirm: 'Je confirme que je suis admissible, que je peux fournir tous les documents requis, et que j\'ai lu et accepté les',
+  terms: 'termes et conditions.',
 } };
 
 function mapStateToProps({ route: { lang }, booking: { isEligible } }) {

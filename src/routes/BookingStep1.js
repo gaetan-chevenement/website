@@ -50,7 +50,7 @@ class BookingStep1 extends PureComponent {
       return (
         <IntlProvider definition={definition[lang]}>
           <h1 class="content">
-            <Text>
+            <Text id='errors.room'>
               Sorry, there was an error preparing your booking for this room.
             </Text>
           </h1>
@@ -68,7 +68,7 @@ class BookingStep1 extends PureComponent {
 
           { isRoomAvailable ?
             <BookingForm lang={lang} /> :
-            <p>Sorry, this room isn't available for booking.</p>
+            <p><Text id="errors.unavailable">Sorry, this room isnt available for booking.</Text></p>
           }
 
           <nav class="text-center">
@@ -94,6 +94,11 @@ const definition = { 'fr-FR': {
     comfort: 'Confort',
     privilege: 'Privilège',
   },
+  errors: {
+    unavailable: 'Désolé, cette chambre n\'est plus dispobible.',
+    room: 'Désolé, une erreur est survenue lors de la préparation de votre réservation.',
+  },
+  button: 'Continuer',
 } };
 
 function mapStateToProps({ route: { lang }, rooms, booking }) {

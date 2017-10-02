@@ -48,8 +48,8 @@ class BookingStep3 extends PureComponent {
             { errors.isUnavailable ? (
               <section>
                 <p>
-                  This room is no longer available.<br />
-                  Please choose another room.
+                  <Text id="errors.unavailable.first">This room is no longer available.</Text><br />
+                  <Text id="errors.unavailable.last">Please choose another room.</Text>
                 </p>
               </section>
             ) : '' }
@@ -58,15 +58,15 @@ class BookingStep3 extends PureComponent {
               <div>
                 <section>
                   <p>
-                    The price of the room has changed.<br />
-                    Please check the updated price before continuing.
+                    <Text id="price.first">The price of the room has changed.</Text><br />
+                    <Text id="price.last">Please check the updated price before continuing.</Text>
                   </p>
                 </section>
 
                 <nav class="text-center">
                   <section style="margin-top: 2rem; text-align: center;">
                     <Button raised
-                      label="Back to Booking Summary"
+                      label={<Text id="back">Back to Booking Summary</Text>}
                       icon="arrow_backward"
                       href={`/${lang}/booking/${room.id}/2`}
                     />
@@ -78,7 +78,7 @@ class BookingStep3 extends PureComponent {
             { errors.unexpected ? (
               <section>
                 <p>
-                  An unexpected error occured.<br />
+                  <Text id="errors.unexpected">An unexpected error occured.</Text><br />
                   { errors.unexpected }
                 </p>
               </section>
@@ -92,7 +92,7 @@ class BookingStep3 extends PureComponent {
       <IntlProvider definition={definition[lang]}>
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
-          <p><Text>Your invoice is being generated</Text></p>
+          <p><Text id="invoice">Your invoice is being generated</Text></p>
         </div>
       </IntlProvider>
     );
@@ -100,6 +100,21 @@ class BookingStep3 extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
+  title: 'La réservation n\'a pas fonctionner pour la chambre',
+  price: {
+    first: 'Le prix de la chambre a changé,',
+    last: 'Merci de verifier le nouveau de la chambre avant de continuer.',
+  },
+  back: 'Retour au Récapitulatif de la réservation',
+  errors: {
+    unavailable: {
+      first: 'Cette chambre n\'est plus disponible.',
+      last: 'Veuilez en selectionner une autre.',
+    },
+    unexpected: 'Une erreur est survenue.',
+  },
+  invoice: 'Votre facture a été générée',
+
 } };
 
 function mapStateToProps({ route: { lang }, rooms, booking }) {

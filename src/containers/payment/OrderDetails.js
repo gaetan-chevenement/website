@@ -1,7 +1,7 @@
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { IntlProvider }       from 'preact-i18n';
+import { IntlProvider, Text }       from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import * as actions           from '~/actions';
 
@@ -30,9 +30,9 @@ class OrderDetails extends PureComponent {
           <table>
             <thead>
               <tr>
-                <th>Item</th>
-                <th class="text-right">Unit Price</th>
-                <th>Quantity</th>
+                <th><Text id='item'>Item</Text></th>
+                <th class="text-right"><Text id='unitPrice'>Unit Price</Text></th>
+                <th><Text id='quantity'>Quantity</Text></th>
                 <th class="text-right">Total</th>
               </tr>
             </thead>
@@ -46,13 +46,13 @@ class OrderDetails extends PureComponent {
                     {order.conditions}
                   </p>
                   <p>
-                    <em>Order ref. {order.id}</em>
+                    <em><Text id='ref'>Order ref.</Text> {order.id}</em>
                   </p>
                 </th>
                 <th>
                   <p>Total</p>
-                  <p>Paid</p>
-                  <p>Balance</p>
+                  <p><Text id='paid'>Paid</Text></p>
+                  <p><Text id='balance'>Balance</Text></p>
                 </th>
                 <th class="text-right">
                   <p>{order.amount / 100}€</p>
@@ -69,7 +69,12 @@ class OrderDetails extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
-
+  item: 'Produits',
+  unitPrice: 'Prix Unitaire',
+  quantity: 'Quantité',
+  ref: 'Réference de facture',
+  paid: 'Payé à ce jour',
+  balance: 'Montant dû',
 } };
 
 function mapStateToProps({ route: { lang }, orders, payment }) {

@@ -2,7 +2,7 @@ import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { batch }              from 'redux-act';
-import { IntlProvider }       from 'preact-i18n';
+import { IntlProvider, Text }       from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import D                      from 'date-fns';
 import { DatePicker }         from 'react-toolbox/lib/date_picker';
@@ -33,12 +33,11 @@ class CheckinInputs extends PureComponent {
       checkinDate,
       checkinDateError,
     } = this.props;
-
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
           <DatePicker
-            label="Check-in Date"
+          label={<Text id="checkinDate">Check-in Date</Text>}
             name="checkinDate"
             locale={lang.split('-')[0]}
             value={checkinDate}
@@ -47,7 +46,7 @@ class CheckinInputs extends PureComponent {
             minDate={D.startOfDay(bookingDate)}
           />
           <TimePicker
-            label="Check-in Time"
+            label={<Text id="checkinTime">Check-in Time</Text>}
             name="checkinDate"
             value={checkinDate}
             onChange={this.handleDateChange}
@@ -60,6 +59,8 @@ class CheckinInputs extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
+  checkinDate: 'Jour Du Checkin',
+  checkinTime: 'Heure Du Checkin',
 } };
 
 function mapStateToProps({ route: { lang }, booking }) {
