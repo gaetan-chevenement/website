@@ -2,7 +2,6 @@ import { h, Component } from 'preact';
 import { Router }       from 'preact-router';
 import { Provider }     from 'react-redux';
 import { batch }        from 'redux-act';
-import reduce           from 'lodash/reduce';
 // import { ThemeProvider } from 'react-css-themr';
 
 import configureStore   from '~/stores';
@@ -18,12 +17,10 @@ import {
   updateRoute,
   updatePayment,
 }                       from '~/actions';
+import Utils            from '~/utils';
 import Header           from './Header';
-import Footer           from './Footer';
 // import Home from 'async!./home';
 // import Profile from 'async!./profile';
-
-const _ = { reduce };
 
 const store = configureStore({
   route: {
@@ -33,7 +30,6 @@ const store = configureStore({
     minPack: 'basic',
     pack: 'comfort',
     errors: {},
-    // bookingDate: new Date(),
     // firstName: {},
     // lastName: {},
     // email: {},
@@ -65,11 +61,11 @@ export default class App extends Component {
     // route params are only relevant when they're defined, so we'll filter-out
     // all undefined values.
     batch(
-      store.dispatch(updateRoute(filterOutUndef(
+      store.dispatch(updateRoute(Utils.filterOutUndef(
         { lang, rentingId, clientId, minPack }
       ))),
-      store.dispatch(updateBooking(filterOutUndef({ roomId }))),
-      store.dispatch(updatePayment(filterOutUndef({ orderId })))
+      roomId !== undefined && store.dispatch(updateBooking({ roomId })),
+      orderId !== undefined && store.dispatch(updatePayment({ orderId }))
     );
 
   };
@@ -89,21 +85,10 @@ export default class App extends Component {
             <Renting path="/:lang/renting/:rentingId" />
             <Payment path="/:lang/payment/:orderId" />
           </Router>
-          <Footer />
           <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans|Material+Icons" />
           <link rel="stylesheet" href="//weloveiconfonts.com/api/?family=brandico" />
         </div>
       </Provider>
     );
   }
-}
-
-function filterOutUndef(collection) {
-  return _.reduce(collection, ( result, value, key ) => {
-    if ( value !== undefined ) {
-      result[key] = value;
-    }
-
-    return result;
-  }, {});
 }

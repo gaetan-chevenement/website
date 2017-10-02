@@ -11,7 +11,7 @@ import {
 import Utils                  from '~/utils';
 
 class Renting extends PureComponent {
-  componentWillMount() {
+  componentDidMount() {
     const { rentingId, actions } = this.props;
 
     batch(

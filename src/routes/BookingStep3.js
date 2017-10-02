@@ -9,7 +9,7 @@ import * as actions           from '~/actions';
 import Utils                  from '~/utils';
 
 class BookingStep3 extends PureComponent {
-  componentWillMount() {
+  componentDidMount() {
     const {
       lang,
       room,

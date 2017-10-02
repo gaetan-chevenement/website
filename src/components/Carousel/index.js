@@ -2,30 +2,43 @@ import React, { PureComponent }   from 'react';
 import { h }                      from 'preact';
 import autobind                   from 'autobind-decorator';
 
+/* A simple and dependency free carousel component
+ * - CSS transitions based
+ * - Lazy-loading (incompatible with usage of #goto method)
+ */
 class Carousel extends PureComponent {
   @autobind
-  step(diff) {
+  goto(index) {
     const { length } = this.props.children;
 
+    if ( index === this.state.currIndex ) {
+      return;
+    }
+
     this.setState({
-      currIndex: ( this.state.currIndex + length + diff ) % length,
+      prevIndex: this.state.currIndex,
+      currIndex: ( index + length ) % length,
+      nextIndex: ( index + length + 1 ) % length,
     });
   }
 
   @autobind
   next() {
-    this.step(+1);
+    this.goto(this.state.currIndex + 1);
   }
 
   @autobind
   prev() {
-    this.step(-1);
+    this.step(this.state.currIndex - 1);
   }
 
   constructor(props) {
     super(props);
 
-    this.state = { currIndex: props.currIndex || 0 };
+    this.state = {
+      currIndex: props.currIndex || 0,
+      nextIndex: ( props.currIndex || 0 ) + 1,
+    };
   }
 
   componentWillMount() {
@@ -36,24 +49,27 @@ class Carousel extends PureComponent {
     }
   }
 
-  render({ children, className, fade }) {
-    const { currIndex } = this.state;
-    const { length } = children;
+  render({ children, className, fade, lazy }) {
+    const { prevIndex, currIndex, nextIndex } = this.state;
 
     return (
       <div className={`${className} carousel ${fade ? 'fade' : 'slide'}`}>
         {children.map((child, i) => {
-          if ( i === ( currIndex + length - 1 ) % length ) {
+          if ( i === prevIndex ) {
             return cloneWithClass(child, 'prev');
           }
           if ( i === currIndex ) {
             return cloneWithClass(child, 'curr');
           }
-          if ( i === ( currIndex + 1 ) % length ) {
+          if ( i === nextIndex ) {
             return cloneWithClass(child, 'next');
           }
 
-          return child;
+          // lazy rendering
+          // (always render 'something' otherwise transitions won't work)
+          return lazy ?
+            React.createElement(child.type) :
+            child;
         })}
       </div>
     );
@@ -64,21 +80,8 @@ export default Carousel;
 
 function cloneWithClass(elem, name) {
   const clone = React.cloneElement(elem);
-  const lazySrc = clone.props['lazy-src'];
 
   clone.props.className += ` carousel-${name}`;
-
-  if ( lazySrc ) {
-    if ( clone.nodeName === 'img' ) {
-      clone.props.src = lazySrc;
-    }
-    else {
-      clone.props.style = {
-        ...clone.props.style,
-        backgroundImage: `url(${lazySrc})`,
-      };
-    }
-  }
 
   return clone;
 }

@@ -1,12 +1,13 @@
-import { PureComponent }      from 'preact';
+import { h }                  from 'preact';
+import { PureComponent }      from 'react';
 import autobind               from 'autobind-decorator';
 import { connect }            from 'react-redux';
 
 import { listRooms }          from '~/actions';
 import SearchEngineForm       from '~/components/SearchEngineForm';
 import SameSearchCount        from '~/components/SameSearchCount';
-import SearchResults          from '~/components/SearchResults';
-import ResultsMap             from '~/components/ResultsMap';
+import SearchResults          from '~/containers/search/ResultsList';
+import ResultsMap             from '~/containers/search/ResultsMap';
 import {
   SameSearchCountOptions,
 }                             from '~/content';
@@ -55,37 +56,29 @@ export class SearchContainer extends PureComponent {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.dispatch(listRooms({ city: this.props.city }));
   }
 
-  componentWillReceiveProps({ city }) {
-    if (this.props.city !== city) {
-      this.props.dispatch(listRooms({ city }));
-      this.setState({
-        sameSearchCounter: this.getUsersCount(),
-      });
-    }
-  }
+  // componentWillReceiveProps({ city }) {
+  //   if (this.props.city !== city) {
+  //     this.props.dispatch(listRooms({ city }));
+  //     this.setState({
+  //       sameSearchCounter: this.getUsersCount(),
+  //     });
+  //   }
+  // }
 
   render() {
-    const { rooms } = this.props;
-    let data = [];
-
+    const { rooms, city } = this.props;
     let searchResultsContent = <div>...</div>;
 
-    if (!rooms.loading && rooms.error !== null) {
+    if (!rooms.isLoading && rooms.error !== false) {
       searchResultsContent = <div>Une erreur a eu lieu</div>;
     }
-    if (!rooms.loading && rooms.error === null) {
-      data = rooms.data.data;
+    if (!rooms.isLoading && rooms.error === false) {
       searchResultsContent = (
-        <SearchResults
-          rooms={data}
-          data={rooms.data}
-          city={this.props.city}
-          onRoomOver={this.__onRoomOver}
-        />
+        <SearchResults onRoomOver={this.onRoomOver} />
       );
     }
 
@@ -96,9 +89,7 @@ export class SearchContainer extends PureComponent {
         >
           <div className={mapPane}>
             <ResultsMap
-              rooms={data}
-              data={rooms.data}
-              highlightRoom={this.state.overRoom}
+              highlightedRoomId={this.state.overRoom}
               currentlyShowing={this.state.mobilePane}
             />
           </div>
@@ -108,7 +99,7 @@ export class SearchContainer extends PureComponent {
         >
           <div className={leftPane}>
             <div className={searchEngineAndAlerts}>
-              <SearchEngineForm mode="small" defaultCity={this.props.city} />
+              <SearchEngineForm mode="small" defaultCity={city} />
               <CreateAlertButton />
             </div>
             <SameSearchCount count={this.state.sameSearchCounter} />
@@ -117,13 +108,13 @@ export class SearchContainer extends PureComponent {
         </div>
         <div className={switchMapList}>
           <span
-            onClick={this.__switchToList}
+            onClick={this.switchToList}
             className={this.state.mobilePane === 'list' ? selected : null}
           >
             Liste
           </span>
           <span
-            onClick={this.__switchToMap}
+            onClick={this.switchToMap}
             className={this.state.mobilePane === 'map' ? selected : null}
           >
             Plan
@@ -134,8 +125,10 @@ export class SearchContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  rooms: state.rooms,
+const mapStateToProps = ({ rooms, route: { lang } }, { city }) => ({
+  lang,
+  city,
+  rooms,
 });
 
 export default connect(mapStateToProps)(SearchContainer);
