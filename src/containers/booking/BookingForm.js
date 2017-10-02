@@ -20,7 +20,7 @@ export default function({ lang }) {
 
         <section>
           <h3><Text id="detail">Detailed comparison</Text></h3>
-          <FeatureList lang={lang}/>
+          <FeatureList lang={lang} />
         </section>
 
         <section>
@@ -43,7 +43,7 @@ const definition = { 'fr-FR': {
   detail: 'Comparaison Détaillée',
   date: {
     first: 'Date et heure prévues de checkin',
-    last:'(Possibilité de changer à n\'importe quel moment)',
+    last: '(Possibilité de changer à n\'importe quel moment)',
   },
   eligibility: 'Eligibilité, modalités et Conditions',
 } };

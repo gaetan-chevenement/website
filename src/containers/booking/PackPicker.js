@@ -1,16 +1,13 @@
-import { IntlProvider, Text} from 'preact-i18n';
+import { IntlProvider, Text } from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import autobind               from 'autobind-decorator';
-import capitalize             from 'lodash/capitalize';
 import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import { List, ListItem, ListSubHeader } from 'react-toolbox/lib/list';
 import { Button }             from 'react-toolbox/lib/button';
 import * as actions           from '~/actions';
 import { PACK_PRICES }        from '~/const';
-
-const _ = { capitalize };
 
 class PackPicker extends PureComponent {
   @autobind
@@ -18,11 +15,22 @@ class PackPicker extends PureComponent {
     this.props.actions.updateBooking({ [event.target.name]: event.target.value });
   }
 
-  renderCardActions(packName) {
+  renderCardActions(packName, lang) {
+    let packNameTranslated;
+
+    if ( packName === 'basic' ) {
+      packNameTranslated = lang.split('-')[0] === 'en' ? 'basic' : 'basique';
+    }
+    if ( packName === 'comfort' ) {
+      packNameTranslated = lang.split('-')[0] === 'en' ? 'comfort' : 'confort';
+    }
+    if ( packName === 'privilege' ) {
+      packNameTranslated = lang.split('-')[0] === 'en' ? 'privilege' : 'privilège';
+    }
     return (
       <CardActions>
         <Button raised
-          label={`Choose ${_.capitalize(packName)}`}
+          label={<div><Text id="select">Choose</Text> {packNameTranslated}</div>}
           name="pack"
           value={packName}
           onClick={this.handlePackChange}
@@ -30,7 +38,6 @@ class PackPicker extends PureComponent {
       </CardActions>
     );
   }
-
   render() {
     const {
       lang,
@@ -46,8 +53,8 @@ class PackPicker extends PureComponent {
             <Card raised={pack === 'basic'}>
               <CardTitle
                 title={<Text id="basic.title">★ Basic</Text>}
-                subtitle={<Text id="basic.subtitle">
-                  All essential services for a stress-free stay in your apartment</Text>}// - ${packPrices.basic /100}€
+                subtitle={<div><Text id="basic.subtitle" >
+                  All essential services for a stress-free stay in your apartment - </Text>{packPrices.basic /100}€ </div>}
               />
               <CardText>
                 <List>
@@ -59,7 +66,7 @@ class PackPicker extends PureComponent {
                   <ListItem caption={<Text id="basic.sixth">Unlimited maintenance &amp; assistance</Text>} />
                 </List>
               </CardText>
-              {this.renderCardActions(lang.split[0] === 'en' ? 'basic' : 'basique')}
+              {this.renderCardActions('basic', lang)}
             </Card> :
             ''
           }
@@ -67,10 +74,10 @@ class PackPicker extends PureComponent {
             <Card raised={pack === 'comfort'}>
               <CardTitle
                 title={<Text id="comfort.title">★★ Comfort</Text>}
-                subtitle={`
+                subtitle={<div><Text id="comfort.subtitle">
                   An easier move in for more comfort and serenity
-                  - ${packPrices.comfort / 100}€
-                `}
+                  - </Text>{packPrices.comfort / 100}€ </div>
+                }
               />
               <CardText>
                 <List>
@@ -82,17 +89,17 @@ class PackPicker extends PureComponent {
                   <ListItem caption={<Text id="comfort.sixth">Cancellation insurance - 1 month</Text>} />
                 </List>
               </CardText>
-              {this.renderCardActions(lang.split[0] === 'en' ? 'comfort': 'confort')}
+              {this.renderCardActions('comfort', lang)}
             </Card> :
             ''
           }
           <Card raised={pack === 'privilege'}>
             <CardTitle
               title={<Text id="privilege.title">★★★ Privilege</Text>}
-              subtitle={`
+              subtitle={<div><Text id="privilege.subtitle">
                 Personalized services for a complete and careful support
-                - ${packPrices.privilege / 100}€
-              `}
+                - </Text> {packPrices.privilege / 100}€</div>
+              }
             />
             <CardText>
               <List>
@@ -104,7 +111,7 @@ class PackPicker extends PureComponent {
                 <ListItem caption={<Text id="privilege.sixth">Cancellation insurance - 7 days</Text>} />
               </List>
             </CardText>
-            {this.renderCardActions(lang.split[0] === 'en' ? 'privilege' : 'privilège')}
+            {this.renderCardActions('privilege', lang)}
           </Card>
         </p>
       </IntlProvider>
@@ -113,6 +120,37 @@ class PackPicker extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
+  basic: {
+    title: '★ Basique',
+    subtitle: 'Les principaux services pour un séjour sans stress dans votre appartement - ',
+    first: 'Principaux services',
+    second: 'Checkin rapide',
+    third: 'Contrat individuel personnalisé',
+    fourth: 'Oreiller et couette',
+    fifth: 'Activation des services',
+    sixth: 'Maintenance et assistance illimitées',
+  },
+  comfort: {
+    title: '★★ Confort',
+    subtitle: 'Plus de facilité pour plus de confort et de sérénité - ',
+    first: 'Tous les services du pack Basique plus:',
+    second: 'Checkin 24/7 au domicile',
+    third: 'Draps, oreiller et housses de couette',
+    fourth: 'Pack de nourriture',
+    fifth: 'Priorité de réservation',
+    sixth: 'Assurance annulation - 1 mois',
+  },
+  privilege: {
+    title: '★★★ Privilège',
+    subtitle: 'Services personnalisés pour un support client complet et attentif - ',
+    first: 'Tous les services du pack Confort plus:',
+    second: 'Chauffeur privé de l\'aéroport/gare',
+    third: 'Service de bagage illimité',
+    fourth: 'Assistance clefs 24/7',
+    fifth: 'Checkout 24/7',
+    sixth: 'Assurance annulation - 7 jours',
+  },
+  select: 'Choisir',
 } };
 
 function mapStateToProps({ route, booking, rooms, apartments }) {

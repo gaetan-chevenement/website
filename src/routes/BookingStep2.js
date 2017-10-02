@@ -58,13 +58,13 @@ class BookingStep2 extends PureComponent {
           <nav class="text-center">
             <section style="margin-top: 2rem; text-align: center;">
               <Button raised
-                label=/*{<Text id="back">*/"Back"//</Text>}
+                label={<Text id="back">Back</Text>}
                 icon="arrow_backward"
                 href={`/${lang}/booking/${roomId}/1`}
               />
               {' '}
               <Button raised primary
-                label=/*{<Text id="forward">*/"Continue"//</Text> }
+                label={<Text id="forward">Continue</Text>}
                 icon="forward"
                 href={`/${lang}/booking/${roomId}/3`}
               />

@@ -60,13 +60,13 @@ const renderSublist = memoize(([header, features], lang) => (
   </IntlProvider>
 ));
 
-export default function FeatureList({lang}) {
-   const features =
-   lang.split('-')[0] === 'fr' ? splitOnTitles(featuresFr) : splitOnTitles(featuresEn);
+export default function FeatureList({ lang }) {
+  const features =
+    lang.split('-')[0] === 'fr' ? splitOnTitles(featuresFr) : splitOnTitles(featuresEn);
 
   return (
     <div>
-      {features.map((feature) => { return renderSublist(feature, lang) } ) }
+      {features.map((feature) => { return renderSublist(feature, lang) }) }
     </div>
   );
 }

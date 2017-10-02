@@ -68,7 +68,7 @@ class BookingStep1 extends PureComponent {
 
           { isRoomAvailable ?
             <BookingForm lang={lang} /> :
-            <p><Text id="errors.unavailable">Sorry, this room isnt available for booking.</Text></p>
+            <p><Text id="errors.unavailable">Sorry, this room isn't available for booking.</Text></p>
           }
 
           <nav class="text-center">

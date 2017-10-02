@@ -54,7 +54,6 @@ class Payment extends PureComponent {
         </div>
       );
     }
-
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="content">
