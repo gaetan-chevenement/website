@@ -124,11 +124,11 @@ class Summary extends PureComponent {
             </section>
 
             <p>{this.renderDetails([
-              <span><Text id="rent.fr"></Text>{firstMonths[0]}.<Text id="rent.en">rent:</Text></span>,
+              <span><Text id="rent.fr" />{firstMonths[0]}.<Text id="rent.en">rent:</Text></span>,
               <b>{proratedRent / 100}€</b>,
-              <span><Text id="rent.fr"></Text>{firstMonths[1]}.<Text id="rent.en"> rent:</Text></span>,
+              <span><Text id="rent.fr" />{firstMonths[1]}.<Text id="rent.en"> rent:</Text></span>,
               <b>{totalRent / 100}€</b>,
-              <span><Text id="rent.fr"></Text>{firstMonths[2]}.<Text id="rent.en"> rent:</Text></span>,
+              <span><Text id="rent.fr" />{firstMonths[2]}.<Text id="rent.en"> rent:</Text></span>,
               <b>{totalRent / 100}€</b>,
               <Text id="dueDate.title">Due date:</Text>,
               <Text id="dueDate.rent">First rent is due prior to the checkin and subsequent rents are due on the first of the month.</Text>,

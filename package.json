@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "fix": "eslint --fix src",
     "lint": "eslint src",
     "test": "eslint src && jest __tests__",
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",

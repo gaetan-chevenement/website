@@ -30,9 +30,9 @@ class OrderDetails extends PureComponent {
           <table>
             <thead>
               <tr>
-                <th><Text id='item'>Item</Text></th>
-                <th class="text-right"><Text id='unitPrice'>Unit Price</Text></th>
-                <th><Text id='quantity'>Quantity</Text></th>
+                <th><Text id="item">Item</Text></th>
+                <th class="text-right"><Text id="unitPrice">Unit Price</Text></th>
+                <th><Text id="quantity">Quantity</Text></th>
                 <th class="text-right">Total</th>
               </tr>
             </thead>
@@ -46,13 +46,13 @@ class OrderDetails extends PureComponent {
                     {order.conditions}
                   </p>
                   <p>
-                    <em><Text id='ref'>Order ref.</Text> {order.id}</em>
+                    <em><Text id="ref">Order ref.</Text> {order.id}</em>
                   </p>
                 </th>
                 <th>
                   <p>Total</p>
-                  <p><Text id='paid'>Paid</Text></p>
-                  <p><Text id='balance'>Balance</Text></p>
+                  <p><Text id="paid">Paid</Text></p>
+                  <p><Text id="balance">Balance</Text></p>
                 </th>
                 <th class="text-right">
                   <p>{order.amount / 100}€</p>

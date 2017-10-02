@@ -47,24 +47,25 @@ export default class ResultsMap extends Component {
     });
 
     let markers = roomsCoordinates.map(({ ll, room }) =>
-      <Marker
+      (<Marker
         position={ll}
         icon={
           highlightRoom !== null && room.id === highlightRoom.id
             ? HIGHLIGHT_ICON
             : DEFAULT_ICON
         }
-      >
+       >
         <Popup>
           <Room room={room} data={data} fromMap />
         </Popup>
-      </Marker>,
+      </Marker>),
     );
 
     let bounds;
     if (roomsCoordinates.length === 0) {
       bounds = DEFAULT_BBOX;
-    } else {
+    }
+    else {
       bounds = new L.LatLngBounds(roomsCoordinates.map(({ ll }) => ll)).pad(
         0.2,
       );

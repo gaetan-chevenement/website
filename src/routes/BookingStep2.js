@@ -23,9 +23,7 @@ class BookingStep2 extends PureComponent {
       // validateBooking has to heppen after fetching the room,
       // as the bookingDate validity might change.
       .then(() => actions.validateBooking(booking))
-      .catch(() => {
-        return route(`/${lang}/booking/${booking.roomId}/`);
-      });
+      .catch(() => route(`/${lang}/booking/${booking.roomId}/`));
   }
 
   render() {
