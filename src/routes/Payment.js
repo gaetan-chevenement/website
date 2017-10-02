@@ -10,13 +10,11 @@ import { Button }             from 'react-toolbox/lib/button';
 import OrderDetails           from '~/containers/payment/OrderDetails';
 import CardForm               from '~/containers/payment/CardForm';
 import * as actions           from '~/actions';
-import Utils                  from '~/utils';
-
 
 class Payment extends PureComponent {
   @autobind
   handleSubmitPayment() {
-    const { returnUrl, payment, actions, lang, orderId } = this.props;
+    const { returnUrl, payment, actions, orderId } = this.props;
 
     return Promise.resolve()
       .then(() => actions.validatePayment(payment))
@@ -26,7 +24,7 @@ class Payment extends PureComponent {
         if ( !returnUrl ) {
           return;
         }
-        route(returnUrl);
+        return route(returnUrl);
       })
       .catch(console.error);
   }
@@ -66,30 +64,30 @@ class Payment extends PureComponent {
             <OrderDetails orderId={orderId} />
           </section>
           <section>
-          { !payment.isValidated && !errors.payment && orderBalance !== 0 ?
-            <h3>
-              <Text id='payment.title'>Payment can be made by Mastercard or Visa.</Text>
-            </h3>
-          : '' }
+            { !payment.isValidated && !errors.payment && orderBalance !== 0 ?
+              <h3>
+                <Text id="payment.title">Payment can be made by Mastercard or Visa.</Text>
+              </h3>
+              : '' }
             <CardForm />
           </section>
 
           { !payment.isValidated && !errors.payment && orderBalance !== 0?
-          <nav class="text-center">
-            { payment.isValidating || payment.isSaving ?
-              <ProgressBar type="circular" mode="indeterminate" /> :
-              <section style="margin-top: 2rem;">
-                <Button raised primary
-                  disabled={!payment.cardNumber || !payment.cvv || !payment.expiryMonth
+            <nav class="text-center">
+              { payment.isValidating || payment.isSaving ?
+                <ProgressBar type="circular" mode="indeterminate" /> :
+                <section style="margin-top: 2rem;">
+                  <Button raised primary
+                    disabled={!payment.cardNumber || !payment.cvv || !payment.expiryMonth
                     || !payment.expiryYear || !payment.holderName}
-                  label={ <Text id='payment.button'>Pay Now</Text> }
-                  icon="payment"
-                  onClick={this.handleSubmitPayment}
-                />
-              </section>
-            }
-          </nav>
-          : '' }
+                    label={<Text id="payment.button">Pay Now</Text>}
+                    icon="payment"
+                    onClick={this.handleSubmitPayment}
+                  />
+                </section>
+              }
+            </nav>
+            : '' }
 
         </div>
       </IntlProvider>

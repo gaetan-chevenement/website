@@ -35,7 +35,6 @@ class BookingStep1 extends PureComponent {
       isRoomLoading,
       isRoomAvailable,
       isEligible,
-      hasErrors,
     } = this.props;
 
     if ( isRoomLoading ) {
@@ -110,7 +109,6 @@ function mapStateToProps({ route: { lang }, rooms, booking }) {
     roomError: room && room.error,
     isRoomLoading: !room || room.isLoading,
     isRoomAvailable: room && Utils.isRoomAvailable( room ),
-    hasErrors: Utils.hasErrors(booking),
     isEligible: booking.isEligible,
   };
 }

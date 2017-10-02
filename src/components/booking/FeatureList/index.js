@@ -22,41 +22,41 @@ const TooltipButton = Tooltip(Button);
 // receive arguments more likely to change.
 const renderSublist = memoize(([header, features], lang) => (
   <IntlProvider definition={definition[lang]}>
-  <table class={sublist}>
-    <thead>
-      <tr>
-        <th>{header}</th>
-        <th class={valueCellHeader}><Text id="basic">Basic</Text></th>
-        <th class={valueCellHeader}><Text id="comfort">Comfort</Text></th>
-        <th class={valueCellHeader}><Text id="privilege">Privilege</Text></th>
-      </tr>
-    </thead>
-    <tbody>
-      {features.map(([label, tooltip, ...values]) => (
+    <table class={sublist}>
+      <thead>
         <tr>
-          <td class={featureCell}>
-            <span class={featureLabel}>
-              <TooltipButton
-                label={`${label}`}
-                tooltip={`${label.toUpperCase()} — ${tooltip}`}
-                tooltipShowOnClick
-                theme={({ button })}
-                ripple={false}
-              />
-            </span>
-            <span class={featureDetails}>— {tooltip}</span>
-          </td>
-          {values.map((value) => (
-            <td class={valueCell}>
-              {typeof value === 'string' ?
-                <span class={valueText}>{value}</span> : ( value ? '✔' : '✘' )
-              }
-            </td>
-          ))}
+          <th>{header}</th>
+          <th class={valueCellHeader}><Text id="basic">Basic</Text></th>
+          <th class={valueCellHeader}><Text id="comfort">Comfort</Text></th>
+          <th class={valueCellHeader}><Text id="privilege">Privilege</Text></th>
         </tr>
-      ))}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {features.map(([label, tooltip, ...values]) => (
+          <tr>
+            <td class={featureCell}>
+              <span class={featureLabel}>
+                <TooltipButton
+                  label={`${label}`}
+                  tooltip={`${label.toUpperCase()} — ${tooltip}`}
+                  tooltipShowOnClick
+                  theme={({ button })}
+                  ripple={false}
+                />
+              </span>
+              <span class={featureDetails}>— {tooltip}</span>
+            </td>
+            {values.map((value) => (
+              <td class={valueCell}>
+                {typeof value === 'string' ?
+                  <span class={valueText}>{value}</span> : ( value ? '✔' : '✘' )
+                }
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   </IntlProvider>
 ));
 
@@ -66,7 +66,7 @@ export default function FeatureList({ lang }) {
 
   return (
     <div>
-      {features.map((feature) => { return renderSublist(feature, lang) }) }
+      {features.map((feature) => renderSublist(feature, lang)) }
     </div>
   );
 }

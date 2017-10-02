@@ -37,7 +37,7 @@ class CheckinInputs extends PureComponent {
       <IntlProvider definition={definition[lang]}>
         <div>
           <DatePicker
-          label={<Text id="checkinDate">Check-in Date</Text>}
+            label={<Text id="checkinDate">Check-in Date</Text>}
             name="checkinDate"
             locale={lang.split('-')[0]}
             value={checkinDate}

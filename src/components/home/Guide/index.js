@@ -14,9 +14,9 @@ export default function Guide() {
         {ContentGuide.texts.title}
       </h3>
       {ContentGuide.texts.text.map(p =>
-        <p>
+        (<p>
           {p}
-        </p>,
+        </p>),
       )}
       <Button theme={CSS}>
         {ContentGuide.texts['button-download']}

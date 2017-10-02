@@ -46,7 +46,8 @@ function getAvailabilityDiv(availableAt) {
         Non disponible
       </div>
     );
-  } else if (+date > +Date.now()) {
+  }
+  else if (+date > +Date.now()) {
     availabilityEl = (
       <div className={[CSS.availability, CSS.availableSoon].join(' ')}>
         Disponible le {date.getDate()} {MONTHS[date.getMonth()]}
@@ -60,13 +61,13 @@ function getAvailabilityDiv(availableAt) {
 function getSlider(pictures, onOver) {
   const baseUrl = SearchResultsOptions.imagesBaseUrl;
   let images = pictures.map(pic =>
-    <div
+    (<div
       className={CSS.image}
       onMouseOver={onOver}
       style={{
         backgroundImage: `url('${baseUrl}${pic.attributes.href}')`,
       }}
-    />,
+    />),
   );
 
   return (
