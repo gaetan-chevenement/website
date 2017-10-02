@@ -47,7 +47,6 @@ class Summary extends PureComponent {
       proratedRent,
       firstMonths,
     } = this.props;
-
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="grid has-gutter-xl">

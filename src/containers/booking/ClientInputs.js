@@ -2,7 +2,7 @@ import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { batch }              from 'redux-act';
-import { IntlProvider }       from 'preact-i18n';
+import { IntlProvider, Text }       from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import { Input }              from 'react-toolbox/lib/input';
 import * as actions           from '~/actions';
@@ -29,21 +29,21 @@ class ClientInputs extends PureComponent {
       <IntlProvider definition={definition[lang]}>
         <div>
           <Input type="text"
-            label="First Name"
+            label={<Text id="firstName">First Name</Text>}
             name="firstName"
             value={booking.firstName}
             onChange={this.handleChange}
             error={errors.firstName}
           />
           <Input type="text"
-            label="Last Name"
+            label={<Text id="lastName">Last Name</Text>}
             name="lastName"
             value={booking.lastName}
             onChange={this.handleChange}
             error={errors.lastName}
           />
           <Input type="email"
-            label="Email address"
+            label={<Text id="email">Email address</Text>}
             name="email"
             value={booking.email}
             onChange={this.handleChange}
@@ -56,6 +56,9 @@ class ClientInputs extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
+  firstName: 'Prénom',
+  lastName: 'Nom de famille',
+  email: 'Courriel',
 } };
 
 function mapStateToProps({ route: { lang }, booking }) {

@@ -1,4 +1,4 @@
-import { IntlProvider } from 'preact-i18n';
+import { IntlProvider, Text} from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
@@ -45,30 +45,28 @@ class PackPicker extends PureComponent {
           { minPack !== 'comfort' && minPack !== 'privilege' ?
             <Card raised={pack === 'basic'}>
               <CardTitle
-                title="★ Basic"
-                subtitle={`
-                  All essential services for a stress-free stay in your apartment
-                  - ${packPrices.basic / 100}€
-                `}
+                title={<Text id="basic.title">★ Basic</Text>}
+                subtitle={<Text id="basic.subtitle">
+                  All essential services for a stress-free stay in your apartment</Text>}// - ${packPrices.basic /100}€
               />
               <CardText>
                 <List>
-                  <ListSubHeader caption="Main services including" />
-                  <ListItem caption="Fast check-in" />
-                  <ListItem caption="Customized individual contract" />
-                  <ListItem caption="Pillow and duvet" />
-                  <ListItem caption="Services activation" />
-                  <ListItem caption="Unlimited maintenance &amp; assistance" />
+                  <ListSubHeader caption={<Text id="basic.first">Main services including</Text>} />
+                  <ListItem caption={<Text id="basic.second">Fast check-in</Text>} />
+                  <ListItem caption={<Text id="basic.third">Customized individual contract</Text>} />
+                  <ListItem caption={<Text id="basic.fourth">Pillow and duvet</Text>} />
+                  <ListItem caption={<Text id="basic.fifth">Services activation</Text>} />
+                  <ListItem caption={<Text id="basic.sixth">Unlimited maintenance &amp; assistance</Text>} />
                 </List>
               </CardText>
-              {this.renderCardActions('basic')}
+              {this.renderCardActions(lang.split[0] === 'en' ? 'basic' : 'basique')}
             </Card> :
             ''
           }
           { minPack !== 'privilege' ?
             <Card raised={pack === 'comfort'}>
               <CardTitle
-                title="★★ Comfort"
+                title={<Text id="comfort.title">★★ Comfort</Text>}
                 subtitle={`
                   An easier move in for more comfort and serenity
                   - ${packPrices.comfort / 100}€
@@ -76,21 +74,21 @@ class PackPicker extends PureComponent {
               />
               <CardText>
                 <List>
-                  <ListSubHeader caption="All Basic services plus:" />
-                  <ListItem caption="Check-in 24/7 at home" />
-                  <ListItem caption="Sheets, pillow & duvet cases" />
-                  <ListItem caption="Food pack" />
-                  <ListItem caption="Booking priority" />
-                  <ListItem caption="Cancellation insurance - 1 month" />
+                  <ListSubHeader caption={<Text id="comfort.first">All Basic services plus:</Text>} />
+                  <ListItem caption={<Text id="comfort.second">Check-in 24/7 at home</Text>} />
+                  <ListItem caption={<Text id="comfort.third">Sheets, pillow & duvet cases</Text>} />
+                  <ListItem caption={<Text id="comfort.fourth">Food pack</Text>} />
+                  <ListItem caption={<Text id="comfort.fifth">Booking priority</Text>} />
+                  <ListItem caption={<Text id="comfort.sixth">Cancellation insurance - 1 month</Text>} />
                 </List>
               </CardText>
-              {this.renderCardActions('comfort')}
+              {this.renderCardActions(lang.split[0] === 'en' ? 'comfort': 'confort')}
             </Card> :
             ''
           }
           <Card raised={pack === 'privilege'}>
             <CardTitle
-              title="★★★ Privilege"
+              title={<Text id="privilege.title">★★★ Privilege</Text>}
               subtitle={`
                 Personalized services for a complete and careful support
                 - ${packPrices.privilege / 100}€
@@ -98,15 +96,15 @@ class PackPicker extends PureComponent {
             />
             <CardText>
               <List>
-                <ListSubHeader caption="All Comfort services plus:" />
-                <ListItem caption="Private driver from airport/train station" />
-                <ListItem caption="Unlimited luggage service" />
-                <ListItem caption="Keys assistance 24/7" />
-                <ListItem caption="Checkout 24/7" />
-                <ListItem caption="Cancellation insurance - 7 days" />
+                <ListSubHeader caption={<Text id="privilege.first">All Comfort services plus:</Text>} />
+                <ListItem caption={<Text id="privilege.second">Private driver from airport/train station</Text>} />
+                <ListItem caption={<Text id="privilege.third">Unlimited luggage service</Text>} />
+                <ListItem caption={<Text id="privilege.fourth">Keys assistance 24/7</Text>} />
+                <ListItem caption={<Text id="privilege.fifth">Checkout 24/7</Text>} />
+                <ListItem caption={<Text id="privilege.sixth">Cancellation insurance - 7 days</Text>} />
               </List>
             </CardText>
-            {this.renderCardActions('privilege')}
+            {this.renderCardActions(lang.split[0] === 'en' ? 'privilege' : 'privilège')}
           </Card>
         </p>
       </IntlProvider>

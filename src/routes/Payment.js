@@ -69,7 +69,7 @@ class Payment extends PureComponent {
           <section>
           { !payment.isValidated && !errors.payment && orderBalance !== 0 ?
             <h3>
-              Payment can be made by Mastercard or Visa.
+              <Text id='payment.title'>Payment can be made by Mastercard or Visa.</Text>
             </h3>
           : '' }
             <CardForm />
@@ -83,7 +83,7 @@ class Payment extends PureComponent {
                 <Button raised primary
                   disabled={!payment.cardNumber || !payment.cvv || !payment.expiryMonth
                     || !payment.expiryYear || !payment.holderName}
-                  label="Pay Now"
+                  label={ <Text id='payment.button'>Pay Now</Text> }
                   icon="payment"
                   onClick={this.handleSubmitPayment}
                 />
@@ -99,6 +99,11 @@ class Payment extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
+  title: 'Paiement sécurisé pour la facture de',
+  payment: {
+    title: 'Le Paiement peut s\'effectuer avec une carte Mastercard ou Visa.',
+    button: 'payer',
+  },
 } };
 
 function mapStateToProps({ route: { lang, returnUrl }, orders, payment }) {

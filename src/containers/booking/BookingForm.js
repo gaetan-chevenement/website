@@ -1,4 +1,4 @@
-import { IntlProvider }       from 'preact-i18n';
+import { IntlProvider, Text }       from 'preact-i18n';
 import FeatureList						from '~/components/booking/FeatureList';
 import PackPicker							from './PackPicker';
 import CheckinInputs			    from './CheckinInputs';
@@ -14,23 +14,23 @@ export default function({ lang }) {
         </section>
 
         <section>
-          <h3>Choose Your Housing Pack</h3>
+          <h3><Text id="housingPack">Choose Your Housing Pack</Text></h3>
           <PackPicker />
         </section>
 
         <section>
-          <h3>Detailed comparison</h3>
-          <FeatureList />
+          <h3><Text id="detail">Detailed comparison</Text></h3>
+          <FeatureList lang={lang}/>
         </section>
 
         <section>
-          <h3>Planned date and time of check-in</h3>
-          <p>(This can be changed at any time.)</p>
+          <h3><Text id="date.first">Planned date and time of check-in</Text></h3>
+          <p><Text id="date.last">(This can be changed at any time.)</Text></p>
           <CheckinInputs />
         </section>
 
         <section>
-          <h3>Eligibility, Terms and Conditions</h3>
+          <h3><Text id="eligibility">Eligibility, Terms and Conditions</Text></h3>
           <EligibilityInput />
         </section>
       </div>
@@ -39,4 +39,11 @@ export default function({ lang }) {
 }
 
 const definition = { 'fr-FR': {
+  housingPack: 'Choisissez Votre Pack Logement',
+  detail: 'Comparaison Détaillée',
+  date: {
+    first: 'Date et heure prévues de checkin',
+    last:'(Possibilité de changer à n\'importe quel moment)',
+  },
+  eligibility: 'Eligibilité, modalités et Conditions',
 } };
