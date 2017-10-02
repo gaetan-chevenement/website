@@ -23,7 +23,7 @@ class Payment extends PureComponent {
       .catch(() => (''));
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { orderId, orderLabel, actions } = this.props;
 
     if ( orderLabel === undefined ) {

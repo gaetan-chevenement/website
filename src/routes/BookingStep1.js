@@ -9,7 +9,7 @@ import * as actions           from '~/actions';
 import Utils                  from '~/utils';
 
 class BookingStep1 extends PureComponent {
-  componentWillMount() {
+  componentDidMount() {
     const {
       roomName,
       hasErrors,

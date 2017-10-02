@@ -36,7 +36,7 @@ class Carousel extends PureComponent {
     }
   }
 
-  render({ children, className, fade }) {
+  render({ children, className, fade, lazy }) {
     const { currIndex } = this.state;
     const { length } = children;
 
@@ -53,7 +53,11 @@ class Carousel extends PureComponent {
             return cloneWithClass(child, 'next');
           }
 
-          return child;
+          // lazy rendering is on by default
+          // we always need to render 'something' or else transitions won't work
+          return lazy !== false ?
+            React.createElement(child.type) :
+            child;
         })}
       </div>
     );
@@ -64,21 +68,8 @@ export default Carousel;
 
 function cloneWithClass(elem, name) {
   const clone = React.cloneElement(elem);
-  const lazySrc = clone.props['lazy-src'];
 
   clone.props.className += ` carousel-${name}`;
-
-  if ( lazySrc ) {
-    if ( clone.nodeName === 'img' ) {
-      clone.props.src = lazySrc;
-    }
-    else {
-      clone.props.style = {
-        ...clone.props.style,
-        backgroundImage: `url(${lazySrc})`,
-      };
-    }
-  }
 
   return clone;
 }

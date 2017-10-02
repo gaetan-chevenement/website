@@ -1,9 +1,20 @@
-import { Component } from 'preact';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
-import Room from '~/components/SearchResults/room';
-import CSS from './style.css';
+import { h }                  from 'preact';
+import { PureComponent }      from 'react';
+import { connect }            from 'react-redux';
+import {
+  Map,
+  TileLayer,
+  Marker,
+  Popup,
+}                             from 'react-leaflet';
+import L                      from 'leaflet';
+import MarkerClusterGroup     from 'react-leaflet-markercluster';
+import filter                 from 'lodash/filter';
+import Room                   from '~/containers/search/Room';
+import Utils                  from '~/utils';
+import style                  from './style.css';
+
+const _ = { filter };
 
 const DEFAULT_ICON = new L.Icon({
   iconUrl: require('~/assets/search/map-marker-default.png'),
@@ -27,7 +38,7 @@ const MARKER_GROUP_OPTIONS = {
 
 const DEFAULT_BBOX = [[51.089062, 9.55932], [41.33374, -5.1406]];
 
-export default class ResultsMap extends Component {
+class ResultsMap extends PureComponent {
   componentDidUpdate() {
     // Force l'actualisation de la carte si les propriétés sont mises à jour
     if (this._map) {
@@ -35,46 +46,43 @@ export default class ResultsMap extends Component {
     }
   }
 
-  render() {
-    const { rooms, data, highlightRoom } = this.props;
-    let roomsCoordinates = rooms.map(room => {
-      const aptId = room.relationships.Apartment.data.id;
-      const apt = data.included.filter(i => i.id === aptId)[0];
-      return {
-        ll: apt.attributes.latLng.split(',').map(n => +n),
-        room,
-      };
-    });
+  renderMarkers() {
+    const { highlightedRoomId, roomsArr } = this.props;
 
-    let markers = roomsCoordinates.map(({ ll, room }) =>
+    return roomsArr.map((room) => (
       <Marker
-        position={ll}
+        position={room.latLng}
         icon={
-          highlightRoom !== null && room.id === highlightRoom.id
+          highlightedRoomId !== null && room.id === highlightedRoomId
             ? HIGHLIGHT_ICON
             : DEFAULT_ICON
         }
       >
         <Popup>
-          <Room room={room} data={data} fromMap />
+          <Room room={room} data={room} fromMap />
         </Popup>
-      </Marker>,
-    );
+      </Marker>
+    ));
+  }
 
+  render() {
+    const { roomsArr } = this.props;
     let bounds;
-    if (roomsCoordinates.length === 0) {
+
+    if (roomsArr.length === 0) {
       bounds = DEFAULT_BBOX;
-    } else {
-      bounds = new L.LatLngBounds(roomsCoordinates.map(({ ll }) => ll)).pad(
-        0.2,
-      );
+    }
+    else {
+      bounds = new L.LatLngBounds(
+        roomsArr.map(({ latLng }) => (latLng))
+      ).pad(0.2);
     }
 
     return (
       <Map
         style={{ width: '100%', height: '100%', position: 'relative' }}
         bounds={bounds}
-        className={CSS.map}
+        className={style.map}
         zoomControl={false}
         attributionControl={false}
         maxZoom={15}
@@ -88,9 +96,19 @@ export default class ResultsMap extends Component {
           wrapperOptions={{ enableDefaultStyle: false, maxClusterRadius: 0 }}
           options={MARKER_GROUP_OPTIONS}
         >
-          {markers}
+          {this.renderMarkers()}
         </MarkerClusterGroup>
       </Map>
     );
   }
 }
+
+const mapStateToProps = ({ rooms, apartments }, { hightlightedRoomId }) => (console.log(rooms), {
+  roomsArr: _.filter(rooms, (room) => (typeof room === 'object')).map((room) => ({
+    ...room,
+    latLng: Utils.getApartmentLatLng(apartments[room.ApartmentId]),
+  })),
+  hightlightedRoomId,
+});
+
+export default connect(mapStateToProps)(ResultsMap);

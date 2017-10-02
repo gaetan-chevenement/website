@@ -3,11 +3,14 @@
 const yup                         = require('yup');
 const D                           = require('date-fns');
 const memoize                     = require('memoize-immutable');
+const reduce                      = require('lodash/reduce');
 const holidays                    = require('./holidays.json');
 const {
   SPECIAL_CHECKIN_PRICE,
   UNAVAILABLE_DATE,
 }                                 = require('./const');
+
+const _ = { reduce };
 
 const pureUtils = {
   roundBy100(value) {
@@ -51,6 +54,9 @@ const pureUtils = {
   isRoomAvailable(room) {
     return D.compareAsc( room.availableAt, UNAVAILABLE_DATE ) !== 0;
   },
+  getBookingDate({ availableAt }, now = new Date()) {
+    return D.compareAsc( availableAt, now ) === -1 ? now : availableAt;
+  },
   classifyRentingOrders({ rentingId, orders }) {
     return Object.values(orders)
       // filter orders related to that renting
@@ -84,6 +90,27 @@ const pureUtils = {
   },
   hasErrors(object) {
     return Object.keys(object.errors).length > 0;
+  },
+  filterOutUndef(collection) {
+    return _.reduce(collection, ( result, value, key ) => {
+      if ( value !== undefined ) {
+        result[key] = value;
+      }
+
+      return result;
+    }, {});
+  },
+  getApartmentLatLng(apartment) {
+    const latLngArr = apartment.latLng.split(',');
+
+    return {
+      lat: Number(latLngArr[0]),
+      lng: Number(latLngArr[1]),
+    };
+  },
+  // TODO: implement proper room filtering
+  filterMatchingRooms(rooms) {
+    return rooms;
   },
 };
 

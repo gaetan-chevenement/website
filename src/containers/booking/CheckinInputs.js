@@ -8,6 +8,7 @@ import D                      from 'date-fns';
 import { DatePicker }         from 'react-toolbox/lib/date_picker';
 import { TimePicker }         from 'react-toolbox/lib/time_picker';
 import * as actions           from '~/actions';
+import Utils                  from '~/utils';
 
 class CheckinInputs extends PureComponent {
   @autobind
@@ -62,13 +63,13 @@ class CheckinInputs extends PureComponent {
 const definition = { 'fr-FR': {
 } };
 
-function mapStateToProps({ route: { lang }, booking }) {
-  const { checkinDate, bookingDate, errors } = booking;
+function mapStateToProps({ route: { lang, roomId }, booking, rooms }) {
+  const { checkinDate, errors } = booking;
 
   return {
     lang,
     checkinDate,
-    bookingDate,
+    bookingDate: Utils.getBookingDate(rooms[roomId]),
     checkinDateError: errors.checkinDate,
   };
 }

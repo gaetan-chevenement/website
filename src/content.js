@@ -47,11 +47,13 @@ export const SearchOptions = {
   },
   texts: {
     introduction: {
-      title: 'Colocations à {{town}}',
-      content: `Découvrez et comparez notre sélection de {{count}} chambres en colocation à {{town}}.
-        Tous nos logements à {{town}} sont entièrement meublés, équipé, tout inclus et en centre ville.
+      title: (town) => (`Colocations à ${town}`),
+      content: (town, count) => (
+        `Découvrez et comparez notre sélection de ${count} chambres en colocation à ${town}.
+        Tous nos logements à ${town} sont entièrement meublés, équipé, tout inclus et en centre ville.
         Réservez en ligne ou visitez nos appartements et apportez juste votre valise : pour 1 mois, 1 semestre, 1 an...
-        Louer une colocation à {{town}} n'a jamais été aussi simple avec Chez Nestor !`,
+        Louer une colocation à ${town} n'a jamais été aussi simple avec Chez Nestor !`
+      ),
     },
   },
 };

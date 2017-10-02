@@ -35,13 +35,13 @@ class Summary extends PureComponent {
       roomName,
       apartment,
       booking: {
-        bookingDate,
         checkinDate,
         pack,
         firstName,
         lastName,
         email,
       },
+      bookingDate,
       totalRent,
       checkinPrice,
       proratedRent,
@@ -182,13 +182,15 @@ const definition = { 'fr-FR': {
 function mapStateToProps({ route: { lang }, booking, rooms, apartments }) {
   const room = rooms[booking.roomId];
   const totalRent = room ? room['current price'] + room['service fees'] : 0;
-  const { bookingDate, checkinDate, pack } = booking;
+  const { checkinDate, pack } = booking;
+  const bookingDate = room && Utils.getBookingDate(room);
 
   return {
     lang,
     roomName: room && room.name,
     apartment: room && apartments[room.ApartmentId],
     booking,
+    bookingDate,
     totalRent,
     proratedRent: Utils.prorateFirstRent(totalRent, bookingDate.getTime()),
     firstMonths: Utils.getFirstMonths(bookingDate),

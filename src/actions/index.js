@@ -1,6 +1,5 @@
 import { createAction }         from 'redux-act';
 import { createActionAsync }    from 'redux-act-async';
-import D                        from 'date-fns';
 import queryString              from 'query-string';
 import Utils                    from '~/utils';
 import {
@@ -30,21 +29,7 @@ export const getRoom =
       .then(throwIfNotFound('Room', id)),
     {
       noRethrow: true,
-      ok: { payloadReducer: ({ response: { data, included } }) => {
-        const availableAt = new Date(data[0].attributes.availableAt);
-        const now = new Date();
-
-        return {
-          room: {
-            ...data[0].attributes,
-            ApartmentId: data[0].relationships.Apartment.data.id,
-            availableAt: new Date(data[0].attributes.availableAt),
-          },
-          apartment: included[0].attributes,
-          bookingDate:
-            D.compareAsc( availableAt, now ) === -1 ? now : availableAt,
-        };
-      } },
+      ok: { payloadReducer: reduceRooms },
     }
   );
 export const getRenting = createGetActionAsync('Renting');
@@ -72,19 +57,43 @@ export const listOrders =
 
       return fetchJson(`/OrderItem?filterType=and&filter[RentingId]=${rentingId}`);
     },
-    { ok: { payloadReducer: ({ response: { data, included } }) => (
-      included
+    { ok: { payloadReducer: ({ response: { data, included } }) => ({
+      orders: included
         .filter((inc) => inc.type === 'order')
         .map((order) => ({
           ...order.attributes,
           OrderItems: mapOrderItems(data, order.id),
         }))
-        .reduce((orders, order) => {
-          orders[order.id] = order;
-          return orders;
-        }, {})
-    ) } }
+        .reduce(arrayToMap),
+    }) } }
   );
+
+export const listRooms =
+  createActionAsync(
+    'List Rooms',
+    ({ city }) => {
+      if ( city === undefined ) {
+        return Promise.reject('Can only list Rooms by city for now');
+      }
+
+      const params = {
+        segment: ROOM_SEGMENTS[city.toLowerCase()],
+        'page[number]': 1,
+        'page[size]': 10,
+      };
+      const qs = queryString.stringify(params, { encode: false });
+
+      return fetchJson(`/Room?${qs}`);
+    },
+    { ok: { payloadReducer: reduceRooms } }
+  );
+
+export const listPictures =
+  createActionAsync('List pictures', ({ room }) => (
+    fetchJson(`/Pictures`)
+      .then(result => Object.assign(result, { roomId: room.id }))
+  ));
+
 export const saveBooking =
   createActionAsync(
     'save Renting and associated Client in the backoffice',
@@ -102,7 +111,7 @@ export const saveBooking =
             client: booking,
             checkinDate: booking.checkinDate,
             currentPrice: room['current price'],
-            bookingDate: booking.bookingDate,
+            bookingDate: Utils.getBookingDate(room),
           }),
         },
       )
@@ -119,28 +128,6 @@ export const saveBooking =
       return { errors: { unexpected: payload.error } };
     } } },
   );
-
-export const listRooms =
-  createActionAsync('List Rooms', ({ city }) => {
-    if ( city === undefined ) {
-      return Promise.reject('Can only list Rooms by city for now');
-    }
-
-    const params = {
-      segment: ROOM_SEGMENTS[city.toLowerCase()],
-      'page[number]': 1,
-      'page[size]': 10,
-    };
-    const qs = queryString.stringify(params, { encode: false });
-
-    return fetchJson(`${API_BASE_URL}/forest/Room?${qs}`);
-  });
-
-export const listPictures =
-  createActionAsync('List pictures', ({ picturesUrl, roomId }) => (
-    fetchJson(`${API_BASE_URL}${picturesUrl}`)
-      .then(result => Object.assign(result, { roomId }))
-  ));
 
 function fetchJson(url, options) {
   return fetch(`${API_BASE_URL}${url}`, options)
@@ -212,4 +199,29 @@ function mapOrderItems(data, orderId) {
       RentingId: item.relationships.Renting.data.id,
       ProductId: item.relationships.Product.data.id,
     }));
+}
+
+function reduceRooms({ response: { data, included } }) {
+  return {
+    rooms: data
+      .filter((item) => item.type === 'room')
+      .map((item) => ({
+        ...item.attributes,
+        ApartmentId: item.relationships.Apartment.data.id,
+        availableAt: new Date(item.attributes.availableAt),
+      }))
+      .reduce(arrayToMap),
+    apartments: included
+      .filter((item) => item.type === 'apartment')
+      .map((item) => ({ ...item.attributes }))
+      .reduce(arrayToMap),
+  };
+}
+
+function arrayToMap(items, item, i) {
+  if ( i === 1 ) {
+    items = { [items.id]: items };
+  }
+  items[item.id] = item;
+  return items;
 }

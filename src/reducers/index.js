@@ -39,10 +39,6 @@ const bookingReducer = createReducer({
     deleteError: deleteBookingError,
     validate: validateBooking,
   }),
-  [getRoom.ok]: (state, { bookingDate }) => ({
-    ...state,
-    bookingDate,
-  }),
   [saveBooking.request]: (state) => ({
     ...state,
     isSaving: true,
@@ -70,25 +66,27 @@ const paymentReducer = createReducer({
 
 const roomsReducer = createReducer({
   ...createGetReducer(getRoom),
-  [getRoom.ok]: (state, { room }) => ({
+  // getRoom returns { rooms, apartments } so it needs a special reducer
+  [getRoom.ok]: (state, { rooms }) => ({
     ...state,
-    [room.id]: room,
+    ...rooms,
   }),
+  ...createListReducer(listRooms, 'room'),
   [getRenting.ok]: (state, { _room: room }) => ({
     ...state,
     [room.id]: room,
-  }),
-  [listRooms.ok]: (state, { rooms }) => ({
-    ...state,
-    ...rooms,
   }),
 }, {});
 
 const apartmentsReducer = createReducer({
   ...createGetReducer(getApartment),
-  [getRoom.ok]: (state, { apartment }) => ({
+  [getRoom.ok]: (state, { apartments }) => ({
     ...state,
-    [apartment.id]: apartment,
+    ...apartments,
+  }),
+  [listRooms.ok]: (state, { apartments }) => ({
+    ...state,
+    ...apartments,
   }),
 }, {});
 
@@ -98,18 +96,11 @@ const rentingsReducer = createReducer({
 
 const ordersReducer = createReducer({
   ...createGetReducer(getOrder),
-
-  [listOrders.ok]: (state, orders) => ({
-    ...state,
-    ...orders,
-  }),
+  ...createListReducer(listOrders, 'order'),
 }, {});
 
 const picturesReducer = createReducer({
-  [listPictures.ok]: (state, pictures) => ({
-    ...state,
-    ...pictures,
-  }),
+  ...createListReducer(listPictures, 'picture'),
 }, {});
 
 const reducers = {
@@ -167,6 +158,27 @@ export function createGetReducer(actionAsync) {
         isLoading: false,
         error,
       },
+    }),
+  };
+}
+
+export function createListReducer(actionAsync, modelName) {
+  return {
+    [actionAsync.request]: (state) => ({
+      ...state,
+      isLoading: true,
+      error: false,
+    }),
+    [actionAsync.ok]: (state, payload) => ({
+      ...state,
+      isLoading: false,
+      error: false,
+      ...payload[`${modelName}s`],
+    }),
+    [actionAsync.error]: (state, payload) => ({
+      ...state,
+      isLoading: false,
+      error: payload,
     }),
   };
 }
