@@ -16,21 +16,15 @@ class PackPicker extends PureComponent {
   }
 
   renderCardActions(packName, lang) {
-    let packNameTranslated;
-
-    if ( packName === 'basic' ) {
-      packNameTranslated = lang.split('-')[0] === 'en' ? 'basic' : 'basique';
-    }
-    if ( packName === 'comfort' ) {
-      packNameTranslated = lang.split('-')[0] === 'en' ? 'comfort' : 'confort';
-    }
-    if ( packName === 'privilege' ) {
-      packNameTranslated = lang.split('-')[0] === 'en' ? 'privilege' : 'privilège';
-    }
     return (
       <CardActions>
         <Button raised
-          label={<div><Text id="select">Choose</Text> {packNameTranslated}</div>}
+          label={
+            <div>
+              <Text id="select">Choose</Text>
+              <Text id={`${name}.lowercase`}>{name}</Text>
+            </div>
+          }
           name="pack"
           value={packName}
           onClick={this.handlePackChange}
@@ -121,6 +115,7 @@ class PackPicker extends PureComponent {
 
 const definition = { 'fr-FR': {
   basic: {
+    lowercase: 'basique',
     title: '★ Basique',
     subtitle: 'Les principaux services pour un séjour sans stress dans votre appartement - ',
     first: 'Principaux services',
@@ -131,6 +126,7 @@ const definition = { 'fr-FR': {
     sixth: 'Maintenance et assistance illimitées',
   },
   comfort: {
+    lowercase: 'confort',
     title: '★★ Confort',
     subtitle: 'Plus de facilité pour plus de confort et de sérénité - ',
     first: 'Tous les services du pack Basique plus:',
@@ -141,6 +137,7 @@ const definition = { 'fr-FR': {
     sixth: 'Assurance annulation - 1 mois',
   },
   privilege: {
+    lowercase: 'privilège',
     title: '★★★ Privilège',
     subtitle: 'Services personnalisés pour un support client complet et attentif - ',
     first: 'Tous les services du pack Confort plus:',

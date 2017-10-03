@@ -1,5 +1,5 @@
 import { h }                      from 'preact';
-import PureComponent              from 'react';
+import { PureComponent }          from 'react';
 import { connect }                from 'react-redux';
 import { SearchResultsOptions }   from '~/content';
 import Carousel                   from '~/components/Carousel';
@@ -81,22 +81,22 @@ class Room extends PureComponent {
   }
 
   renderCarousel() {
-    const { 'cover picture': coverPicture } = this.props.room;
-    const baseUrl = SearchResultsOptions.imagesBaseUrl;
-    let images = pictures.map((pic) => (
-      <div
-        className={style.image}
-        onMouseOver={onOver}
-        style={{
-          backgroundImage: `url('${baseUrl}${pic.attributes.href}')`,
-        }}
-      />
-    ));
+    // const { 'cover picture': coverPicture } = this.props.room;
+    // const baseUrl = SearchResultsOptions.imagesBaseUrl;
+    // let images = pictures.map((pic) => (
+    //   <div
+    //     className={style.image}
+    //     onMouseOver={onOver}
+    //     style={{
+    //       backgroundImage: `url('${baseUrl}${pic.attributes.href}')`,
+    //     }}
+    //   />
+    // ));
 
     return (
       <div>
-        <Carousel slide className={style.coverPicture}>
-          {images}
+        <Carousel lazy slide className={style.coverPicture}>
+          {/*images*/' '}
         </Carousel>
       </div>
     );

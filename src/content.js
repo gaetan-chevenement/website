@@ -238,9 +238,6 @@ export const ContentTestimonies = {
 };
 
 export const ContentGuide = {
-  assets: {
-    image: require('./assets/home/gallery/home-gallery-1-o.jpg'),
-  },
   texts: {
     title: 'Guide logement gratuit',
     text: [

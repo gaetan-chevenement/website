@@ -50,7 +50,7 @@ export default class App extends Component {
   // Store route parameters in the state when route changes
   handleRoute = (e) => {
     const {
-      lang,
+      lang = /^fr-/.test(window.navigator.language) ? 'fr-FR' : 'en-EN',
       minPack,
       roomId,
       rentingId,
@@ -76,7 +76,7 @@ export default class App extends Component {
         <div id="app">
           <Header />
           <Router onChange={this.handleRoute}>
-            <Home path="/:lang/" />
+            <Home path="/:lang" default />
             <Search path="/:lang/search/:city" />
             <BookingStep1 path="/:lang/booking/:roomId/" />
             <BookingStep1 path="/:lang/booking/:roomId/1" />

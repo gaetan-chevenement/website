@@ -62,7 +62,7 @@ const renderSublist = memoize(([header, features], lang) => (
 
 export default function FeatureList({ lang }) {
   const features =
-    lang.split('-')[0] === 'fr' ? splitOnTitles(featuresFr) : splitOnTitles(featuresEn);
+    lang === 'fr-FR' ? splitOnTitles(featuresFr) : splitOnTitles(featuresEn);
 
   return (
     <div>
