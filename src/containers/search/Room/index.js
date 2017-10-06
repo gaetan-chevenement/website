@@ -44,9 +44,9 @@ function getBedsDetails(beds, bedNames, pictos) {
     );
     bedText = (
       <span>
-        {bedsList.length > 1
-          ? bedNames.multiple.replace('{n}', bedsList.length)
-          : bedNames[bedsList[0]]}
+        {bedsList.length > 1 ?
+          bedNames.multiple.replace('{n}', bedsList.length):
+          bedNames[bedsList[0]]}
       </span>
     );
   }
@@ -58,23 +58,23 @@ class Room extends PureComponent {
   renderAvailability() {
     const date = new Date(this.props.availableAt);
 
-    if (this.props.availableAt === null) {
+    if ( this.props.availableAt === null ) {
       return (
-        <div className={[style.availability, style.notAvailable].join(' ')}>
+        <div class={`{style.availability} ${style.notAvailable}`}>
           Non disponible
         </div>
       );
     }
-    else if (+date > +Date.now()) {
+    else if ( +date > +Date.now() ) {
       return (
-        <div className={[style.availability, style.availableSoon].join(' ')}>
+        <div class={`{style.availability} ${style.availableSoon}`}>
           Disponible le {date.getDate()} {MONTHS[date.getMonth()]}
         </div>
       );
     }
 
     return (
-      <div className={[style.availability, style.available].join(' ')}>
+      <div class={`${style.availability} ${style.available}`}>
         Disponible immédiatement
       </div>
     );
@@ -94,11 +94,9 @@ class Room extends PureComponent {
     // ));
 
     return (
-      <div>
-        <Carousel lazy slide className={style.coverPicture}>
-          {/*images*/' '}
-        </Carousel>
-      </div>
+      <Carousel lazy slide className={style.coverPicture}>
+        <img src="https://s3-eu-west-1.amazonaws.com/pictures.chez-nestor.com/10cf4563-4aa7-4347-8b43-f7ae6eec78fd" />
+      </Carousel>
     );
   }
 
@@ -117,12 +115,12 @@ class Room extends PureComponent {
     } = this.props;
 
     const { pictos, bedNames } = SearchResultsOptions;
-    const newElement = isNew(createdAt)
-      ? null
-      : <div className={style.isNew}>NEW</div>;
+    const newElement = isNew(createdAt) ?
+      null :
+      <div className={style.isNew}>NEW</div>;
     const { bedIcons, bedText } = getBedsDetails(beds, bedNames, pictos);
-
     let mainClasses = [style.room];
+
     if (!fromMap) {
       mainClasses.push(style.roomSplit);
     }
@@ -164,7 +162,7 @@ class Room extends PureComponent {
 
 const mapStateToProps = ({ rooms, apartments, pictures }, { roomId }) => ({
   room: rooms[roomId],
-  roomCount: apartments[rooms[roomId]].roomCount,
+  roomCount: apartments[rooms[roomId].ApartmentId].roomCount,
   pictures,
 });
 

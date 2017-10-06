@@ -4,13 +4,14 @@ const yup                         = require('yup');
 const D                           = require('date-fns');
 const memoize                     = require('memoize-immutable');
 const reduce                      = require('lodash/reduce');
+const filter                      = require('lodash/filter');
 const holidays                    = require('./holidays.json');
 const {
   SPECIAL_CHECKIN_PRICE,
   UNAVAILABLE_DATE,
 }                                 = require('./const');
 
-const _ = { reduce };
+const _ = { reduce, filter };
 
 const pureUtils = {
   roundBy100(value) {
@@ -110,7 +111,7 @@ const pureUtils = {
   },
   // TODO: implement proper room filtering
   filterMatchingRooms(rooms) {
-    return rooms;
+    return _.filter(rooms, (room) => ( typeof room === 'object' ));
   },
 };
 

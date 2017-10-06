@@ -1,16 +1,20 @@
-/**
- * Created by flb on 17/08/2017.
- */
-import { ContentSearchEngine, ContentTowns } from '~/content';
-import { Component } from 'preact';
-import { route } from 'preact-router';
-import theme from './style.css';
-import { Dropdown } from 'react-toolbox/lib/dropdown';
-import { DatePicker } from 'react-toolbox/lib/date_picker';
-import { Input } from 'react-toolbox/lib/input';
-import { Button } from 'react-toolbox/lib/button';
+import { h }              from 'preact';
+import { PureComponent }  from 'react';
+import { route }          from 'preact-router';
+import autobind           from 'autobind-decorator';
+import { Dropdown }       from 'react-toolbox/lib/dropdown';
+import { DatePicker }     from 'react-toolbox/lib/date_picker';
+import { Input }          from 'react-toolbox/lib/input';
+import { Button }         from 'react-toolbox/lib/button';
+import { ContentTowns }   from '~/content';
+import {
+  buttonContainer,
+  form,
+  noSubmit,
+}                         from './style.css';
 
-export default class SearchEngineForm extends Component {
+export default class SearchEngineForm extends PureComponent {
+  @autobind
   onSubmit(e) {
     e.preventDefault();
 
@@ -19,57 +23,48 @@ export default class SearchEngineForm extends Component {
     }
   }
 
+  @autobind
   handleCityChange(value) {
-    this.setState({
-      city: value,
-    });
-    if (this.props.mode === 'small') {
-      route(`/fr/search/${value}`);
+    if (this.props.mode === 'noSubmit') {
+      return route(`/fr/search/${value}`);
     }
+
+    this.setState({ city: value });
   }
 
+  @autobind
   handleDateChange(value) {
-    this.setState({
-      date: value,
-    });
+    this.setState({ date: value });
   }
 
   constructor(props) {
     super(props);
+
     this.state = {
-      city: props.defaultCity,
+      city: props.city,
       date: null,
     };
-
-    this._onSubmit = this.onSubmit.bind(this);
-    this._handleCityChange = this.handleCityChange.bind(this);
-    this._handleDateChange = this.handleDateChange.bind(this);
   }
 
   render() {
-    let button = null,
-      buttonContainer = null;
+    let button = null;
+    let buttonContainer = null;
 
-    if (this.props.mode !== 'small') {
-      button = <Button label="Rechercher" onClick={this._onSubmit} />;
+    if (this.props.mode !== 'noSubmit') {
+      button = <Button label="Rechercher" onClick={this.onSubmit} />;
       buttonContainer = (
-        <div className={theme.buttonContainer}>
+        <div class={buttonContainer}>
           {button}
         </div>
       );
     }
 
     return (
-      <form
-        className={[
-          theme.form,
-          this.props.mode === 'small' ? theme.small : '',
-        ].join(' ')}
-      >
+      <form class={`${form} ${this.props.mode === 'noSubmit' ? noSubmit : ''}`}>
         <div>
           <i class="material-icons">location_city</i>
           <Dropdown
-            onChange={this._handleCityChange}
+            onChange={this.handleCityChange}
             label="Ville"
             value={this.state.city}
             source={ContentTowns.list
@@ -85,7 +80,7 @@ export default class SearchEngineForm extends Component {
             label="Date d'arrivée"
             floating={false}
             value={this.state.date}
-            onChange={this._handleDateChange}
+            onChange={this.handleDateChange}
           />
         </div>
         <div>

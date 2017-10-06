@@ -3,13 +3,15 @@ import { message } from './style.css';
 
 export default function SameSearchCount({ count }) {
   return (
-    <div className={message}>
-      <p
+    <p class={`${message}`} style="display: flex;">
+      <i class="material-icons">timer</i>
+      &nbsp;
+      <span
         /*eslint-disable react/no-danger*/
         dangerouslySetInnerHTML={{
-          __html: SameSearchCountOptions.texts.content.replace('{n}', count),
+          __html: SameSearchCountOptions.texts.content(count),
         }}
       />
-    </div>
+    </p>
   );
 }

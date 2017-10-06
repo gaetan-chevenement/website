@@ -1,13 +1,12 @@
 import { PureComponent }      from 'react';
-import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { batch }              from 'redux-act';
-import { IntlProvider, Text }       from 'preact-i18n';
+import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import D                      from 'date-fns';
 import { DatePicker }         from 'react-toolbox/lib/date_picker';
 import { TimePicker }         from 'react-toolbox/lib/time_picker';
-import * as actions           from '~/actions';
+import mapDispatchToProps     from '~/actions/mapDispatchToProps';
 import Utils                  from '~/utils';
 
 class CheckinInputs extends PureComponent {
@@ -73,10 +72,6 @@ function mapStateToProps({ route: { lang, roomId }, booking, rooms }) {
     bookingDate: Utils.getBookingDate(rooms[roomId]),
     checkinDateError: errors.checkinDate,
   };
-}
-
-function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actions, dispatch) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckinInputs);

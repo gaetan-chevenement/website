@@ -82,7 +82,7 @@ class Renting extends PureComponent {
 const definition = { 'fr-FR': {
 } };
 
-function mapStateToProps({ route: { lang, rentingId }, rentings, orders, rooms }) {
+function mapStateToProps({ route: { lang }, rentings, orders, rooms }, { rentingId }) {
   const renting = rentings[rentingId];
   const room = renting && rooms[renting.roomId];
   const { pack: packOrder } =

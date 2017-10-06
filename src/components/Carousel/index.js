@@ -54,7 +54,7 @@ class Carousel extends PureComponent {
 
     return (
       <div className={`${className} carousel ${fade ? 'fade' : 'slide'}`}>
-        {children.map((child, i) => {
+        {(Array.isArray(children) ? children : [children]).map((child, i) => {
           if ( i === prevIndex ) {
             return cloneWithClass(child, 'prev');
           }

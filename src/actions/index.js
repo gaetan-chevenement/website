@@ -7,7 +7,8 @@ import {
   ROOM_SEGMENTS,
 }                               from '~/const';
 
-export const updateRoute = createAction('Update route object');
+export const updateRoute = createAction('Update route state');
+export const updateSearch = createAction('Update search state');
 
 export const {
   updateBooking,

@@ -9,6 +9,12 @@ import * as actions           from '~/actions';
 import Utils                  from '~/utils';
 
 class BookingStep1 extends PureComponent {
+  componentWillMount() {
+    const { roomId } = this.props;
+
+    actions.updateBooking({ roomId });
+  }
+
   componentDidMount() {
     const {
       roomName,
@@ -100,8 +106,8 @@ const definition = { 'fr-FR': {
   button: 'Continuer',
 } };
 
-function mapStateToProps({ route: { lang }, rooms, booking }) {
-  const room = rooms[booking.roomId];
+function mapStateToProps({ route: { lang }, rooms, booking }, { roomId }) {
+  const room = rooms[roomId];
 
   return {
     lang,

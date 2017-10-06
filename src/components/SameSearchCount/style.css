@@ -1,11 +1,4 @@
 .message {
   color: red;
-  background: url("/assets/search/Picto warning.png") left center no-repeat;
-  background-size: 30px;
-  min-height: 30px;
-  margin: 20px 0;
-  padding-left: 50px;
-  display: flex;
-  justify-content: left;
-  font-size: 13px;
+  margin: 20px 0 19px;
 }

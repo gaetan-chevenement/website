@@ -29,6 +29,12 @@ class Payment extends PureComponent {
       .catch(console.error);
   }
 
+  componentWillMount() {
+    const { orderId } = this.props;
+
+    actions.updatePayment({ orderId });
+  }
+
   componentDidMount() {
     const { orderId, orderLabel, actions } = this.props;
 
@@ -104,8 +110,7 @@ const definition = { 'fr-FR': {
   },
 } };
 
-function mapStateToProps({ route: { lang, returnUrl }, orders, payment }) {
-  const { orderId } = payment;
+function mapStateToProps({ route: { lang, returnUrl }, orders, payment }, { orderId }) {
   const order = orders[orderId];
 
   return {

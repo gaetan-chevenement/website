@@ -5,6 +5,7 @@ import NamedTupleMap       from 'namedtuplemap';
 
 import {
   updateRoute,
+  updateSearch,
   updateBooking,
   setBookingErrors,
   deleteBookingError,
@@ -28,6 +29,12 @@ const noErrors = {};
 
 const routeReducer = createReducer({
   [updateRoute]: (state, payload) => ({
+    ...state,
+    ...payload,
+  }),
+}, {});
+const searchReducer = createReducer({
+  [updateSearch]: (state, payload) => ({
     ...state,
     ...payload,
   }),
@@ -121,17 +128,11 @@ const picturesReducer = createReducer({
 
 const reducers = {
 
-  // /* generally modified by the router */
-  // route: (routeReducer),
-  //
-  // /* generally modified by user-interactions */
-  // booking: (bookingReducer),
-  // payment: (paymentReducer),
-
   /* generally modified by the router */
   route: avoidUselessMutations(routeReducer),
 
   /* generally modified by user-interactions */
+  search: avoidUselessMutations(searchReducer),
   booking: avoidUselessMutations(bookingReducer),
   payment: avoidUselessMutations(paymentReducer),
 

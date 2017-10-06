@@ -44,6 +44,7 @@ class ResultsMap extends PureComponent {
     if (this._map) {
       this._map.leafletElement.invalidateSize();
     }
+    setInterval(this._map.leafletElement.invalidateSize, 1000);
   }
 
   renderMarkers() {
@@ -80,7 +81,12 @@ class ResultsMap extends PureComponent {
 
     return (
       <Map
-        style={{ width: '100%', height: '100%', position: 'relative' }}
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
         bounds={bounds}
         className={style.map}
         zoomControl={false}

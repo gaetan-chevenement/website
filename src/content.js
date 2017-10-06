@@ -2,8 +2,9 @@ export const SameSearchCountOptions = {
   min: 750,
   max: 950,
   texts: {
-    content:
-      '<b>{n} personnes</b> ont fait la <b>même recherche</b> cette semaine. Nous vous recommandons de réserver sans tarder !',
+    content: (count) => (
+      `<b>${count} personnes</b> ont fait la <b>même recherche</b> cette semaine.`
+    ),
   },
 };
 

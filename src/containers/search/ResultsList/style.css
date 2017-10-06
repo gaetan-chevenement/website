@@ -39,17 +39,7 @@
 
 .closeButton {
   float: right;
-  border: 1px solid white;
-  border-radius: 50%;
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  font-family: 'Open Sans', sans-serif;
   color: white;
-  padding: 5px;
-  text-align: center;
-  line-height: 16px;
   cursor: pointer;
-  margin-right: 4px;
   margin-top: -7px;
 }

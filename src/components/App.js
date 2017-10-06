@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Router }       from 'preact-router';
 import { Provider }     from 'react-redux';
-import { batch }        from 'redux-act';
+import autobind         from 'autobind-decorator';
 // import { ThemeProvider } from 'react-css-themr';
 
 import configureStore   from '~/stores';
@@ -13,9 +13,7 @@ import BookingStep3     from '~/routes/BookingStep3';
 import Renting          from '~/routes/Renting';
 import Payment          from '~/routes/Payment';
 import {
-  updateBooking,
   updateRoute,
-  updatePayment,
 }                       from '~/actions';
 import Utils            from '~/utils';
 import Header           from './Header';
@@ -39,6 +37,9 @@ const store = configureStore({
   payment: {
     errors: {},
   },
+  search: {
+    errors: {}
+  },
   orders: {},
   rooms: {},
   apartments: {},
@@ -46,35 +47,38 @@ const store = configureStore({
 });
 
 export default class App extends Component {
-
   // Store route parameters in the state when route changes
-  handleRoute = (e) => {
+  @autobind
+  handleRoute(e) {
     const {
-      lang = /^fr-/.test(window.navigator.language) ? 'fr-FR' : 'en-EN',
+      lang = this.state.lang,
       minPack,
-      roomId,
-      rentingId,
-      clientId,
-      orderId,
+      returnUrl,
+      city,
     } = e.current.attributes;
 
     // route params are only relevant when they're defined, so we'll filter-out
     // all undefined values.
-    batch(
-      store.dispatch(updateRoute(Utils.filterOutUndef(
-        { lang, rentingId, clientId, minPack }
-      ))),
-      roomId !== undefined && store.dispatch(updateBooking({ roomId })),
-      orderId !== undefined && store.dispatch(updatePayment({ orderId }))
-    );
+    store.dispatch(updateRoute(Utils.filterOutUndef({
+      lang, minPack, city, returnUrl,
+    })));
 
-  };
+    this.setState({ lang });
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      lang: /^fr-/.test(window.navigator.language) ? 'fr-FR' : 'en-EN',
+    };
+  }
 
   render() {
     return (
       <Provider store={store}>
         <div id="app">
-          <Header />
+          <Header lang={this.state.lang} />
           <Router onChange={this.handleRoute}>
             <Home path="/:lang" default />
             <Search path="/:lang/search/:city" />
