@@ -90,7 +90,6 @@ export default class App extends Component {
             <Payment path="/:lang/payment/:orderId" />
           </Router>
           <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans|Material+Icons" />
-          <link rel="stylesheet" href="//weloveiconfonts.com/api/?family=brandico" />
         </div>
       </Provider>
     );

@@ -24,12 +24,12 @@ export const SearchResultsOptions = {
   imagesBaseUrl: 'http://chez-nestor.com/wp-content/uploads/',
   pictos: {
     double: require('./assets/search/Picto description 4a.png'),
-    single: require('./assets/search/Picto description 4b.png'),
+    simple: require('./assets/search/Picto description 4b.png'),
     sofa: require('./assets/search/Picto description 4c.png'),
   },
   bedNames: {
     double: 'Double couchage',
-    single: 'Lit simple',
+    simple: 'Lit simple',
     sofa: 'Canapé lit',
     multiple: '{n} couchages',
   },

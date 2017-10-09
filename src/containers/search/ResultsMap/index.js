@@ -89,7 +89,7 @@ class ResultsMap extends PureComponent {
         }}
         bounds={bounds}
         className={style.map}
-        zoomControl={false}
+        scrollWheelZoom={false}
         attributionControl={false}
         maxZoom={15}
         ref={map => (this._map = map)}

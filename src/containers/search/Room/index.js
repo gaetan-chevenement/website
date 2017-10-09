@@ -1,6 +1,7 @@
 import { h }                      from 'preact';
 import { PureComponent }          from 'react';
 import { connect }                from 'react-redux';
+import { Link }                   from 'preact-router';
 import { SearchResultsOptions }   from '~/content';
 import Carousel                   from '~/components/Carousel';
 import style                      from './style.css';
@@ -20,6 +21,7 @@ const MONTHS = [
   'Novembre',
   'Décembre',
 ];
+const { pictos, bedNames } = SearchResultsOptions;
 
 function getClassForRoomAttribute(cssClass) {
   return [style.roomAttributesIcon, cssClass].join(' ');
@@ -33,15 +35,15 @@ function isNew(createdAt) {
   return diffDays > DAYS_COUNT_FOR_NEW;
 }
 
-function getBedsDetails(beds, bedNames, pictos) {
+function getBedsDetails(beds) {
   let bedIcons = [];
   let bedText = null;
   const bedsList = beds !== null ? beds.split('+') : [];
 
   if (beds !== null && bedsList.length > 0) {
-    bedIcons = bedsList.map(b =>
-      <img className={style.roomBedIcon} src={pictos[b]} />,
-    );
+    bedIcons = bedsList.map((b) => (console.log(b),
+      <img className={style.roomBedIcon} src={pictos[b]} />
+    ));
     bedText = (
       <span>
         {bedsList.length > 1 ?
@@ -55,6 +57,10 @@ function getBedsDetails(beds, bedNames, pictos) {
 }
 
 class Room extends PureComponent {
+  // handleClick() {
+  //   console.log('here');
+  // }
+
   renderAvailability() {
     const date = new Date(this.props.availableAt);
 
@@ -94,14 +100,16 @@ class Room extends PureComponent {
     // ));
 
     return (
-      <Carousel lazy slide className={style.coverPicture}>
+      <Carousel lazy slide arrows className={style.coverPicture}>
         <img src="https://s3-eu-west-1.amazonaws.com/pictures.chez-nestor.com/10cf4563-4aa7-4347-8b43-f7ae6eec78fd" />
+        <img src="https://s3-eu-west-1.amazonaws.com/pictures.chez-nestor.com/31f53798-1548-4d98-b5aa-1b0199ffc112?1507301466951" />
       </Carousel>
     );
   }
 
   render() {
     const {
+      lang,
       room: {
         basePrice,
         beds,
@@ -114,11 +122,10 @@ class Room extends PureComponent {
       fromMap,
     } = this.props;
 
-    const { pictos, bedNames } = SearchResultsOptions;
     const newElement = isNew(createdAt) ?
       null :
       <div className={style.isNew}>NEW</div>;
-    const { bedIcons, bedText } = getBedsDetails(beds, bedNames, pictos);
+    const { bedIcons, bedText } = getBedsDetails(beds);
     let mainClasses = [style.room];
 
     if (!fromMap) {
@@ -126,9 +133,9 @@ class Room extends PureComponent {
     }
 
     return (
-      <a
+      <Link
         className={mainClasses.join(' ')}
-        href={`/fr/room/${id}`}
+        href={`/${lang}/room/${id}`}
       >
         {this.renderCarousel()}
         <div className={style.roomAttributes}>
@@ -155,15 +162,20 @@ class Room extends PureComponent {
             </div>
           </div>
         </div>
-      </a>
+      </Link>
     );
   }
 }
 
-const mapStateToProps = ({ rooms, apartments, pictures }, { roomId }) => ({
-  room: rooms[roomId],
-  roomCount: apartments[rooms[roomId].ApartmentId].roomCount,
-  pictures,
-});
+const mapStateToProps = (state, { roomId }) => {
+  const { rooms, apartments, pictures, route: { lang } } = state;
+
+  return {
+    lang,
+    room: rooms[roomId],
+    roomCount: apartments[rooms[roomId].ApartmentId].roomCount,
+    pictures,
+  };
+};
 
 export default connect(mapStateToProps)(Room);

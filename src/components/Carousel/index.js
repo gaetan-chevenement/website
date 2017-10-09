@@ -11,7 +11,7 @@ class Carousel extends PureComponent {
   goto(index) {
     const { length } = this.props.children;
 
-    if ( index === this.state.currIndex ) {
+    if ( ( index + length ) % length === this.state.currIndex ) {
       return;
     }
 
@@ -23,13 +23,15 @@ class Carousel extends PureComponent {
   }
 
   @autobind
-  next() {
+  next(e) {
+    preventDefault(e);
     this.goto(this.state.currIndex + 1);
   }
 
   @autobind
-  prev() {
-    this.step(this.state.currIndex - 1);
+  prev(e) {
+    preventDefault(e);
+    this.goto(this.state.currIndex - 1);
   }
 
   constructor(props) {
@@ -49,28 +51,45 @@ class Carousel extends PureComponent {
     }
   }
 
-  render({ children, className, fade, lazy }) {
+  renderArrows() {
+    return (
+      <div class="carousel-arrows">
+        <div class="carousel-arrow-left" onClick={this.prev}>
+          <span>❬</span>
+        </div>
+        <div class="carousel-arrow-right" onClick={this.next}>
+          <span>❭</span>
+        </div>
+      </div>
+    );
+  }
+
+  render({ children, className, fade, lazy, arrows }) {
     const { prevIndex, currIndex, nextIndex } = this.state;
 
+    // ❬❭⧼⧽
     return (
-      <div className={`${className} carousel ${fade ? 'fade' : 'slide'}`}>
-        {(Array.isArray(children) ? children : [children]).map((child, i) => {
-          if ( i === prevIndex ) {
-            return cloneWithClass(child, 'prev');
-          }
-          if ( i === currIndex ) {
-            return cloneWithClass(child, 'curr');
-          }
-          if ( i === nextIndex ) {
-            return cloneWithClass(child, 'next');
-          }
+      <div className={`${className} carousel-wrapper`}>
+        { arrows ? this.renderArrows() : '' }
+        <div className={`carousel ${fade ? 'fade' : 'slide'}`}>
+          {(Array.isArray(children) ? children : [children]).map((child, i) => {
+            if ( i === currIndex ) {
+              return cloneWithClass(child, 'curr');
+            }
+            if ( i === nextIndex ) {
+              return cloneWithClass(child, 'next');
+            }
+            if ( i === prevIndex ) {
+              return cloneWithClass(child, 'prev');
+            }
 
-          // lazy rendering
-          // (always render 'something' otherwise transitions won't work)
-          return lazy ?
-            React.createElement(child.type) :
-            child;
-        })}
+            // lazy rendering
+            // (always render 'something' otherwise transitions won't work)
+            return lazy ?
+              React.createElement(child.type) :
+              child;
+          })}
+        </div>
       </div>
     );
   }
@@ -84,4 +103,11 @@ function cloneWithClass(elem, name) {
   clone.props.className += ` carousel-${name}`;
 
   return clone;
+}
+
+function preventDefault(e) {
+  if ( e ) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
 }
