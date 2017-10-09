@@ -23,6 +23,11 @@ import {
   listOrders,
   getRenting,
   listPictures,
+  listFeatures,
+  addFeature,
+  deleteFeature,
+  saveFeatures,
+
 }                           from '~/actions';
 
 const noErrors = {};
@@ -99,6 +104,24 @@ const roomsReducer = createReducer({
     ...state,
     [room.id]: room,
   }),
+  [listRooms.ok]: (state, { rooms }) => ({
+    ...state,
+    ...rooms,
+  }),
+  [listFeatures.ok]: (state, [{ id, Features }]) => ({
+    ...state,
+    [id]: { ...state[id], Features },
+  }),
+  [addFeature]: (state, feature) => feature.termable === 'Room' ? [
+    ...state,
+    feature,
+  ] : state,
+  [deleteFeature]: (state, feature) => feature.termable === 'Room' ? [],
+
+  [saveFeatures.ok]: (state, [{ id, Features }]) => ({
+    ...state,
+    [id]: { ...state[id], Features },
+  }),
 }, {});
 
 const apartmentsReducer = createReducer({
@@ -111,6 +134,14 @@ const apartmentsReducer = createReducer({
     ...state,
     ...apartments,
   }),
+  [listFeatures.ok]: (state, [,{ id, Features }]) => ({
+    ...state,
+    [id]: { ...state[id], Features },
+  }),
+  [addFeature]: (state, feature) => feature.termable === 'Apartment' ? [
+    ...state,
+    feature,
+  ] : state,
 }, {});
 
 const rentingsReducer = createReducer({

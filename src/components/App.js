@@ -14,6 +14,8 @@ import Renting          from 'async!../routes/Renting';
 import Payment          from 'async!../routes/Payment';
 import Services         from 'async!../routes/Services';
 import Booking          from 'async!../routes/Booking';
+import Admin            from '~/routes/Admin';
+import Room             from '~/routes/Room';
 import {
   updateRoute,
 }                       from '~/actions';
@@ -80,7 +82,8 @@ export default class App extends Component {
         <div id="app">
           <Header lang={this.state.lang} />
           <Router onChange={this.handleRoute}>
-            <Home path="/:lang" default />
+            <Home path="/:lang/" default />
+            <Admin path="/admin" />
             <Search path="/:lang/search/:city" />
             <BookingStep1 path="/:lang/booking/:roomId/" />
             <BookingStep1 path="/:lang/booking/:roomId/1" />
@@ -90,6 +93,7 @@ export default class App extends Component {
             <Payment path="/:lang/payment/:orderId" />
             <Services path="/:lang/services" />
             <Booking path="/:lang/booking" />
+            <Room path="/:lang/room/:roomId/" />
           </Router>
           <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:700|Material+Icons" />
         </div>

@@ -1,14 +1,20 @@
 import { createAction }         from 'redux-act';
 import { createActionAsync }    from 'redux-act-async';
 import queryString              from 'query-string';
+import mapValues                from 'lodash/mapValues';
+import flattenDeep                from 'lodash/flattenDeep';
+import values                   from 'lodash/values';
+import filter                   from 'lodash/filter';
 import Utils                    from '~/utils';
+import Features                    from '~/components/Features/features';
 import {
   API_BASE_URL,
   ROOM_SEGMENTS,
 }                               from '~/const';
 
-export const updateRoute = createAction('Update route state');
-export const updateSearch = createAction('Update search state');
+const _ = { mapValues, values, filter, flattenDeep };
+export const updateRoute = createAction('Update route object');
+export const addFeature = createAction('add feature');
 
 export const {
   updateBooking,
@@ -88,12 +94,67 @@ export const listRooms =
     },
     { ok: { payloadReducer: reduceRooms } }
   );
+<<<<<<< eff05bb89827d550d695ed7d879cfac2e359853c
 
 export const listPictures =
   createActionAsync('List pictures', ({ room }) => (
     fetchJson(`/Pictures`)
       .then(result => Object.assign(result, { roomId: room.id }))
   ));
+=======
+export const listFeatures =
+  createActionAsync(
+    'list Features of a room and apartment',
+    (roomId, apartmentId) => {
+      if (roomId === undefined || apartmentId === undefined ) {
+        return Promise.reject('Can only fetch by roomId or by ApartmentIdfor now');
+      }
+
+      return fetchJson(`/Term?filterType=or&filter[TermableId]=${roomId},${apartmentId}`);
+    },
+    { ok: { payloadReducer: ({ request: [ roomId, apartmentId ], response: { data, included } }) => {
+      const features = [{
+        id: roomId,
+        Features: data
+          .filter((_data) => _data.attributes.termable === 'Room' && /^room-features-/.test(_data.attributes.taxonomy))
+          .map(({ attributes }) => attributes ),
+      }, {
+        id: apartmentId,
+        Features: data
+          .filter((_data) => _data.attributes.termable === 'Apartment' && /^apartment-features-/.test(_data.attributes.taxonomy))
+          .map(({ attributes }) =>  attributes  ),
+      }];
+      if ( !features[0].Features.length ) {
+        features[0].Features = _.flattenDeep(
+          _.values(_.mapValues(
+            Features.Room,
+            (value, taxonomy, object) =>
+              _.filter(
+                object[taxonomy],
+                (term, name) => {
+                  Object.assign(term, { name, taxonomy, termable: 'Room' });
+                  return term.value === true;
+                }))));
+      }
+      if ( !features[1].Features.length ) {
+        features[1].Features = _.flattenDeep(
+          _.values(_.mapValues(
+            Features.Apartment,
+            (value, taxonomy, object) => _.filter(
+              object[taxonomy],
+              (term, name) => {
+                Object.assign(term, { name, taxonomy, termable: 'Apartment' });
+                return term.value === true;
+              }))));
+      }
+      return features;
+    } } }
+  );
+
+export const saveFeatures = (roomFeatures, apartmentFeatures) => {
+  console.log(roomFeatures, apartmentFeatures);
+};
+>>>>>>> WIP
 
 export const saveBooking =
   createActionAsync(
@@ -179,7 +240,7 @@ export const savePayment =
   );
 
 function fetchJson(url, options) {
-  return fetch(`${API_BASE_URL}${url}`, options)
+  return fetch(`${API_BASE_URL}${url}`, Object.assign({ credentials: 'include' }, options))
     .then((response) => {
       if ( !response.ok ) {
         /* eslint-disable promise/no-nesting */
