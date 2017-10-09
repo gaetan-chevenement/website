@@ -1,9 +1,17 @@
 import { IntlProvider, Text } from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { connect }            from 'react-redux';
+<<<<<<< e4ce40357a41faeeda2a4b46728141ba0fa3cf24
 import { bindActionCreators } from 'redux';
 import Promise                from 'bluebird';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
+=======
+import { route }              from 'preact-router';
+import { bindActionCreators } from 'redux';
+import Promise                from 'bluebird';
+import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
+import { Button }             from 'react-toolbox/lib/button';
+>>>>>>> WIP
 import FeaturesDetails           from '~/containers/room/FeaturesDetails';
 import * as actions           from '~/actions';
 
@@ -24,6 +32,10 @@ class Room extends PureComponent {
       roomName,
       apartmentId,
       lang,
+<<<<<<< e4ce40357a41faeeda2a4b46728141ba0fa3cf24
+=======
+      roomError,
+>>>>>>> WIP
       isRoomLoading,
     } = this.props;
     if ( isRoomLoading ) {
@@ -54,7 +66,11 @@ const definition = { 'fr-FR': {
 
 } };
 
+<<<<<<< e4ce40357a41faeeda2a4b46728141ba0fa3cf24
 function mapStateToProps({ route: { lang, roomId }, rooms }) {
+=======
+function mapStateToProps({ route: { lang, roomId }, apartments, rooms }) {
+>>>>>>> WIP
   const room = rooms[roomId];
 
   return {
@@ -62,6 +78,10 @@ function mapStateToProps({ route: { lang, roomId }, rooms }) {
     roomName: room && room.name,
     apartmentId: room && room.ApartmentId,
     lang,
+<<<<<<< e4ce40357a41faeeda2a4b46728141ba0fa3cf24
+=======
+    roomError: room && room.error,
+>>>>>>> WIP
     room,
     isRoomLoading: !room || room.isLoading,
   };

@@ -49,6 +49,7 @@ class FeaturesDetails extends PureComponent {
 
   renderTerm({ termable, taxonomy, name, label, isChecked }) {
     const { admin } = this.props;
+
     return (
       admin ?
         <li>
@@ -63,7 +64,7 @@ class FeaturesDetails extends PureComponent {
     );
   }
   renderFeatures(taxonomy, category) {
-    const { lang, admin } = this.props;
+    const { lang } = this.props;
     const InitializedFeatures = this.props[`${category}Features`];
     const featuresList = _.values(_.mapValues(Features[category][taxonomy],(value, key, object) => Object.assign(
       object[key],

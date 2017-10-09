@@ -110,14 +110,12 @@ export const listRooms =
     },
     { ok: { payloadReducer: reduceRooms } }
   );
-<<<<<<< eff05bb89827d550d695ed7d879cfac2e359853c
 
 export const listPictures =
   createActionAsync('List pictures', ({ room }) => (
     fetchJson(`/Pictures`)
       .then(result => Object.assign(result, { roomId: room.id }))
   ));
-=======
 export const listFeatures =
   createActionAsync(
     'list Features of a room and apartment',
@@ -173,12 +171,6 @@ export const listFeatures =
     } } }
   );
 
-<<<<<<< e561728d26e032d2d25eb414e3e64176f3997137
-export const saveFeatures = (roomFeatures, apartmentFeatures) => {
-  console.log(roomFeatures, apartmentFeatures);
-};
->>>>>>> WIP
-=======
 export const saveFeatures =
   createActionAsync(
     'save Terms of Room and Apartment in the backoffice',
@@ -203,8 +195,6 @@ export const saveFeatures =
       noRethrow: true,
       error: { payloadReducer: (payload) => ({ unauthorized: 'You must be log to the backoffice to update room\'s features' }) } },
   );
->>>>>>> Update Room and apartment Terms
-
 export const saveBooking =
   createActionAsync(
     'save Renting and associated Client in the backoffice',

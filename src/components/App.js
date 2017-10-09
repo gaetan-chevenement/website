@@ -57,6 +57,11 @@ export default class App extends Component {
       minPack,
       returnUrl,
       city,
+      roomId,
+      rentingId,
+      clientId,
+      orderId,
+      admin,
     } = e.current.attributes;
 
     // route params are only relevant when they're defined, so we'll filter-out
@@ -66,8 +71,15 @@ export default class App extends Component {
     })));
 
     this.setState({ lang });
-  }
 
+    batch(
+      store.dispatch(updateRoute(filterOutUndef(
+        { lang, rentingId, clientId, minPack, roomId, admin }
+      ))),
+      store.dispatch(updateBooking(filterOutUndef({ roomId }))),
+      store.dispatch(updatePayment(filterOutUndef({ orderId })))
+    );
+  }
   constructor(props) {
     super(props);
 
