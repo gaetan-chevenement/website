@@ -1,11 +1,9 @@
 import { IntlProvider, Text } from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { connect }            from 'react-redux';
-import { route }              from 'preact-router';
 import { bindActionCreators } from 'redux';
 import Promise                from 'bluebird';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
-import { Button }             from 'react-toolbox/lib/button';
 import FeaturesDetails           from '~/containers/room/FeaturesDetails';
 import * as actions           from '~/actions';
 
@@ -26,7 +24,6 @@ class Room extends PureComponent {
       roomName,
       apartmentId,
       lang,
-      roomError,
       isRoomLoading,
     } = this.props;
     if ( isRoomLoading ) {
@@ -57,7 +54,7 @@ const definition = { 'fr-FR': {
 
 } };
 
-function mapStateToProps({ route: { lang, roomId }, apartments, rooms }) {
+function mapStateToProps({ route: { lang, roomId }, rooms }) {
   const room = rooms[roomId];
 
   return {
@@ -65,7 +62,6 @@ function mapStateToProps({ route: { lang, roomId }, apartments, rooms }) {
     roomName: room && room.name,
     apartmentId: room && room.ApartmentId,
     lang,
-    roomError: room && room.error,
     room,
     isRoomLoading: !room || room.isLoading,
   };

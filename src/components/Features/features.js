@@ -154,7 +154,7 @@ export default {
       bakingTrays: {
         value: true,
         'en-US': 'Baking Trays',
-        'fr-FR': 'Paques',
+        'fr-FR': 'Plaques',
       },
       oven: {
         value: true,

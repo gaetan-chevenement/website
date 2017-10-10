@@ -6,7 +6,7 @@ import { IntlProvider }       from 'preact-i18n';
 import capitalize             from 'lodash/capitalize';
 import values                 from 'lodash/values';
 import mapValues              from 'lodash/mapValues';
-//import Promise                from 'bluebird';
+import Promise                from 'bluebird';
 import autobind               from 'autobind-decorator';
 import Features                  from '~/components/Features/features';
 import * as actions           from '~/actions';
@@ -15,24 +15,40 @@ const _ = { capitalize, values, mapValues };
 class FeaturesDetails extends PureComponent {
   @autobind
   handleFormSubmit(event) {
-    const { RoomFeatures, ApartmentFeatures, actions } = this.props;
+    const { actions } = this.props;
+
     event.preventDefault();
-    actions.updateFeatures(RoomFeatures, ApartmentFeatures);
+    Promise.resolve()
+      .then(() => actions.saveFeatures(this.props))
+      .catch((e) => console.error(e));
   }
 
   @autobind
   handleFeatureChange(event) {
     let feature = {};
-    ['name', 'label', 'taxonomy', 'termable']
-      .forEach((attribute) => Object.assign(feature, { [attribute]: event.target.getAttribute(attribute) }));
+    ['name', 'taxonomy', 'termable']
+      .forEach((attribute) => Object.assign(
+        feature,
+        { [attribute]: event.target.getAttribute(attribute) }
+      ));
+    Object.assign(
+      feature,
+      { termableId: feature.termable === 'Room' ?
+        this.props.roomId :
+        this.props.apartmentId,
+      });
 
-    event.target.checked ? this.props.actions.addFeature(feature):
-      this.props.actions.deleteFeature(feature);
+    event.target.checked ?
+      feature.termable === 'Room' ?
+        this.props.actions.addRoomFeature(feature) :
+        this.props.actions.addApartmentFeature(feature) :
+      feature.termable === 'Room' ?
+        this.props.actions.deleteRoomFeature(feature) :
+        this.props.actions.deleteApartmentFeature(feature);
   }
 
   renderTerm({ termable, taxonomy, name, label, isChecked }) {
     const { admin } = this.props;
-
     return (
       admin ?
         <li>
@@ -47,7 +63,7 @@ class FeaturesDetails extends PureComponent {
     );
   }
   renderFeatures(taxonomy, category) {
-    const { lang } = this.props;
+    const { lang, admin } = this.props;
     const InitializedFeatures = this.props[`${category}Features`];
     const featuresList = _.values(_.mapValues(Features[category][taxonomy],(value, key, object) => Object.assign(
       object[key],
@@ -56,13 +72,14 @@ class FeaturesDetails extends PureComponent {
         taxonomy,
         name: key,
         label: object[key][lang],
-        isChecked: InitializedFeatures.some((feature) =>  feature.name === key),
+        isChecked: InitializedFeatures.some((feature) => feature.name === key && feature.taxonomy === taxonomy),
       })));
+    const displayTitle = admin ? true : !!featuresList.some((feature) => feature.isChecked !== false);
 
     return (
       featuresList.length > 0 ?
         <section>
-          <h4>{_.capitalize(taxonomy.split('-')[2])}</h4>
+          {displayTitle ? <h4>{_.capitalize(taxonomy.split('-')[2])}</h4> : ''}
           <ul>{featuresList.map((term) => this.renderTerm(term))}</ul>
         </section>
         : '');
@@ -71,6 +88,9 @@ class FeaturesDetails extends PureComponent {
   render() {
     const {
       lang,
+      roomError,
+      roomId,
+      isFeaturesValidated,
       isApartmentFeaturesInitialized,
       isRoomFeaturesInitialized,
       admin,
@@ -100,8 +120,25 @@ class FeaturesDetails extends PureComponent {
                 'apartment-features-bathroom',
                 'apartment-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Apartment'))
               }
-              <input type="submit" />
+              <input disabled={roomError && roomError.unauthorized} type="submit" />
             </form>
+            {roomError && roomError.unauthorized ?
+              <div>
+                <span>{roomError.unauthorized}<br />
+                  <a href="/admin">Login</a> <br />
+                  Or <br />
+                  <a href={`/${lang}/room/${roomId}`}>Go back</a>
+                </span>
+
+              </div>
+              : ''
+            }
+            {isFeaturesValidated ?
+              <div>
+                <span>Features have been successfully updated on the backoffice</span>
+              </div>
+              : ''
+            }
           </section> :
           <section>
             <h3>Room</h3>
@@ -130,6 +167,8 @@ function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { roomId
   return {
     lang,
     admin,
+    roomError: rooms && rooms.errors,
+    isFeaturesValidated: rooms && rooms.isValidated,
     RoomFeatures: rooms[roomId] && rooms[roomId].Features,
     ApartmentFeatures: apartments[apartmentId] && apartments[apartmentId].Features,
     isApartmentFeaturesInitialized: apartments[apartmentId] && apartments[apartmentId].Features && apartments[apartmentId].Features.length > 0,

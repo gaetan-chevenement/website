@@ -14,7 +14,10 @@ import {
 
 const _ = { mapValues, values, filter, flattenDeep };
 export const updateRoute = createAction('Update route object');
-export const addFeature = createAction('add feature');
+export const addRoomFeature = createAction('add feature to room');
+export const deleteRoomFeature = createAction('delete feature from room');
+export const addApartmentFeature = createAction('add feature to apartment');
+export const deleteApartmentFeature = createAction('delete feature from apartment');
 
 export const {
   updateBooking,
@@ -36,8 +39,21 @@ export const getRoom =
       .then(throwIfNotFound('Room', id)),
     {
       noRethrow: true,
-      ok: { payloadReducer: reduceRooms },
-    }
+      ok: { payloadReducer: ({ response: { data, included } }) => {
+        const availableAt = new Date(data[0].attributes.availableAt);
+        const now = new Date();
+
+        return {
+          room: {
+            ...data[0].attributes,
+            ApartmentId: data[0].relationships.Apartment.data.id,
+            availableAt: new Date(data[0].attributes.availableAt),
+          },
+          apartment: included[0].attributes,
+          bookingDate:
+            D.compareAsc( availableAt, now ) === -1 ? now : availableAt,
+        };
+      } } },
   );
 export const getRenting = createGetActionAsync('Renting');
 export const getApartment = createGetActionAsync('Apartment');
@@ -110,7 +126,13 @@ export const listFeatures =
         return Promise.reject('Can only fetch by roomId or by ApartmentIdfor now');
       }
 
-      return fetchJson(`/Term?filterType=or&filter[TermableId]=${roomId},${apartmentId}`);
+      const params = {
+        'page[number]': 1,
+        'page[size]': 100,
+      };
+      const qs = queryString.stringify(params, { encode: false });
+
+      return fetchJson(`/Term?filterType=or&filter[TermableId]=${roomId},${apartmentId}&${qs}`);
     },
     { ok: { payloadReducer: ({ request: [ roomId, apartmentId ], response: { data, included } }) => {
       const features = [{
@@ -151,10 +173,37 @@ export const listFeatures =
     } } }
   );
 
+<<<<<<< e561728d26e032d2d25eb414e3e64176f3997137
 export const saveFeatures = (roomFeatures, apartmentFeatures) => {
   console.log(roomFeatures, apartmentFeatures);
 };
 >>>>>>> WIP
+=======
+export const saveFeatures =
+  createActionAsync(
+    'save Terms of Room and Apartment in the backoffice',
+    ({ roomId, apartmentId, ApartmentFeatures, RoomFeatures }) => (
+      fetchJson(
+        '/actions/public/updateTerms',
+        {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            roomId,
+            apartmentId,
+            RoomFeatures,
+            ApartmentFeatures,
+          }),
+        },
+      )
+    ),
+    {
+      noRethrow: true,
+      error: { payloadReducer: (payload) => ({ unauthorized: 'You must be log to the backoffice to update room\'s features' }) } },
+  );
+>>>>>>> Update Room and apartment Terms
 
 export const saveBooking =
   createActionAsync(

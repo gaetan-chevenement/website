@@ -31,18 +31,18 @@ class Admin extends Component {
         password,
       }),
     })
-    .then((response) => {
-      if ( !response.ok ) {
-        throw new Error('Unauthorized');
-      }
-      return response.json();
-    })
-    .then(() => route('/fr-FR'))
-    .catch((e) => {
-      this.setState({
-        error: e.message,
+      .then((response) => {
+        if ( !response.ok ) {
+          throw new Error('Unauthorized');
+        }
+        return response.json();
+      })
+      .then(() => route('/fr-FR'))
+      .catch((e) => {
+        this.setState({
+          error: e.message,
+        });
       });
-    });
   }
 
 

@@ -24,8 +24,10 @@ import {
   getRenting,
   listPictures,
   listFeatures,
-  addFeature,
-  deleteFeature,
+  addRoomFeature,
+  deleteRoomFeature,
+  addApartmentFeature,
+  deleteApartmentFeature,
   saveFeatures,
 
 }                           from '~/actions';
@@ -112,15 +114,10 @@ const roomsReducer = createReducer({
     ...state,
     [id]: { ...state[id], Features },
   }),
-  [addFeature]: (state, feature) => feature.termable === 'Room' ? [
-    ...state,
-    feature,
-  ] : state,
-  [deleteFeature]: (state, feature) => feature.termable === 'Room' ? [],
-
-  [saveFeatures.ok]: (state, [{ id, Features }]) => ({
-    ...state,
-    [id]: { ...state[id], Features },
+  ...createFeatureReducer({
+    addFeature: addRoomFeature,
+    deleteFeature: deleteRoomFeature,
+    saveFeatures,
   }),
 }, {});
 
@@ -138,10 +135,11 @@ const apartmentsReducer = createReducer({
     ...state,
     [id]: { ...state[id], Features },
   }),
-  [addFeature]: (state, feature) => feature.termable === 'Apartment' ? [
-    ...state,
-    feature,
-  ] : state,
+  ...createFeatureReducer({
+    addFeature: addApartmentFeature,
+    deleteFeature: deleteApartmentFeature,
+    saveFeatures,
+  }),
 }, {});
 
 const rentingsReducer = createReducer({
@@ -255,6 +253,35 @@ export function createFormReducer({ update, setErrors, deleteError, validate }) 
     [validate.error]: (state, payload) =>  ({
       ...state,
       isValidating: false,
+      errors: payload,
+    }),
+  };
+}
+
+export function createFeatureReducer({ addFeature, deleteFeature, saveFeatures }) {
+  return {
+    [addFeature]: (state, feature) => ({
+      ...state,
+      isValidated: false,
+      [feature.termableId]: {
+        ...state[feature.termableId],
+        Features: [...state[feature.termableId].Features, feature],
+      },
+    }),
+    [deleteFeature]: (state, feature) => ({
+      ...state,
+      isValidated: false,
+      [feature.termableId]: {
+        ...state[feature.termableId],
+        Features: state[feature.termableId].Features.filter((oldFeature) => oldFeature.name !== feature.name || oldFeature.taxonomy !== feature.taxonomy),
+      },
+    }),
+    [saveFeatures.ok]: (state) => ({
+      ...state,
+      isValidated: true,
+    }),
+    [saveFeatures.error]: (state, payload) => ({
+      ...state,
       errors: payload,
     }),
   };
