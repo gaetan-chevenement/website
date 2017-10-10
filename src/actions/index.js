@@ -3,6 +3,7 @@ import { createActionAsync }    from 'redux-act-async';
 import queryString              from 'query-string';
 import mapValues                from 'lodash/mapValues';
 import flattenDeep                from 'lodash/flattenDeep';
+import D                        from 'date-fns';
 import values                   from 'lodash/values';
 import filter                   from 'lodash/filter';
 import Utils                    from '~/utils';
@@ -195,6 +196,7 @@ export const saveFeatures =
       noRethrow: true,
       error: { payloadReducer: (payload) => ({ unauthorized: 'You must be log to the backoffice to update room\'s features' }) } },
   );
+  
 export const saveBooking =
   createActionAsync(
     'save Renting and associated Client in the backoffice',

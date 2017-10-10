@@ -61,24 +61,17 @@ export default class App extends Component {
       rentingId,
       clientId,
       orderId,
-      admin,
+      admin = false,
     } = e.current.attributes;
 
     // route params are only relevant when they're defined, so we'll filter-out
     // all undefined values.
     store.dispatch(updateRoute(Utils.filterOutUndef({
-      lang, minPack, city, returnUrl,
+      lang, minPack, city, returnUrl, roomId, admin
     })));
 
     this.setState({ lang });
 
-    batch(
-      store.dispatch(updateRoute(filterOutUndef(
-        { lang, rentingId, clientId, minPack, roomId, admin }
-      ))),
-      store.dispatch(updateBooking(filterOutUndef({ roomId }))),
-      store.dispatch(updatePayment(filterOutUndef({ orderId })))
-    );
   }
   constructor(props) {
     super(props);
