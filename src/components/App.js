@@ -38,7 +38,7 @@ const store = configureStore({
     errors: {},
   },
   search: {
-    errors: {}
+    errors: {},
   },
   orders: {},
   rooms: {},
@@ -70,7 +70,7 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      lang: /^fr-/.test(window.navigator.language) ? 'fr-FR' : 'en-EN',
+      lang: /^fr-/.test(window.navigator.language) ? 'fr-FR' : 'en-US',
     };
   }
 
