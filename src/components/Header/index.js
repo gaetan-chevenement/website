@@ -13,10 +13,10 @@ export default function Header({ lang }) {
             <img src="/assets/logo370x130.png" alt="Chez Nestor" style="height: 80px;" />
           </Link>
           <nav>
-            <Link href="http://chez-nestor.com/included-services" target="_blank">
+            <Link href={`/${lang}/services`}>
               <Text id="included">Included Services</Text>
             </Link>
-            <Link href="http://chez-nestor.com/book" target="_blank">
+            <Link href={`/${lang}/booking`}>
               <Text id="booking">Booking</Text>
             </Link>
             <Link href="http://chez-nestor.com/contact-en" target="_blank">
@@ -30,6 +30,6 @@ export default function Header({ lang }) {
 }
 
 const definition = { 'fr-FR': {
-  included: 'Serices Inclus',
+  included: 'Services Inclus',
   booking: 'Réserver',
 } };

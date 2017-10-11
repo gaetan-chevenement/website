@@ -12,6 +12,8 @@ import BookingStep2     from '~/routes/BookingStep2';
 import BookingStep3     from '~/routes/BookingStep3';
 import Renting          from '~/routes/Renting';
 import Payment          from '~/routes/Payment';
+import Services         from '~/routes/Services';
+import Booking         from '~/routes/Booking';
 import {
   updateRoute,
 }                       from '~/actions';
@@ -38,7 +40,7 @@ const store = configureStore({
     errors: {},
   },
   search: {
-    errors: {}
+    errors: {},
   },
   orders: {},
   rooms: {},
@@ -88,6 +90,8 @@ export default class App extends Component {
             <BookingStep3 path="/:lang/booking/:roomId/3" />
             <Renting path="/:lang/renting/:rentingId" />
             <Payment path="/:lang/payment/:orderId" />
+            <Services path="/:lang/services" />
+            <Booking path="/:lang/booking" />
           </Router>
           <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans|Material+Icons" />
         </div>
