@@ -51,4 +51,7 @@ module.exports = {
   },
 
   IDENTITY_FORM_URL: 'https://forms.chez-nestor.com/50392735671964',
+
+  MAPBOX_TOKEN: `pk.eyJ1IjoiY2hlem5lc3RvciIsImEiOiJjajhtdzhkMGQxMXRqMndsZHRyaXo0ZXhsIn0.\
+8nTAH6da3pvqHKYAARms5A`,
 };

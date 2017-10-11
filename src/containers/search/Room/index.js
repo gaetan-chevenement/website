@@ -41,7 +41,7 @@ function getBedsDetails(beds) {
   const bedsList = beds !== null ? beds.split('+') : [];
 
   if (beds !== null && bedsList.length > 0) {
-    bedIcons = bedsList.map((b) => (console.log(b),
+    bedIcons = bedsList.map((b) => (
       <img className={style.roomBedIcon} src={pictos[b]} />
     ));
     bedText = (

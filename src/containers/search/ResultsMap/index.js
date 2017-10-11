@@ -11,8 +11,11 @@ import L                      from 'leaflet';
 import MarkerClusterGroup     from 'react-leaflet-markercluster';
 import filter                 from 'lodash/filter';
 import Room                   from '~/containers/search/Room';
+import { MAPBOX_TOKEN }       from '~/const';
 import Utils                  from '~/utils';
 import style                  from './style.css';
+
+import 'leaflet/dist/leaflet.css';
 
 const _ = { filter };
 
@@ -37,6 +40,8 @@ const MARKER_GROUP_OPTIONS = {
 };
 
 const DEFAULT_BBOX = [[51.089062, 9.55932], [41.33374, -5.1406]];
+const tileLayerUrl =
+  `https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${MAPBOX_TOKEN}`;
 
 class ResultsMap extends PureComponent {
   componentDidUpdate() {
@@ -95,8 +100,18 @@ class ResultsMap extends PureComponent {
         ref={map => (this._map = map)}
       >
         <TileLayer
-          url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-          attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+          url={tileLayerUrl}
+          id="mapbox.streets"
+          attribution={`
+            © <a href="https://www.mapbox.com/about/maps/">Mapbox</a>
+            © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>
+            <strong>
+              <a href="https://www.mapbox.com/map-feedback/"
+                target="_blank"
+              >
+                Improve this map
+              </a>
+            </strong>`}
         />
         <MarkerClusterGroup
           wrapperOptions={{ enableDefaultStyle: false, maxClusterRadius: 0 }}
@@ -109,7 +124,7 @@ class ResultsMap extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ rooms, apartments }, { hightlightedRoomId }) => (console.log(rooms), {
+const mapStateToProps = ({ rooms, apartments }, { hightlightedRoomId }) => ({
   roomsArr: _.filter(rooms, (room) => (typeof room === 'object')).map((room) => ({
     ...room,
     latLng: Utils.getApartmentLatLng(apartments[room.ApartmentId]),
