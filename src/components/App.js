@@ -58,9 +58,6 @@ export default class App extends Component {
       returnUrl,
       city,
       roomId,
-      rentingId,
-      clientId,
-      orderId,
       admin = false,
     } = e.current.attributes;
 

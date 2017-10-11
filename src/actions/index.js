@@ -40,21 +40,8 @@ export const getRoom =
       .then(throwIfNotFound('Room', id)),
     {
       noRethrow: true,
-      ok: { payloadReducer: ({ response: { data, included } }) => {
-        const availableAt = new Date(data[0].attributes.availableAt);
-        const now = new Date();
-
-        return {
-          room: {
-            ...data[0].attributes,
-            ApartmentId: data[0].relationships.Apartment.data.id,
-            availableAt: new Date(data[0].attributes.availableAt),
-          },
-          apartment: included[0].attributes,
-          bookingDate:
-            D.compareAsc( availableAt, now ) === -1 ? now : availableAt,
-        };
-      } } },
+    ok: { payloadReducer: reduceRooms },
+    }		
   );
 export const getRenting = createGetActionAsync('Renting');
 export const getApartment = createGetActionAsync('Apartment');
@@ -196,7 +183,7 @@ export const saveFeatures =
       noRethrow: true,
       error: { payloadReducer: (payload) => ({ unauthorized: 'You must be log to the backoffice to update room\'s features' }) } },
   );
-  
+
 export const saveBooking =
   createActionAsync(
     'save Renting and associated Client in the backoffice',
