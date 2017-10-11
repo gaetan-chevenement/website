@@ -12,6 +12,8 @@ import BookingStep2     from 'async!../routes/BookingStep2';
 import BookingStep3     from 'async!../routes/BookingStep3';
 import Renting          from 'async!../routes/Renting';
 import Payment          from 'async!../routes/Payment';
+import Services         from 'async!../routes/Services';
+import Booking          from 'async!../routes/Booking';
 import {
   updateRoute,
 }                       from '~/actions';
@@ -86,6 +88,8 @@ export default class App extends Component {
             <BookingStep3 path="/:lang/booking/:roomId/3" />
             <Renting path="/:lang/renting/:rentingId" />
             <Payment path="/:lang/payment/:orderId" />
+            <Services path="/:lang/services" />
+            <Booking path="/:lang/booking" />
           </Router>
           <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:700|Material+Icons" />
         </div>
