@@ -68,7 +68,6 @@ export default class App extends Component {
     })));
 
     this.setState({ lang });
-
   }
   constructor(props) {
     super(props);
@@ -84,7 +83,7 @@ export default class App extends Component {
         <div id="app">
           <Header lang={this.state.lang} />
           <Router onChange={this.handleRoute}>
-            <Home path="/:lang/" default />
+            <Home path="/:lang" default />
             <Admin path="/admin" />
             <Search path="/:lang/search/:city" />
             <BookingStep1 path="/:lang/booking/:roomId/" />

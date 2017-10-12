@@ -29,7 +29,6 @@ import {
   addApartmentFeature,
   deleteApartmentFeature,
   saveFeatures,
-
 }                           from '~/actions';
 
 const noErrors = {};
