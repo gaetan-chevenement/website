@@ -6,12 +6,12 @@ import autobind         from 'autobind-decorator';
 
 import configureStore   from '~/stores';
 import Home             from '~/routes/Home';
-import Search           from '~/routes/Search';
-import BookingStep1     from '~/routes/BookingStep1';
-import BookingStep2     from '~/routes/BookingStep2';
-import BookingStep3     from '~/routes/BookingStep3';
-import Renting          from '~/routes/Renting';
-import Payment          from '~/routes/Payment';
+import Search           from 'async!../routes/Search';
+import BookingStep1     from 'async!../routes/BookingStep1';
+import BookingStep2     from 'async!../routes/BookingStep2';
+import BookingStep3     from 'async!../routes/BookingStep3';
+import Renting          from 'async!../routes/Renting';
+import Payment          from 'async!../routes/Payment';
 import {
   updateRoute,
 }                       from '~/actions';

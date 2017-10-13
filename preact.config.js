@@ -11,6 +11,10 @@ export default (config, env, helpers) => {
   const cssModulesRule = postcssLoader[0].rule;
   const globalCssRule = postcssLoader[1].rule;
 
+  /* Delete postcss config so that postcss.config.js is used instead
+   */
+  postcssLoader.forEach(({ loader }) => ( delete loader.options ));
+
   /* Add babel-root-import plugin
    */
   babelLoaderRule.options.plugins.push(
