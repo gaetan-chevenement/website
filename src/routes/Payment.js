@@ -7,7 +7,8 @@ import autobind               from 'autobind-decorator';
 import Promise                from 'bluebird';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { Button }             from 'react-toolbox/lib/button';
-import OrderDetails           from '~/containers/payment/OrderDetails';
+import OrderDetails           from '~/components/OrderDetails';
+import LoadingError           from '~/components/LoadingError';
 import CardForm               from '~/containers/payment/CardForm';
 import * as actions           from '~/actions';
 
@@ -42,16 +43,30 @@ class Payment extends PureComponent {
       actions.getOrder( orderId );
     }
   }
+
+  renderTitle(lang, label) {
+    return (
+      <IntlProvider definition={definition[lang]}>
+        <div class="content">
+          <h1>
+            <Text id="title">Secure payment for order</Text><br />
+            <em>{label}</em>
+          </h1>
+        </div>
+      </IntlProvider>
+    );
+  }
+
   render() {
     const {
       lang,
       orderId,
-      orderLabel,
-      orderBalance,
+      order,
       payment,
       payment: { errors },
       isOrderLoading,
     } = this.props;
+
     if ( isOrderLoading ) {
       return (
         <div class="content text-center">
@@ -59,19 +74,27 @@ class Payment extends PureComponent {
         </div>
       );
     }
+
+    if ( order.error ) {
+      return (
+        <LoadingError
+          lang={lang}
+          label={orderId}
+          error={order.error}
+        />
+      );
+    }
+
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="content">
-          <h1>
-            <Text id="title">Secure payment for order of</Text><br />
-            <em>{orderLabel}</em>
-          </h1>
+          {this.renderTitle(lang, order.label)}
 
           <section>
-            <OrderDetails orderId={orderId} />
+            <OrderDetails order={order} lang={lang} />
           </section>
           <section>
-            { !payment.isValidated && !errors.payment && orderBalance !== 0 ?
+            { !payment.isValidated && !errors.payment && order.balance !== 0 ?
               <h3>
                 <Text id="payment.title">Payment can be made by Mastercard or Visa.</Text>
               </h3>
@@ -79,7 +102,7 @@ class Payment extends PureComponent {
             <CardForm />
           </section>
 
-          { !payment.isValidated && !errors.payment && orderBalance !== 0?
+          { !payment.isValidated && !errors.payment && order.balance !== 0?
             <nav class="text-center">
               { payment.isValidating || payment.isSaving ?
                 <ProgressBar type="circular" mode="indeterminate" /> :
@@ -95,7 +118,6 @@ class Payment extends PureComponent {
               }
             </nav>
             : '' }
-
         </div>
       </IntlProvider>
     );
@@ -112,14 +134,13 @@ const definition = { 'fr-FR': {
 
 function mapStateToProps({ route: { lang, returnUrl }, orders, payment }, { orderId }) {
   const order = orders[orderId];
-
+console.log(order && order.error);
   return {
     lang,
     returnUrl,
     orderId,
+    order,
     payment,
-    orderBalance: order && order.balance,
-    orderLabel: order && order.label,
     isOrderLoading: order === undefined || order.isLoading,
   };
 }

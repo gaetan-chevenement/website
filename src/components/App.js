@@ -89,7 +89,7 @@ export default class App extends Component {
             <Renting path="/:lang/renting/:rentingId" />
             <Payment path="/:lang/payment/:orderId" />
           </Router>
-          <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans|Material+Icons" />
+          <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:700|Material+Icons" />
         </div>
       </Provider>
     );

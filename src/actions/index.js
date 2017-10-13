@@ -207,7 +207,13 @@ function throwIfNotFound(modelName, id) {
 function createGetActionAsync(modelName) {
   return createActionAsync(
     `get ${modelName} by id`,
-    (id) => fetchJson(`/${modelName}/${id}`),
+    (id) => fetchJson(`/${modelName}/${id}`)
+      // No record returned is an error
+      .tap((response) => {
+        if ( response.meta.count === 0 ) {
+          throw new Error(`${modelName} ${id} not found`);
+        }
+      }),
     { ok: { payloadReducer: ({ response }) => ({
       ...response.data.attributes,
       ...response.included.reduce((attributes, value) => {

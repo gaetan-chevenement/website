@@ -44,7 +44,7 @@ class CardForm extends PureComponent {
         <IntlProvider definition={definition[lang]}>
           <div class="text-center">
             <h3>
-              <Text id="payment.ok.first">  Your payment has been approved.</Text>
+              <Text id="payment.ok.first">Your payment has been approved.</Text>
               <br />
               <Text id="payment.ok.second">The Chez Nestor Team would like to wish you a great day!</Text>
             </h3>
