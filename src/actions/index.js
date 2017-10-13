@@ -256,7 +256,7 @@ function mapOrderItems(data, orderId) {
     }));
 }
 
-function reduceRooms({ response: { data, included } }) {
+function reduceRooms({ response: { data = [], included = [] } }) {
   return {
     rooms: data
       .filter((item) => item.type === 'room')

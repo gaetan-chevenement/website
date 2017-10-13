@@ -13,7 +13,6 @@ import filter                 from 'lodash/filter';
 import Room                   from '~/containers/search/Room';
 import { MAPBOX_TOKEN }       from '~/const';
 import Utils                  from '~/utils';
-import style                  from './style.css';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -21,22 +20,29 @@ const _ = { filter };
 
 const DEFAULT_ICON = new L.Icon({
   iconUrl: require('~/assets/search/map-marker-default.png'),
-  iconSize: [45, 67],
+  iconSize: [45, 66],
 });
 
 const HIGHLIGHT_ICON = new L.Icon({
   iconUrl: require('~/assets/search/map-marker-highlight.png'),
-  iconSize: [45, 67],
+  iconSize: [45, 66],
 });
 
 const MARKER_GROUP_OPTIONS = {
   iconCreateFunction(cluster) {
     return L.divIcon({
-      html: '<div>' + cluster.getChildCount() + '</div>',
       className: 'map-rooms-cluster',
-      iconSize: [46, 46],
+      html: (`
+        <div data-count="${cluster.getChildCount()}">
+          <img src="${require('~/assets/search/map-marker-cluster.png')}" />
+        </div>
+      `),
+      iconSize: [45, 66],
     });
   },
+  // We only want to cluster at the street address level.
+  // that should do the trick
+  maxClusterRadius: 1,
 };
 
 const DEFAULT_BBOX = [[51.089062, 9.55932], [41.33374, -5.1406]];
@@ -93,7 +99,6 @@ class ResultsMap extends PureComponent {
           overflow: 'hidden',
         }}
         bounds={bounds}
-        className={style.map}
         scrollWheelZoom={false}
         attributionControl={false}
         maxZoom={15}
@@ -114,7 +119,7 @@ class ResultsMap extends PureComponent {
             </strong>`}
         />
         <MarkerClusterGroup
-          wrapperOptions={{ enableDefaultStyle: false, maxClusterRadius: 0 }}
+          wrapperOptions={{ enableDefaultStyle: false }}
           options={MARKER_GROUP_OPTIONS}
         >
           {this.renderMarkers()}

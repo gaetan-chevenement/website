@@ -67,3 +67,21 @@ a:hover {
   color: inherit;
   text-decoration: underline;
 }
+
+.map-rooms-cluster {
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+
+  & div:after {
+    content: attr(data-count);
+    display: block;
+    width: 100%;
+    margin-top: -38px;
+
+    color: white;
+    font-size: 15px;
+    text-align: center;
+  }
+}
