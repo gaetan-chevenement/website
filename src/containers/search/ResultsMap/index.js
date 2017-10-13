@@ -55,11 +55,10 @@ class ResultsMap extends PureComponent {
     if (this._map) {
       this._map.leafletElement.invalidateSize();
     }
-    setInterval(this._map.leafletElement.invalidateSize, 1000);
   }
 
   renderMarkers() {
-    const { highlightedRoomId, roomsArr } = this.props;
+    const { lang, highlightedRoomId, roomsArr } = this.props;
 
     return roomsArr.map((room) => (
       <Marker
@@ -71,7 +70,7 @@ class ResultsMap extends PureComponent {
         }
       >
         <Popup>
-          <Room room={room} data={room} fromMap />
+          <Room lang={lang} room={room} isThumbnail />
         </Popup>
       </Marker>
     ));
@@ -129,12 +128,18 @@ class ResultsMap extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ rooms, apartments }, { hightlightedRoomId }) => ({
-  roomsArr: _.filter(rooms, (room) => (typeof room === 'object')).map((room) => ({
-    ...room,
-    latLng: Utils.getApartmentLatLng(apartments[room.ApartmentId]),
-  })),
-  hightlightedRoomId,
-});
+const mapStateToProps = (state, { hightlightedRoomId }) => {
+  const { route: { lang }, rooms, apartments } = state;
+
+  return {
+    lang,
+    roomsArr: _.filter(rooms, (room) => (typeof room === 'object')).map((room) => ({
+      ...room,
+      latLng: Utils.getApartmentLatLng(apartments[room.ApartmentId]),
+      roomCount: apartments[room.ApartmentId].roomCount,
+    })),
+    hightlightedRoomId,
+  };
+};
 
 export default connect(mapStateToProps)(ResultsMap);

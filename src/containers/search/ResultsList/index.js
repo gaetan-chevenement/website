@@ -52,7 +52,8 @@ class SearchResults extends PureComponent {
   renderRoom(room) {
     return (
       <Room
-        roomId={room.id}
+        lang={this.props.lang}
+        room={room}
         onMouseOver={this.props.handleMouseOver}
         onMouseOut={this.props.handleMouseOut}
       />
@@ -71,7 +72,8 @@ class SearchResults extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ rooms, search: { city } }) => ({
+const mapStateToProps = ({ route: { lang }, rooms, search: { city } }) => ({
+  lang,
   city,
   rooms: Utils.filterMatchingRooms(rooms),
 });

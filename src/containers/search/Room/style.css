@@ -5,6 +5,10 @@
   margin-top: 40px;
 }
 
+.room.is-thumbnail {
+  margin: 21px 10px 10px;
+}
+
 .room:hover {
   text-decoration: none;
 }

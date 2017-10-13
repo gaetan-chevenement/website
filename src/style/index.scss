@@ -85,3 +85,12 @@ a:hover {
     text-align: center;
   }
 }
+
+.leaflet-popup-content-wrapper {
+  border-radius: 0 !important;
+}
+
+.leaflet-popup-content {
+  width: 250px !important;
+  margin: 0 !important;
+}

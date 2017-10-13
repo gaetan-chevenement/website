@@ -1,6 +1,5 @@
 import { h }                      from 'preact';
 import { PureComponent }          from 'react';
-import { connect }                from 'react-redux';
 import { Link }                   from 'preact-router';
 import { SearchResultsOptions }   from '~/content';
 import Carousel                   from '~/components/Carousel';
@@ -56,7 +55,7 @@ function getBedsDetails(beds) {
   return { bedText, bedIcons };
 }
 
-class Room extends PureComponent {
+export default class Room extends PureComponent {
   // handleClick() {
   //   console.log('here');
   // }
@@ -117,9 +116,9 @@ class Room extends PureComponent {
         floorArea,
         createdAt,
         id,
+        roomCount,
       },
-      roomCount,
-      fromMap,
+      isThumbnail,
     } = this.props;
 
     const newElement = isNew(createdAt) ?
@@ -128,8 +127,8 @@ class Room extends PureComponent {
     const { bedIcons, bedText } = getBedsDetails(beds);
     let mainClasses = [style.room];
 
-    if (!fromMap) {
-      mainClasses.push(style.roomSplit);
+    if (isThumbnail) {
+      mainClasses.push(style['is-thumbnail']);
     }
 
     return (
@@ -149,16 +148,16 @@ class Room extends PureComponent {
           </div>
           <div className={style.roomAttributesIcons}>
             <div className={getClassForRoomAttribute(style.chambersCount)}>
-              {roomCount} {fromMap ? '' : 'chambres'}
+              {roomCount} {isThumbnail ? '' : 'chambres'}
             </div>
             <div className={getClassForRoomAttribute(style.roomsCount)}>
-              {roomCount + 2} {fromMap ? '' : 'pièces'}
+              {roomCount + 2} {isThumbnail ? '' : 'pièces'}
             </div>
             <div className={getClassForRoomAttribute(style.roomSize)}>
               {floorArea} m²
             </div>
             <div className={getClassForRoomAttribute(style.roomBedText)}>
-              {bedIcons} {fromMap ? '' : bedText}
+              {bedIcons} {isThumbnail ? '' : bedText}
             </div>
           </div>
         </div>
@@ -167,15 +166,5 @@ class Room extends PureComponent {
   }
 }
 
-const mapStateToProps = (state, { roomId }) => {
-  const { rooms, apartments, pictures, route: { lang } } = state;
-
-  return {
-    lang,
-    room: rooms[roomId],
-    roomCount: apartments[rooms[roomId].ApartmentId].roomCount,
-    pictures,
-  };
-};
-
-export default connect(mapStateToProps)(Room);
+// /!\ This component cannot used the state because it's used inside leaflet
+// and apparently these things are incompatible.
