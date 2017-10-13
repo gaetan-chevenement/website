@@ -5,7 +5,7 @@ import autobind         from 'autobind-decorator';
 // import { ThemeProvider } from 'react-css-themr';
 
 import configureStore   from '~/stores';
-import Home             from '~/routes/Home';
+import Home             from 'async!../routes/Home';
 import Search           from 'async!../routes/Search';
 import BookingStep1     from 'async!../routes/BookingStep1';
 import BookingStep2     from 'async!../routes/BookingStep2';
@@ -17,8 +17,6 @@ import {
 }                       from '~/actions';
 import Utils            from '~/utils';
 import Header           from './Header';
-// import Home from 'async!./home';
-// import Profile from 'async!./profile';
 
 const store = configureStore({
   route: {

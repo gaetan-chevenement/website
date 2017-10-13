@@ -65,7 +65,7 @@ export const listOrders =
           ...order.attributes,
           OrderItems: mapOrderItems(data, order.id),
         }))
-        .reduce(arrayToMap),
+        .reduce(arrayToMap, {}),
     }) } }
   );
 
@@ -265,18 +265,15 @@ function reduceRooms({ response: { data, included } }) {
         ApartmentId: item.relationships.Apartment.data.id,
         availableAt: new Date(item.attributes.availableAt),
       }))
-      .reduce(arrayToMap),
+      .reduce(arrayToMap, {}),
     apartments: included
       .filter((item) => item.type === 'apartment')
       .map((item) => ({ ...item.attributes }))
-      .reduce(arrayToMap),
+      .reduce(arrayToMap, {}),
   };
 }
 
 function arrayToMap(items, item, i) {
-  if ( i === 1 ) {
-    items = { [items.id]: items };
-  }
   items[item.id] = item;
   return items;
 }

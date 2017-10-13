@@ -124,8 +124,8 @@ class ResultsMap extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ rooms, apartments }, { hightlightedRoomId }) => (console.log(rooms), {
-  roomsArr: _.filter(rooms, (room) => (typeof room === 'object')).map((room) => (console.log(room),{
+const mapStateToProps = ({ rooms, apartments }, { hightlightedRoomId }) => ({
+  roomsArr: _.filter(rooms, (room) => (typeof room === 'object')).map((room) => ({
     ...room,
     latLng: Utils.getApartmentLatLng(apartments[room.ApartmentId]),
   })),
