@@ -1,0 +1,99 @@
+.invoice-content {
+  min-height: 100%;
+  width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.logo {
+  margin-top: 10px;
+}
+
+.logo span {
+   display: inline-block;
+   position: relative;
+}
+
+.logo span:after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  left: 100px;
+  border-top: 1px solid #1C2B4A;
+  top: 64px;
+  width: 900px;
+}
+
+.table-0 {
+  width: auto;
+  float: right;
+  margin-bottom: 40px;
+  line-height: 5px;
+
+}
+
+.table-1 {
+  margin:0;
+  width:1024px;
+  line-height: 5px;
+}
+
+.table-2 {
+  padding:10px;
+  width:1024px;
+  display: table;
+  margin-top: 40px;
+}
+
+.table-3 {
+  width: 400px;
+  line-height: 20px;
+  font-size: 20px;
+  float: right;
+}
+
+.noborder, .noborder th, .noborder td {
+  border: none;
+}
+
+.top {
+  line-height: 20px !important;
+  padding-top: 15px !important;
+  border-top:  solid 1px #ddd !important;
+}
+
+.bottom {
+  padding-bottom: 20px !important;
+  border-bottom: solid 1px #ddd !important;
+}
+
+.title {
+  color: #465e8a;
+}
+
+.invoice-title {
+  color: #465e8a;
+  padding-top: 32px;
+  font-size: 20px;
+  margin-left: 12px;
+}
+
+.invoice-part3 {
+  width: 1024px;
+}
+
+.conditions {
+  float: left;
+  width: 400px;
+  margin-left: 12px;
+}
+
+.footer {
+  margin: 427px 0px 0px 58px;
+  width: auto;
+  font-size: 15px;
+  color: #888888;
+  line-height: 10px;
+  text-align: center;
+}

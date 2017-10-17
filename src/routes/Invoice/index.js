@@ -7,6 +7,7 @@ import D                      from 'date-fns';
 import capitalize             from 'lodash/capitalize';
 import * as actions           from '~/actions';
 import Utils                  from '~/utils';
+import style                  from './style';
 
 const _ = { capitalize };
 
@@ -56,7 +57,7 @@ class Invoice extends PureComponent {
   renderOrderItem({ label, unitPrice, vatRate, quantity }) {
     return (
       <tr>
-        <td class="title text-left">{label}</td>
+        <td class={`${style.title} text-left`}>{label}</td>
         <td class="text-right">{unitPrice /100}€</td>
         <td class="text-right">{vatRate > 0 ? `${vatRate * 100}%` : ''}</td>
         <td class="text-right">{quantity}</td>
@@ -68,7 +69,7 @@ class Invoice extends PureComponent {
   renderInvoiceDetails() {
     const { order, lang } = this.props;
     return   (
-      <table class="table-3 noborder">
+      <table class={`${style['table-3']} ${style.noborder}`}>
         <th class="text-left">
           <p>Total</p>
           <p><Text id="paid">Paid</Text></p>
@@ -109,15 +110,15 @@ class Invoice extends PureComponent {
 
     return (
       <IntlProvider definition={definition[lang]}>
-        <div class="invoice-content">
-          <div class="logo">
+        <div class={style['invoice-content']}>
+          <div class={style.logo}>
             <span>
               <img src="/assets/icons/favicon-128.png" />
             </span>
           </div>
-          <table class="table-0 noborder" cellspacing="0" cellpadding="0">
+          <table class={`${style['table-0']} ${style.noborder}`} cellspacing="0" cellpadding="0">
             <tr>
-              <td class="title">Chez Nestor</td>
+              <td class={style.title}>Chez Nestor</td>
               <td>Chez Nestor</td>
             </tr>
             <tr>
@@ -134,15 +135,15 @@ class Invoice extends PureComponent {
               <td>France</td>
             </tr>
           </table>
-          <div class="invoice-title">
+          <div class={style['invoice-title']}>
             <p><Text id="title">Invoice</Text> #{order.receiptNumber}</p>
           </div>
-          <table class="table-1 noborder">
+          <table class={`${style['table-1']} ${style.noborder}`}>
             <tr>
-              <td class="top"><b><Text id="due.date">Due Date</Text></b></td>
-              <td class="top"><b><Text id="due.amount">Amount Due</Text></b></td>
-              <td class="top"><b><Text id="address.billing">Billing Address</Text></b></td>
-              <td class="top"><b><Text id="address.property">Property Address</Text></b></td>
+              <td class={style.top}><b><Text id="due.date">Due Date</Text></b></td>
+              <td class={style.top}><b><Text id="due.amount">Amount Due</Text></b></td>
+              <td class={style.top}><b><Text id="address.billing">Billing Address</Text></b></td>
+              <td class={style.top}><b><Text id="address.property">Property Address</Text></b></td>
             </tr>
             <tr>
               <td class="text-left">{D.format(order.dueDate, 'DD/MM/YYYY')}</td>
@@ -169,13 +170,13 @@ class Invoice extends PureComponent {
               <td />
             </tr>
             <tr>
-              <td class="bottom" />
-              <td class="bottom" />
-              <td class="bottom">{client.email}</td>
-              <td class="bottom" />
+              <td class={style.bottom} />
+              <td class={style.bottom} />
+              <td class={style.bottom}>{client.email}</td>
+              <td class={style.bottom} />
             </tr>
           </table>
-          <table class="table-2">
+          <table class={style['table-2']}>
             <tr>
               <td class="text-left"><strong><Text id="item">Item</Text></strong></td>
               <td class="text-right"><strong><Text id="unitPrice">Unit Price</Text></strong></td>
@@ -185,13 +186,13 @@ class Invoice extends PureComponent {
             </tr>
             { ( order.OrderItems || [] ).map(this.renderOrderItem) }
           </table>
-          <div class="invoice-part3">
-            <div class="conditions">
+          <div class={style['invoice-part3']}>
+            <div class={style.conditions}>
               <p>Conditions<br />La présente quittance ne libère l'occupant que pour la période indiquée et annule tout reçu à valoir. Elle n'est pas libératoire des loyers antérieurs impayés et est délivrée sous réserve de toutes instances judiciaires en cours.</p>
             </div>
             {this.renderInvoiceDetails()}
           </div>
-          <footer class="footer">
+          <footer class={style.footer}>
             <p>MY FRENCH LIFEGUARD | 16 rue de Condé 69002 Lyon | +33 (0)972323102 | lyon@myfrenchlifeguard.com</p>
             <p>www.myfrenchlifeguard.com | SARL au capital de 10.000€ immatriculée au RCS de Lyon</p>
             <p>SIRET n°751570003 00036 | N° de TVA intracommunautaire FR20 751 570 003</p>
