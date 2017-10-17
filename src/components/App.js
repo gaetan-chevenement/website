@@ -64,7 +64,7 @@ export default class App extends Component {
     // route params are only relevant when they're defined, so we'll filter-out
     // all undefined values.
     store.dispatch(updateRoute(Utils.filterOutUndef({
-      lang, minPack, city, returnUrl, roomId, admin
+      lang, minPack, city, returnUrl, roomId, admin,
     })));
 
     this.setState({ lang });
