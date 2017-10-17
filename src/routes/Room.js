@@ -12,10 +12,9 @@ class Room extends PureComponent {
   componentWillMount() {
     const { roomId, actions } = this.props;
 
-    Promise.resolve()
+    return Promise.resolve()
       .then(() => actions.getRoom(roomId))
-      .then(({ response }) =>  actions.listFeatures(roomId, response.included[0].id))
-      .catch((e) => console.log(e));
+      .then(({ response }) =>  actions.listFeatures(roomId, response.included[0].id));
   }
 
   render() {

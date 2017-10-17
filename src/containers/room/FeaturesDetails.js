@@ -26,17 +26,14 @@ class FeaturesDetails extends PureComponent {
   @autobind
   handleFeatureChange(event) {
     let feature = {};
+
     ['name', 'taxonomy', 'termable']
-      .forEach((attribute) => Object.assign(
-        feature,
-        { [attribute]: event.target.getAttribute(attribute) }
-      ));
-    Object.assign(
-      feature,
-      { termableId: feature.termable === 'Room' ?
-        this.props.roomId :
-        this.props.apartmentId,
-      });
+      .forEach((attribute) =>
+        feature[attribute] = event.target.getAttribute(attribute)
+      );
+    feature.termableId = feature.termable === 'Room' ?
+      this.props.roomId :
+      this.props.apartmentId;
 
     event.target.checked ?
       feature.termable === 'Room' ?
@@ -49,17 +46,16 @@ class FeaturesDetails extends PureComponent {
 
   renderTerm({ termable, taxonomy, name, label, isChecked }) {
     const { admin } = this.props;
+    if ( !admin ) {
+      return isChecked ? <li>{label}</li> : '';
+    }
     return (
-      admin ?
-        <li>
-          <input type="checkbox" name={name} taxonomy={taxonomy}
-            termable={termable} label={label}
-            onChange={this.handleFeatureChange}
-            checked={isChecked}
-          /> {label}</li>
-        : isChecked ?
-          <li>{label}</li> :
-          ''
+      <li>
+        <input type="checkbox" name={name} taxonomy={taxonomy}
+          termable={termable} label={label}
+          onChange={this.handleFeatureChange}
+          checked={isChecked}
+        /> {label}</li>
     );
   }
   renderFeatures(taxonomy, category) {
@@ -82,7 +78,8 @@ class FeaturesDetails extends PureComponent {
           {displayTitle ? <h4>{_.capitalize(taxonomy.split('-')[2])}</h4> : ''}
           <ul>{featuresList.map((term) => this.renderTerm(term))}</ul>
         </section>
-        : '');
+        : ''
+    );
   }
 
   render() {

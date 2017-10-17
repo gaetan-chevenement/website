@@ -40,8 +40,8 @@ export const getRoom =
       .then(throwIfNotFound('Room', id)),
     {
       noRethrow: true,
-    ok: { payloadReducer: reduceRooms },
-    }		
+      ok: { payloadReducer: reduceRooms },
+    }
   );
 export const getRenting = createGetActionAsync('Renting');
 export const getApartment = createGetActionAsync('Apartment');
@@ -268,7 +268,7 @@ export const savePayment =
   );
 
 function fetchJson(url, options) {
-  return fetch(`${API_BASE_URL}${url}`, Object.assign({ credentials: 'include' }, options))
+  return fetch(`${API_BASE_URL}${url}`, { credentials: 'include', ...options })
     .then((response) => {
       if ( !response.ok ) {
         /* eslint-disable promise/no-nesting */
