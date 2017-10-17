@@ -119,7 +119,21 @@ const pureUtils = {
 const currYear = pureUtils.getCurrYear();
 const Utils = {
   _pure: pureUtils,
+  fetchJson: function fetchJson(url, options) {
+    return fetch(`${API_BASE_URL}${url}`, options)
+      .then((response) => {
+        if ( !response.ok ) {
+        /* eslint-disable promise/no-nesting */
+          return response.text()
+            .then((message) => {
+              throw new Error(message);
+            });
+        /* eslint-enable promise/no-nesting */
+        }
 
+        return response.json();
+      });
+  },
   bookingSchema: yup.object().shape({
     bookingDate: yup.date().required(),
     pack: yup.string().required(),

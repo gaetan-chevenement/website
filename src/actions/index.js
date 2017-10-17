@@ -12,6 +12,7 @@ import {
 }                               from '~/const';
 
 const _ = { mapValues, values, filter, flattenDeep };
+
 export const updateRoute = createAction('Update route object');
 export const addRoomFeature = createAction('add feature to room');
 export const deleteRoomFeature = createAction('delete feature from room');
@@ -321,7 +322,7 @@ function mapOrderItems(data, orderId) {
     ))
     .map((item) => ({
       ...item.attributes,
-      RentingId: item.relationships.Renting.data.id,
+      RentingId: item.relationships.Renting.data ? item.relationships.Renting.data.id : null,
       ProductId: item.relationships.Product.data.id,
     }));
 }

@@ -5,7 +5,6 @@
 @import url('shoelace-css/source/css/utilities.css');
 @import url('./grillade.css');
 @import url('../components/Carousel/style.scss');
-
 :root {
   --header-height: 80px;
   --font-sans-serif: 'Open Sans';
@@ -16,7 +15,9 @@
   font-family: 'brandico', sans-serif;
 }
 
-html, body, #app {
+html,
+body,
+#app {
   height: 100%;
   background: #FAFAFA;
   color: #222;
@@ -26,7 +27,7 @@ body {
   overflow-y: scroll;
 }
 
-header + * {
+header+* {
   margin-top: var(--header-height);
 }
 
@@ -74,6 +75,7 @@ section {
 a {
   color: inherit;
 }
+
 a:hover {
   color: inherit;
   text-decoration: underline;

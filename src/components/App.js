@@ -1,21 +1,23 @@
 import { h, Component } from 'preact';
 import { Router }       from 'preact-router';
+import Match            from 'preact-router/match';
 import { Provider }     from 'react-redux';
 import autobind         from 'autobind-decorator';
 // import { ThemeProvider } from 'react-css-themr';
 
 import configureStore   from '~/stores';
-import Home             from 'async!../routes/Home';
-import Search           from 'async!../routes/Search';
-import BookingStep1     from 'async!../routes/BookingStep1';
-import BookingStep2     from 'async!../routes/BookingStep2';
-import BookingStep3     from 'async!../routes/BookingStep3';
-import Renting          from 'async!../routes/Renting';
-import Payment          from 'async!../routes/Payment';
 import Services         from 'async!../routes/Services';
 import Booking          from 'async!../routes/Booking';
 import Admin            from '~/routes/Admin';
 import Room             from '~/routes/Room';
+import Home             from '~/routes/Home';
+import Search           from '~/routes/Search';
+import BookingStep1     from '~/routes/BookingStep1';
+import BookingStep2     from '~/routes/BookingStep2';
+import BookingStep3     from '~/routes/BookingStep3';
+import Renting          from '~/routes/Renting';
+import Payment          from '~/routes/Payment';
+import Invoice          from '~/routes/Invoice';
 import {
   updateRoute,
 }                       from '~/actions';
@@ -47,6 +49,7 @@ const store = configureStore({
   apartments: {},
   pictures: {},
 });
+
 
 export default class App extends Component {
   // Store route parameters in the state when route changes
@@ -81,7 +84,10 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <div id="app">
-          <Header lang={this.state.lang} />
+          <Match path="/">
+            { ({ matches, path, url }) =>
+              /(fr-FR|en-US)(?!(\/invoice))/.test(path) ? <Header lang={this.state.lang} /> : '' }
+          </Match>
           <Router onChange={this.handleRoute}>
             <Home path="/:lang" default />
             <Admin path="/admin" />
@@ -91,6 +97,7 @@ export default class App extends Component {
             <BookingStep2 path="/:lang/booking/:roomId/2" />
             <BookingStep3 path="/:lang/booking/:roomId/3" />
             <Renting path="/:lang/renting/:rentingId" />
+            <Invoice path="/:lang/invoice/:orderId" />
             <Payment path="/:lang/payment/:orderId" />
             <Services path="/:lang/services" />
             <Booking path="/:lang/booking" />
