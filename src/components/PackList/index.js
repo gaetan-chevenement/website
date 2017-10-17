@@ -1,6 +1,15 @@
 import { IntlProvider, Text } from 'preact-i18n';
-import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
-import { List, ListItem, ListSubHeader } from 'react-toolbox/lib/list';
+import {
+  Card,
+  CardTitle,
+  CardText,
+  CardActions,
+}                             from 'react-toolbox/lib/card';
+import {
+  List,
+  ListItem,
+  ListSubHeader,
+}                             from 'react-toolbox/lib/list';
 import { Button }             from 'react-toolbox/lib/button';
 
 function  renderCardActions(packName, lang) {
@@ -20,7 +29,8 @@ function  renderCardActions(packName, lang) {
     </CardActions>
   );
 }
-export default function displayPack({ lang, packPrices, pack, minPack, renderButton }) {
+
+export default function PackList({ lang, packPrices, pack, minPack, renderButton }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <p class="grid-3-large-1 has-gutter">

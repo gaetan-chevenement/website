@@ -1,8 +1,8 @@
-import { IntlProvider, Text }           from 'preact-i18n';
-import Footer                           from '~/components/Footer';
-import DisplayPack                      from '~/components/booking/DisplayPack';
-import FeatureList						from '~/components/booking/FeatureList';
-import FeatureListPrice				    from '~/components/booking/FeatureListPrice';
+import { IntlProvider, Text } from 'preact-i18n';
+import Footer                 from '~/components/Footer';
+import PackList               from '~/components/PackList';
+import FeatureList					  from '~/components/booking/FeatureList';
+import FeatureListPrice				from '~/components/booking/FeatureListPrice';
 
 export default function Services({ lang }) {
   return (
@@ -44,7 +44,7 @@ export default function Services({ lang }) {
           <h1  class="services-title">
             <Text id="title.second">CHOOSE YOUR HOUSING PACK</Text><br /></h1>
           <p class="services-subtitle"><Text id="subtitle">All the different services throughout your stay depending on which Housing Pack you choose.</Text></p>
-          <DisplayPack lang={lang} pack="comfort" />
+          <PackList lang={lang} pack="comfort" />
           <div class="span-container">
             <p class="subtitle fancy"><span><Text id="packDetails">All the services included in your Housing Pack</Text></span></p>
           </div>

@@ -2,7 +2,7 @@ import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import autobind               from 'autobind-decorator';
-import DisplayPack                      from '~/components/booking/DisplayPack';
+import PackList               from '~/components/PackList';
 import * as actions           from '~/actions';
 import { PACK_PRICES }        from '~/const';
 
@@ -21,7 +21,7 @@ class PackPicker extends PureComponent {
     } = this.props;
 
     return (
-      <DisplayPack lang={lang} packPrices={packPrices} pack={pack} minPack={minPack} renderButton />
+      <PackList lang={lang} packPrices={packPrices} pack={pack} minPack={minPack} renderButton />
     );
   }
 }
