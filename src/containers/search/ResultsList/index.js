@@ -8,7 +8,6 @@ import Room                   from '~/containers/search/Room';
 import {
   message,
   closeButton,
-  roomsWrapper,
 }                             from './style.css';
 
 class SearchResults extends PureComponent {
