@@ -21,7 +21,7 @@ class PackPicker extends PureComponent {
     } = this.props;
 
     return (
-      <PackList lang={lang} packPrices={packPrices} pack={pack} minPack={minPack} renderButton />
+      <PackList handlePackChange={this.handlePackChange} lang={lang} packPrices={packPrices} pack={pack} minPack={minPack} />
     );
   }
 }

@@ -12,25 +12,25 @@ import {
 }                             from 'react-toolbox/lib/list';
 import { Button }             from 'react-toolbox/lib/button';
 
-function  renderCardActions(packName, lang) {
+function  renderCardActions(handlePackChange, packName, lang) {
   return (
     <CardActions>
       <Button raised
         label={
           <div>
-            <Text id="select">Choose</Text>
+            <Text id="select">Choose </Text>
             <Text id={`${packName}.lowercase`}>{packName}</Text>
           </div>
         }
         name="pack"
         value={packName}
-        onClick={this.handlePackChange}
+        onClick={handlePackChange}
       />
     </CardActions>
   );
 }
 
-export default function PackList({ lang, packPrices, pack, minPack, renderButton }) {
+export default function PackList({ handlePackChange, lang, packPrices, pack, minPack }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <p class="grid-3-large-1 has-gutter">
@@ -51,7 +51,7 @@ export default function PackList({ lang, packPrices, pack, minPack, renderButton
                 <ListItem caption={<Text id="basic.sixth">Unlimited maintenance &amp; assistance</Text>} />
               </List>
             </CardText>
-            {renderButton ? renderCardActions('basic', lang) : ''}
+            {handlePackChange ? renderCardActions(handlePackChange, 'basic', lang) : ''}
 
           </Card> :
           ''
@@ -74,7 +74,7 @@ export default function PackList({ lang, packPrices, pack, minPack, renderButton
                 <ListItem caption={<Text id="comfort.sixth">Cancellation insurance - 1 month</Text>} />
               </List>
             </CardText>
-            {renderButton ? renderCardActions('comfort', lang) : ''}
+            {handlePackChange ? renderCardActions(handlePackChange, 'comfort', lang) : ''}
 
           </Card> :
           ''
@@ -96,7 +96,7 @@ export default function PackList({ lang, packPrices, pack, minPack, renderButton
               <ListItem caption={<Text id="privilege.sixth">Cancellation insurance - 7 days</Text>} />
             </List>
           </CardText>
-          {renderButton ? renderCardActions('privilege', lang) : ''}
+          {handlePackChange ? renderCardActions(handlePackChange, 'privilege', lang) : ''}
         </Card>
       </p>
     </IntlProvider>
@@ -104,7 +104,7 @@ export default function PackList({ lang, packPrices, pack, minPack, renderButton
 }
 
 const definition = { 'fr-FR': {
-  select: 'Choisir',
+  select: 'Choisir ',
   basic: {
     lowercase: 'basique',
     title: '★ Basique',

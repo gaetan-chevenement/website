@@ -57,6 +57,7 @@ const pureUtils = {
     return D.compareAsc( room.availableAt, UNAVAILABLE_DATE ) !== 0;
   },
   getBookingDate({ availableAt }, now = new Date()) {
+    console.log(availableAt);
     return D.compareAsc( availableAt, now ) === -1 ? now : availableAt;
   },
   classifyRentingOrders({ rentingId, orders }) {
