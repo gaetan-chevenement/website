@@ -10,7 +10,7 @@ import Utils                  from '~/utils';
 
 class BookingStep1 extends PureComponent {
   componentWillMount() {
-    const { roomId } = this.props;
+    const { roomId, actions } = this.props;
 
     actions.updateBooking({ roomId });
   }

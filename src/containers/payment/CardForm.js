@@ -1,12 +1,14 @@
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
+import { Button }             from 'react-toolbox/lib/button';
 import { batch }              from 'redux-act';
 import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import { Input }              from 'react-toolbox/lib/input';
 import * as actions           from '~/actions';
 import Utils                  from '~/utils';
+import { API_BASE_URL }       from '~/const';
 
 class CardForm extends PureComponent {
   @autobind
@@ -21,11 +23,14 @@ class CardForm extends PureComponent {
   render() {
     const {
       lang,
+      orderId,
       payment: { errors },
       orderBalance,
+      receiptNumber,
       payment,
       currYear,
     } = this.props;
+
     if (!payment.isValidated && orderBalance === 0) {
       return (
         <IntlProvider definition={definition[lang]}>
@@ -34,7 +39,13 @@ class CardForm extends PureComponent {
               <h4>
                 <Text id="errors.paid">This order has already been paid.</Text>
               </h4>
+              <br />
+              <Button raised primary
+                label={<Text id="downloadInvoice">Download your invoice</Text>}
+                href={`${API_BASE_URL}/actions/public/${lang}/${orderId}/invoice-${receiptNumber}.pdf`}
+              />
             </div>
+
           </section>
         </IntlProvider>
       );
@@ -48,6 +59,11 @@ class CardForm extends PureComponent {
               <br />
               <Text id="payment.ok.second">The Chez Nestor Team would like to wish you a great day!</Text>
             </h3>
+            <br />
+            <Button raised primary
+              label={<Text id="downloadInvoice">Download your invoice</Text>}
+              href={`${API_BASE_URL}/actions/public/${lang}/${orderId}/invoice-${receiptNumber}.pdf`}
+            />
           </div>
         </IntlProvider>
       );
@@ -58,9 +74,16 @@ class CardForm extends PureComponent {
           <section>
             <div class="handleError">
               { errors.payment.hasWrongBalance ? (
-                <h4>
-                  <Text id="errors.paid">This order has already been paid.</Text>
-                </h4>
+                <div>
+                  <h4>
+                    <Text id="errors.paid">This order has already been paid.</Text>
+                  </h4>
+                  <br />
+                  <Button raised primary
+                    label={<Text id="downloadInvoice">Download your invoice</Text>}
+                    href={`${API_BASE_URL}/actions/public/${lang}/${orderId}/invoice-${receiptNumber}.pdf`}
+                  />
+                </div>
               ) : '' }
 
               { errors.payment.hasNoOrder ? (
@@ -160,6 +183,7 @@ const definition = { 'fr-FR': {
     },
     cvv: 'cryptogramme',
   },
+  downloadInvoice: 'Télécharger votre facture',
 } };
 
 function mapStateToProps({ route: { lang }, orders, payment }) {
@@ -169,7 +193,9 @@ function mapStateToProps({ route: { lang }, orders, payment }) {
   return {
     lang,
     payment,
+    orderId: order && order.id,
     orderBalance: order && order.balance,
+    receiptNumber: order && order.receiptNumber,
     currYear: Utils.getCurrYear(),
   };
 }

@@ -1,5 +1,5 @@
 .invoice-content {
-  min-height: 100%;
+  height: auto;
   width: 1024px;
   margin-left: auto;
   margin-right: auto;
@@ -22,7 +22,7 @@
   left: 100px;
   border-top: 1px solid #1C2B4A;
   top: 64px;
-  width: 900px;
+  width: 924px;
 }
 
 .table-0 {
@@ -90,10 +90,10 @@
 }
 
 .footer {
-  margin: 427px 0px 0px 58px;
   width: auto;
   font-size: 15px;
   color: #888888;
   line-height: 10px;
   text-align: center;
+  padding-top: 250px;
 }
