@@ -1,9 +1,7 @@
 import { Component }          from 'react';
 import { route }              from 'preact-router';
 import autobind               from 'autobind-decorator';
-import {
-  API_BASE_URL,
-}                             from '~/const';
+import Utils                  from '~/utils';
 
 class Admin extends Component {
   @autobind
@@ -20,23 +18,14 @@ class Admin extends Component {
     const { email, password } = this.state;
     event.preventDefault();
 
-    fetch(`${API_BASE_URL}/amIAdmin`, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    Utils.fetchJson('/amIAdmin', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
         email,
         password,
-      }),
+      },
     })
-      .then((response) => {
-        if ( !response.ok ) {
-          throw new Error('Unauthorized');
-        }
-        return response.json();
-      })
+      // TODO: we should redirect to returnUrl
       .then(() => route('/fr-FR'))
       .catch((e) => {
         this.setState({

@@ -9,6 +9,7 @@ const holidays                    = require('./holidays.json');
 const {
   SPECIAL_CHECKIN_PRICE,
   UNAVAILABLE_DATE,
+  API_BASE_URL,
 }                                 = require('./const');
 
 const _ = { reduce, filter };
@@ -147,6 +148,38 @@ const Utils = {
     cvv:
       yup.string().required().matches(/^\d{3}/),
   }),
+
+  fetchJson(url, _options) {
+    const options = { ..._options };
+    options.credentials = 'include';
+    // We assume we will only send json or FormData
+    // (anything else will thus cause problems)
+    if ( /^post$/i.test(options.method) ) {
+      const isFormData = options.body instanceof FormData;
+
+      options.headers = {
+        ...options.headers,
+        'Content-Type': `application/${isFormData? 'x-www-form-urlencoded' : 'json'}`,
+      };
+      if ( !isFormData && typeof options.body === 'object' ) {
+        options.body = JSON.stringify(options.body);
+      }
+    }
+
+    return fetch(`${API_BASE_URL}${url}`, options)
+      .then((response) => {
+        if ( !response.ok ) {
+          /* eslint-disable promise/no-nesting */
+          return response.text()
+            .then((message) => {
+              throw new Error(message);
+            });
+          /* eslint-enable promise/no-nesting */
+        }
+
+        return response.json();
+      });
+  },
 };
 
 for ( let fnName in pureUtils ) {

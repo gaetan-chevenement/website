@@ -2,14 +2,12 @@ import { createAction }         from 'redux-act';
 import { createActionAsync }    from 'redux-act-async';
 import queryString              from 'query-string';
 import mapValues                from 'lodash/mapValues';
-import flattenDeep                from 'lodash/flattenDeep';
-import D                        from 'date-fns';
+import flattenDeep              from 'lodash/flattenDeep';
 import values                   from 'lodash/values';
 import filter                   from 'lodash/filter';
 import Utils                    from '~/utils';
-import Features                    from '~/components/Features/features';
+import Features                 from '~/components/Features/features';
 import {
-  API_BASE_URL,
   ROOM_SEGMENTS,
 }                               from '~/const';
 
@@ -36,7 +34,7 @@ export const {
 export const getRoom =
   createActionAsync(
     'get Room by id',
-    (id) => fetchJson(`/Room?filterType=and&filter[id]=${id}&segment=Availability`)
+    (id) => Utils.fetchJson(`/Room?filterType=and&filter[id]=${id}&segment=Availability`)
       .then(throwIfNotFound('Room', id)),
     {
       noRethrow: true,
@@ -48,7 +46,7 @@ export const getApartment = createGetActionAsync('Apartment');
 export const getOrder =
   createActionAsync(
     'get Order and associated OrderItems by Order id',
-    (id) => fetchJson(`/OrderItem?filterType=and&filter[OrderId]=${id}`)
+    (id) => Utils.fetchJson(`/OrderItem?filterType=and&filter[OrderId]=${id}`)
       .then(throwIfNotFound('Order', id)),
     {
       noRethrow: true,
@@ -66,7 +64,7 @@ export const listOrders =
         return Promise.reject('Can only fetch by rentingId for now');
       }
 
-      return fetchJson(`/OrderItem?filterType=and&filter[RentingId]=${rentingId}`);
+      return Utils.fetchJson(`/OrderItem?filterType=and&filter[RentingId]=${rentingId}`);
     },
     { ok: { payloadReducer: ({ response: { data, included } }) => ({
       orders: included
@@ -94,14 +92,14 @@ export const listRooms =
       };
       const qs = queryString.stringify(params, { encode: false });
 
-      return fetchJson(`/Room?${qs}`);
+      return Utils.fetchJson(`/Room?${qs}`);
     },
     { ok: { payloadReducer: reduceRooms } }
   );
 
 export const listPictures =
   createActionAsync('List pictures', ({ room }) => (
-    fetchJson(`/Pictures`)
+    Utils.fetchJson(`/Pictures`)
       .then(result => Object.assign(result, { roomId: room.id }))
   ));
 export const listFeatures =
@@ -118,9 +116,10 @@ export const listFeatures =
       };
       const qs = queryString.stringify(params, { encode: false });
 
-      return fetchJson(`/Term?filterType=or&filter[TermableId]=${roomId},${apartmentId}&${qs}`);
+      return Utils.fetchJson(`/Term?filterType=or&filter[TermableId]=${roomId},${apartmentId}&${qs}`);
     },
     { ok: { payloadReducer: ({ request: [ roomId, apartmentId ], response: { data, included } }) => {
+      // TODO: refactor
       const features = [{
         id: roomId,
         Features: data
@@ -132,6 +131,7 @@ export const listFeatures =
           .filter((_data) => _data.attributes.termable === 'Apartment' && /^apartment-features-/.test(_data.attributes.taxonomy))
           .map(({ attributes }) =>  attributes  ),
       }];
+      // TODO: refactor (and simplify if possible)
       if ( !features[0].Features.length ) {
         features[0].Features = _.flattenDeep(
           _.values(_.mapValues(
@@ -163,46 +163,43 @@ export const saveFeatures =
   createActionAsync(
     'save Terms of Room and Apartment in the backoffice',
     ({ roomId, apartmentId, ApartmentFeatures, RoomFeatures }) => (
-      fetchJson(
+      Utils.fetchJson(
         '/actions/public/updateTerms',
         {
           method: 'post',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
+          body: {
             roomId,
             apartmentId,
             RoomFeatures,
             ApartmentFeatures,
-          }),
+          },
         },
       )
     ),
     {
       noRethrow: true,
-      error: { payloadReducer: (payload) => ({ unauthorized: 'You must be log to the backoffice to update room\'s features' }) } },
+      error: { payloadReducer: (payload) => ({
+        unauthorized: 'You must be log to the backoffice to update room\'s features',
+      }) },
+    },
   );
 
 export const saveBooking =
   createActionAsync(
     'save Renting and associated Client in the backoffice',
     ({ room, booking }) => (
-      fetchJson(
+      Utils.fetchJson(
         '/actions/public/create-client-and-renting',
         {
           method: 'post',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
+          body: {
             roomId: room.id,
             pack: booking.pack,
             client: booking,
             checkinDate: booking.checkinDate,
             currentPrice: room['current price'],
             bookingDate: Utils.getBookingDate(room),
-          }),
+          },
         },
       )
     ),
@@ -232,7 +229,7 @@ export const savePayment =
         orderId,
       } = payment;
 
-      return fetchJson('/actions/public/create-payment', {
+      return Utils.fetchJson('/actions/public/create-payment', {
         method: 'post',
         body: {
           cardNumber,
@@ -267,22 +264,6 @@ export const savePayment =
     } } },
   );
 
-function fetchJson(url, options) {
-  return fetch(`${API_BASE_URL}${url}`, { credentials: 'include', ...options })
-    .then((response) => {
-      if ( !response.ok ) {
-        /* eslint-disable promise/no-nesting */
-        return response.text()
-          .then((message) => {
-            throw new Error(message);
-          });
-        /* eslint-enable promise/no-nesting */
-      }
-
-      return response.json();
-    });
-}
-
 function throwIfNotFound(modelName, id) {
   return (response) => {
     if ( response.meta.count === 0 ) {
@@ -296,7 +277,7 @@ function throwIfNotFound(modelName, id) {
 function createGetActionAsync(modelName) {
   return createActionAsync(
     `get ${modelName} by id`,
-    (id) => fetchJson(`/${modelName}/${id}`)
+    (id) => Utils.fetchJson(`/${modelName}/${id}`)
       // No record returned is an error
       .tap((response) => {
         if ( response.meta.count === 0 ) {
