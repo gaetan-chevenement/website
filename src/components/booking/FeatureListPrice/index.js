@@ -18,6 +18,7 @@ import {
 
 const TooltipButton = Tooltip(Button);
 
+// TODO: this component is useless, it should be refactored toegether with FeatureList
 // Memoization is simpler at this level instead of FeatureList level as element
 // receive arguments more likely to change.
 const renderSublist = memoize(([header, features], lang) => (

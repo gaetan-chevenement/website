@@ -18,7 +18,7 @@ class Admin extends Component {
     const { email, password } = this.state;
     event.preventDefault();
 
-    Utils.fetchJson('/amIAdmin', {
+    Utils.fetchJson('/login', {
       method: 'POST',
       body: {
         email,
