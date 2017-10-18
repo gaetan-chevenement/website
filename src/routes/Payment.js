@@ -35,7 +35,7 @@ class Payment extends PureComponent {
 
     actions.updatePayment({ orderId });
   }
-3
+
   componentDidMount() {
     const { orderId, orderLabel, actions } = this.props;
 

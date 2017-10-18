@@ -14,6 +14,7 @@ import {
 const _ = { mapValues, values, filter, flattenDeep };
 
 export const updateRoute = createAction('Update route object');
+export const updateSearch = createAction('Update search state');
 export const addRoomFeature = createAction('add feature to room');
 export const deleteRoomFeature = createAction('delete feature from room');
 export const addApartmentFeature = createAction('add feature to apartment');
@@ -317,13 +318,13 @@ function createFormAction(formName, schema) {
 
 function mapOrderItems(data, orderId) {
   return data
-    .filter((item) => (
-      item.relationships.Order.data.id === orderId
+    .filter(({ relationships: { Order } }) => (
+      Order.data.id === orderId
     ))
-    .map((item) => ({
-      ...item.attributes,
-      RentingId: item.relationships.Renting.data ? item.relationships.Renting.data.id : null,
-      ProductId: item.relationships.Product.data.id,
+    .map(({ attributes, relationships: { Renting, Product } }) => ({
+      ...attributes,
+      RentingId: Renting.data && Renting.data.id,
+      ProductId: Product.data.id,
     }));
 }
 

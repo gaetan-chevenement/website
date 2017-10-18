@@ -40,10 +40,7 @@ class CardForm extends PureComponent {
                 <Text id="errors.paid">This order has already been paid.</Text>
               </h4>
               <br />
-              <Button raised primary
-                label={<Text id="downloadInvoice">Download your invoice</Text>}
-                href={`${API_BASE_URL}/actions/public/${lang}/${orderId}/invoice-${receiptNumber}.pdf`}
-              />
+              <InvoiceButton {...{ lang, orderId, receiptNumber }} />
             </div>
 
           </section>
@@ -60,10 +57,7 @@ class CardForm extends PureComponent {
               <Text id="payment.ok.second">The Chez Nestor Team would like to wish you a great day!</Text>
             </h3>
             <br />
-            <Button raised primary
-              label={<Text id="downloadInvoice">Download your invoice</Text>}
-              href={`${API_BASE_URL}/actions/public/${lang}/${orderId}/invoice-${receiptNumber}.pdf`}
-            />
+            <InvoiceButton {...{ lang, orderId, receiptNumber }} />
           </div>
         </IntlProvider>
       );
@@ -79,10 +73,7 @@ class CardForm extends PureComponent {
                     <Text id="errors.paid">This order has already been paid.</Text>
                   </h4>
                   <br />
-                  <Button raised primary
-                    label={<Text id="downloadInvoice">Download your invoice</Text>}
-                    href={`${API_BASE_URL}/actions/public/${lang}/${orderId}/invoice-${receiptNumber}.pdf`}
-                  />
+                  <InvoiceButton {...{ lang, orderId, receiptNumber }} />
                 </div>
               ) : '' }
 
@@ -156,6 +147,17 @@ class CardForm extends PureComponent {
       </IntlProvider>
     );
   }
+}
+
+function InvoiceButton({ lang, orderId, receiptNumber }) {
+  return (
+    <IntlProvider definition={definition[lang]}>
+      <Button raised primary
+        label={<Text id="downloadInvoice">Download your invoice</Text>}
+        href={`${API_BASE_URL}/actions/public/${lang}/${orderId}/invoice-${receiptNumber}.pdf`}
+      />
+    </IntlProvider>
+  );
 }
 
 const definition = { 'fr-FR': {
