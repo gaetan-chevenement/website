@@ -4,7 +4,7 @@ import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Promise                from 'bluebird';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
-import FeaturesDetails           from '~/containers/room/FeaturesDetails';
+import FeaturesDetails        from '~/containers/room/FeaturesDetails';
 import * as actions           from '~/actions';
 
 
@@ -14,7 +14,7 @@ class Room extends PureComponent {
 
     return Promise.resolve()
       .then(() => actions.getRoom(roomId))
-      .then(({ response }) =>  actions.listFeatures(roomId, response.included[0].id));
+      .then(({ response }) => ( actions.listFeatures(roomId, response.included[0].id) ));
   }
 
   render() {
@@ -53,7 +53,7 @@ const definition = { 'fr-FR': {
 
 } };
 
-function mapStateToProps({ route: { lang, roomId }, apartments, rooms }) {
+function mapStateToProps({ route: { lang }, apartments, rooms }, { roomId }) {
   const room = rooms[roomId];
 
   return {

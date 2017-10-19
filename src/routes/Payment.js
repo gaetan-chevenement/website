@@ -31,7 +31,7 @@ class Payment extends PureComponent {
   }
 
   componentWillMount() {
-    const { orderId } = this.props;
+    const { orderId, actions } = this.props;
 
     actions.updatePayment({ orderId });
   }
