@@ -31,9 +31,9 @@ export default {
         'en-US': 'Curtains',
         'fr-FR': 'Rideaux',
       },
-      veiling: {
+      netCurtains: {
         value: false,
-        'en-US': 'Veiling',
+        'en-US': 'Net Curtains',
         'fr-FR': 'Voilage',
       },
     },
@@ -55,7 +55,7 @@ export default {
       },
       multiSocket: {
         value: true,
-        'en-US': 'Multi Socket',
+        'en-US': 'Multi-Socket Extension Cable',
         'fr-FR': 'Multiprise',
       },
     },
@@ -65,9 +65,9 @@ export default {
         'en-US': 'Storage',
         'fr-FR': 'Rangements',
       },
-      arches: {
+      'coat-hanger': {
         value: false,
-        'en-US': 'Arches',
+        'en-US': ' Coat-hanger',
         'fr-FR': 'Cintres',
       },
       mirror: {
@@ -75,9 +75,9 @@ export default {
         'en-US': 'Mirror',
         'fr-FR': 'Miroir',
       },
-      privateDressing: {
+      walkinWarrobe: {
         value: false,
-        'en-US': 'Private Dressing',
+        'en-US': 'Walk-in Wardrobe',
         'fr-FR': 'Dressing Privé',
       },
     },
@@ -87,14 +87,14 @@ export default {
         'en-US': 'Sofa',
         'fr-FR': 'Canapé',
       },
-      lowTable: {
+      coffeeTable: {
         value: false,
-        'en-US': 'Low Table',
+        'en-US': 'Coffee Table',
         'fr-FR': 'Table Basse',
       },
-      closedRoom: {
+      lockedRoom: {
         value: false,
-        'en-US': 'Closed Room',
+        'en-US': 'Locked Room',
         'fr-FR': 'Chambre fermée à clé',
       },
       privateBathroom: {
@@ -246,9 +246,9 @@ export default {
         'en-US': 'Scissors',
         'fr-FR': 'Ciseaux',
       },
-      plateRack: {
+      dryingRack: {
         value: true,
-        'en-US': 'Plate Rack',
+        'en-US': 'Drying Rack',
         'fr-FR': 'Egouttoir',
       },
       corkscrew: {
@@ -256,9 +256,9 @@ export default {
         'en-US': 'Corkscrew',
         'fr-FR': 'Tire-bouchon',
       },
-      cuttingBoards: {
+      choppingBoards: {
         value: true,
-        'en-US': 'Cutting Boards',
+        'en-US': 'Chopping Boards',
         'fr-FR': 'Planches à découper',
       },
       storage: {
@@ -315,9 +315,9 @@ export default {
         'en-US': 'Storage',
         'fr-FR': 'Rangements',
       },
-      arches: {
+      'coat-hanger': {
         value: false,
-        'en-US': 'Arches',
+        'en-US': ' Coat-hanger',
         'fr-FR': 'Cintres',
       },
       sofa: {
@@ -325,9 +325,9 @@ export default {
         'en-US': 'Sofa',
         'fr-FR': 'Canapé',
       },
-      lowTable: {
+      coffeeTable: {
         value: false,
-        'en-US': 'Low Table',
+        'en-US': 'Coffee Table',
         'fr-FR': 'Table Basse',
       },
       iron: {

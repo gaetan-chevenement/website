@@ -1,4 +1,4 @@
-import { IntlProvider, Text } from 'preact-i18n';
+import { IntlProvider } from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -20,7 +20,6 @@ class Room extends PureComponent {
   render() {
     const {
       roomId,
-      roomName,
       apartmentId,
       lang,
       isRoomLoading,
@@ -35,11 +34,6 @@ class Room extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="content">
-          <h1>
-            <Text id="title">Détail de la chambre</Text><br />
-            <em>{roomName}</em>
-          </h1>
-
           <section>
             <FeaturesDetails roomId={roomId} apartmentId={apartmentId} />
           </section>
@@ -59,7 +53,6 @@ function mapStateToProps({ route: { lang, roomId, admin }, apartments, rooms }) 
   return {
     roomId,
     admin,
-    roomName: room && room.name,
     apartmentId: room && room.ApartmentId,
     lang,
     roomError: room && room.error,

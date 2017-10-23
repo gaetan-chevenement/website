@@ -45,7 +45,6 @@ class RoomDetails extends PureComponent {
       room,
       getFeatures,
       rooms: { errors },
-      roomId,
     } = this.props;
 
     if ( !room || getFeatures === undefined ) {
@@ -58,7 +57,7 @@ class RoomDetails extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
-          <h2 style="text-align:center;">Details for room - {roomId}</h2>
+          <h2 style="text-align:center;"><Text id="title">Details for room</Text> - {room.name}</h2>
           <Input type="number"
             label={<Text id="basePrice">Base Price</Text>}
             name="basePrice"
@@ -113,7 +112,7 @@ class RoomDetails extends PureComponent {
               />
             </div>
           </dl>
-          <h3 style="text-align:center;"><Text id="negative.title">Negative Features</Text></h3>
+          <h3 style="text-align:center;"><Text id="negativeTitle">Negative Features</Text></h3>
           <dl class="grid-4 has-gutter-l">
             {negativeFeatures.map((feature) => (
               <Checkbox
@@ -151,7 +150,17 @@ function mapDispatchToProps(dispatch) {
 }
 
 const definition = { 'fr-FR': {
-
+  title: 'Détails de la chambre',
+  basePrice: 'Prix de Base',
+  floorArea: 'Surface',
+  beds: 'Type de Litterie',
+  description: {
+    title: 'Descriptions',
+    fr: 'description française',
+    en: 'description anglaise',
+    es: 'description espagnole',
+  },
+  negativeTitle: 'Points Négatifs',
 } };
 
 
