@@ -19,8 +19,18 @@ export const addRoomFeature = createAction('add feature to room');
 export const deleteRoomFeature = createAction('delete feature from room');
 export const addApartmentFeature = createAction('add feature to apartment');
 export const deleteApartmentFeature = createAction('delete feature from apartment');
-export const updateApartment = createAction('Update Apartment Object');
-export const updateRoom = createAction('Update Room Object');
+export const {
+  updateRoom,
+  setRoomErrors,
+  deleteRoomError,
+  validateRoom,
+} = createFormAction('Room', Utils.roomSchema);
+export const {
+  updateApartment,
+  setApartmentErrors,
+  deleteApartmentError,
+  validateApartment,
+} = createFormAction('Apartment', Utils.apartmentSchema);
 export const {
   updateBooking,
   setBookingErrors,
