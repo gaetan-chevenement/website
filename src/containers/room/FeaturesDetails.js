@@ -12,7 +12,6 @@ import Promise                from 'bluebird';
 import autobind               from 'autobind-decorator';
 import ApartmentDetails       from '~/containers/room/ApartmentDetails';
 import RoomDetails            from '~/containers/room/RoomDetails';
-import Utils                  from '~/utils';
 import Features               from '~/components/Features/features';
 import * as actions           from '~/actions';
 
@@ -24,16 +23,12 @@ class FeaturesDetails extends PureComponent {
 
     Promise.resolve()
       .then(() => Promise.all([
-        Utils.apartmentSchema.validate(apartment, { abortEarly: false }),
-        Utils.roomSchema.validate(room, { abortEarly: false }),
+        actions.validateRoom(room),
+        actions.validateApartment(apartment),
       ]))
-      .then(([validApartment, validRoom]) => {
-        if ( validApartment && validRoom ) {
-          return actions.saveRoomAndApartment(this.props);
-        }
-        return null;
-      })
-      .then(() => actions.saveFeatures(this.props));
+      .then(() => actions.saveRoomAndApartment(this.props))
+      .then(() => actions.saveFeatures(this.props))
+      .catch((e) => console.error(e));
   }
 
   @autobind

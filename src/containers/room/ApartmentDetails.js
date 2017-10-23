@@ -1,11 +1,11 @@
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { batch }              from 'redux-act';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { Input }              from 'react-toolbox/lib/input';
 import { Dropdown }           from 'react-toolbox/lib/dropdown';
 import { Checkbox }           from 'react-toolbox/lib/checkbox';
+import { batch }              from 'redux-act';
 import { IntlProvider, Text } from 'preact-i18n';
 import capitalize             from 'lodash/capitalize';
 import autobind               from 'autobind-decorator';
@@ -14,140 +14,6 @@ import  district              from './district';
 
 
 const _ = { capitalize };
-const cities = [
-  {
-    value: 'lyon', label: 'Lyon',
-  }, {
-    value: 'paris', label: 'Paris',
-  }, {
-    value: 'montpellier', label: 'Montpellier',
-  },
-];
-
-const transport = {
-  lyon: {
-    subway: [{
-      value: 'A',
-      label: 'A',
-    }, {
-      value: 'B',
-      label: 'B',
-    }, {
-      value: 'C',
-      label: 'C',
-    }, {
-      value: 'D',
-      label: 'D',
-    }],
-    tramway: [{
-      value: 'T1',
-      label: 'T1',
-    }, {
-      value: 'T2',
-      label: 'T2',
-    }, {
-      value: 'T3',
-      label: 'T3',
-    }, {
-      value: 'T4',
-      label: 'T4',
-    }],
-  },
-  paris: {
-    subway: [{
-      value: 'A',
-      label: 'A',
-    }, {
-      value: 'B',
-      label: 'B',
-    }, {
-      value: 'C',
-      label: 'C',
-    }, {
-      value: 'D',
-      label: 'D',
-    }],
-    tramway: [{
-      value: 'T1',
-      label: 'T1',
-    }, {
-      value: 'T2',
-      label: 'T2',
-    }, {
-      value: 'T3',
-      label: 'T3',
-    }, {
-      value: 'T4',
-      label: 'T4',
-    }],
-  },
-  montpellier: {
-    subway: [{
-      value: 'A',
-      label: 'A',
-    }, {
-      value: 'B',
-      label: 'B',
-    }, {
-      value: 'C',
-      label: 'C',
-    }, {
-      value: 'D',
-      label: 'D',
-    }],
-    tramway: [{
-      value: 'T1',
-      label: 'T1',
-    }, {
-      value: 'T2',
-      label: 'T2',
-    }, {
-      value: 'T3',
-      label: 'T3',
-    }, {
-      value: 'T4',
-      label: 'T4',
-    }],
-  },
-};
-
-const nearbyBike = [
-  {
-    value: '25', label: '25m',
-  }, {
-    value: '50', label: '50m',
-  }, {
-    value: '75', label: '75m',
-  }, {
-    value: '100', label: '100m',
-  }, {
-    value: '125', label: '125m',
-  }, {
-    value: '150', label: '150m',
-  }, {
-    value: '175', label: '175m',
-  }, {
-    value: '200', label: '200m',
-  }, {
-    value: '250', label: '250m',
-  }, {
-    value: '300', label: '300m',
-  }, {
-    value: '350', label: '350m',
-  }, {
-    value: '400', label: '400m',
-  }, {
-    value: '450', label: '450m',
-  }, {
-    value: '500', label: '500m',
-  },
-];
-
-const countries = [
-  {
-    value: 'france', label: 'France',
-  },
-];
 
 class ApartmentDetails extends PureComponent {
   @autobind
@@ -178,6 +44,7 @@ class ApartmentDetails extends PureComponent {
     }
     batch(
       actions.updateApartment({ [event.target.name]: value, id }),
+      actions.deleteApartmentError(event.target.name),
     );
   }
 
@@ -221,7 +88,7 @@ class ApartmentDetails extends PureComponent {
       lang,
       apartment,
       getFeatures,
-      //      apartment: { errors },
+      apartments: { errors },
     } = this.props;
 
     if ( !apartment || getFeatures === undefined ) {
@@ -240,6 +107,7 @@ class ApartmentDetails extends PureComponent {
             required
             value={apartment.addressStreet}
             onChange={this.handleChange}
+            error={errors && errors.addressStreet}
           />
           <Input type="number"
             label={<Text id="zipCode">ZIP code</Text>}
@@ -247,6 +115,7 @@ class ApartmentDetails extends PureComponent {
             required
             value={apartment.addressZip}
             onChange={this.handleChange}
+            error={errors && errors.addressZip}
           />
           <Dropdown
             onChange={this.handleChange}
@@ -255,6 +124,7 @@ class ApartmentDetails extends PureComponent {
             name="addressCity"
             value={apartment.addressCity}
             source={cities}
+            error={errors && errors.addressCity}
           />
           <Dropdown
             onChange={this.handleChange}
@@ -264,6 +134,7 @@ class ApartmentDetails extends PureComponent {
             auto
             value={apartment.addressCountry}
             source={countries}
+            error={errors && errors.addressCountry}
           />
           {apartment.addressCity ?
             <Dropdown
@@ -275,6 +146,7 @@ class ApartmentDetails extends PureComponent {
               value={apartment.district}
               source={Object.keys(district[apartment.addressCity])
                 .map((district) => ({ value: district, label: _.capitalize(district) }) )}
+              error={errors && errors.district}
             /> : ''
           }
           <Input type="number"
@@ -283,10 +155,11 @@ class ApartmentDetails extends PureComponent {
             required
             value={apartment.floor}
             onChange={this.handleChange}
+            error={errors && errors.floor}
           />
           <Dropdown
             onChange={this.handleChange}
-            label={<Text id="district">Elevator</Text>}
+            label={<Text id="elevator">Elevator</Text>}
             name="elevator"
             required
             auto
@@ -299,6 +172,7 @@ class ApartmentDetails extends PureComponent {
             required
             value={apartment.floorArea}
             onChange={this.handleChange}
+            error={errors && errors.floorArea}
           />
           <Input type="text"
             label={<Text id="digicode">Digicode</Text>}
@@ -410,7 +284,6 @@ class ApartmentDetails extends PureComponent {
 const definition = { 'fr-FR': {
 
 } };
-
 function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { apartmentId, roomId }) {
   const apartment = apartments[apartmentId];
 
@@ -418,6 +291,7 @@ function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { apartm
     lang,
     admin,
     roomId,
+    apartments,
     apartment,
     apartmentId,
     getFeatures: apartment && apartment.Features && apartment.Features.length > 0,
@@ -427,5 +301,186 @@ function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { apartm
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };
 }
+
+const cities = [
+  {
+    value: 'lyon', label: 'Lyon',
+  }, {
+    value: 'paris', label: 'Paris',
+  }, {
+    value: 'montpellier', label: 'Montpellier',
+  },
+];
+
+const transport = {
+  lyon: {
+    subway: [{
+      value: 'A',
+      label: 'A',
+    }, {
+      value: 'B',
+      label: 'B',
+    }, {
+      value: 'C',
+      label: 'C',
+    }, {
+      value: 'D',
+      label: 'D',
+    }, {
+      value: 'F1',
+      label: 'F1',
+    }, {
+      value: 'F2',
+      label: 'F2',
+    }],
+    tramway: [{
+      value: 'T1',
+      label: 'T1',
+    }, {
+      value: 'T2',
+      label: 'T2',
+    }, {
+      value: 'T3',
+      label: 'T3',
+    }, {
+      value: 'T4',
+      label: 'T4',
+    }, {
+      value: 'T5',
+      label: 'T5',
+    }],
+  },
+  paris: {
+    subway: [{
+      value: '1',
+      label: '1',
+    }, {
+      value: '2',
+      label: '2',
+    }, {
+      value: '3',
+      label: '3',
+    }, {
+      value: '3b',
+      label: '3b',
+    }, {
+      value: '4',
+      label: '4',
+    }, {
+      value: '5',
+      label: '5',
+    }, {
+      value: '6',
+      label: '6',
+    }, {
+      value: '7',
+      label: '7',
+    }, {
+      value: '7b',
+      label: '7b',
+    }, {
+      value: '8',
+      label: '8',
+    }, {
+      value: '9',
+      label: '9',
+    }, {
+      value: '10',
+      label: '10',
+    }, {
+      value: '11',
+      label: '11',
+    }, {
+      value: '12',
+      label: '12',
+    }, {
+      value: '13',
+      label: '13',
+    }, {
+      value: '14',
+      label: '14',
+    }],
+    tramway: [{
+      value: '1',
+      label: '1',
+    }, {
+      value: '2',
+      label: '2',
+    }, {
+      value: '3a',
+      label: '3a',
+    }, {
+      value: '3b',
+      label: '3b',
+    }, {
+      value: '5',
+      label: '5',
+    }, {
+      value: '6',
+      label: '6',
+    }, {
+      value: '7',
+      label: '7',
+    }, {
+      value: '8',
+      label: '8',
+    }],
+  },
+  montpellier: {
+    subway: [],
+    tramway: [{
+      value: '1',
+      label: '1',
+    }, {
+      value: '2',
+      label: '2',
+    }, {
+      value: '3',
+      label: '3',
+    }, {
+      value: '4',
+      label: '4',
+    }],
+  },
+};
+
+const nearbyBike = [
+  {
+    value: '25', label: '25m',
+  }, {
+    value: '50', label: '50m',
+  }, {
+    value: '75', label: '75m',
+  }, {
+    value: '100', label: '100m',
+  }, {
+    value: '125', label: '125m',
+  }, {
+    value: '150', label: '150m',
+  }, {
+    value: '175', label: '175m',
+  }, {
+    value: '200', label: '200m',
+  }, {
+    value: '250', label: '250m',
+  }, {
+    value: '300', label: '300m',
+  }, {
+    value: '350', label: '350m',
+  }, {
+    value: '400', label: '400m',
+  }, {
+    value: '450', label: '450m',
+  }, {
+    value: '500', label: '500m',
+  },
+];
+
+const countries = [
+  {
+    value: 'france', label: 'France',
+  },
+];
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApartmentDetails);

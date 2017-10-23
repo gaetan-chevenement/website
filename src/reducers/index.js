@@ -16,7 +16,13 @@ import {
   deletePaymentError,
   validatePayment,
   updateApartment,
+  setApartmentErrors,
+  deleteApartmentError,
+  validateApartment,
   updateRoom,
+  setRoomErrors,
+  deleteRoomError,
+  validateRoom,
   savePayment,
   getApartment,
   getRoom,
@@ -116,14 +122,16 @@ const roomsReducer = createReducer({
     ...state,
     [id]: { ...state[id], Features },
   }),
-  [updateRoom]: (state, payload) => ({
-    ...state,
-    [payload.id]: { ...state[payload.id], ...payload },
-  }),
   ...createFeatureReducer({
     addFeature: addRoomFeature,
     deleteFeature: deleteRoomFeature,
     saveFeatures,
+  }),
+  ...createRoomApartmentFormReducer({
+    update: updateRoom,
+    setErrors: setRoomErrors,
+    deleteError: deleteRoomError,
+    validate: validateRoom,
   }),
   [saveRoomAndApartment.ok]: (state) => ({
     ...state,
@@ -149,14 +157,16 @@ const apartmentsReducer = createReducer({
     ...state,
     [id]: { ...state[id], Features },
   }),
-  [updateApartment]: (state, payload) => ({
-    ...state,
-    [payload.id]: { ...state[payload.id], ...payload },
-  }),
   ...createFeatureReducer({
     addFeature: addApartmentFeature,
     deleteFeature: deleteApartmentFeature,
     saveFeatures,
+  }),
+  ...createRoomApartmentFormReducer({
+    update: updateApartment,
+    setErrors: setApartmentErrors,
+    deleteError: deleteApartmentError,
+    validate: validateApartment,
   }),
   [saveRoomAndApartment.ok]: (state) => ({
     ...state,
@@ -251,6 +261,37 @@ export function createListReducer(actionAsync, modelName) {
       ...state,
       isLoading: false,
       error: payload,
+    }),
+  };
+}
+export function createRoomApartmentFormReducer({ update, setErrors, deleteError, validate }) {
+  return {
+    [update]: (state, payload) => ({
+      ...state,
+      [payload.id]: { ...state[payload.id], ...payload },
+    } ),
+    [setErrors]: (state, payload) => ({
+      ...state,
+      errors: payload,
+    }),
+    [deleteError]: (state, payload) => ({
+      ...state,
+      errors: dissoc(payload, state.errors),
+    }),
+    [validate.request]: (state) => ({
+      ...state,
+      isValidating: true,
+    }),
+    [validate.ok]: (state, { response }) => ({
+      ...state,
+      ...response.data,
+      isValidating: false,
+      errors: noErrors,
+    }),
+    [validate.error]: (state, payload) =>  ({
+      ...state,
+      isValidating: false,
+      errors: payload,
     }),
   };
 }

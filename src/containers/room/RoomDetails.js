@@ -4,56 +4,11 @@ import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { Input }              from 'react-toolbox/lib/input';
 import { Checkbox }           from 'react-toolbox/lib/checkbox';
+import { batch }              from 'redux-act';
 import { Dropdown }           from 'react-toolbox/lib/dropdown';
 import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import * as actions           from '~/actions';
-
-const negativeFeatures = [
-  {
-    value: 'overlooked', label: 'Vis à vis',
-  }, {
-    value: 'dark', label: 'Sombre',
-  }, {
-    value: 'noisy', label: 'Bruyant',
-  }, {
-    value: 'small', label: 'Surface < 10m2',
-  }, {
-    value: 'lowIncome', label: 'Quartier peu vivant',
-  }, {
-    value: 'unsafe', label: 'Peu sécurisé',
-  }, {
-    value: 'fewStorage', label: 'Peu de rangement',
-  }, {
-    value: 'offCentre', label: 'Excentré',
-  }, {
-    value: 'wet', label: 'Humide',
-  }, {
-    value: 'noElevator', label: 'Etage 3 ou + sans ascenseur',
-  }, {
-    value: 'groundFloor', label: 'Rez-de-chaussée',
-  }, {
-    value: 'awayTransport', label: 'Loin des transports',
-  }, {
-    value: 'strictNeighbor', label: 'Voisinage strict',
-  },
-];
-
-const bedDetails = [
-  {
-    value: 'double', label: 'Double',
-  }, {
-    value: 'simple', label: 'Simple',
-  }, {
-    value: 'sofa', label: 'Sofa',
-  }, {
-    value: 'double+sofa', label: 'Double And Sofa',
-  }, {
-    value: 'simple+sofa', label: 'Simple And Sofa',
-  }, {
-    value: 'simple+simple', label: 'Simple And Simple',
-  },
-];
 
 class RoomDetails extends PureComponent {
   @autobind
@@ -63,8 +18,10 @@ class RoomDetails extends PureComponent {
     event.target.name === 'floorArea' && value < 10 ?
       actions.addRoomFeature({ name: 'small', taxonomy: 'room-features-negative', termable: 'Room', TermableId: id }) :
       actions.deleteRoomFeature({ name: 'small', taxonomy: 'room-features-negative', termable: 'Room', TermableId: id });
-
-    actions.updateRoom({ [event.target.name]: value, id });
+    batch(
+      actions.updateRoom({ [event.target.name]: value, id }),
+      actions.deleteRoomError(event.target.name)
+    );
   }
 
   @autobind
@@ -87,7 +44,7 @@ class RoomDetails extends PureComponent {
       lang,
       room,
       getFeatures,
-      //      room: { errors },
+      rooms: { errors },
       roomId,
     } = this.props;
 
@@ -108,6 +65,7 @@ class RoomDetails extends PureComponent {
             required
             value={room.basePrice /100}
             onChange={this.handleChange}
+            error={errors && errors.basePrice}
           />
           <Input type="number"
             label={<Text id="floorArea">Surface</Text>}
@@ -115,6 +73,7 @@ class RoomDetails extends PureComponent {
             required
             value={room.floorArea}
             onChange={this.handleChange}
+            error={errors && errors.floorArea}
           />
           <Dropdown
             label={<Text id="beds">Beds type</Text>}
@@ -174,10 +133,6 @@ class RoomDetails extends PureComponent {
   }
 }
 
-const definition = { 'fr-FR': {
-
-} };
-
 function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { roomId }) {
   const room = rooms[roomId];
 
@@ -185,6 +140,7 @@ function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { roomId
     lang,
     admin,
     room,
+    rooms,
     roomId,
     getFeatures: room && room.Features && room.Features.length > 0,
   };
@@ -193,5 +149,56 @@ function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { roomId
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };
 }
+
+const definition = { 'fr-FR': {
+
+} };
+
+
+const negativeFeatures = [
+  {
+    value: 'overlooked', label: 'Vis à vis',
+  }, {
+    value: 'dark', label: 'Sombre',
+  }, {
+    value: 'noisy', label: 'Bruyant',
+  }, {
+    value: 'small', label: 'Surface < 10m2',
+  }, {
+    value: 'lowIncome', label: 'Quartier peu vivant',
+  }, {
+    value: 'unsafe', label: 'Peu sécurisé',
+  }, {
+    value: 'fewStorage', label: 'Peu de rangement',
+  }, {
+    value: 'offCentre', label: 'Excentré',
+  }, {
+    value: 'wet', label: 'Humide',
+  }, {
+    value: 'noElevator', label: 'Etage 3 ou + sans ascenseur',
+  }, {
+    value: 'groundFloor', label: 'Rez-de-chaussée',
+  }, {
+    value: 'awayTransport', label: 'Loin des transports',
+  }, {
+    value: 'strictNeighbor', label: 'Voisinage strict',
+  },
+];
+
+const bedDetails = [
+  {
+    value: 'double', label: 'Double',
+  }, {
+    value: 'simple', label: 'Simple',
+  }, {
+    value: 'sofa', label: 'Sofa',
+  }, {
+    value: 'double+sofa', label: 'Double And Sofa',
+  }, {
+    value: 'simple+sofa', label: 'Simple And Sofa',
+  }, {
+    value: 'simple+simple', label: 'Simple And Simple',
+  },
+];
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomDetails);
