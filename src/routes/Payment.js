@@ -19,7 +19,7 @@ class Payment extends PureComponent {
 
     return Promise.resolve()
       .then(() => actions.validatePayment(payment))
-      .then(() => actions.savePayment(payment, orderId))
+      .then(() => actions.savePayment(payment))
       .then(() => actions.getOrder(orderId))
       .then(() => {
         if ( !returnUrl ) {
