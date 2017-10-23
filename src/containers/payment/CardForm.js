@@ -120,21 +120,21 @@ class CardForm extends PureComponent {
               error={errors.holderName}
             />
             <p class="grid-3-large-1 has-gutter">
-              <Input type="number" min="1" max="12" step="1"
+              <Input type="number" min="1" max="12" step="1" maxLength="2"
                 label={<Text id="card.expiry.month">Expiry Month</Text>}
                 name="expiryMonth"
                 value={payment.expiryMonth}
                 onChange={this.handleChange}
                 error={errors.expiryMonth}
               />
-              <Input type="number" min={currYear} max={currYear + 10} step="1"
+              <Input type="number" min={currYear} max={currYear + 10} step="1" maxLength="2"
                 label={<Text id="card.expiry.year">Expiry Year</Text>}
                 name="expiryYear"
                 value={payment.expiryYear}
                 onChange={this.handleChange}
                 error={errors.expiryYear}
               />
-              <Input type="number" min="0" max="999" step="1"
+              <Input type="number" min="0" max="999" step="1" maxLength="3"
                 label={<Text id="card.cvv">CVV</Text>}
                 name="cvv"
                 value={payment.cvv}

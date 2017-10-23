@@ -134,6 +134,7 @@ const definition = { 'fr-FR': {
 
 function mapStateToProps({ route: { lang, returnUrl }, orders, payment }, { orderId }) {
   const order = orders[orderId];
+
   return {
     lang,
     returnUrl,
