@@ -85,7 +85,6 @@ class ApartmentDetails extends PureComponent {
       getFeatures,
       apartments: { errors },
     } = this.props;
-
     if ( !apartment || getFeatures === undefined ) {
       return (
         <div class="content text-center">
@@ -95,9 +94,9 @@ class ApartmentDetails extends PureComponent {
     }
     return (
       <IntlProvider definition={definition[lang]}>
-        <h2 style="text-align:center;"><Text id="title">Details for apartment</Text> - {apartment.name}</h2>
-
         <div>
+          <h2 style="text-align:center;"><Text id="title">Details for apartment</Text> - {apartment.name}</h2>
+
           <Input type="text"
             label={<Text id="address">Address</Text>}
             name="addressStreet"

@@ -189,7 +189,6 @@ const definition = { 'fr-FR': {
 function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { roomId, apartmentId }) {
   const room = rooms[roomId];
   const apartment = apartments[apartmentId];
-
   return {
     lang,
     admin,
