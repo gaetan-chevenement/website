@@ -141,15 +141,15 @@ const Utils = {
     addressStreet: yup.string().required().trim(),
     addressZip: yup.number().required(),
     addressCity: yup.string().required(),
+    addressCountry: yup.string().required(),
     floor: yup.number().required(),
-    addressCountry: yup.string().required().trim(),
-    floorArea: yup.number().required(),
-    elevator: yup.boolean().required(),
+    floorArea: yup.number().min(1).required(),
+    district: yup.string().required(),
   }),
 
   roomSchema: yup.object().shape({
-    basePrice: yup.number().required(),
-    floorArea: yup.number().required(),
+    basePrice: yup.number().min(1).required(),
+    floorArea: yup.number().min(1).required(),
     beds: yup.string().required(),
   }),
 
@@ -181,7 +181,6 @@ const Utils = {
         options.body = JSON.stringify(options.body);
       }
     }
-console.log(options);
     return fetch(`${API_BASE_URL}${url}`, options)
       .then((response) => {
         if ( !response.ok ) {
