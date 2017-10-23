@@ -50,7 +50,8 @@ class Invoice extends PureComponent {
           metadata: clientMetadata.length > 0 ?
             JSON.parse(clientMetadata.find((_data) => _data.type === 'metadata').attributes.value) :
             {} ,
-          apartment: roomIncluded.find((inc) => inc.type === 'apartment').attributes }));
+          apartment: roomIncluded.find((inc) => inc.type === 'apartment').attributes })
+        );
     }
   }
 
@@ -110,7 +111,7 @@ class Invoice extends PureComponent {
 
     return (
       <IntlProvider definition={definition[lang]}>
-        <div class={style['invoice-content']}>
+        <div class={`invoice-content ${style['invoice-content']}`}>
           <div class={style.logo}>
             <span>
               <img src={require('~/assets/icons/favicon-128.png')} />
