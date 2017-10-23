@@ -250,13 +250,14 @@ export const saveBooking =
 export const savePayment =
   createActionAsync(
     'save Payment and associated Order in the backoffice',
-    (payment, orderId) => {
+    (payment) => {
       const {
         cardNumber,
         cvv,
         expiryMonth,
         expiryYear,
         holderName,
+        orderId,
       } = payment;
 
       return Utils.fetchJson('/actions/public/create-payment', {
