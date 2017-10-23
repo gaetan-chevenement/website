@@ -7,13 +7,8 @@ import { Dropdown }           from 'react-toolbox/lib/dropdown';
 import { Checkbox }           from 'react-toolbox/lib/checkbox';
 import { batch }              from 'redux-act';
 import { IntlProvider, Text } from 'preact-i18n';
-import capitalize             from 'lodash/capitalize';
 import autobind               from 'autobind-decorator';
 import * as actions           from '~/actions';
-import  district              from './district';
-
-
-const _ = { capitalize };
 
 class ApartmentDetails extends PureComponent {
   @autobind
@@ -100,6 +95,8 @@ class ApartmentDetails extends PureComponent {
     }
     return (
       <IntlProvider definition={definition[lang]}>
+        <h2 style="text-align:center;"><Text id="title">Details for apartment</Text> - {apartment.name}</h2>
+
         <div>
           <Input type="text"
             label={<Text id="address">Address</Text>}
@@ -144,8 +141,7 @@ class ApartmentDetails extends PureComponent {
               required
               auto
               value={apartment.district}
-              source={Object.keys(district[apartment.addressCity])
-                .map((district) => ({ value: district, label: _.capitalize(district) }) )}
+              source={district[apartment.addressCity]}
               error={errors && errors.district}
             /> : ''
           }
@@ -183,7 +179,7 @@ class ApartmentDetails extends PureComponent {
           <h3 style="text-align:center;">Transport</h3>
           <dl class="grid-4 has-gutter-xl">
             <div>
-              <h5>Nearby Bike Station</h5>
+              <h5><Text id="bike">Nearby Bike Station</Text></h5>
               <ul style="height: 150px;overflow: scroll;">
                 {nearbyBike.map((dist) => (
                   <Checkbox
@@ -198,7 +194,7 @@ class ApartmentDetails extends PureComponent {
               </ul>
             </div>
             <div>
-              <h5>Subway</h5>
+              <h5><Text id="subway">Subway</Text></h5>
               {apartment.addressCity ?
                 <div>
                   <ul style="height: 150px;overflow: scroll;">
@@ -216,7 +212,7 @@ class ApartmentDetails extends PureComponent {
               }
             </div>
             <div>
-              <h5>Tramway</h5>
+              <h5><Text id="tramway">Tramway</Text></h5>
               {apartment.addressCity ?
                 <div>
                   <ul style="height: 150px;overflow: scroll;">
@@ -282,6 +278,26 @@ class ApartmentDetails extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
+  title: 'Détails de l\'appartement',
+  address: 'Adresse',
+  zipCode: 'Code Postal',
+  city: 'Ville',
+  country: 'Pays',
+  district: 'Quartier',
+  floor: 'Étage',
+  elevator: 'Ascenseur',
+  floorArea: 'Surface',
+  digicode: 'Digicode',
+  bike: 'Stations de vélo les plus proches',
+  subway: 'Métro',
+  busHint: 'Une ligne de bus par ligne',
+  tramway: 'Tramway',
+  description: {
+    title: 'Descriptions',
+    fr: 'description française',
+    en: 'description anglaise',
+    es: 'description espagnole',
+  },
 
 } };
 function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { apartmentId, roomId }) {
@@ -481,6 +497,75 @@ const countries = [
     value: 'france', label: 'France',
   },
 ];
+
+const district = {
+  lyon: [{
+    value: 'ainay',
+    label: 'Ainay',
+  }, {
+    value: 'confluence',
+    label: 'Confluence',
+  }, {
+    value: 'bellecour',
+    label: 'Bellecour',
+  },{
+    value: 'hotel-de-ville',
+    label: 'Hôtel de Ville',
+  },{
+    value: 'croix-rousse',
+    label: 'Croix-Rousse',
+  },{
+    value: 'tete-dor',
+    label: 'Tête d\'Or',
+  },{
+    value: 'brotteaux',
+    label: 'Brotteaux',
+  },{
+    value: 'foch',
+    label: 'Foch',
+  },{
+    value: 'part-dieu',
+    label: 'Part-Dieu',
+  },{
+    value: 'manufacture',
+    label: 'Manufacture',
+  },{
+    value: 'prefecture',
+    label: 'Préfecture',
+  },{
+    value: 'quais-de-rhone',
+    label: 'Quais de Rhône',
+  },{
+    value: 'guillotiere',
+    label: 'Guillotière',
+  },{
+    value: 'universites',
+    label: 'Universités',
+  },{
+    value: 'jean-mace',
+    label: 'Jean Macé',
+  },{
+    value: 'garibaldi',
+    label: 'Garibaldi',
+  },{
+    value: 'jet-deau',
+    label: 'Jet d\'Eau',
+  },{
+    value: 'debourg-gerland',
+    label: 'Debourg - Gerland',
+  },{
+    value: 'vieux-lyon',
+    label: 'Vieux Lyon',
+  },{
+    value: 'vaise',
+    label: 'Vaise',
+  },{
+    value: 'monchat',
+    label: 'Montchat',
+  }],
+  paris: [],
+  montpellier: [],
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApartmentDetails);
