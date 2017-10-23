@@ -65,11 +65,12 @@ const definition = { 'fr-FR': {
 
 function mapStateToProps({ route: { lang, roomId }, booking, rooms }) {
   const { checkinDate, errors } = booking;
+  const room = rooms[roomId];
 
   return {
     lang,
     checkinDate,
-    bookingDate: Utils.getBookingDate(rooms[roomId]),
+    bookingDate: room && Utils.getBookingDate(room),
     checkinDateError: errors.checkinDate,
   };
 }

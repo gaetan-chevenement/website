@@ -5,14 +5,10 @@ import CheckinInputs			    from './CheckinInputs';
 import ClientInputs			      from './ClientInputs';
 import EligibilityInput		   	from './EligibilityInput';
 
-export default function({ lang }) {
+export default function BookingForm({ lang }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <div>
-        <section>
-          <ClientInputs />
-        </section>
-
         <section>
           <h3><Text id="housingPack">Choose Your Housing Pack</Text></h3>
           <PackPicker />
@@ -21,6 +17,11 @@ export default function({ lang }) {
         <section>
           <h3><Text id="detail">Detailed comparison</Text></h3>
           <FeatureList lang={lang} />
+        </section>
+
+        <section>
+          <h3><Text id="personal">Personal info</Text></h3>
+          <ClientInputs />
         </section>
 
         <section>
@@ -41,6 +42,7 @@ export default function({ lang }) {
 const definition = { 'fr-FR': {
   housingPack: 'Choisissez Votre Pack Logement',
   detail: 'Comparaison Détaillée',
+  personal: 'Infos personnelles',
   date: {
     first: 'Date et heure prévues de checkin',
     last: '(Possibilité de changer à n\'importe quel moment)',

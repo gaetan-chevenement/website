@@ -24,13 +24,14 @@ class EligibilityInputs extends PureComponent {
     const {
       lang,
       isEligible,
+      hasAcceptedTerms,
     } = this.props;
 
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
           <p>
-            <Text id="ensure">Before booking, you need to ensure you are eligibile for an
+            <Text id="eligible.test">Before booking, you need to ensure you are eligibile for an
             accommodation with Chez Nestor:</Text>
             <Button
               icon="launch"
@@ -47,15 +48,26 @@ class EligibilityInputs extends PureComponent {
               onChange={this.handleChange}
               field={theme.eligible}
             >
-              &nbsp;<Text id="confirm">I confirm that I am eligible,
-              that I am able to provide all the required documents,
-              and that I have read and accepted the</Text>{' '}
+              {' '}
+              <Text id="eligible.confirm">I confirm that I am eligible,
+              and that I am able to provide all the required documents</Text>
+            </Checkbox>
+          </p>
+          <p>
+            <Checkbox
+              name="hasAcceptedTerms"
+              checked={hasAcceptedTerms}
+              onChange={this.handleChange}
+              field={theme.eligible}
+            >
+              {' '}
+              <Text id="terms.beforeLink">I confirm that I have read and accepted the </Text>
               <a
                 href="https://drive.google.com/file/d/0B8dLiyBmm3wJa1IwbWsxbk85LWs/view"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Text id="terms">terms and conditions.</Text>
+                <Text id="terms.afterLink">terms and conditions.</Text>
               </a>
             </Checkbox>
           </p>
@@ -72,10 +84,11 @@ const definition = { 'fr-FR': {
   terms: 'termes et conditions.',
 } };
 
-function mapStateToProps({ route: { lang }, booking: { isEligible } }) {
+function mapStateToProps({ route: { lang }, booking: { isEligible, hasAcceptedTerms } }) {
   return {
     lang,
     isEligible,
+    hasAcceptedTerms,
   };
 }
 

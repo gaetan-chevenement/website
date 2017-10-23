@@ -41,6 +41,7 @@ class BookingStep1 extends PureComponent {
       isRoomLoading,
       isRoomAvailable,
       isEligible,
+      hasAcceptedTerms,
     } = this.props;
 
     if ( isRoomLoading ) {
@@ -81,7 +82,7 @@ class BookingStep1 extends PureComponent {
               label="Continue"
               icon="forward"
               href={`/${lang}/booking/${roomId}/2`}
-              disabled={!isEligible}
+              disabled={!isEligible || !hasAcceptedTerms}
             />
           </nav>
         </div>
@@ -116,6 +117,7 @@ function mapStateToProps({ route: { lang }, rooms, booking }, { roomId }) {
     isRoomLoading: !room || room.isLoading,
     isRoomAvailable: room && Utils.isRoomAvailable( room ),
     isEligible: booking.isEligible,
+    hasAcceptedTerms: booking.hasAcceptedTerms,
   };
 }
 
