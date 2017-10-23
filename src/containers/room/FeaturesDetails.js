@@ -4,7 +4,7 @@ import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { Checkbox }           from 'react-toolbox/lib/checkbox';
 import { Button }             from 'react-toolbox/lib/button';
-import { IntlProvider }       from 'preact-i18n';
+import { IntlProvider, Text } from 'preact-i18n';
 import capitalize             from 'lodash/capitalize';
 import values                 from 'lodash/values';
 import mapValues              from 'lodash/mapValues';
@@ -85,7 +85,7 @@ class FeaturesDetails extends PureComponent {
     return (
       featuresList.length > 0 ?
         <section>
-          {displayTitle ? <div><h4>{_.capitalize(taxonomy.split('-')[2])}</h4><br /></div> : ''}
+          {displayTitle ? <div><h4><Text id={taxonomy.split('-')[2]}>{_.capitalize(taxonomy.split('-')[2])}</Text></h4><br /></div> : ''}
           <ul class="grid-4 has-gutter-l">{featuresList.map((term) => this.renderTerm(term))}</ul>
         </section>
         : ''
@@ -123,7 +123,6 @@ class FeaturesDetails extends PureComponent {
               'room-features-work',
               'room-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Room'))
             }
-            <h2 style="text-align:center;">Details for apartment - {apartmentId}</h2>
             <ApartmentDetails roomId={roomId} apartmentId={apartmentId} />
             <h3  style="text-align:center;">Features</h3>
             {['apartment-features-kitchen',
@@ -133,7 +132,7 @@ class FeaturesDetails extends PureComponent {
             <div style="text-align:center;">
               <Button
                 icon="add"
-                label="Save Changes"
+                label={<Text id="save">Save Changes</Text>}
                 raised
                 primary
                 onClick={this.saveChange}
@@ -158,13 +157,13 @@ class FeaturesDetails extends PureComponent {
             }
           </section> :
           <section>
-            <h3 style="text-align:center;">Room</h3>
+            <h3 style="text-align:center;"><Text id="room">Room</Text></h3>
             {['room-features-sleep',
               'room-features-dress',
               'room-features-work',
               'room-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Room'))
             }
-            <h3 style="text-align:center;">Apartment</h3>
+            <h3 style="text-align:center;"><Text id="apartment">Apartment</Text></h3>
             {['apartment-features-kitchen',
               'apartment-features-bathroom',
               'apartment-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Apartment'))}
@@ -176,7 +175,15 @@ class FeaturesDetails extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
-
+  room: 'Chambre',
+  apartment: 'Appartement',
+  save: 'Enregistrer les modifications',
+  sleep: 'Dormir',
+  dress: 'S\'habiller',
+  work: 'Travailler',
+  general: 'Général',
+  kitchen: 'Cuisine',
+  bathroom: 'Salle de Bain',
 } };
 
 function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { roomId, apartmentId }) {
