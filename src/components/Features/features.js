@@ -75,7 +75,7 @@ export default {
         'en-US': 'Mirror',
         'fr-FR': 'Miroir',
       },
-      walkinWarrobe: {
+      walkinWardrobe: {
         value: false,
         'en-US': 'Walk-in Wardrobe',
         'fr-FR': 'Dressing Privé',
