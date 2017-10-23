@@ -19,7 +19,8 @@ export const addRoomFeature = createAction('add feature to room');
 export const deleteRoomFeature = createAction('delete feature from room');
 export const addApartmentFeature = createAction('add feature to apartment');
 export const deleteApartmentFeature = createAction('delete feature from apartment');
-
+export const updateApartment = createAction('Update Apartment Object');
+export const updateRoom = createAction('Update Room Object');
 export const {
   updateBooking,
   setBookingErrors,
@@ -186,6 +187,24 @@ export const saveFeatures =
     },
   );
 
+export const saveRoomAndApartment =
+  createActionAsync(
+    'save Room and Apartment in the backoffice',
+    ({ room, apartment }) => (
+      Utils.fetchJson(
+        '/actions/public/update-apartment-and-room',
+        {
+          method: 'post',
+          body: {
+            room,
+            apartment,
+          },
+        },
+      )
+    ),
+    { error: { payloadReducer: (payload) => ({ errors: { unexpected: payload.error.message } }) } },
+  );
+
 export const saveBooking =
   createActionAsync(
     'save Renting and associated Client in the backoffice',
@@ -221,14 +240,13 @@ export const saveBooking =
 export const savePayment =
   createActionAsync(
     'save Payment and associated Order in the backoffice',
-    (payment) => {
+    (payment, orderId) => {
       const {
         cardNumber,
         cvv,
         expiryMonth,
         expiryYear,
         holderName,
-        orderId,
       } = payment;
 
       return Utils.fetchJson('/actions/public/create-payment', {

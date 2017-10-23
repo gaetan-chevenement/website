@@ -15,6 +15,8 @@ import {
   setPaymentErrors,
   deletePaymentError,
   validatePayment,
+  updateApartment,
+  updateRoom,
   savePayment,
   getApartment,
   getRoom,
@@ -29,6 +31,7 @@ import {
   addApartmentFeature,
   deleteApartmentFeature,
   saveFeatures,
+  saveRoomAndApartment,
 }                           from '~/actions';
 
 const noErrors = {};
@@ -113,10 +116,22 @@ const roomsReducer = createReducer({
     ...state,
     [id]: { ...state[id], Features },
   }),
+  [updateRoom]: (state, payload) => ({
+    ...state,
+    [payload.id]: { ...state[payload.id], ...payload },
+  }),
   ...createFeatureReducer({
     addFeature: addRoomFeature,
     deleteFeature: deleteRoomFeature,
     saveFeatures,
+  }),
+  [saveRoomAndApartment.ok]: (state) => ({
+    ...state,
+    isValidated: true,
+  }),
+  [saveRoomAndApartment.error]: (state, payload) => ({
+    ...state,
+    errors: payload,
   }),
 }, {});
 
@@ -134,10 +149,22 @@ const apartmentsReducer = createReducer({
     ...state,
     [id]: { ...state[id], Features },
   }),
+  [updateApartment]: (state, payload) => ({
+    ...state,
+    [payload.id]: { ...state[payload.id], ...payload },
+  }),
   ...createFeatureReducer({
     addFeature: addApartmentFeature,
     deleteFeature: deleteApartmentFeature,
     saveFeatures,
+  }),
+  [saveRoomAndApartment.ok]: (state) => ({
+    ...state,
+    isValidated: true,
+  }),
+  [saveRoomAndApartment.error]: (state, payload) => ({
+    ...state,
+    errors: payload,
   }),
 }, {});
 
@@ -262,17 +289,17 @@ export function createFeatureReducer({ addFeature, deleteFeature, saveFeatures }
     [addFeature]: (state, feature) => ({
       ...state,
       isValidated: false,
-      [feature.termableId]: {
-        ...state[feature.termableId],
-        Features: [...state[feature.termableId].Features, feature],
+      [feature.TermableId]: {
+        ...state[feature.TermableId],
+        Features: [...state[feature.TermableId].Features, feature],
       },
     }),
     [deleteFeature]: (state, feature) => ({
       ...state,
       isValidated: false,
-      [feature.termableId]: {
-        ...state[feature.termableId],
-        Features: state[feature.termableId].Features.filter((oldFeature) => oldFeature.name !== feature.name || oldFeature.taxonomy !== feature.taxonomy),
+      [feature.TermableId]: {
+        ...state[feature.TermableId],
+        Features: state[feature.TermableId].Features.filter((oldFeature) => oldFeature.name !== feature.name || oldFeature.taxonomy !== feature.taxonomy),
       },
     }),
     [saveFeatures.ok]: (state) => ({

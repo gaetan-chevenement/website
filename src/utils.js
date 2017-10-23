@@ -137,6 +137,22 @@ const Utils = {
     }),
   }),
 
+  apartmentSchema: yup.object().shape({
+    addressStreet: yup.string().required().trim(),
+    addressZip: yup.number().required(),
+    addressCity: yup.string().required(),
+    floor: yup.number().required(),
+    addressCountry: yup.string().required().trim(),
+    floorArea: yup.number().required(),
+    elevator: yup.boolean().required(),
+  }),
+
+  roomSchema: yup.object().shape({
+    basePrice: yup.number().required(),
+    floorArea: yup.number().required(),
+    beds: yup.string().required(),
+  }),
+
   paymentSchema: yup.object().shape({
     holderName: yup.string().required().trim(),
     cardNumber:
@@ -165,7 +181,7 @@ const Utils = {
         options.body = JSON.stringify(options.body);
       }
     }
-
+console.log(options);
     return fetch(`${API_BASE_URL}${url}`, options)
       .then((response) => {
         if ( !response.ok ) {
