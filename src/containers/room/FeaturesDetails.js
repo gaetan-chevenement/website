@@ -2,36 +2,49 @@ import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
+import { Checkbox }           from 'react-toolbox/lib/checkbox';
+import { Button }             from 'react-toolbox/lib/button';
 import { IntlProvider }       from 'preact-i18n';
 import capitalize             from 'lodash/capitalize';
 import values                 from 'lodash/values';
 import mapValues              from 'lodash/mapValues';
 import Promise                from 'bluebird';
 import autobind               from 'autobind-decorator';
-import Features                  from '~/components/Features/features';
+import ApartmentDetails       from '~/containers/room/ApartmentDetails';
+import RoomDetails            from '~/containers/room/RoomDetails';
+import Utils                  from '~/utils';
+import Features               from '~/components/Features/features';
 import * as actions           from '~/actions';
 
 const _ = { capitalize, values, mapValues };
 class FeaturesDetails extends PureComponent {
   @autobind
-  handleFormSubmit(event) {
-    const { actions } = this.props;
+  saveChange(event, value) {
+    const { actions, room, apartment } = this.props;
 
-    event.preventDefault();
     Promise.resolve()
-      .then(() => actions.saveFeatures(this.props))
-      .catch((e) => console.error(e));
+      .then(() => Promise.all([
+        Utils.apartmentSchema.validate(apartment, { abortEarly: false }),
+        Utils.roomSchema.validate(room, { abortEarly: false }),
+      ]))
+      .then(([validApartment, validRoom]) => {
+        if ( validApartment && validRoom ) {
+          return actions.saveRoomAndApartment(this.props);
+        }
+        return null;
+      })
+      .then(() => actions.saveFeatures(this.props));
   }
 
   @autobind
-  handleFeatureChange(event) {
+  handleFeatureChange(value, event) {
     let feature = {};
 
     ['name', 'taxonomy', 'termable']
       .forEach((attribute) =>
         feature[attribute] = event.target.getAttribute(attribute)
       );
-    feature.termableId = feature.termable === 'Room' ?
+    feature.TermableId = feature.termable === 'Room' ?
       this.props.roomId :
       this.props.apartmentId;
 
@@ -50,12 +63,14 @@ class FeaturesDetails extends PureComponent {
       return isChecked ? <li>{label}</li> : '';
     }
     return (
-      <li>
-        <input type="checkbox" name={name} taxonomy={taxonomy}
-          termable={termable} label={label}
-          onChange={this.handleFeatureChange}
-          checked={isChecked}
-        /> {label}</li>
+      <Checkbox
+        checked={isChecked}
+        label={label}
+        onChange={this.handleFeatureChange}
+        name={name}
+        taxonomy={taxonomy}
+        termable={termable}
+      />
     );
   }
   renderFeatures(taxonomy, category) {
@@ -75,8 +90,8 @@ class FeaturesDetails extends PureComponent {
     return (
       featuresList.length > 0 ?
         <section>
-          {displayTitle ? <h4>{_.capitalize(taxonomy.split('-')[2])}</h4> : ''}
-          <ul>{featuresList.map((term) => this.renderTerm(term))}</ul>
+          {displayTitle ? <div><h4>{_.capitalize(taxonomy.split('-')[2])}</h4><br /></div> : ''}
+          <ul class="grid-4 has-gutter-l">{featuresList.map((term) => this.renderTerm(term))}</ul>
         </section>
         : ''
     );
@@ -87,6 +102,7 @@ class FeaturesDetails extends PureComponent {
       lang,
       roomError,
       roomId,
+      apartmentId,
       isFeaturesValidated,
       isApartmentFeaturesInitialized,
       isRoomFeaturesInitialized,
@@ -105,20 +121,29 @@ class FeaturesDetails extends PureComponent {
       <IntlProvider definition={definition[lang]}>
         { admin ?
           <section>
-            <form onSubmit={this.handleFormSubmit}>
-              <h3>Room</h3>
-              {['room-features-sleep',
-                'room-features-dress',
-                'room-features-work',
-                'room-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Room'))
-              }
-              <h3>Apartment</h3>
-              {['apartment-features-kitchen',
-                'apartment-features-bathroom',
-                'apartment-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Apartment'))
-              }
-              <input disabled={roomError && roomError.unauthorized} type="submit" />
-            </form>
+            <RoomDetails roomId={roomId} />
+            <h3 style="text-align:center;">Features</h3>
+            {['room-features-sleep',
+              'room-features-dress',
+              'room-features-work',
+              'room-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Room'))
+            }
+            <h2 style="text-align:center;">Details for apartment - {apartmentId}</h2>
+            <ApartmentDetails roomId={roomId} apartmentId={apartmentId} />
+            <h3  style="text-align:center;">Features</h3>
+            {['apartment-features-kitchen',
+              'apartment-features-bathroom',
+              'apartment-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Apartment'))
+            }
+            <div style="text-align:center;">
+              <Button
+                icon="add"
+                label="Save Changes"
+                raised
+                primary
+                onClick={this.saveChange}
+              />
+            </div>
             {roomError && roomError.unauthorized ?
               <div>
                 <span>{roomError.unauthorized}<br />
@@ -138,13 +163,13 @@ class FeaturesDetails extends PureComponent {
             }
           </section> :
           <section>
-            <h3>Room</h3>
+            <h3 style="text-align:center;">Room</h3>
             {['room-features-sleep',
               'room-features-dress',
               'room-features-work',
               'room-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Room'))
             }
-            <h3>Apartment</h3>
+            <h3 style="text-align:center;">Apartment</h3>
             {['apartment-features-kitchen',
               'apartment-features-bathroom',
               'apartment-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Apartment'))}
@@ -160,16 +185,20 @@ const definition = { 'fr-FR': {
 } };
 
 function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { roomId, apartmentId }) {
+  const room = rooms[roomId];
+  const apartment = apartments[apartmentId];
 
   return {
     lang,
     admin,
-    roomError: rooms && rooms.errors,
+    room,
+    apartment,
+    roomError: room && room.errors,
     isFeaturesValidated: rooms && rooms.isValidated,
-    RoomFeatures: rooms[roomId] && rooms[roomId].Features,
-    ApartmentFeatures: apartments[apartmentId] && apartments[apartmentId].Features,
-    isApartmentFeaturesInitialized: apartments[apartmentId] && apartments[apartmentId].Features && apartments[apartmentId].Features.length > 0,
-    isRoomFeaturesInitialized: rooms[roomId] && rooms[roomId].Features && rooms[roomId].Features.length > 0,
+    RoomFeatures: room && room.Features,
+    ApartmentFeatures: apartment && apartment.Features,
+    isApartmentFeaturesInitialized: apartment && apartment.Features && apartment.Features.length > 0,
+    isRoomFeaturesInitialized: room && room.Features && room.Features.length > 0,
   };
 }
 

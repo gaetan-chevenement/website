@@ -53,11 +53,12 @@ const definition = { 'fr-FR': {
 
 } };
 
-function mapStateToProps({ route: { lang }, apartments, rooms }, { roomId }) {
+function mapStateToProps({ route: { lang, roomId, admin }, apartments, rooms }) {
   const room = rooms[roomId];
 
   return {
     roomId,
+    admin,
     roomName: room && room.name,
     apartmentId: room && room.ApartmentId,
     lang,
