@@ -33,7 +33,7 @@ export default class Invoice extends PureComponent {
             order,
             client: order.Client,
             clientIdentity:
-              order.Client.Metadata.length && JSON.parse(order.Client.Metadata[0]),
+              order.Client.Metadata.length && JSON.parse(order.Client.Metadata[0].value),
             apartment: itemWithRenting && itemWithRenting.Renting.Room.Apartment,
           });
         });
