@@ -14,7 +14,8 @@
     "build": "npm run build:holidays && npm run build:preact && npm run build:netlify",
     "serve": "preact build && preact serve",
     "dev": "preact watch",
-    "diff": "git diff -- . ':(exclude)package-lock.json'"
+    "diff": "git diff -- . ':(exclude)package-lock.json'",
+    "release": "git checkout release && git reset master --hard && git push origin release && git checkout -"
   },
   "keywords": [],
   "author": "@louis_remi",
