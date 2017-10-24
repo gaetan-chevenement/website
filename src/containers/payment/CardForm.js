@@ -150,11 +150,14 @@ class CardForm extends PureComponent {
 }
 
 function InvoiceButton({ lang, orderId, receiptNumber }) {
+  const url = `${API_BASE_URL}/actions/pdf-invoice/invoice-${receiptNumber}.pdf`;
+  const params = `orderId=${orderId}&lang=${lang}`;
+
   return (
     <IntlProvider definition={definition[lang]}>
       <Button raised primary
         label={<Text id="downloadInvoice">Download your invoice</Text>}
-        href={`${API_BASE_URL}/actions/public/${lang}/${orderId}/invoice-${receiptNumber}.pdf`}
+        href={`${url}?${params}`}
       />
     </IntlProvider>
   );

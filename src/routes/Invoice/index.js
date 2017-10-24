@@ -1,57 +1,42 @@
 import { PureComponent }      from 'react';
 import { IntlProvider, Text } from 'preact-i18n';
-import { bindActionCreators } from 'redux';
-import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import D                      from 'date-fns';
 import capitalize             from 'lodash/capitalize';
-import * as actions           from '~/actions';
 import Utils                  from '~/utils';
 import style                  from './style';
 
 const _ = { capitalize };
 
-class Invoice extends PureComponent {
+export default class Invoice extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      client: false,
-      metadata: false,
-      apartment: false,
-      error: false,
+      isLoading: true,
+      order: {},
+      client: {},
+      clientIdentity: {},
+      apartment: {},
     };
   }
 
   componentDidMount() {
-    const { orderId, actions, order } = this.props;
+    const { orderId, order } = this.props;
 
     if ( !order ) {
-      return Promise.resolve()
-        .then(() => actions.getOrder( orderId ))
-        .then(({ request, response }) => Promise.all([
-          response.included.find((inc) => inc.type === 'order').attributes.id,
-          response.included.find((inc) => inc.type === 'renting').attributes.id,
-        ]))
-        .then(([orderId , rentingId]) => Promise.all([
-          Utils.fetchJson(`/Order/${orderId}`),
-          Utils.fetchJson(`/Renting/${rentingId}`)]))
-        .then(([{ included: orderIncluded },  { included: rentingIncluded } ]) => {
-          this.setState({ client: orderIncluded.find((inc) => inc.type === 'client').attributes });
-          return Promise.all([
-            orderIncluded.find((inc) => inc.type === 'client').attributes.id,
-            rentingIncluded.find((inc) => inc.type === 'room').attributes.id,
-          ]);
-        })
-        .then(([clientId, roomId]) => Promise.all([
-          Utils.fetchJson(`/Metadata?filterType=and&filter[MetadatableId]=${clientId}&filter[name]=clientIdentity&filter[metadatable]=Client`),
-          Utils.fetchJson(`/Room/${roomId}`),
-        ]))
-        .then(([{ data: clientMetadata }, { included: roomIncluded } ]) => this.setState({
-          metadata: clientMetadata.length > 0 ?
-            JSON.parse(clientMetadata.find((_data) => _data.type === 'metadata').attributes.value) :
-            {} ,
-          apartment: roomIncluded.find((inc) => inc.type === 'apartment').attributes })
-        );
+      return Utils.fetchJson(`/Invoice/${orderId}`)
+        .then((order) => {
+          const itemWithRenting = order.OrderItems.find((item) => ( item.Renting ));
+
+          return this.setState({
+            isLoading: false,
+            order,
+            client: order.Client,
+            clientIdentity:
+              order.Client.Metadata.length && JSON.parse(order.Client.Metadata[0]),
+            apartment: itemWithRenting && itemWithRenting.Renting.Room.Apartment,
+          });
+        });
     }
   }
 
@@ -67,8 +52,7 @@ class Invoice extends PureComponent {
     );
   }
 
-  renderInvoiceDetails() {
-    const { order, lang } = this.props;
+  renderInvoiceDetails({ order, lang }) {
     return   (
       <table class={`${style['table-3']} ${style.noborder}`}>
         <th class="text-left">
@@ -87,21 +71,16 @@ class Invoice extends PureComponent {
     );
   }
 
-  render() {
+  render({ lang }) {
     const {
-      lang,
+      isLoading,
       order,
-      isOrderLoading,
-    } = this.props;
-    const {
       client,
-      metadata,
-      apartment,
-      metadata: { address },
+      clientIdentity: { address },
       apartment: { addressCity, addressCountry, addressStreet, addressZip },
     } = this.state;
 
-    if ( isOrderLoading || !order || !client || !metadata || !apartment ) {
+    if ( isLoading ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -123,7 +102,7 @@ class Invoice extends PureComponent {
               <td>Chez Nestor</td>
             </tr>
             <tr>
-              <td><a href="www.chez-nestor.com">www.chez-nestor.com</a></td>
+              <td><a href="http://www.chez-nestor.com">www.chez-nestor.com</a></td>
               <td>16, Rue de Condé</td>
             </tr>
             <tr>
@@ -197,7 +176,7 @@ class Invoice extends PureComponent {
                 to any undergoing legal procedures.
               </Text></p>
             </div>
-            {this.renderInvoiceDetails()}
+            {this.renderInvoiceDetails({ order, lang })}
           </div>
           <footer class={style.footer}>
             <p>MY FRENCH LIFEGUARD | 16 rue de Condé 69002 Lyon | +33 (0)972323102 | lyon@myfrenchlifeguard.com</p>
@@ -210,17 +189,6 @@ class Invoice extends PureComponent {
 
     );
   }
-}
-
-function mapStateToProps({ route: { lang, returnUrl }, orders }, { orderId }) {
-  const order = orders[orderId];
-
-  return {
-    lang,
-    orderId,
-    order,
-    isOrderLoading: order === undefined || order.isLoading,
-  };
 }
 
 const definition = { 'fr-FR': {
@@ -246,9 +214,3 @@ const definition = { 'fr-FR': {
     loyers antérieurs impayés et est délivrée sous réserve de toutes instances
     judiciaires en cours.`,
 } };
-
-function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actions, dispatch) };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Invoice);
