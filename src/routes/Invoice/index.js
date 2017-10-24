@@ -179,14 +179,12 @@ export default class Invoice extends PureComponent {
             {this.renderInvoiceDetails({ order, lang })}
           </div>
           <footer class={style.footer}>
-            <p>MY FRENCH LIFEGUARD | 16 rue de Condé 69002 Lyon | +33 (0)972323102 | lyon@myfrenchlifeguard.com</p>
-            <p>www.myfrenchlifeguard.com | SARL au capital de 10.000€ immatriculée au RCS de Lyon</p>
+            <p>Someby | 16 rue de Condé 69002 Lyon | +33 (0)972323102 | hello@chez-nestor.com</p>
+            <p>www.chez-nestor.com | SARL au capital de 170.000€ immatriculée au RCS de Lyon</p>
             <p>SIRET n°751570003 00036 | N° de TVA intracommunautaire FR20 751 570 003</p>
           </footer>
         </div>
-
       </IntlProvider>
-
     );
   }
 }
