@@ -122,6 +122,10 @@ const roomsReducer = createReducer({
     ...state,
     [id]: { ...state[id], Features },
   }),
+  [listPictures.ok]: (state, [{ id, Pictures }]) => ({
+    ...state,
+    [id]: { ...state[id], Pictures },
+  }),
   ...createFeatureReducer({
     addFeature: addRoomFeature,
     deleteFeature: deleteRoomFeature,
@@ -156,6 +160,10 @@ const apartmentsReducer = createReducer({
   [listFeatures.ok]: (state, [,{ id, Features }]) => ({
     ...state,
     [id]: { ...state[id], Features },
+  }),
+  [listPictures.ok]: (state, [,{ id, Pictures }]) => ({
+    ...state,
+    [id]: { ...state[id], Pictures },
   }),
   ...createFeatureReducer({
     addFeature: addApartmentFeature,
