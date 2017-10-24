@@ -324,7 +324,7 @@ function mapOrderItems(data, orderId) {
     .map(({ attributes, relationships: { Renting, Product } }) => ({
       ...attributes,
       RentingId: Renting.data && Renting.data.id,
-      ProductId: Product.data.id,
+      ProductId: Product.data && Product.data.id,
     }));
 }
 
