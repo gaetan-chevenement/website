@@ -17,6 +17,8 @@ export const updateRoute = createAction('Update route object');
 export const updateSearch = createAction('Update search state');
 export const addRoomFeature = createAction('add feature to room');
 export const deleteRoomFeature = createAction('delete feature from room');
+export const addRoomPicture = createAction('add picture to room');
+export const deleteRoomPicture = createAction('delete picture from room');
 export const addApartmentFeature = createAction('add feature to apartment');
 export const deleteApartmentFeature = createAction('delete feature from apartment');
 export const {
@@ -111,10 +113,34 @@ export const listRooms =
   );
 
 export const listPictures =
-  createActionAsync('List pictures', ({ room }) => (
-    Utils.fetchJson(`/Pictures`)
-      .then(result => Object.assign(result, { roomId: room.id }))
-  ));
+  createActionAsync('List pictures',
+    (roomId, apartmentId) => {
+      if (roomId === undefined || apartmentId === undefined ) {
+        return Promise.reject('Can only fetch by roomId or by ApartmentIdfor now');
+      }
+
+      const params = {
+        'page[number]': 1,
+        'page[size]': 100,
+      };
+      const qs = queryString.stringify(params, { encode: false });
+
+      return Utils.fetchJson(`/Picture?filterType=or&filter[PicturableId]=${roomId},${apartmentId}&${qs}`);
+    },
+    { ok: { payloadReducer: ({ request: [ roomId, apartmentId ], response: { data, included } }) => ([{
+      id: roomId,
+      Pictures: data
+        .filter((_data) => _data.attributes.picturable === 'Room')
+        .map(({ attributes }) => attributes ),
+    }, {
+      id: apartmentId,
+      Pictures: data
+        .filter((_data) => _data.attributes.picturable === 'Apartment')
+        .map(({ attributes }) =>  attributes  ),
+    }]),
+    } }
+  );
+
 export const listFeatures =
   createActionAsync(
     'list Features of a room and apartment',
@@ -310,20 +336,17 @@ function createGetActionAsync(modelName) {
     `get ${modelName} by id`,
     (id) => Utils.fetchJson(`/${modelName}/${id}`)
       // No record returned is an error
-      .tap((response) => {
-        if ( response.meta.count === 0 ) {
-          throw new Error(`${modelName} ${id} not found`);
-        }
-      }),
-    { ok: { payloadReducer: ({ response }) => ({
-      ...response.data.attributes,
-      ...response.included.reduce((attributes, value) => {
-        attributes[`${value.type}Id`] = value.id;
-        attributes[`_${value.type}`] = value.attributes;
-
-        return attributes;
-      }, {}),
-    }) } }
+      .then(throwIfNotFound(modelName,id)
+      ),
+    { noRethrow: true,
+      ok: { payloadReducer: ({ response }) => ({
+        ...response.data.attributes,
+        ...response.included.reduce((attributes, value) => {
+          attributes[`${value.type}Id`] = value.id;
+          attributes[`_${value.type}`] = value.attributes;
+          return attributes;
+        }, {}),
+      }) } }
   );
 }
 

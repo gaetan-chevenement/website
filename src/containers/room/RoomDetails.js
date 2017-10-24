@@ -5,6 +5,7 @@ import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { Input }              from 'react-toolbox/lib/input';
 import { Checkbox }           from 'react-toolbox/lib/checkbox';
 import { batch }              from 'redux-act';
+import  Dropzone              from 'react-dropzone';
 import { Dropdown }           from 'react-toolbox/lib/dropdown';
 import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
@@ -23,6 +24,26 @@ class RoomDetails extends PureComponent {
       actions.deleteRoomError(event.target.name)
     );
   }
+
+  @autobind
+  onDrop(acceptedFiles, rejectedFiles) {
+    const { actions, roomId } = this.props;
+
+    const reader = new FileReader();
+    acceptedFiles.map((file, index) => {
+      reader.onload = () => {
+        actions.addRoomPicture({ url: reader.result, picturable: 'Room', PicturableId: roomId, order: index });
+      // do whatever you want with the file content
+      };
+      reader.onabort = () => console.log('file reading was aborted');
+      reader.onerror = () => console.log('file reading has failed');
+      reader.readAsDataURL(file);
+    });
+
+    let filesToBeSent = [];
+    filesToBeSent.push(acceptedFiles);
+  }
+
 
   @autobind
   handleFeatureChange(value, event) {
@@ -44,10 +65,12 @@ class RoomDetails extends PureComponent {
       lang,
       room,
       getFeatures,
+      room: { Pictures },
+      getPictures,
       rooms: { errors },
     } = this.props;
 
-    if ( !room || getFeatures === undefined ) {
+    if ( !room || getFeatures === undefined || getPictures === undefined ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -112,6 +135,16 @@ class RoomDetails extends PureComponent {
               />
             </div>
           </dl>
+          <h3 style="text-align:center;"><Text id="picture">Upload Pictures</Text></h3>
+          <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/jpg">
+            <div>Try dropping some files here, or click to select files to upload.</div>
+          </Dropzone>
+          <div>
+            {Pictures.map((picture) =>
+              (
+                <img src={picture.url} />
+              )
+            )}</div>
           <h3 style="text-align:center;"><Text id="negativeTitle">Negative Features</Text></h3>
           <dl class="grid-4 has-gutter-l">
             {negativeFeatures.map((feature) => (
@@ -141,6 +174,7 @@ function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { roomId
     room,
     rooms,
     roomId,
+    getPictures: room && room.Pictures && room.Pictures.length > 0,
     getFeatures: room && room.Features && room.Features.length > 0,
   };
 }

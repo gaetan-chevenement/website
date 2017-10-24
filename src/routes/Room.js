@@ -14,7 +14,11 @@ class Room extends PureComponent {
 
     return Promise.resolve()
       .then(() => actions.getRoom(roomId))
-      .then(({ response }) => ( actions.listFeatures(roomId, response.included[0].id) ));
+      .then(({ response }) => Promise.all([
+        actions.getApartment(response.included[0].id),
+        actions.listFeatures(roomId, response.included[0].id),
+        actions.listPictures(roomId, response.included[0].id),
+      ]));
   }
 
   render() {

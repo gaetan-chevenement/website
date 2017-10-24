@@ -139,7 +139,7 @@ class ApartmentDetails extends PureComponent {
               name="district"
               required
               auto
-              value={apartment.district}
+              value={apartment.DistrictId && apartment.DistrictId.split('-').splice(1,2).join('-')}
               source={districts[apartment.addressCity]}
               error={errors && errors.district}
             /> : ''
