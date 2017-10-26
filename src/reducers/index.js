@@ -26,6 +26,7 @@ import {
   savePayment,
   getApartment,
   getRoom,
+  getDistrict,
   listRooms,
   getOrder,
   listOrders,
@@ -34,6 +35,13 @@ import {
   listFeatures,
   addRoomFeature,
   deleteRoomFeature,
+  addRoomPicture,
+  deleteRoomPicture,
+  updateRoomPicture,
+  savePictures,
+  addApartmentPicture,
+  deleteApartmentPicture,
+  updateApartmentPicture,
   addApartmentFeature,
   deleteApartmentFeature,
   saveFeatures,
@@ -131,6 +139,12 @@ const roomsReducer = createReducer({
     deleteFeature: deleteRoomFeature,
     saveFeatures,
   }),
+  ...createPictureReducer({
+    updatePicture: updateRoomPicture,
+    addPicture: addRoomPicture,
+    deletePicture: deleteRoomPicture,
+    savePictures,
+  }),
   ...createRoomApartmentFormReducer({
     update: updateRoom,
     setErrors: setRoomErrors,
@@ -153,6 +167,10 @@ const apartmentsReducer = createReducer({
     ...state,
     ...apartments,
   }),
+  [getDistrict.ok]: (state, { id, district } ) => ({
+    ...state,
+    [id]: { ...state[id], district },
+  }),
   [listRooms.ok]: (state, { apartments }) => ({
     ...state,
     ...apartments,
@@ -164,6 +182,12 @@ const apartmentsReducer = createReducer({
   [listPictures.ok]: (state, [,{ id, Pictures }]) => ({
     ...state,
     [id]: { ...state[id], Pictures },
+  }),
+  ...createPictureReducer({
+    updatePicture: updateApartmentPicture,
+    addPicture: addApartmentPicture,
+    deletePicture: deleteApartmentPicture,
+    savePictures,
   }),
   ...createFeatureReducer({
     addFeature: addApartmentFeature,
@@ -329,6 +353,34 @@ export function createFormReducer({ update, setErrors, deleteError, validate }) 
       ...state,
       isValidating: false,
       errors: payload,
+    }),
+  };
+}
+
+export function createPictureReducer({ updatePicture, addPicture, deletePicture, savePicture }) {
+  return {
+    [addPicture]: (state, picture) => ({
+      ...state,
+      [picture.PicturableId]: {
+        ...state[picture.PicturableId],
+        Pictures: [...state[picture.PicturableId].Pictures, picture],
+      },
+    }),
+    [updatePicture]: (state, { picture, id }) => ({
+      ...state,
+      [id]: {
+        ...state[id],
+        Pictures:
+        state[id].Pictures.map((oldPicture) => picture.id === oldPicture.id ? { ...oldPicture, ...picture } : oldPicture),
+      },
+    }),
+    [deletePicture]: (state, picture) => ({
+      ...state,
+      [picture.PicturableId]: {
+        ...state[picture.PicturableId],
+        Pictures:
+        state[picture.PicturableId].Pictures.filter((oldPicture) => oldPicture.id !== picture.id),
+      },
     }),
   };
 }

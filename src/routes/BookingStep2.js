@@ -8,6 +8,7 @@ import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 import Summary                from '~/containers/booking/Summary';
+import Utils                  from '~/utils';
 
 class BookingStep2 extends PureComponent {
   componentDidMount() {

@@ -19,8 +19,13 @@ export const addRoomFeature = createAction('add feature to room');
 export const deleteRoomFeature = createAction('delete feature from room');
 export const addRoomPicture = createAction('add picture to room');
 export const deleteRoomPicture = createAction('delete picture from room');
+export const updateRoomPicture = createAction('update picture from room');
 export const addApartmentFeature = createAction('add feature to apartment');
 export const deleteApartmentFeature = createAction('delete feature from apartment');
+export const addApartmentPicture = createAction('add picture to apartment');
+export const deleteApartmentPicture = createAction('delete picture from apartment');
+export const updateApartmentPicture = createAction('update picture from apartment');
+
 export const {
   updateRoom,
   setRoomErrors,
@@ -58,6 +63,20 @@ export const getRoom =
   );
 export const getRenting = createGetActionAsync('Renting');
 export const getApartment = createGetActionAsync('Apartment');
+export const getDistrict = createActionAsync(
+  'get District by apartmentId',
+  (apartmentId) => Utils.fetchJson(`/Apartment?filterType=and&filter[id]=${apartmentId}`)
+    .then(throwIfNotFound('Room', apartmentId)),
+  {
+    noRethrow: true,
+    ok: { payloadReducer: ({ request: [ apartmentId ], response: { included } }) => ({
+      id: apartmentId,
+      district: included
+        .find((_included) => _included.type === 'district').id.split('-').splice(1,2).join('-'),
+    }),
+    } },
+);
+
 export const getOrder =
   createActionAsync(
     'get Order and associated OrderItems by Order id',
@@ -223,6 +242,31 @@ export const saveFeatures =
     },
   );
 
+export const savePictures =
+  createActionAsync(
+    'save Pictures of Room and Apartment in the backoffice',
+    ({ roomId, apartmentId, ApartmentPictures, RoomPictures }) => (
+      Utils.fetchJson(
+        '/actions/public/updatePictures',
+        {
+          method: 'post',
+          body: {
+            roomId,
+            apartmentId,
+            RoomPictures,
+            ApartmentPictures,
+          },
+        },
+      )
+    ),
+    {
+      noRethrow: true,
+      error: { payloadReducer: (payload) => ({
+        unauthorized: 'You must be log to the backoffice to update room\'s pictures',
+      }) },
+    },
+  );
+
 export const saveRoomAndApartment =
   createActionAsync(
     'save Room and Apartment in the backoffice',
@@ -334,7 +378,7 @@ function throwIfNotFound(modelName, id) {
 function createGetActionAsync(modelName) {
   return createActionAsync(
     `get ${modelName} by id`,
-    (id) => Utils.fetchJson(`/${modelName}/${id}`)
+    (id) => Utils.fetchJson(`/${modelName}?filterType=and&filter[id]=${id}`)
       // No record returned is an error
       .then(throwIfNotFound(modelName,id)
       ),
