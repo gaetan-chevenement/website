@@ -1,16 +1,21 @@
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
+import uuid                   from 'uuid/v4';
 import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { Input }              from 'react-toolbox/lib/input';
 import { Checkbox }           from 'react-toolbox/lib/checkbox';
+import { IconButton }         from 'react-toolbox/lib/button';
 import { batch }              from 'redux-act';
-import  Dropzone              from 'react-dropzone';
+import Dropzone               from 'react-dropzone';
+import capitalize             from 'lodash/capitalize';
+import Promise                from 'bluebird';
 import { Dropdown }           from 'react-toolbox/lib/dropdown';
 import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import * as actions           from '~/actions';
 
+const _ = { capitalize };
 class RoomDetails extends PureComponent {
   @autobind
   handleChange(value, event) {
@@ -26,22 +31,46 @@ class RoomDetails extends PureComponent {
   }
 
   @autobind
-  onDrop(acceptedFiles, rejectedFiles) {
-    const { actions, roomId } = this.props;
+  handlePictureChange(event) {
+    const { actions, room, roomId: id } = this.props;
+    const picture = {
+      order: event.target.value,
+      picturable: event.target.getAttribute('picturable'),
+      id: event.target.getAttribute('pictureId'),
+      PicturableId: id,
+      alt: _.capitalize(room.name.split('-')[1].trim()),
+    };
+    actions.updateRoomPicture({ picture, id });
+  }
 
-    const reader = new FileReader();
-    acceptedFiles.map((file, index) => {
+  @autobind
+  handlePictureDelete(event) {
+    const { actions, roomId: id } = this.props;
+    const picture = {
+      PicturableId: id,
+      id: event.target.getAttribute('pictureId'),
+    };
+    actions.deleteRoomPicture(picture);
+  }
+  @autobind
+  onDrop(acceptedFiles, rejectedFiles) {
+    const { actions, roomId, room } = this.props;
+    Promise.mapSeries(acceptedFiles, (file) => {
+      const reader = new FileReader();
       reader.onload = () => {
-        actions.addRoomPicture({ url: reader.result, picturable: 'Room', PicturableId: roomId, order: index });
-      // do whatever you want with the file content
+        actions.addRoomPicture({
+          url: reader.result,
+          picturable: 'Room',
+          PicturableId: roomId,
+          id: uuid(),
+          alt: _.capitalize(room.name.split('-')[1].trim())
+        });
       };
-      reader.onabort = () => console.log('file reading was aborted');
-      reader.onerror = () => console.log('file reading has failed');
       reader.readAsDataURL(file);
     });
+    Promise.mapSeries(rejectedFiles, (file) => {
 
-    let filesToBeSent = [];
-    filesToBeSent.push(acceptedFiles);
+    });
   }
 
 
@@ -79,7 +108,7 @@ class RoomDetails extends PureComponent {
     }
     return (
       <IntlProvider definition={definition[lang]}>
-        <div>
+        <section>
           <h2 style="text-align:center;"><Text id="title">Details for room</Text> - {room.name}</h2>
           <Input type="number"
             label={<Text id="basePrice">Base Price</Text>}
@@ -135,18 +164,54 @@ class RoomDetails extends PureComponent {
               />
             </div>
           </dl>
-          <h3 style="text-align:center;"><Text id="picture">Upload Pictures</Text></h3>
-          <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/jpg">
-            <div>Try dropping some files here, or click to select files to upload.</div>
-          </Dropzone>
-          <div>
-            {Pictures.map((picture) =>
-              (
-                <img src={picture.url} />
-              )
-            )}</div>
+          <br />
+          <div style="text-align:center;">
+            <h3><Text id="picture">Upload Pictures</Text></h3>
+            <br />
+            <Dropzone style={{ display: 'inline-block',
+              width: '400px',
+              height: '80px',
+              'border-width': '2px',
+              'border-color': 'rgb(29, 44, 73)',
+              'border-style': 'dashed',
+              'border-radius': '5px',
+            }} onDrop={this.onDrop} accept="image/jpeg, image/jpg" multiple
+            >
+              <div style="position:relative;margin:16px auto;">drop some files here, or click to upload files.<br /> Only *.jpeg and *.jpg pictures.</div>
+            </Dropzone>
+            <br />
+            <dl class="grid-3 has-gutter-l">
+              {Pictures.sort((a,b) => a.order - b.order).map((picture) =>
+                (
+                  <div>
+                    <div style="position:relative;">
+                      <div style="position:absolute;top:4px;">
+                        <IconButton
+                          icon="delete"
+                          raised
+                          onClick={this.handlePictureDelete}
+                          pictureId={picture.id}
+                        />
+                      </div>
+                      <img src={picture.url} style="max-height: 300px; max-width: 300px;" />
+                    </div>
+                    <Input type="number"
+                      label={<Text id="picture.order">Order</Text>}
+                      name="order"
+                      picturable="Room"
+                      required
+                      pictureId={picture.id}
+                      value={picture.order}
+                      onBlur={this.handlePictureChange}
+                      error={errors && errors.floorArea}
+                    />
+                  </div>
+                )
+              )}</dl>
+          </div>
           <h3 style="text-align:center;"><Text id="negativeTitle">Negative Features</Text></h3>
-          <dl class="grid-4 has-gutter-l">
+          <br />
+          <ul class="grid-4 has-gutter-l">
             {negativeFeatures.map((feature) => (
               <Checkbox
                 checked={room.Features.some((feat) => feat.name === feature.value && feat.taxonomy === 'room-features-negative')}
@@ -157,9 +222,9 @@ class RoomDetails extends PureComponent {
                 name={feature.value}
               />
             ))}
-          </dl>
+          </ul>
 
-        </div>
+        </section>
       </IntlProvider>
     );
   }

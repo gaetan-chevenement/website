@@ -5,10 +5,17 @@ import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { Input }              from 'react-toolbox/lib/input';
 import { Dropdown }           from 'react-toolbox/lib/dropdown';
 import { Checkbox }           from 'react-toolbox/lib/checkbox';
+import { IconButton }         from 'react-toolbox/lib/button';
+import Dropzone               from 'react-dropzone';
+import capitalize             from 'lodash/capitalize';
 import { batch }              from 'redux-act';
+import uuid                   from 'uuid/v4';
+import Promise                from 'bluebird';
 import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import * as actions           from '~/actions';
+
+const _= { capitalize };
 
 class ApartmentDetails extends PureComponent {
   @autobind
@@ -41,6 +48,61 @@ class ApartmentDetails extends PureComponent {
       actions.updateApartment({ [event.target.name]: value, id }),
       actions.deleteApartmentError(event.target.name),
     );
+  }
+
+  @autobind
+  handlePictureChange(event) {
+    const { actions, apartmentId: id } = this.props;
+    const picture = {
+      order: event.target.value,
+      picturable: event.target.getAttribute('picturable'),
+      id: event.target.getAttribute('pictureId'),
+      PicturableId: id,
+    };
+    actions.updateApartmentPicture({ picture, id });
+  }
+
+  @autobind
+  handlePictureAltChange(pictureId) {
+    return (value, event) => {
+      const { actions, apartmentId: id } = this.props;
+      const picture = {
+        alt: value,
+        picturable: 'Apartment',
+        id: pictureId,
+        PicturableId: id,
+      };
+      actions.updateApartmentPicture({ picture, id });
+    };
+  }
+
+  @autobind
+  handlePictureDelete(event) {
+    const { actions, apartmentId: id } = this.props;
+    const picture = {
+      PicturableId: id,
+      id: event.target.getAttribute('pictureId'),
+    };
+    actions.deleteApartmentPicture(picture);
+  }
+
+  @autobind
+  onDrop(acceptedFiles, rejectedFiles) {
+    const { actions, apartmentId } = this.props;
+    Promise.mapSeries(acceptedFiles, (file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        actions.addApartmentPicture({
+          url: reader.result,
+          picturable: 'Apartment',
+          PicturableId: apartmentId,
+          id: uuid() });
+      };
+      reader.readAsDataURL(file);
+    });
+    Promise.mapSeries(rejectedFiles, (file) => {
+
+    });
   }
 
   @autobind
@@ -82,10 +144,13 @@ class ApartmentDetails extends PureComponent {
     const {
       lang,
       apartment,
+      apartment: { Pictures },
       getFeatures,
+      getPictures,
       apartments: { errors },
     } = this.props;
-    if ( !apartment || getFeatures === undefined ) {
+
+    if ( !apartment || getFeatures === undefined || getPictures === undefined  ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -94,7 +159,7 @@ class ApartmentDetails extends PureComponent {
     }
     return (
       <IntlProvider definition={definition[lang]}>
-        <div>
+        <section>
           <h2 style="text-align:center;"><Text id="title">Details for apartment</Text> - {apartment.name}</h2>
 
           <Input type="text"
@@ -109,7 +174,7 @@ class ApartmentDetails extends PureComponent {
             label={<Text id="zipCode">ZIP code</Text>}
             name="addressZip"
             required
-            value={apartment.addressZip}
+            value={parseInt(apartment.addressZip, 10)}
             onChange={this.handleChange}
             error={errors && errors.addressZip}
           />
@@ -139,7 +204,7 @@ class ApartmentDetails extends PureComponent {
               name="district"
               required
               auto
-              value={apartment.DistrictId && apartment.DistrictId.split('-').splice(1,2).join('-')}
+              value={apartment.district}
               source={district[apartment.addressCity]}
               error={errors && errors.district}
             /> : ''
@@ -175,7 +240,60 @@ class ApartmentDetails extends PureComponent {
             value={apartment.code}
             onChange={this.handleChange}
           />
+          <br />
+          <div style="text-align:center;">
+            <h3><Text id="picture">Upload Pictures</Text></h3>
+            <br />
+            <Dropzone style={{ display: 'inline-block',
+              width: '400px',
+              height: '80px',
+              'border-width': '2px',
+              'border-color': 'rgb(29, 44, 73)',
+              'border-style': 'dashed',
+              'border-radius': '5px',
+            }} onDrop={this.onDrop} accept="image/jpeg, image/jpg" multiple
+            >
+              <div style="position:relative;margin:16px auto;">drop some files here, or click to upload files.<br /> Only *.jpeg and *.jpg pictures.</div>
+            </Dropzone>
+            <br />
+            <dl class="grid-3 has-gutter-l">
+              {Pictures.map((picture) => (
+                <div>
+                  <div style="position:relative;">
+                    <div style="position:absolute;top:4px;">
+                      <IconButton
+                        icon="delete"
+                        raised
+                        onClick={this.handlePictureDelete}
+                        pictureId={picture.id}
+                      />
+                    </div>
+                    <img src={picture.url} style="max-height: 300px; max-width: 300px;" />
+                  </div>
+                  <Input type="number"
+                    label={<Text id="picture.order">Order</Text>}
+                    name="order"
+                    picturable="Apartment"
+                    required
+                    pictureId={picture.id}
+                    value={picture.order}
+                    onBlur={this.handlePictureChange}
+                  />
+                  <Dropdown
+                    onChange={this.handlePictureAltChange(picture.id)}
+                    label={<Text id="picture.caption">Caption</Text>}
+                    name="alt"
+                    required
+                    auto
+                    value={picture.alt}
+                    source={captions}
+                  />
+                </div>
+              )
+              )}</dl>
+          </div>
           <h3 style="text-align:center;">Transport</h3>
+          <br />
           <dl class="grid-4 has-gutter-xl">
             <div>
               <h5><Text id="bike">Nearby Bike Station</Text></h5>
@@ -192,42 +310,25 @@ class ApartmentDetails extends PureComponent {
                 ))}
               </ul>
             </div>
-            <div>
-              <h5><Text id="subway">Subway</Text></h5>
-              {apartment.addressCity ?
+            {apartment.addressCity ?
+              Object.keys(transport[apartment.addressCity]).map((value, key) => (
                 <div>
+                  <h5><Text id="subway">{_.capitalize(value)}</Text></h5>
                   <ul style="height: 150px;overflow: scroll;">
-                    {transport[apartment.addressCity].subway.map((sub) => (
+                    {transport[apartment.addressCity][value].map((data) => (
                       <Checkbox
-                        checked={apartment.Features.some((feat) => feat.name === sub.value && feat.taxonomy === 'apartment-features-transport-subway')}
-                        label={sub.label}
-                        taxonomy="apartment-features-transport-subway"
+                        checked={apartment.Features.some((feat) =>  feat.name === data.value && feat.taxonomy === `apartment-features-transport-${value}`)}
+                        label={data.label}
+                        taxonomy={`apartment-features-transport-${value}`}
                         termable="Apartment"
                         onChange={this.handleFeatureChange}
-                        name={sub.value}
-                      />
-                    ))}
-                  </ul> </div>: ''
-              }
-            </div>
-            <div>
-              <h5><Text id="tramway">Tramway</Text></h5>
-              {apartment.addressCity ?
-                <div>
-                  <ul style="height: 150px;overflow: scroll;">
-                    {transport[apartment.addressCity].tramway.map((sub) => (
-                      <Checkbox
-                        checked={apartment.Features.some((feat) => feat.name === sub.value && feat.taxonomy === 'apartment-features-transport-tramway')}
-                        label={sub.label}
-                        taxonomy="apartment-features-transport-tramway"
-                        termable="Apartment"
-                        onChange={this.handleFeatureChange}
-                        name={sub.value}
+                        name={data.value}
                       />
                     ))}
                   </ul>
-                </div> : ''
-              }</div>
+                </div>
+              )) : ''
+            }
             <div>
               <h5>Bus</h5>
               <Input type="text"
@@ -241,6 +342,7 @@ class ApartmentDetails extends PureComponent {
             </div>
           </dl>
           <h3 style="text-align:center;"><Text id="description.title">Description</Text></h3>
+          <br />
           <dl class="grid-3 has-gutter-l">
             <div>
               <Input type="text"
@@ -270,7 +372,7 @@ class ApartmentDetails extends PureComponent {
               />
             </div>
           </dl>
-        </div>
+        </section>
       </IntlProvider>
     );
   }
@@ -309,6 +411,7 @@ function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { apartm
     apartments,
     apartment,
     apartmentId,
+    getPictures: apartment && apartment.Pictures && apartment.Pictures.length > 0,
     getFeatures: apartment && apartment.Features && apartment.Features.length > 0,
   };
 }
@@ -415,30 +518,77 @@ const transport = {
       value: '14',
       label: '14',
     }],
+    rer: [{
+      value: 'A',
+      label: 'A',
+    }, {
+      value: 'B',
+      label: 'B',
+    }, {
+      value: 'B',
+      label: 'B',
+    }, {
+      value: 'C',
+      label: 'C',
+    }, {
+      value: 'D',
+      label: 'D',
+    }, {
+      value: 'E',
+      label: 'E',
+    }],
+    transilien: [{
+      value: 'H',
+      label: 'H',
+    }, {
+      value: 'J',
+      label: 'J',
+    }, {
+      value: 'K',
+      label: 'K',
+    }, {
+      value: 'L',
+      label: 'L',
+    }, {
+      value: 'N',
+      label: 'N',
+    }, {
+      value: 'P',
+      label: 'P',
+    }, {
+      value: 'R',
+      label: 'R',
+    }, {
+      value: 'U',
+      label: 'U',
+    }],
     tramway: [{
-      value: '1',
-      label: '1',
+      value: 'T1',
+      label: 'T1',
     }, {
-      value: '2',
-      label: '2',
+      value: 'T2',
+      label: 'T2',
     }, {
-      value: '3a',
-      label: '3a',
+      value: 'T3a',
+      label: 'T3a',
     }, {
-      value: '3b',
-      label: '3b',
+      value: 'T3b',
+      label: 'T3b',
     }, {
-      value: '5',
-      label: '5',
+      value: 'T4',
+      label: 'T4',
     }, {
-      value: '6',
-      label: '6',
+      value: 'T5',
+      label: 'T5',
     }, {
-      value: '7',
-      label: '7',
+      value: 'T6',
+      label: 'T6',
     }, {
-      value: '8',
-      label: '8',
+      value: 'T7',
+      label: 'T7',
+    }, {
+      value: 'T8',
+      label: 'T8',
     }],
   },
   montpellier: {
@@ -500,16 +650,16 @@ const countries = [
 const district = {
   lyon: [{
     value: 'ainay',
-    label: 'Ainay',
+    label: 'Ainay- Presqu\'île',
   }, {
     value: 'confluence',
-    label: 'Confluence',
+    label: 'Confluence- Presqu\'île',
   }, {
     value: 'bellecour',
-    label: 'Bellecour',
+    label: 'Bellecour- Presqu\'île',
   },{
     value: 'hotel-de-ville',
-    label: 'Hôtel de Ville',
+    label: 'Hôtel de Ville- Presqu\'île',
   },{
     value: 'croix-rousse',
     label: 'Croix-Rousse',
@@ -563,8 +713,106 @@ const district = {
     label: 'Montchat',
   }],
   paris: [],
-  montpellier: [],
+  montpellier: [{
+    value: 'centre-historique-comedie',
+    label: 'Centre Historique - Comédie',
+  },{
+    value: 'boutonnet',
+    label: 'Boutonnet',
+  },{
+    value: 'beaux-arts',
+    label: 'Beaux-Arts',
+  },{
+    value: 'aubes-pompignane',
+    label: 'Aubes - Pompignane',
+  },{
+    value: 'antigone',
+    label: 'Antigone',
+  },{
+    value: 'gares',
+    label: 'Gares',
+  },{
+    value: 'gambetta',
+    label: 'Gambetta',
+  },{
+    value: 'figuerolles',
+    label: 'Figuerolles',
+  },{
+    value: 'les-arceaux',
+    label: 'Les Arceaux',
+  },{
+    value: 'hopitaux-facultes',
+    label: 'Hôpitaux - Facultés',
+  },{
+    value: 'aiguelongue',
+    label: 'Aiguelongue',
+  },{
+    value: 'millenaire',
+    label: 'Millénaire',
+  },{
+    value: 'port-marianne',
+    label: 'Port-Marianne',
+  },{
+    value: 'aiguerelles',
+    label: 'Aiguerelles',
+  },{
+    value: 'saint-martin',
+    label: 'Saint-Martin',
+  },{
+    value: 'pres-darenes',
+    label: 'Près d\'Arènes',
+  },{
+    value: 'estanove',
+    label: 'Estanove',
+  },{
+    value: 'pas-du-loup',
+    label: 'Pas du Loup',
+  },{
+    value: 'chamberte',
+    label: 'Chamberte',
+  }],
 };
+
+const captions = [{
+  value: 'Cuisine',
+  label: 'Cuisine',
+}, {
+  value: 'Salle de bain',
+  label: 'Salle de bain',
+}, {
+  value: 'Hall',
+  label: 'Hall',
+}, {
+  value: 'WC',
+  label: 'WC',
+}, {
+  value: 'Balcon',
+  label: 'Balcon',
+}, {
+  value: 'Terrasse',
+  label: 'Terrasse',
+}, {
+  value: 'Jardin',
+  label: 'Jardin',
+}, {
+  value: 'Loggia',
+  label: 'Loggia',
+}, {
+  value: 'Séjour',
+  label: 'Séjour',
+}, {
+  value: 'Salle à manger',
+  label: 'Salle à manger',
+}, {
+  value: 'Immeuble',
+  label: 'Immeuble',
+}, {
+  value: 'Garde-manger',
+  label: 'Garder-manger',
+}, {
+  value: 'Dressing',
+  label: 'Dressing',
+}];
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApartmentDetails);

@@ -27,6 +27,7 @@ class FeaturesDetails extends PureComponent {
         actions.validateApartment(apartment),
       ]))
       .then(() => actions.saveRoomAndApartment(this.props))
+      .then(() => actions.savePictures(this.props))
       .then(() => actions.saveFeatures(this.props))
       .catch((e) => console.error(e));
   }
@@ -118,6 +119,7 @@ class FeaturesDetails extends PureComponent {
           <section>
             <RoomDetails roomId={roomId} />
             <h3 style="text-align:center;">Features</h3>
+            <br />
             {['room-features-sleep',
               'room-features-dress',
               'room-features-work',
@@ -125,6 +127,7 @@ class FeaturesDetails extends PureComponent {
             }
             <ApartmentDetails roomId={roomId} apartmentId={apartmentId} />
             <h3  style="text-align:center;">Features</h3>
+            <br />
             {['apartment-features-kitchen',
               'apartment-features-bathroom',
               'apartment-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Apartment'))
@@ -197,6 +200,8 @@ function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { roomId
     roomError: room && room.errors,
     isFeaturesValidated: rooms && rooms.isValidated,
     RoomFeatures: room && room.Features,
+    RoomPictures: room && room.Pictures,
+    ApartmentPictures: apartment && apartment.Pictures,
     ApartmentFeatures: apartment && apartment.Features,
     isApartmentFeaturesInitialized: apartment && apartment.Features && apartment.Features.length > 0,
     isRoomFeaturesInitialized: room && room.Features && room.Features.length > 0,

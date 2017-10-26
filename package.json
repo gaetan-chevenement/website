@@ -72,6 +72,7 @@
     "redux-act-async": "^1.7.0",
     "redux-thunk": "^2.2.0",
     "shoelace-css": "^1.0.0-beta9",
+    "uuid": "^3.1.0",
     "yup": "^0.23.0"
   }
 }

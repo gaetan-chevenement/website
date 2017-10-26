@@ -7,6 +7,7 @@ import { Button }             from 'react-toolbox/lib/button';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import * as actions           from '~/actions';
 import Summary                from '~/containers/booking/Summary';
+import Utils                  from '~/utils';
 
 class BookingStep2 extends PureComponent {
   componentDidMount() {
@@ -86,7 +87,10 @@ function mapStateToProps({ route: { lang }, booking, rooms }) {
 
   return {
     lang,
-    booking,
+    booking: {
+      ...booking,
+      bookingDate: room && Utils.getBookingDate(room),
+    },
     roomName: room && room.name,
     isRoomLoading: !room || room.isLoading,
   };
