@@ -201,10 +201,10 @@ class ApartmentDetails extends PureComponent {
             <Dropdown
               onChange={this.handleChange}
               label={<Text id="district">Neighborhood</Text>}
-              name="district"
+              name="DistrictId"
               required
               auto
-              value={apartment.DistrictId && apartment.DistrictId.split('-').splice(1,2).join('-')}
+              value={apartment.DistrictId}
               source={districts[apartment.addressCity]}
               error={errors && errors.district}
             /> : ''
@@ -311,11 +311,11 @@ class ApartmentDetails extends PureComponent {
               </ul>
             </div>
             {apartment.addressCity ?
-              Object.keys(transport[apartment.addressCity]).map((value, key) => (
+              Object.keys(transports[apartment.addressCity]).map((value, key) => (
                 <div>
                   <h5><Text id="subway">{_.capitalize(value)}</Text></h5>
                   <ul style="height: 150px;overflow: scroll;">
-                    {transport[apartment.addressCity][value].map((data) => (
+                    {transports[apartment.addressCity][value].map((data) => (
                       <Checkbox
                         checked={apartment.Features.some((feat) =>  feat.name === data.value && feat.taxonomy === `apartment-features-transport-${value}`)}
                         label={data.label}
@@ -524,7 +524,9 @@ const countries = [
   { value: 'france', label: 'France' },
 ];
 
-<<<<<<< HEAD
+function addCity(city) {
+  return ({ value, label }) => ({ value: `${city}-${value}`, label });
+}
 const districts = {
   lyon: [
     { value: 'ainay', label: 'Ainay' },
@@ -548,175 +550,86 @@ const districts = {
     { value: 'vieux-lyon', label: 'Vieux Lyon' },
     { value: 'vaise', label: 'Vaise' },
     { value: 'monchat', label: 'Montchat' },
-  ],
-=======
-const district = {
-  lyon: [{
-    value: 'ainay',
-    label: 'Ainay- Presqu\'île',
-  }, {
-    value: 'confluence',
-    label: 'Confluence- Presqu\'île',
-  }, {
-    value: 'bellecour',
-    label: 'Bellecour- Presqu\'île',
-  },{
-    value: 'hotel-de-ville',
-    label: 'Hôtel de Ville- Presqu\'île',
-  },{
-    value: 'croix-rousse',
-    label: 'Croix-Rousse',
-  },{
-    value: 'tete-dor',
-    label: 'Tête d\'Or',
-  },{
-    value: 'brotteaux',
-    label: 'Brotteaux',
-  },{
-    value: 'foch',
-    label: 'Foch',
-  },{
-    value: 'part-dieu',
-    label: 'Part-Dieu',
-  },{
-    value: 'manufacture',
-    label: 'Manufacture',
-  },{
-    value: 'prefecture',
-    label: 'Préfecture',
-  },{
-    value: 'quais-de-rhone',
-    label: 'Quais de Rhône',
-  },{
-    value: 'guillotiere',
-    label: 'Guillotière',
-  },{
-    value: 'universites',
-    label: 'Universités',
-  },{
-    value: 'jean-mace',
-    label: 'Jean Macé',
-  },{
-    value: 'garibaldi',
-    label: 'Garibaldi',
-  },{
-    value: 'jet-deau',
-    label: 'Jet d\'Eau',
-  },{
-    value: 'debourg-gerland',
-    label: 'Debourg - Gerland',
-  },{
-    value: 'vieux-lyon',
-    label: 'Vieux Lyon',
-  },{
-    value: 'vaise',
-    label: 'Vaise',
-  },{
-    value: 'monchat',
-    label: 'Montchat',
-  }],
->>>>>>> end of admin room page
-  paris: [],
-  montpellier: [{
-    value: 'centre-historique-comedie',
-    label: 'Centre Historique - Comédie',
-  },{
-    value: 'boutonnet',
-    label: 'Boutonnet',
-  },{
-    value: 'beaux-arts',
-    label: 'Beaux-Arts',
-  },{
-    value: 'aubes-pompignane',
-    label: 'Aubes - Pompignane',
-  },{
-    value: 'antigone',
-    label: 'Antigone',
-  },{
-    value: 'gares',
-    label: 'Gares',
-  },{
-    value: 'gambetta',
-    label: 'Gambetta',
-  },{
-    value: 'figuerolles',
-    label: 'Figuerolles',
-  },{
-    value: 'les-arceaux',
-    label: 'Les Arceaux',
-  },{
-    value: 'hopitaux-facultes',
-    label: 'Hôpitaux - Facultés',
-  },{
-    value: 'aiguelongue',
-    label: 'Aiguelongue',
-  },{
-    value: 'millenaire',
-    label: 'Millénaire',
-  },{
-    value: 'port-marianne',
-    label: 'Port-Marianne',
-  },{
-    value: 'aiguerelles',
-    label: 'Aiguerelles',
-  },{
-    value: 'saint-martin',
-    label: 'Saint-Martin',
-  },{
-    value: 'pres-darenes',
-    label: 'Près d\'Arènes',
-  },{
-    value: 'estanove',
-    label: 'Estanove',
-  },{
-    value: 'pas-du-loup',
-    label: 'Pas du Loup',
-  },{
-    value: 'chamberte',
-    label: 'Chamberte',
-  }],
+  ].map(addCity('lyon')),
+  paris: [
+    { value: 'opera-grands-boulevards', label: 'Opéra - Grands Boulevards' },
+    { value: 'marais', label: 'Marais' },
+    { value: '4e-arrondissement', label: '4e Arrondissement' },
+    { value: '5e-arrondissement', label: '5e Arrondissement' },
+    { value: '6e-arrondissement', label: '6e Arrondissement' },
+    { value: 'champs-de-mars', label: 'Champs de Mars' },
+    { value: 'orsay-invalides', label: 'Orsay - Invalides' },
+    { value: 'etoile-champs-elysees', label: 'Etoile - Champs Elysées' },
+    { value: 'saint-lazare', label: 'Saint-Lazare' },
+    { value: 'monceau-ternes', label: 'Monceau - Ternes' },
+    { value: 'madeleine', label: 'Madeleine' },
+    { value: 'montmartre', label: 'Montmartre' },
+    { value: 'gare-du-nord', label: 'Gare du Nord' },
+    { value: 'canal-saint-martin', label: 'Canal Saint-Martin' },
+    { value: 'bastille', label: 'Bastille' },
+    { value: 'republique', label: 'République' },
+    { value: 'oberkampf', label: 'Oberkampf' },
+    { value: 'bercy', label: 'Bercy' },
+    { value: 'nation', label: 'Nation' },
+    { value: 'daumesnil', label: 'Daumesnil' },
+    { value: 'bibliotheque-nationale', label: 'Bibliothèque Nationale' },
+    { value: 'place-ditalie', label: 'Place ' },
+    { value: 'massena', label: 'Masséna' },
+    { value: 'monsouris', label: 'Monsouris' },
+    { value: 'alesia', label: 'Alesia' },
+    { value: 'montparnasse-denfert-rochereau', label: 'Montparnasse - Denfert Rochereau' },
+    { value: 'vaugirard', label: 'Vaugirard' },
+    { value: 'grenelle-javel', label: 'Grenelle - Javel' },
+    { value: 'champs-de-mars', label: 'Champs de Mars' },
+    { value: 'auteuil', label: 'Auteuil' },
+    { value: 'trocadero', label: 'Trocadéro' },
+    { value: '16e-arrondissement', label: '16e Arrondissement' },
+    { value: 'batignolles', label: 'Batignolles' },
+    { value: 'clichy-fourche', label: 'Clichy - Fourche' },
+    { value: 'goutte-dor', label: 'Goutte d\'Or' },
+    { value: 'clignancourt', label: 'Clignancourt' },
+    { value: 'vilette', label: 'Vilette' },
+    { value: 'buttes-chaumont', label: 'Buttes Chaumont' },
+    { value: 'belleville', label: 'Belleville' },
+    { value: 'pere-lachaise', label: 'Père Lachaise' },
+  ].map(addCity('paris')),
+  montpellier: [
+    { value: 'centre-historique-comedie', label: 'Centre Historique - Comédie' },
+    { value: 'boutonnet', label: 'Boutonnet' },
+    { value: 'beaux-arts', label: 'Beaux-Arts' },
+    { value: 'aubes-pompignane', label: 'Aubes - Pompignane' },
+    { value: 'antigone', label: 'Antigone' },
+    { value: 'gares', label: 'Gares' },
+    { value: 'gambetta', label: 'Gambetta' },
+    { value: 'figuerolles', label: 'Figuerolles' },
+    { value: 'les-arceaux', label: 'Les Arceaux' },
+    { value: 'hopitaux-facultes', label: 'Hôpitaux - Facultés' },
+    { value: 'aiguelongue', label: 'Aiguelongue' },
+    { value: 'millenaire', label: 'Millénaire' },
+    { value: 'port-marianne', label: 'Port-Marianne' },
+    { value: 'aiguerelles', label: 'Aiguerelles' },
+    { value: 'saint-martin', label: 'Saint-Martin' },
+    { value: 'pres-darenes', label: 'Près d\'Arènes' },
+    { value: 'estanove', label: 'Estanove' },
+    { value: 'pas-du-loup', label: 'Pas du Loup' },
+    { value: 'chamberte', label: 'Chamberte' },
+  ].map(addCity('paris')),
 };
 
-const captions = [{
-  value: 'Cuisine',
-  label: 'Cuisine',
-}, {
-  value: 'Salle de bain',
-  label: 'Salle de bain',
-}, {
-  value: 'Hall',
-  label: 'Hall',
-}, {
-  value: 'WC',
-  label: 'WC',
-}, {
-  value: 'Balcon',
-  label: 'Balcon',
-}, {
-  value: 'Terrasse',
-  label: 'Terrasse',
-}, {
-  value: 'Jardin',
-  label: 'Jardin',
-}, {
-  value: 'Loggia',
-  label: 'Loggia',
-}, {
-  value: 'Séjour',
-  label: 'Séjour',
-}, {
-  value: 'Salle à manger',
-  label: 'Salle à manger',
-}, {
-  value: 'Immeuble',
-  label: 'Immeuble',
-}, {
-  value: 'Garde-manger',
-  label: 'Garder-manger',
-}, {
-  value: 'Dressing',
-  label: 'Dressing',
-}];
-
+const captions = [
+  { value: 'Cuisine', label: 'Cuisine' },
+  { value: 'Salle de bain', label: 'Salle de bain' },
+  { value: 'Hall', label: 'Hall' },
+  { value: 'WC', label: 'WC' },
+  { value: 'Balcon', label: 'Balcon' },
+  { value: 'Terrasse', label: 'Terrasse' },
+  { value: 'Jardin', label: 'Jardin' },
+  { value: 'Loggia', label: 'Loggia' },
+  { value: 'Séjour', label: 'Séjour' },
+  { value: 'Salle à manger', label: 'Salle à manger' },
+  { value: 'Immeuble', label: 'Immeuble' },
+  { value: 'Garde-manger', label: 'Garder-manger' },
+  { value: 'Dressing', label: 'Dressing' },
+];
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApartmentDetails);

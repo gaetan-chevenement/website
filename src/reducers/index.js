@@ -167,9 +167,9 @@ const apartmentsReducer = createReducer({
     ...state,
     ...apartments,
   }),
-  [getDistrict.ok]: (state, { id, district } ) => ({
+  [getDistrict.ok]: (state, { id, DistrictId } ) => ({
     ...state,
-    [id]: { ...state[id], district },
+    [id]: { ...state[id], DistrictId },
   }),
   [listRooms.ok]: (state, { apartments }) => ({
     ...state,

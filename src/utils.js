@@ -144,7 +144,7 @@ const Utils = {
     addressCountry: yup.string().required(),
     floor: yup.number().required(),
     floorArea: yup.number().min(1).required(),
-    district: yup.string().required(),
+    DistrictId: yup.string().required(),
   }),
 
   roomSchema: yup.object().shape({

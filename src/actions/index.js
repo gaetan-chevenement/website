@@ -71,10 +71,9 @@ export const getDistrict = createActionAsync(
     noRethrow: true,
     ok: { payloadReducer: ({ request: [ apartmentId ], response: { included } }) => ({
       id: apartmentId,
-      district: included
-        .find((_included) => _included.type === 'district').id.split('-').splice(1,2).join('-'),
-    }),
-    } },
+      DistrictId: included.find((_included) => _included.type === 'district').id,
+    }) },
+  },
 );
 
 export const getOrder =
@@ -247,7 +246,7 @@ export const savePictures =
     'save Pictures of Room and Apartment in the backoffice',
     ({ roomId, apartmentId, ApartmentPictures, RoomPictures }) => (
       Utils.fetchJson(
-        '/actions/public/updatePictures',
+        '/actions/update-pictures',
         {
           method: 'post',
           body: {
