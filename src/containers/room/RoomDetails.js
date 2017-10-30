@@ -71,9 +71,6 @@ class RoomDetails extends PureComponent {
       };
       reader.readAsDataURL(file);
     });
-    Promise.mapSeries(rejectedFiles, (file) => {
-
-    });
   }
 
 

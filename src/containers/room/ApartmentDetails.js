@@ -75,7 +75,6 @@ class ApartmentDetails extends PureComponent {
         id: pictureId,
         PicturableId: id,
       };
-      console.log(event);
       batch(
         actions.updateApartmentPicture({ picture, id }),
         actions.deleteApartmentError(event.target.name),
@@ -106,9 +105,6 @@ class ApartmentDetails extends PureComponent {
           id: uuid() });
       };
       reader.readAsDataURL(file);
-    });
-    Promise.mapSeries(rejectedFiles, (file) => {
-
     });
   }
 
