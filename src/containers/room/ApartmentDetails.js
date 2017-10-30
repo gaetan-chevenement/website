@@ -59,7 +59,10 @@ class ApartmentDetails extends PureComponent {
       id: event.target.getAttribute('pictureId'),
       PicturableId: id,
     };
-    actions.updateApartmentPicture({ picture, id });
+    batch(
+      actions.updateApartmentPicture({ picture, id }),
+      actions.deleteApartmentError(event.target.name),
+    );
   }
 
   @autobind
@@ -72,7 +75,11 @@ class ApartmentDetails extends PureComponent {
         id: pictureId,
         PicturableId: id,
       };
-      actions.updateApartmentPicture({ picture, id });
+      console.log(event);
+      batch(
+        actions.updateApartmentPicture({ picture, id }),
+        actions.deleteApartmentError(event.target.name),
+      );
     };
   }
 
@@ -242,18 +249,18 @@ class ApartmentDetails extends PureComponent {
           />
           <br />
           <div style="text-align:center;">
-            <h3><Text id="picture">Upload Pictures</Text></h3>
+            <h3><Text id="picture.title">Upload Pictures</Text></h3>
             <br />
             <Dropzone style={{ display: 'inline-block',
               width: '400px',
-              height: '80px',
+              height: '110px',
               'border-width': '2px',
               'border-color': 'rgb(29, 44, 73)',
               'border-style': 'dashed',
               'border-radius': '5px',
             }} onDrop={this.onDrop} accept="image/jpeg, image/jpg" multiple
             >
-              <div style="position:relative;margin:16px auto;">drop some files here, or click to upload files.<br /> Only *.jpeg and *.jpg pictures.</div>
+              <div style="position:relative;margin:16px auto;"><Text id="picture.hint.first">Drop some files here, or click to upload files.</Text><br /><Text id="picture.hint.second">Only *.jpeg and *.jpg pictures.</Text></div>
             </Dropzone>
             <br />
             <dl class="grid-3 has-gutter-l">
@@ -278,6 +285,7 @@ class ApartmentDetails extends PureComponent {
                     pictureId={picture.id}
                     value={picture.order}
                     onBlur={this.handlePictureChange}
+                    error={errors && errors.order}
                   />
                   <Dropdown
                     onChange={this.handlePictureAltChange(picture.id)}
@@ -287,6 +295,7 @@ class ApartmentDetails extends PureComponent {
                     auto
                     value={picture.alt}
                     source={captions}
+                    error={errors && errors.alt}
                   />
                 </div>
               )
@@ -313,7 +322,7 @@ class ApartmentDetails extends PureComponent {
             {apartment.addressCity ?
               Object.keys(transport[apartment.addressCity]).map((value, key) => (
                 <div>
-                  <h5><Text id="subway">{_.capitalize(value)}</Text></h5>
+                  <h5><Text id="transport" fields={{ name: value === 'subway' ? 'Métro' : value === 'tramway' ? 'Tramway' : value === 'rer' ? 'Rer' : 'Transilien' }}>{_.capitalize(value)}</Text></h5>
                   <ul style="height: 150px;overflow: scroll;">
                     {transport[apartment.addressCity][value].map((data) => (
                       <Checkbox
@@ -390,16 +399,23 @@ const definition = { 'fr-FR': {
   floorArea: 'Surface',
   digicode: 'Digicode',
   bike: 'Stations de vélo les plus proches',
-  subway: 'Métro',
+  transport: '{{name}}',
   busHint: 'Une ligne de bus par ligne',
-  tramway: 'Tramway',
   description: {
     title: 'Descriptions',
     fr: 'description française',
     en: 'description anglaise',
     es: 'description espagnole',
   },
-
+  picture: {
+    title: 'Télécharger des photos',
+    hint: {
+      first: 'Déposez des fichiers, ou cliquez pour télécharger des fichiers.',
+      second: 'Seulement des images *.jpeg ou *.jpg',
+    },
+    order: 'Ordre',
+    caption: 'Description',
+  },
 } };
 function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { apartmentId, roomId }) {
   const apartment = apartments[apartmentId];
@@ -592,7 +608,6 @@ const transport = {
     }],
   },
   montpellier: {
-    subway: [],
     tramway: [{
       value: '1',
       label: '1',
@@ -650,16 +665,16 @@ const countries = [
 const district = {
   lyon: [{
     value: 'ainay',
-    label: 'Ainay- Presqu\'île',
+    label: 'Ainay - Presqu\'île',
   }, {
     value: 'confluence',
-    label: 'Confluence- Presqu\'île',
+    label: 'Confluence - Presqu\'île',
   }, {
     value: 'bellecour',
-    label: 'Bellecour- Presqu\'île',
+    label: 'Bellecour - Presqu\'île',
   },{
     value: 'hotel-de-ville',
-    label: 'Hôtel de Ville- Presqu\'île',
+    label: 'Hôtel de Ville - Presqu\'île',
   },{
     value: 'croix-rousse',
     label: 'Croix-Rousse',
@@ -709,10 +724,130 @@ const district = {
     value: 'vaise',
     label: 'Vaise',
   },{
-    value: 'monchat',
-    label: 'Montchat',
+    value: '1er-arrondissement',
+    label: '1er Arrondissement',
   }],
-  paris: [],
+  paris: [{
+    value: 'opera-grands-boulevards',
+    label: 'Opéra - Grands Boulevards',
+  }, {
+    value: 'marais',
+    label: 'Marais',
+  }, {
+    value: '4e-arrondissement',
+    label: '4e Arrondissement',
+  }, {
+    value: '5e-arrondissement',
+    label: '5e Arrondissement',
+  }, {
+    value: '6e-arrondissement',
+    label: '6e Arrondissement',
+  }, {
+    value: 'champs-de-mars',
+    label: 'Champs de Mars',
+  }, {
+    value: 'orsay-invalides',
+    label: 'Orsay - Invalides',
+  }, {
+    value: 'etoile-champs-elysees',
+    label: 'Etoile - Champs Elysées',
+  }, {
+    value: 'saint-lazare',
+    label: 'Saint-Lazare',
+  }, {
+    value: 'monceau-ternes',
+    label: 'Monceau - Ternes',
+  }, {
+    value: 'madeleine',
+    label: 'Madeleine',
+  }, {
+    value: 'montmartre',
+    label: 'Montmartre',
+  }, {
+    value: 'gare-du-nord',
+    label: 'Gare du Nord',
+  }, {
+    value: 'canal-saint-martin',
+    label: 'Canal Saint-Martin',
+  }, {
+    value: 'bastille',
+    label: 'Bastille',
+  }, {
+    value: 'republique',
+    label: 'République',
+  }, {
+    value: 'oberkampf',
+    label: 'Oberkampf',
+  }, {
+    value: 'bercy',
+    label: 'Bercy',
+  }, {
+    value: 'nation',
+    label: 'Nation',
+  }, {
+    value: 'daumesnil',
+    label: 'Daumesnil',
+  }, {
+    value: 'bibliotheque-nationale',
+    label: 'Bibliothèque Nationale',
+  }, {
+    value: 'place-ditalie',
+    label: 'Place ',
+  }, {
+    value: 'massena',
+    label: 'Masséna',
+  }, {
+    value: 'monsouris',
+    label: 'Monsouris',
+  }, {
+    value: 'alesia',
+    label: 'Alesia',
+  }, {
+    value: 'montparnasse-denfert-rochereau',
+    label: 'Montparnasse - Denfert Rochereau',
+  }, {
+    value: 'vaugirard',
+    label: 'Vaugirard',
+  }, {
+    value: 'grenelle-javel',
+    label: 'Grenelle - Javel',
+  }, {
+    value: 'champs-de-mars',
+    label: 'Champs de Mars',
+  }, {
+    value: 'auteuil',
+    label: 'Auteuil',
+  }, {
+    value: 'trocadero',
+    label: 'Trocadéro',
+  }, {
+    value: '16e-arrondissement',
+    label: '16e Arrondissement',
+  }, {
+    value: 'batignolles',
+    label: 'Batignolles',
+  }, {
+    value: 'clichy-fourche',
+    label: 'Clichy - Fourche',
+  }, {
+    value: 'goutte-dor',
+    label: 'Goutte d\'Or',
+  }, {
+    value: 'clignancourt',
+    label: 'Clignancourt',
+  }, {
+    value: 'vilette',
+    label: 'Vilette',
+  }, {
+    value: 'buttes-chaumont',
+    label: 'Buttes Chaumont',
+  }, {
+    value: 'belleville',
+    label: 'Belleville',
+  }, {
+    value: 'pere-lachaise',
+    label: 'Père Lachaise',
+  }],
   montpellier: [{
     value: 'centre-historique-comedie',
     label: 'Centre Historique - Comédie',
