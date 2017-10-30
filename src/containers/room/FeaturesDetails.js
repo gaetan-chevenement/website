@@ -117,19 +117,16 @@ class FeaturesDetails extends PureComponent {
         { admin ?
           <section>
             <RoomDetails roomId={roomId} />
-            <h3 style="text-align:center;">Features</h3>
-            {['room-features-sleep',
-              'room-features-dress',
-              'room-features-work',
-              'room-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Room'))
-            }
+            <h3 class="text-center">Features</h3>
+            {['sleep', 'dress', 'work', 'general'].map((taxonomy) => (
+              this.renderFeatures(`room-features-${taxonomy}`, 'Room')
+            ))}
             <ApartmentDetails roomId={roomId} apartmentId={apartmentId} />
-            <h3  style="text-align:center;">Features</h3>
-            {['apartment-features-kitchen',
-              'apartment-features-bathroom',
-              'apartment-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Apartment'))
-            }
-            <div style="text-align:center;">
+            <h3 class="text-center">Features</h3>
+            {['kitchen', 'bathroom', 'general'].map((taxonomy) => (
+              this.renderFeatures(`apartment-features-${taxonomy}`, 'Apartment')
+            ))}
+            <div class="text-center">
               <Button
                 icon="add"
                 label={<Text id="save">Save Changes</Text>}
@@ -157,16 +154,14 @@ class FeaturesDetails extends PureComponent {
             }
           </section> :
           <section>
-            <h3 style="text-align:center;"><Text id="room">Room</Text></h3>
-            {['room-features-sleep',
-              'room-features-dress',
-              'room-features-work',
-              'room-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Room'))
-            }
-            <h3 style="text-align:center;"><Text id="apartment">Apartment</Text></h3>
-            {['apartment-features-kitchen',
-              'apartment-features-bathroom',
-              'apartment-features-general'].map((taxonomy) => this.renderFeatures(taxonomy, 'Apartment'))}
+            <h3 class="text-center"><Text id="room">Room</Text></h3>
+            {['sleep', 'dress', 'work', 'general'].map((taxonomy) => (
+              this.renderFeatures(`room-features-${taxonomy}`, 'Room')
+            ))}
+            <h3 class="text-center"><Text id="apartment">Apartment</Text></h3>
+            {['kitchen', 'bathroom', 'general'].map((taxonomy) => (
+              this.renderFeatures(taxonomy, 'Apartment')
+            ))}
           </section>
         }
       </IntlProvider>

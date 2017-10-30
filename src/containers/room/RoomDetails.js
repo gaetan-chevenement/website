@@ -165,49 +165,28 @@ const definition = { 'fr-FR': {
 
 
 const negativeFeatures = [
-  {
-    value: 'overlooked', label: 'Vis à vis',
-  }, {
-    value: 'dark', label: 'Sombre',
-  }, {
-    value: 'noisy', label: 'Bruyant',
-  }, {
-    value: 'small', label: 'Surface < 10m2',
-  }, {
-    value: 'lowIncome', label: 'Quartier peu vivant',
-  }, {
-    value: 'unsafe', label: 'Peu sécurisé',
-  }, {
-    value: 'fewStorage', label: 'Peu de rangement',
-  }, {
-    value: 'offCentre', label: 'Excentré',
-  }, {
-    value: 'wet', label: 'Humide',
-  }, {
-    value: 'noElevator', label: 'Etage 3 ou + sans ascenseur',
-  }, {
-    value: 'groundFloor', label: 'Rez-de-chaussée',
-  }, {
-    value: 'awayTransport', label: 'Loin des transports',
-  }, {
-    value: 'strictNeighbor', label: 'Voisinage strict',
-  },
+  { value: 'overlooked', label: 'Vis à vis' },
+  { value: 'dark', label: 'Sombre' },
+  { value: 'noisy', label: 'Bruyant' },
+  { value: 'small', label: 'Surface < 10m2' },
+  { value: 'lowIncome', label: 'Quartier peu vivant' },
+  { value: 'unsafe', label: 'Peu sécurisé' },
+  { value: 'fewStorage', label: 'Peu de rangement' },
+  { value: 'offCentre', label: 'Excentré' },
+  { value: 'wet', label: 'Humide' },
+  { value: 'noElevator', label: 'Etage 3 ou + sans ascenseur' },
+  { value: 'groundFloor', label: 'Rez-de-chaussée' },
+  { value: 'awayTransport', label: 'Loin des transports' },
+  { value: 'strictNeighbor', label: 'Voisinage strict' },
 ];
 
 const bedDetails = [
-  {
-    value: 'double', label: 'Double',
-  }, {
-    value: 'simple', label: 'Simple',
-  }, {
-    value: 'sofa', label: 'Sofa',
-  }, {
-    value: 'double+sofa', label: 'Double And Sofa',
-  }, {
-    value: 'simple+sofa', label: 'Simple And Sofa',
-  }, {
-    value: 'simple+simple', label: 'Simple And Simple',
-  },
+  { value: 'double', label: 'Double' },
+  { value: 'simple', label: 'Simple' },
+  { value: 'sofa', label: 'Sofa' },
+  { value: 'double+sofa', label: 'Double And Sofa' },
+  { value: 'simple+sofa', label: 'Simple And Sofa' },
+  { value: 'simple+simple', label: 'Simple And Simple' },
 ];
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomDetails);

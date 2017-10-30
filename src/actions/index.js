@@ -177,7 +177,7 @@ export const saveFeatures =
     'save Terms of Room and Apartment in the backoffice',
     ({ roomId, apartmentId, ApartmentFeatures, RoomFeatures }) => (
       Utils.fetchJson(
-        '/actions/public/updateTerms',
+        '/actions/update-terms',
         {
           method: 'post',
           body: {
@@ -202,7 +202,7 @@ export const saveRoomAndApartment =
     'save Room and Apartment in the backoffice',
     ({ room, apartment }) => (
       Utils.fetchJson(
-        '/actions/public/update-apartment-and-room',
+        '/actions/update-apartment-and-room',
         {
           method: 'post',
           body: {

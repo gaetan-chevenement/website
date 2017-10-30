@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { route }              from 'preact-router';
 import { Button }             from 'react-toolbox/lib/button';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
+import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 import Summary                from '~/containers/booking/Summary';
 
@@ -15,14 +16,15 @@ class BookingStep2 extends PureComponent {
       roomName,
       booking,
       actions,
+      bookingDate,
     } = this.props;
 
     Promise.resolve()
       // refetch the room if necessary (if the price has changed for example)
       .then(() => roomName === undefined && actions.getRoom(booking.roomId))
-      // validateBooking has to heppen after fetching the room,
+      // validateBooking has to happen after fetching the room,
       // as the bookingDate validity might change.
-      .then(() => actions.validateBooking(booking))
+      .then((args) => actions.validateBooking({ ...booking, bookingDate }))
       .catch(() => route(`/${lang}/booking/${booking.roomId}/`));
   }
 
@@ -87,6 +89,7 @@ function mapStateToProps({ route: { lang }, booking, rooms }) {
   return {
     lang,
     booking,
+    bookingDate: room && Utils.getBookingDate(room),
     roomName: room && room.name,
     isRoomLoading: !room || room.isLoading,
   };

@@ -140,7 +140,7 @@ class ApartmentDetails extends PureComponent {
               required
               auto
               value={apartment.district}
-              source={district[apartment.addressCity]}
+              source={districts[apartment.addressCity]}
               error={errors && errors.district}
             /> : ''
           }
@@ -180,7 +180,7 @@ class ApartmentDetails extends PureComponent {
             <div>
               <h5><Text id="bike">Nearby Bike Station</Text></h5>
               <ul style="height: 150px;overflow: scroll;">
-                {nearbyBike.map((dist) => (
+                {nearbyBikeStations.map((dist) => (
                   <Checkbox
                     checked={apartment.Features.some((feat) => feat.name === dist.value && feat.taxonomy === 'apartment-features-nearbyBike')}
                     label={dist.label}
@@ -197,7 +197,7 @@ class ApartmentDetails extends PureComponent {
               {apartment.addressCity ?
                 <div>
                   <ul style="height: 150px;overflow: scroll;">
-                    {transport[apartment.addressCity].subway.map((sub) => (
+                    {transports[apartment.addressCity].subway.map((sub) => (
                       <Checkbox
                         checked={apartment.Features.some((feat) => feat.name === sub.value && feat.taxonomy === 'apartment-features-transport-subway')}
                         label={sub.label}
@@ -215,7 +215,7 @@ class ApartmentDetails extends PureComponent {
               {apartment.addressCity ?
                 <div>
                   <ul style="height: 150px;overflow: scroll;">
-                    {transport[apartment.addressCity].tramway.map((sub) => (
+                    {transports[apartment.addressCity].tramway.map((sub) => (
                       <Checkbox
                         checked={apartment.Features.some((feat) => feat.name === sub.value && feat.taxonomy === 'apartment-features-transport-tramway')}
                         label={sub.label}
@@ -318,250 +318,115 @@ function mapDispatchToProps(dispatch) {
 }
 
 const cities = [
-  {
-    value: 'lyon', label: 'Lyon',
-  }, {
-    value: 'paris', label: 'Paris',
-  }, {
-    value: 'montpellier', label: 'Montpellier',
-  },
+  { value: 'lyon', label: 'Lyon' },
+  { value: 'paris', label: 'Paris' },
+  { value: 'montpellier', label: 'Montpellier' },
 ];
 
-const transport = {
+const transports = {
   lyon: {
-    subway: [{
-      value: 'A',
-      label: 'A',
-    }, {
-      value: 'B',
-      label: 'B',
-    }, {
-      value: 'C',
-      label: 'C',
-    }, {
-      value: 'D',
-      label: 'D',
-    }, {
-      value: 'F1',
-      label: 'F1',
-    }, {
-      value: 'F2',
-      label: 'F2',
-    }],
-    tramway: [{
-      value: 'T1',
-      label: 'T1',
-    }, {
-      value: 'T2',
-      label: 'T2',
-    }, {
-      value: 'T3',
-      label: 'T3',
-    }, {
-      value: 'T4',
-      label: 'T4',
-    }, {
-      value: 'T5',
-      label: 'T5',
-    }],
+    subway: [
+      { value: 'A', label: 'A' },
+      { value: 'B', label: 'B' },
+      { value: 'C', label: 'C' },
+      { value: 'D', label: 'D' },
+      { value: 'F1', label: 'F1' },
+      { value: 'F2', label: 'F2' },
+    ],
+    tramway: [
+      { value: 'T1', label: 'T1' },
+      { value: 'T2', label: 'T2' },
+      { value: 'T3', label: 'T3' },
+      { value: 'T4', label: 'T4' },
+      { value: 'T5', label: 'T5' },
+    ],
   },
   paris: {
-    subway: [{
-      value: '1',
-      label: '1',
-    }, {
-      value: '2',
-      label: '2',
-    }, {
-      value: '3',
-      label: '3',
-    }, {
-      value: '3b',
-      label: '3b',
-    }, {
-      value: '4',
-      label: '4',
-    }, {
-      value: '5',
-      label: '5',
-    }, {
-      value: '6',
-      label: '6',
-    }, {
-      value: '7',
-      label: '7',
-    }, {
-      value: '7b',
-      label: '7b',
-    }, {
-      value: '8',
-      label: '8',
-    }, {
-      value: '9',
-      label: '9',
-    }, {
-      value: '10',
-      label: '10',
-    }, {
-      value: '11',
-      label: '11',
-    }, {
-      value: '12',
-      label: '12',
-    }, {
-      value: '13',
-      label: '13',
-    }, {
-      value: '14',
-      label: '14',
-    }],
-    tramway: [{
-      value: '1',
-      label: '1',
-    }, {
-      value: '2',
-      label: '2',
-    }, {
-      value: '3a',
-      label: '3a',
-    }, {
-      value: '3b',
-      label: '3b',
-    }, {
-      value: '5',
-      label: '5',
-    }, {
-      value: '6',
-      label: '6',
-    }, {
-      value: '7',
-      label: '7',
-    }, {
-      value: '8',
-      label: '8',
-    }],
+    subway: [
+      { value: '1', label: '1' },
+      { value: '2', label: '2' },
+      { value: '3', label: '3' },
+      { value: '3b', label: '3b' },
+      { value: '4', label: '4' },
+      { value: '5', label: '5' },
+      { value: '6', label: '6' },
+      { value: '7', label: '7' },
+      { value: '7b', label: '7b' },
+      { value: '8', label: '8' },
+      { value: '9', label: '9' },
+      { value: '10', label: '10' },
+      { value: '11', label: '11' },
+      { value: '12', label: '12' },
+      { value: '13', label: '13' },
+      { value: '14', label: '14' },
+    ],
+    tramway: [
+      { value: '1', label: '1' },
+      { value: '2', label: '2' },
+      { value: '3a', label: '3a' },
+      { value: '3b', label: '3b' },
+      { value: '5', label: '5' },
+      { value: '6', label: '6' },
+      { value: '7', label: '7' },
+      { value: '8', label: '8' },
+    ],
   },
   montpellier: {
     subway: [],
-    tramway: [{
-      value: '1',
-      label: '1',
-    }, {
-      value: '2',
-      label: '2',
-    }, {
-      value: '3',
-      label: '3',
-    }, {
-      value: '4',
-      label: '4',
-    }],
+    tramway: [
+      { value: '1', label: '1' },
+      { value: '2', label: '2' },
+      { value: '3', label: '3' },
+      { value: '4', label: '4' },
+    ],
   },
 };
 
-const nearbyBike = [
-  {
-    value: '25', label: '25m',
-  }, {
-    value: '50', label: '50m',
-  }, {
-    value: '75', label: '75m',
-  }, {
-    value: '100', label: '100m',
-  }, {
-    value: '125', label: '125m',
-  }, {
-    value: '150', label: '150m',
-  }, {
-    value: '175', label: '175m',
-  }, {
-    value: '200', label: '200m',
-  }, {
-    value: '250', label: '250m',
-  }, {
-    value: '300', label: '300m',
-  }, {
-    value: '350', label: '350m',
-  }, {
-    value: '400', label: '400m',
-  }, {
-    value: '450', label: '450m',
-  }, {
-    value: '500', label: '500m',
-  },
+const nearbyBikeStations = [
+  { value: '25', label: '25m' },
+  { value: '50', label: '50m' },
+  { value: '75', label: '75m' },
+  { value: '100', label: '100m' },
+  { value: '125', label: '125m' },
+  { value: '150', label: '150m' },
+  { value: '175', label: '175m' },
+  { value: '200', label: '200m' },
+  { value: '250', label: '250m' },
+  { value: '300', label: '300m' },
+  { value: '350', label: '350m' },
+  { value: '400', label: '400m' },
+  { value: '450', label: '450m' },
+  { value: '500', label: '500m' },
 ];
 
 const countries = [
-  {
-    value: 'france', label: 'France',
-  },
+  { value: 'france', label: 'France' },
 ];
 
-const district = {
-  lyon: [{
-    value: 'ainay',
-    label: 'Ainay',
-  }, {
-    value: 'confluence',
-    label: 'Confluence',
-  }, {
-    value: 'bellecour',
-    label: 'Bellecour',
-  },{
-    value: 'hotel-de-ville',
-    label: 'Hôtel de Ville',
-  },{
-    value: 'croix-rousse',
-    label: 'Croix-Rousse',
-  },{
-    value: 'tete-dor',
-    label: 'Tête d\'Or',
-  },{
-    value: 'brotteaux',
-    label: 'Brotteaux',
-  },{
-    value: 'foch',
-    label: 'Foch',
-  },{
-    value: 'part-dieu',
-    label: 'Part-Dieu',
-  },{
-    value: 'manufacture',
-    label: 'Manufacture',
-  },{
-    value: 'prefecture',
-    label: 'Préfecture',
-  },{
-    value: 'quais-de-rhone',
-    label: 'Quais de Rhône',
-  },{
-    value: 'guillotiere',
-    label: 'Guillotière',
-  },{
-    value: 'universites',
-    label: 'Universités',
-  },{
-    value: 'jean-mace',
-    label: 'Jean Macé',
-  },{
-    value: 'garibaldi',
-    label: 'Garibaldi',
-  },{
-    value: 'jet-deau',
-    label: 'Jet d\'Eau',
-  },{
-    value: 'debourg-gerland',
-    label: 'Debourg - Gerland',
-  },{
-    value: 'vieux-lyon',
-    label: 'Vieux Lyon',
-  },{
-    value: 'vaise',
-    label: 'Vaise',
-  },{
-    value: 'monchat',
-    label: 'Montchat',
-  }],
+const districts = {
+  lyon: [
+    { value: 'ainay', label: 'Ainay' },
+    { value: 'confluence', label: 'Confluence' },
+    { value: 'bellecour', label: 'Bellecour' },
+    { value: 'hotel-de-ville', label: 'Hôtel de Ville' },
+    { value: 'croix-rousse', label: 'Croix-Rousse' },
+    { value: 'tete-dor', label: 'Tête d\'Or' },
+    { value: 'brotteaux', label: 'Brotteaux' },
+    { value: 'foch', label: 'Foch' },
+    { value: 'part-dieu', label: 'Part-Dieu' },
+    { value: 'manufacture', label: 'Manufacture' },
+    { value: 'prefecture', label: 'Préfecture' },
+    { value: 'quais-de-rhone', label: 'Quais de Rhône' },
+    { value: 'guillotiere', label: 'Guillotière' },
+    { value: 'universites', label: 'Universités' },
+    { value: 'jean-mace', label: 'Jean Macé' },
+    { value: 'garibaldi', label: 'Garibaldi' },
+    { value: 'jet-deau', label: 'Jet d\'Eau' },
+    { value: 'debourg-gerland', label: 'Debourg - Gerland' },
+    { value: 'vieux-lyon', label: 'Vieux Lyon' },
+    { value: 'vaise', label: 'Vaise' },
+    { value: 'monchat', label: 'Montchat' },
+  ],
   paris: [],
   montpellier: [],
 };

@@ -33,6 +33,7 @@ class CheckinInputs extends PureComponent {
       checkinDate,
       checkinDateError,
     } = this.props;
+
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
@@ -63,8 +64,8 @@ const definition = { 'fr-FR': {
   checkinTime: 'Heure Du Checkin',
 } };
 
-function mapStateToProps({ route: { lang, roomId }, booking, rooms }) {
-  const { checkinDate, errors } = booking;
+function mapStateToProps({ route: { lang }, booking, rooms }) {
+  const { checkinDate, errors, roomId } = booking;
   const room = rooms[roomId];
 
   return {
