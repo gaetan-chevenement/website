@@ -128,7 +128,7 @@ export default class Invoice extends PureComponent {
             </tr>
             <tr>
               <td class="text-left">{D.format(order.dueDate, 'DD/MM/YYYY')}</td>
-              <td class="text-left">{-order.balance / 100}€</td>
+              <td class="text-left">{order.amount / 100}€</td>
               <td>{client['Full Name']}</td>
               <td>{addressStreet ? addressStreet : ''}</td>
             </tr>

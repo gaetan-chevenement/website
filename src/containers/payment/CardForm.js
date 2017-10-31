@@ -158,6 +158,7 @@ function InvoiceButton({ lang, orderId, receiptNumber }) {
       <Button raised primary
         label={<Text id="downloadInvoice">Download your invoice</Text>}
         href={`${url}?${params}`}
+        target="_blank"
       />
     </IntlProvider>
   );
