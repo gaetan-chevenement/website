@@ -75,7 +75,19 @@ export const getDistrict = createActionAsync(
     }) },
   },
 );
-
+export const getDistrictDetails = createActionAsync(
+  'get District by districtId',
+  (districtId, apartmentId) => Utils.fetchJson(`/District?filterType=and&filter[id]=${districtId}`)
+    .then(throwIfNotFound('Room', districtId)),
+  {
+    noRethrow: true,
+    ok: { payloadReducer: ({ request: [ districtId, apartmentId ], response: { data } }) => ({
+      id: apartmentId,
+      District: data
+        .find((item) => item.type === 'district').attributes,
+    }) },
+  },
+);
 export const getOrder =
   createActionAsync(
     'get Order and associated OrderItems by Order id',

@@ -9,6 +9,7 @@ import configureStore   from '~/stores';
 import Services         from 'async!../routes/Services';
 import Booking          from 'async!../routes/Booking';
 import Admin            from '~/routes/Admin';
+import RoomAdmin        from '~/routes/RoomAdmin';
 import Room             from '~/routes/Room';
 import Home             from '~/routes/Home';
 import Search           from '~/routes/Search';
@@ -101,7 +102,8 @@ export default class App extends Component {
             <Payment path="/:lang/payment/:orderId" />
             <Services path="/:lang/services" />
             <Booking path="/:lang/booking" />
-            <Room path="/:lang/room/:roomId/" />
+            <Room path="/:lang/room/:roomId" />
+            <RoomAdmin path="/:lang/room/:roomId/admin" />
           </Router>
           <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:700|Material+Icons" />
         </div>

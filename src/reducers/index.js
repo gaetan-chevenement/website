@@ -27,6 +27,7 @@ import {
   getApartment,
   getRoom,
   getDistrict,
+  getDistrictDetails,
   listRooms,
   getOrder,
   listOrders,
@@ -182,6 +183,10 @@ const apartmentsReducer = createReducer({
   [listPictures.ok]: (state, [,{ id, Pictures }]) => ({
     ...state,
     [id]: { ...state[id], Pictures },
+  }),
+  [getDistrictDetails.ok]: (state, { id, District }) => ({
+    ...state,
+    [id]: { ...state[id], District },
   }),
   ...createPictureReducer({
     updatePicture: updateApartmentPicture,

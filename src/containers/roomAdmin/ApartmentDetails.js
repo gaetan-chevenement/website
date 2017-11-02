@@ -205,7 +205,7 @@ class ApartmentDetails extends PureComponent {
               auto
               value={apartment.DistrictId}
               source={districts[apartment.addressCity]}
-              error={errors && errors.district}
+              error={errors && errors.DistrictId}
             /> : ''
           }
           <Input type="number"
@@ -241,18 +241,18 @@ class ApartmentDetails extends PureComponent {
           />
           <br />
           <div style="text-align:center;">
-            <h3><Text id="picture">Upload Pictures</Text></h3>
+            <h3><Text id="picture.title">Upload Pictures</Text></h3>
             <br />
             <Dropzone style={{ display: 'inline-block',
               width: '400px',
-              height: '80px',
+              height: '110px',
               'border-width': '2px',
               'border-color': 'rgb(29, 44, 73)',
               'border-style': 'dashed',
               'border-radius': '5px',
             }} onDrop={this.onDrop} accept="image/jpeg, image/jpg" multiple
             >
-              <div style="position:relative;margin:16px auto;">drop some files here, or click to upload files.<br /> Only *.jpeg and *.jpg pictures.</div>
+              <div style="position:relative;margin:16px auto;"><Text id="picture.hint.first">Drop some files here, or click to upload files.</Text><br /><Text id="picture.hint.second">Only *.jpeg and *.jpg pictures.</Text></div>
             </Dropzone>
             <br />
             <dl class="grid-3 has-gutter-l">
@@ -299,9 +299,9 @@ class ApartmentDetails extends PureComponent {
               <ul style="height: 150px;overflow: scroll;">
                 {nearbyBikeStations.map((dist) => (
                   <Checkbox
-                    checked={apartment.Features.some((feat) => feat.name === dist.value && feat.taxonomy === 'apartment-features-nearbyBike')}
+                    checked={apartment.Features.some((feat) => feat.name === dist.value && feat.taxonomy === 'apartment-features-transport-nearbyBike')}
                     label={dist.label}
-                    taxonomy="apartment-features-nearbyBike"
+                    taxonomy="apartment-features-transport-nearbyBike"
                     termable="Apartment"
                     onChange={this.handleFeatureChange}
                     name={dist.value}
@@ -312,7 +312,7 @@ class ApartmentDetails extends PureComponent {
             {apartment.addressCity ?
               Object.keys(transports[apartment.addressCity]).map((value, key) => (
                 <div>
-                  <h5><Text id="subway">{_.capitalize(value)}</Text></h5>
+                  <h5><Text id="transport" fields={{ name: value === 'subway' ? 'Métro' : value === 'tramway' ? 'Tramway' : value === 'rer' ? 'Rer' : 'Transilien' }}>{_.capitalize(value)}</Text></h5>
                   <ul style="height: 150px;overflow: scroll;">
                     {transports[apartment.addressCity][value].map((data) => (
                       <Checkbox
@@ -389,23 +389,29 @@ const definition = { 'fr-FR': {
   floorArea: 'Surface',
   digicode: 'Digicode',
   bike: 'Stations de vélo les plus proches',
-  subway: 'Métro',
+  transport: '{{name}}',
   busHint: 'Une ligne de bus par ligne',
-  tramway: 'Tramway',
   description: {
     title: 'Descriptions',
     fr: 'description française',
     en: 'description anglaise',
     es: 'description espagnole',
   },
-
+  picture: {
+    title: 'Télécharger des photos',
+    hint: {
+      first: 'Déposez des fichiers, ou cliquez pour télécharger des fichiers.',
+      second: 'Seulement des images *.jpeg ou *.jpg',
+    },
+    order: 'Ordre',
+    caption: 'Description',
+  },
 } };
-function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { apartmentId, roomId }) {
+function mapStateToProps({ route: { lang }, rooms, apartments }, { apartmentId, roomId }) {
   const apartment = apartments[apartmentId];
 
   return {
     lang,
-    admin,
     roomId,
     apartments,
     apartment,
@@ -492,7 +498,6 @@ const transports = {
     ],
   },
   montpellier: {
-    subway: [],
     tramway: [
       { value: '1', label: '1' },
       { value: '2', label: '2' },
@@ -612,7 +617,7 @@ const districts = {
     { value: 'estanove', label: 'Estanove' },
     { value: 'pas-du-loup', label: 'Pas du Loup' },
     { value: 'chamberte', label: 'Chamberte' },
-  ].map(addCity('paris')),
+  ].map(addCity('montpellier')),
 };
 
 const captions = [

@@ -9,8 +9,8 @@ import capitalize             from 'lodash/capitalize';
 import values                 from 'lodash/values';
 import mapValues              from 'lodash/mapValues';
 import autobind               from 'autobind-decorator';
-import ApartmentDetails       from '~/containers/room/ApartmentDetails';
-import RoomDetails            from '~/containers/room/RoomDetails';
+import ApartmentDetails       from '~/containers/roomAdmin/ApartmentDetails';
+import RoomDetails            from '~/containers/roomAdmin/RoomDetails';
 import Features               from '~/components/Features/features';
 import * as actions           from '~/actions';
 
@@ -53,10 +53,6 @@ class FeaturesDetails extends PureComponent {
   }
 
   renderTerm({ termable, taxonomy, name, label, isChecked }) {
-    const { admin } = this.props;
-    if ( !admin ) {
-      return isChecked ? <li>{label}</li> : '';
-    }
     return (
       <Checkbox
         checked={isChecked}
@@ -68,8 +64,9 @@ class FeaturesDetails extends PureComponent {
       />
     );
   }
+
   renderFeatures(taxonomy, category) {
-    const { lang, admin } = this.props;
+    const { lang } = this.props;
     const InitializedFeatures = this.props[`${category}Features`];
     const featuresList = _.values(_.mapValues(Features[category][taxonomy],(value, key, object) => Object.assign(
       object[key],
@@ -80,12 +77,11 @@ class FeaturesDetails extends PureComponent {
         label: object[key][lang],
         isChecked: InitializedFeatures.some((feature) => feature.name === key && feature.taxonomy === taxonomy),
       })));
-    const displayTitle = admin ? true : !!featuresList.some((feature) => feature.isChecked !== false);
 
     return (
       featuresList.length > 0 ?
         <section>
-          {displayTitle ? <div><h4><Text id={taxonomy.split('-')[2]}>{_.capitalize(taxonomy.split('-')[2])}</Text></h4><br /></div> : ''}
+          <div><h4><Text id={taxonomy.split('-')[2]}>{_.capitalize(taxonomy.split('-')[2])}</Text></h4><br /></div>
           <ul class="grid-4 has-gutter-l">{featuresList.map((term) => this.renderTerm(term))}</ul>
         </section>
         : ''
@@ -101,7 +97,6 @@ class FeaturesDetails extends PureComponent {
       isFeaturesValidated,
       isApartmentFeaturesInitialized,
       isRoomFeaturesInitialized,
-      admin,
     } = this.props;
 
     if ( isRoomFeaturesInitialized === undefined && isApartmentFeaturesInitialized === undefined) {
@@ -114,58 +109,46 @@ class FeaturesDetails extends PureComponent {
 
     return (
       <IntlProvider definition={definition[lang]}>
-        { admin ?
-          <section>
-            <RoomDetails roomId={roomId} />
-            <h3 class="text-center">Features</h3>
-            <br />
-            {['sleep', 'dress', 'work', 'general'].map((taxonomy) => (
-              this.renderFeatures(`room-features-${taxonomy}`, 'Room')
-            ))}
-            <ApartmentDetails roomId={roomId} apartmentId={apartmentId} />
-            <h3 class="text-center">Features</h3>
-            <br />
-            {['kitchen', 'bathroom', 'general'].map((taxonomy) => (
-              this.renderFeatures(`apartment-features-${taxonomy}`, 'Apartment')
-            ))}
-            <div class="text-center">
-              <Button
-                icon="add"
-                label={<Text id="save">Save Changes</Text>}
-                raised
-                primary
-                onClick={this.saveChange}
-              />
-            </div>
-            {roomError && roomError.unauthorized ?
-              <div>
-                <span>{roomError.unauthorized}<br />
-                  <a href="/admin">Login</a> <br />
+        <section>
+          <RoomDetails roomId={roomId} />
+          <h3 class="text-center">Features</h3>
+          <br />
+          {['sleep', 'dress', 'work', 'general'].map((taxonomy) => (
+            this.renderFeatures(`room-features-${taxonomy}`, 'Room')
+          ))}
+          <ApartmentDetails roomId={roomId} apartmentId={apartmentId} />
+          <h3 class="text-center">Features</h3>
+          <br />
+          {['kitchen', 'bathroom', 'general'].map((taxonomy) => (
+            this.renderFeatures(`apartment-features-${taxonomy}`, 'Apartment')
+          ))}
+          <div class="text-center">
+            <Button
+              icon="add"
+              label={<Text id="save">Save Changes</Text>}
+              raised
+              primary
+              onClick={this.saveChange}
+            />
+          </div>
+          {roomError && roomError.unauthorized ?
+            <div>
+              <span>{roomError.unauthorized}<br />
+                <a href="/admin">Login</a> <br />
                   Or <br />
-                  <a href={`/${lang}/room/${roomId}`}>Go back</a>
-                </span>
+                <a href={`/${lang}/room/${roomId}`}>Go back</a>
+              </span>
 
-              </div>
-              : ''
-            }
-            {isFeaturesValidated ?
-              <div>
-                <span>Features have been successfully updated on the backoffice</span>
-              </div>
-              : ''
-            }
-          </section> :
-          <section>
-            <h3 class="text-center"><Text id="room">Room</Text></h3>
-            {['sleep', 'dress', 'work', 'general'].map((taxonomy) => (
-              this.renderFeatures(`room-features-${taxonomy}`, 'Room')
-            ))}
-            <h3 class="text-center"><Text id="apartment">Apartment</Text></h3>
-            {['kitchen', 'bathroom', 'general'].map((taxonomy) => (
-              this.renderFeatures(taxonomy, 'Apartment')
-            ))}
-          </section>
-        }
+            </div>
+            : ''
+          }
+          {isFeaturesValidated ?
+            <div>
+              <span>Features have been successfully updated on the backoffice</span>
+            </div>
+            : ''
+          }
+        </section>
       </IntlProvider>
     );
   }
@@ -183,12 +166,11 @@ const definition = { 'fr-FR': {
   bathroom: 'Salle de Bain',
 } };
 
-function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { roomId, apartmentId }) {
+function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
   const room = rooms[roomId];
   const apartment = apartments[apartmentId];
   return {
     lang,
-    admin,
     room,
     apartment,
     roomError: room && room.errors,

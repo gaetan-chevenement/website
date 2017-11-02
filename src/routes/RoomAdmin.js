@@ -2,12 +2,9 @@ import { IntlProvider } from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Promise                from 'bluebird';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
-import DisplayFeatures        from '~/containers/room/DisplayFeatures';
-import Pictures               from '~/containers/room/Pictures';
-import HouseMates             from '~/containers/room/HouseMates';
-import Description            from '~/containers/room/Description';
-import ApartmentDescription   from '~/containers/room/ApartmentDescription';
+import FeaturesDetails        from '~/containers/roomAdmin/FeaturesDetails';
 import * as actions           from '~/actions';
 
 
@@ -21,8 +18,7 @@ class Room extends PureComponent {
         actions.getDistrict(response.included[0].id),
         actions.listFeatures(roomId, response.included[0].id),
         actions.listPictures(roomId, response.included[0].id),
-      ]))
-      .then(([{ response }]) => actions.getDistrictDetails(response.included[0].id, response.data[0].id ));
+      ]));
   }
 
   render() {
@@ -30,7 +26,6 @@ class Room extends PureComponent {
       roomId,
       apartmentId,
       lang,
-      room,
       isRoomLoading,
     } = this.props;
     if ( isRoomLoading ) {
@@ -44,12 +39,7 @@ class Room extends PureComponent {
       <IntlProvider definition={definition[lang]}>
         <div class="content">
           <section>
-            <img src={room['cover picture']} />
-            <h2>{room.name}</h2>
-            <Pictures roomId={roomId} apartmentId={apartmentId} />
-            <Description roomId={roomId} apartmentId={apartmentId} />
-            <DisplayFeatures roomId={roomId} apartmentId={apartmentId} />
-            <ApartmentDescription apartmentId={apartmentId} />
+            <FeaturesDetails roomId={roomId} apartmentId={apartmentId} />
           </section>
         </div>
       </IntlProvider>
@@ -61,11 +51,12 @@ const definition = { 'fr-FR': {
 
 } };
 
-function mapStateToProps({ route: { lang }, apartments, rooms }, { roomId }) {
+function mapStateToProps({ route: { lang, admin }, apartments, rooms }, { roomId }) {
   const room = rooms[roomId];
 
   return {
     roomId,
+    admin,
     apartmentId: room && room.ApartmentId,
     lang,
     roomError: room && room.error,

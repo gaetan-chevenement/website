@@ -165,18 +165,18 @@ class RoomDetails extends PureComponent {
           </dl>
           <br />
           <div style="text-align:center;">
-            <h3><Text id="picture">Upload Pictures</Text></h3>
+            <h3><Text id="picture.title">Upload Pictures</Text></h3>
             <br />
             <Dropzone style={{ display: 'inline-block',
               width: '400px',
-              height: '80px',
+              height: '110px',
               'border-width': '2px',
               'border-color': 'rgb(29, 44, 73)',
               'border-style': 'dashed',
               'border-radius': '5px',
             }} onDrop={this.onDrop} accept="image/jpeg, image/jpg" multiple
             >
-              <div style="position:relative;margin:16px auto;">drop some files here, or click to upload files.<br /> Only *.jpeg and *.jpg pictures.</div>
+              <div style="position:relative;margin:16px auto;"><Text id="picture.hint.first">Drop some files here, or click to upload files.</Text><br /><Text id="picture.hint.second">Only *.jpeg and *.jpg pictures.</Text></div>
             </Dropzone>
             <br />
             <dl class="grid-3 has-gutter-l">
@@ -229,12 +229,11 @@ class RoomDetails extends PureComponent {
   }
 }
 
-function mapStateToProps({ route: { lang, admin }, rooms, apartments }, { roomId }) {
+function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId }) {
   const room = rooms[roomId];
 
   return {
     lang,
-    admin,
     room,
     rooms,
     roomId,
@@ -259,6 +258,15 @@ const definition = { 'fr-FR': {
     es: 'description espagnole',
   },
   negativeTitle: 'Points Négatifs',
+  picture: {
+    title: 'Télécharger des photos',
+    hint: {
+      first: 'Déposez des fichiers, ou cliquez pour télécharger des fichiers.',
+      second: 'Seulement des images *.jpeg ou *.jpg',
+    },
+    order: 'Ordre',
+    caption: 'Description',
+  },
 } };
 
 
