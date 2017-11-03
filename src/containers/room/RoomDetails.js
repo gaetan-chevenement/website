@@ -9,7 +9,6 @@ import { IconButton }         from 'react-toolbox/lib/button';
 import { batch }              from 'redux-act';
 import Dropzone               from 'react-dropzone';
 import capitalize             from 'lodash/capitalize';
-import Promise                from 'bluebird';
 import { Dropdown }           from 'react-toolbox/lib/dropdown';
 import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
@@ -63,7 +62,7 @@ class RoomDetails extends PureComponent {
           picturable: 'Room',
           PicturableId: roomId,
           id: uuid(),
-          alt: _.capitalize(room.name.split('-')[1].trim())
+          alt: _.capitalize(room.name.split('-')[1].trim()),
         });
       };
       reader.readAsDataURL(file);

@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { route }              from 'preact-router';
 import autobind               from 'autobind-decorator';
-import Promise                from 'bluebird';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { Button }             from 'react-toolbox/lib/button';
 import OrderDetails           from '~/components/OrderDetails';

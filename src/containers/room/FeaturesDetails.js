@@ -8,7 +8,6 @@ import { IntlProvider, Text } from 'preact-i18n';
 import capitalize             from 'lodash/capitalize';
 import values                 from 'lodash/values';
 import mapValues              from 'lodash/mapValues';
-import Promise                from 'bluebird';
 import autobind               from 'autobind-decorator';
 import ApartmentDetails       from '~/containers/room/ApartmentDetails';
 import RoomDetails            from '~/containers/room/RoomDetails';

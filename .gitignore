@@ -32,3 +32,6 @@ node_modules
 # secrets
 .env.js
 .env.json
+
+# Webpack stats
+stats.json

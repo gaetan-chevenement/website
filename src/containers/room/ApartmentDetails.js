@@ -10,7 +10,6 @@ import Dropzone               from 'react-dropzone';
 import capitalize             from 'lodash/capitalize';
 import { batch }              from 'redux-act';
 import uuid                   from 'uuid/v4';
-import Promise                from 'bluebird';
 import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import * as actions           from '~/actions';

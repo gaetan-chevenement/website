@@ -15,10 +15,12 @@ export default (config, env, helpers) => {
    */
   postcssLoader.forEach(({ loader }) => ( delete loader.options ));
 
-  /* Add babel-root-import plugin
+  /* Add babel plugins
    */
   babelLoaderRule.options.plugins.push(
-    [require.resolve('babel-plugin-root-import'), { rootPathSuffix: 'src' }]
+    [require.resolve('babel-plugin-root-import'), { rootPathSuffix: 'src' }],
+    [require.resolve('babel-plugin-lodash')],
+    [require.resolve('babel-plugin-date-fns')],
   );
 
   /* Use postcss for every css in react-toolbox module

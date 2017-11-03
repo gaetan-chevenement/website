@@ -2,7 +2,6 @@ import { IntlProvider } from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Promise                from 'bluebird';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import FeaturesDetails        from '~/containers/room/FeaturesDetails';
 import * as actions           from '~/actions';

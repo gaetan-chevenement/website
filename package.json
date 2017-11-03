@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "keywords": [],
+  "author": "@louis_remi",
+  "license": "MPL v2.0",
+  "browserlist": [
+    "last 2 versions",
+    "safari > 8",
+    "not ie < 11"
+  ],
   "scripts": {
     "fix": "eslint --fix src",
     "lint": "eslint src",
@@ -17,12 +25,11 @@
     "diff": "git diff -- . ':(exclude)package-lock.json'",
     "release": "git checkout release && git reset master --hard && git push origin release && git checkout -"
   },
-  "keywords": [],
-  "author": "@louis_remi",
-  "license": "MPL v2.0",
   "devDependencies": {
     "autobind-decorator": "^2.1.0",
     "babel-eslint": "^8.0.1",
+    "babel-plugin-date-fns": "^0.1.0",
+    "babel-plugin-lodash": "^3.2.11",
     "babel-plugin-root-import": "^5.1.0",
     "date-holidays": "^1.1.0",
     "eslint": "^4.8.0",
@@ -36,6 +43,7 @@
     "eslint-plugin-react": "^7.4.0",
     "if-env": "^1.0.0",
     "jest": "^21.2.1",
+    "lodash-webpack-plugin": "^0.11.4",
     "modules-values-extract": "^1.0.3",
     "node-sass": "^4.5.3",
     "postcss": "^6.0.13",
@@ -47,7 +55,8 @@
     "preact-cli": "^2.0.0",
     "preact-cli-plugin-env-vars": "^1.0.0",
     "prettier": "^1.7.4",
-    "sass-loader": "^6.0.6"
+    "sass-loader": "^6.0.6",
+    "webpack-bundle-analyzer": "^2.9.0"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
