@@ -99,8 +99,22 @@ class ApartmentDetails extends PureComponent {
       };
       reader.readAsDataURL(file);
     });
-    Promise.mapSeries(rejectedFiles, (file) => {
+  }
 
+  @autobind
+  floorPlanOnDrop(acceptedFiles, rejectFiles) {
+    const { actions, apartmentId } = this.props;
+    Promise.mapSeries(acceptedFiles, (file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        actions.addApartmentPicture({
+          url: reader.result,
+          picturable: 'Apartment',
+          PicturableId: apartmentId,
+          alt: 'floorPlan',
+          id: uuid() });
+      };
+      reader.readAsDataURL(file);
     });
   }
 
@@ -241,7 +255,7 @@ class ApartmentDetails extends PureComponent {
           />
           <br />
           <div style="text-align:center;">
-            <h3><Text id="picture.title">Upload Pictures</Text></h3>
+            <h3><Text id="picture.floorPlan">Upload Floor Plan</Text></h3>
             <br />
             <Dropzone style={{ display: 'inline-block',
               width: '400px',
@@ -250,13 +264,47 @@ class ApartmentDetails extends PureComponent {
               'border-color': 'rgb(29, 44, 73)',
               'border-style': 'dashed',
               'border-radius': '5px',
-            }} onDrop={this.onDrop} accept="image/jpeg, image/jpg" multiple
+            }} onDrop={this.floorPlanOnDrop} accept="image/jpeg, image/jpg"
             >
               <div style="position:relative;margin:16px auto;"><Text id="picture.hint.first">Drop some files here, or click to upload files.</Text><br /><Text id="picture.hint.second">Only *.jpeg and *.jpg pictures.</Text></div>
             </Dropzone>
             <br />
             <dl class="grid-3 has-gutter-l">
-              {Pictures.map((picture) => (
+              {Pictures.filter((picture) => picture.alt === 'floorPlan').map((picture) => (
+                <div>
+                  <div style="position:relative;">
+                    <div style="position:absolute;top:4px;">
+                      <IconButton
+                        icon="delete"
+                        raised
+                        onClick={this.handlePictureDelete}
+                        pictureId={picture.id}
+                      />
+                    </div>
+                    <img src={picture.url} style="max-height: 300px; max-width: 300px;" />
+                  </div>
+                </div>
+              )
+              )}</dl>
+            <br />
+            <div style="text-align:center;">
+              <h3><Text id="picture.title">Upload Pictures</Text></h3>
+              <br />
+              <Dropzone style={{ display: 'inline-block',
+                width: '400px',
+                height: '110px',
+                'border-width': '2px',
+                'border-color': 'rgb(29, 44, 73)',
+                'border-style': 'dashed',
+                'border-radius': '5px',
+              }} onDrop={this.onDrop} accept="image/jpeg, image/jpg" multiple
+              >
+                <div style="position:relative;margin:16px auto;"><Text id="picture.hint.first">Drop some files here, or click to upload files.</Text><br /><Text id="picture.hint.second">Only *.jpeg and *.jpg pictures.</Text></div>
+              </Dropzone>
+            </div>
+            <br />
+            <dl class="grid-3 has-gutter-l">
+              {Pictures.filter((picture) => picture.alt !== 'floorPlan').map((picture) => (
                 <div>
                   <div style="position:relative;">
                     <div style="position:absolute;top:4px;">

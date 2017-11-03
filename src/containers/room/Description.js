@@ -9,9 +9,20 @@ import * as actions           from '~/actions';
 const _ = { capitalize };
 
 class Pictures extends PureComponent {
+  renderBedDetail() {
+    const { room, lang } = this.props;
 
-  renderPicture({ url, alt, order }) {
+    return (
+      <li>{bedDetails[room.beds][lang]}</li>
+    );
+  }
 
+  renderElevatorDetail() {
+    const { apartment, lang, room: { Features } } = this.props;
+
+    return (
+      <li>{apartment.floor} <Text id="floor">floor</Text> {Features.some((feature) => feature.name === 'noElevator' && feature.taxonomy === 'room-features-negative') ? elevatorDetail.whithout[lang] : elevatorDetail.with[lang]} <Text id="elevator">elevator</Text></li>
+    );
   }
   render() {
     const {
@@ -34,13 +45,16 @@ class Pictures extends PureComponent {
         <section>
           <h3><Text id="title">Description</Text></h3>
           <ul class="grid-4 has-gutter">
-            <li>{apartment.floorArea}m² (apartment)</li>
-            <li>{apartment.floor} floor {Features.some((feature) => feature.name === 'noElevator' && feature.taxonomy === 'room-features-negative') ? ' whitout' : ' with'} elevator </li>
-            <li>1 {/(^double$)|(^simple$)|(^sofa$)/.test(room.beds) ? `${room.beds} bed` : `${room.beds.split('+')[0]} bed and a ${room.beds.split('+')[1]}`}</li>
-            <li>{room.floorArea}m² (room)</li>
+            <li>{apartment.floorArea}m² (<Text id="apartment">apartment</Text>)</li>
+            {this.renderElevatorDetail()}
+            {this.renderBedDetail()}
+            <li>{room.floorArea}m² (<Text id="room">room</Text>)</li>
             <li class="two-thirds">{apartment.addressStreet} {apartment.addressZip} {_.capitalize(apartment.addressCity)}, {_.capitalize(apartment.addressCountry)}</li>
           </ul>
-          <div>{room[`description${_.capitalize(lang.split('-')[0])}`]}{apartment[`description${_.capitalize(lang.split('-')[0])}`]}</div>
+          <div>{room[`description${_.capitalize(lang.split('-')[0])}`]}
+            <br />
+            {apartment[`description${_.capitalize(lang.split('-')[0])}`]}
+          </div>
         </section>
       </IntlProvider>
     );
@@ -48,7 +62,26 @@ class Pictures extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
+  title: 'Description',
+  apartment: 'logement',
+  floor: 'étage',
+  elevator: 'ascenseur',
+  room: 'chambre',
 } };
+
+const bedDetails = {
+  double: { 'fr-FR': '1 lit double', 'en-US': '1 double bed' },
+  simple: { 'fr-FR': '1 lit simple', 'en-US': '1 simple bed' },
+  sofa: { 'fr-FR': '1 canapé-lit', 'en-US': '1 sofa bed' },
+  'double+sofa': { 'fr-FR': '1 lit double et un canapé-lit', 'en-US': '1 double bed and a sofa bed' },
+  'simple+sofa': { 'fr-FR': '1 lit simple et un canapé-lit', 'en-US': '1 simple bed and a sofa bed' },
+  'simple+simple': { 'fr-FR': '2 lits simple', 'en-US': '2 simple beds' },
+};
+
+const elevatorDetail = {
+  with: { 'fr-FR': 'avec', 'en-US': 'with' },
+  without: { 'fr-FR': 'sans', 'en-US': 'without' },
+};
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
   const room = rooms[roomId];

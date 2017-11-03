@@ -28,6 +28,8 @@ import {
   getRoom,
   getDistrict,
   getDistrictDetails,
+  getDistrictTerms,
+  getHouseMates,
   listRooms,
   getOrder,
   listOrders,
@@ -187,6 +189,14 @@ const apartmentsReducer = createReducer({
   [getDistrictDetails.ok]: (state, { id, District }) => ({
     ...state,
     [id]: { ...state[id], District },
+  }),
+  [getDistrictTerms.ok]: (state, { id, NearbySchools }) => ({
+    ...state,
+    [id]: { ...state[id], NearbySchools },
+  }),
+  [getHouseMates.ok]: (state, { id, HouseMates }) => ({
+    ...state,
+    [id]: { ...state[id], HouseMates },
   }),
   ...createPictureReducer({
     updatePicture: updateApartmentPicture,

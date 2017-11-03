@@ -66,7 +66,7 @@ export const getApartment = createGetActionAsync('Apartment');
 export const getDistrict = createActionAsync(
   'get District by apartmentId',
   (apartmentId) => Utils.fetchJson(`/Apartment?filterType=and&filter[id]=${apartmentId}`)
-    .then(throwIfNotFound('Room', apartmentId)),
+    .then(throwIfNotFound('Apartment', apartmentId)),
   {
     noRethrow: true,
     ok: { payloadReducer: ({ request: [ apartmentId ], response: { included } }) => ({
@@ -75,16 +75,72 @@ export const getDistrict = createActionAsync(
     }) },
   },
 );
+
 export const getDistrictDetails = createActionAsync(
   'get District by districtId',
   (districtId, apartmentId) => Utils.fetchJson(`/District?filterType=and&filter[id]=${districtId}`)
-    .then(throwIfNotFound('Room', districtId)),
+    .then(throwIfNotFound('District', districtId)),
   {
     noRethrow: true,
-    ok: { payloadReducer: ({ request: [ districtId, apartmentId ], response: { data } }) => ({
+    ok: { payloadReducer: ({ request: [ districtId, apartmentId ], response: { data, included } }) => ({
       id: apartmentId,
       District: data
         .find((item) => item.type === 'district').attributes,
+    }) },
+
+  },
+);
+
+export const getHouseMates = createActionAsync(
+  'get Housemates by ApartmentId',
+  (apartmentId) => Utils.fetchJson(`/Apartment/house-mates?ApartmentId=${apartmentId}`),
+  {
+    noRethrow: true,
+    ok: { payloadReducer: ({ request: [ apartmentId ] , response }) => ({
+      id: apartmentId,
+      HouseMates: response.map((room) => {
+        if ( !room.Rentings.length ) {
+          return {
+            name: room.name,
+            roomId: room.id,
+            availableAt: new Date(),
+          };
+        }
+        if ( room.Rentings && room.Rentings[0].Events.length > 0 ) {
+          return {
+            name: room.name,
+            roomId: room.id,
+            availableAt: new Date(room.Rentings[0].Events[0].startDate) < new Date() ? new Date() : new Date(room.Rentings[0].Events[0].startDate),
+          };
+        }
+        return {
+          name: room.name,
+          roomId: room.id,
+          client: room.Rentings[0].Client.firstName,
+        };
+      }),
+    }) },
+  },
+);
+
+export const getDistrictTerms = createActionAsync(
+  'get nearbySchool by districtId',
+  (districtId, apartmentId) => {
+    const params = {
+      'page[number]': 1,
+      'page[size]': 100,
+    };
+    const qs = queryString.stringify(params, { encode: false });
+    return Utils.fetchJson(`/Term?filterType=or&filter[TermableId]=${districtId}&${qs}`)
+      .then(throwIfNotFound('District', districtId));
+  },
+  {
+    noRethrow: true,
+    ok: { payloadReducer: ({ request: [ districtId, apartmentId ], response: { data, included } }) => ({
+      id: apartmentId,
+      NearbySchools:  data
+        .filter((_data) => _data.attributes.termable === 'District' && _data.attributes.taxonomy === 'nearbySchool')
+        .map(({ attributes }) => attributes ),
     }) },
   },
 );

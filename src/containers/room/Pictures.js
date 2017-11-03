@@ -30,7 +30,7 @@ class Pictures extends PureComponent {
         </div>
       );
     }
-    const allPictures = [].concat(RoomPictures.sort((a, b) => a.order - b.order), ApartmentPictures.sort((a, b) => a.order - b.order));
+    const allPictures = [].concat(RoomPictures.sort((a, b) => a.order - b.order), ApartmentPictures.filter((picture) => picture.alt !== 'floorPlan').sort((a, b) => a.order - b.order));
 
     return (
       <IntlProvider definition={definition[lang]}>
@@ -46,6 +46,7 @@ class Pictures extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
+  title: 'Photos',
 } };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {

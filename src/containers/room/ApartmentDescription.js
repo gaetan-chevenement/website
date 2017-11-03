@@ -11,97 +11,33 @@ const _ = { capitalize };
 class Pictures extends PureComponent {
 
   renderTransport() {
-    const { apartment: { Features } } = this.props;
-    const transportFeature = Features.filter((feature) => /transport/.test(feature.taxonomy));
-    const subway = [];
-    const tramway = [];
-    const bus = [];
-    const rer = [];
-    const transilien = [];
-    const nearbyBike = [];
+    const { apartment: { Features }, lang } = this.props;
+    const transports = [];
 
-    transportFeature.map((feature) => {
-      if ( /subway/.test(feature.taxonomy) ){
-        subway.push(feature);
-      }
-      if ( /tramway/.test(feature.taxonomy) ){
-        tramway.push(feature);
-      }
-      if ( /bus/.test(feature.taxonomy) ){
-        bus.push(feature);
-      }
-      if ( /rer/.test(feature.taxonomy) ){
-        rer.push(feature);
-      }
-      if ( /transilien/.test(feature.taxonomy) ){
-        transilien.push(feature);
-      }
-      if ( /nearbyBike/.test(feature.taxonomy) ){
-        nearbyBike.push(feature);
-      }
-    });
+    ['subway', 'tramway', 'bus', 'rer', 'transilien', 'nearbyBike']
+      .map((transport) => {
+        transports[transport] = Features.filter((feature) =>
+          new RegExp(`transport-${transport}`).test(feature.taxonomy)
+        );
+      });
+
     return (
       <section>
-        {subway.length > 0 ?
-          <div>
-            <h6>Subway</h6>
-            <ul class="grid-3">
-              {subway.map((feat) => (
-                <div>{feat.name}</div>
-              ))}
-            </ul>
-          </div>
-          : ''}
-        {tramway.length > 0 ?
-          <div>
-            <h6>Tramway</h6>
-            <ul class="grid-3">
-              {tramway.map((feat) => (
-                <div>{feat.name}</div>
-              ))}
-            </ul>
-          </div>
-          :''}
-        {bus.length > 0 ?
-          <div>
-            <h6>Bus</h6>
-            <ul class="grid-3">
-              {bus.map((feat) => (
-                <div>{feat.name}</div>
-              ))}
-            </ul>
-          </div>
-          :''}
-        {rer.length > 0 ?
-          <div>
-            <h6>Rer</h6>
-            <ul class="grid-3">
-              {rer.map((feat) => (
-                <div>{feat.name}</div>
-              ))}
-            </ul>
-          </div>
-          :''}
-        {transilien.length > 0 ?
-          <div>
-            <h6>Transilien</h6>
-            <ul class="grid-3">
-              {transilien.map((feat) => (
-                <div>{feat.name}</div>
-              ))}
-            </ul>
-          </div>
-          :''}
-        {nearbyBike.length > 0 ?
-          <div>
-            <h6>NearbyBike</h6>
-            <ul class="grid-3">
-              {nearbyBike.map((feat) => (
-                <div>{feat.name}</div>
-              ))}
-            </ul>
-          </div>
-          :''}
+        {Object.keys(transports).map((key, index) => {
+          if ( transports[key].length > 0 ) {
+            return (
+              <div>
+                <h6>{transportName[key][lang]}</h6>
+                <ul class="grid-3">
+                  {transports[key].map((feat) => (
+                    <div>{feat.name}</div>
+                  ))}
+                </ul>
+              </div>
+            );
+          }
+        })
+        }
       </section>
     );
   }
@@ -111,10 +47,11 @@ class Pictures extends PureComponent {
       lang,
       apartment,
       District,
+      NearbySchools,
       getFeatures,
     } = this.props;
 
-    if (!apartment || !getFeatures || !District) {
+    if (!apartment || !getFeatures || !District || !NearbySchools) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -142,6 +79,9 @@ class Pictures extends PureComponent {
               </div>
               <div>
                 <h5><Text id="nearbySchool">Nearby School(s)</Text></h5>
+                {NearbySchools.map((school) =>
+                  <li>{school.name}</li>
+                )}
               </div>
             </ul>
           </section>
@@ -152,7 +92,19 @@ class Pictures extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
+  nearbySchool: 'Ecole(s) à proximité',
+  floorPlan: 'Plan du logement',
+  district: 'Quartier',
 } };
+
+const transportName = {
+  subway: { 'fr-FR': 'Métro', 'en-US': 'Subway' },
+  tramway: { 'fr-FR': 'Tramway', 'en-US': 'Tramway' },
+  bus: { 'fr-FR': 'Bus', 'en-US': 'Bus' },
+  rer: { 'fr-FR': 'Rer', 'en-US': 'Rer' },
+  transilien: { 'fr-FR': 'Transilien', 'en-US': 'Transilien' },
+  nearbyBike: { 'fr-FR': 'Vélos', 'en-US': 'Bikes' },
+};
 
 function mapStateToProps({ route: { lang }, apartments }, { apartmentId }) {
   const apartment = apartments[apartmentId];
@@ -162,6 +114,7 @@ function mapStateToProps({ route: { lang }, apartments }, { apartmentId }) {
     apartment,
     getFeatures: apartment && apartment.Features && apartment.Features.length > 0,
     District: apartment && apartment.District,
+    NearbySchools: apartment && apartment.NearbySchools,
   };
 }
 

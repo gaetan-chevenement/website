@@ -22,7 +22,11 @@ class Room extends PureComponent {
         actions.listFeatures(roomId, response.included[0].id),
         actions.listPictures(roomId, response.included[0].id),
       ]))
-      .then(([{ response }]) => actions.getDistrictDetails(response.included[0].id, response.data[0].id ));
+      .then(([{ response }]) => Promise.all([
+        actions.getDistrictDetails(response.included[0].id, response.data[0].id),
+        actions.getDistrictTerms(response.included[0].id, response.data[0].id),
+        actions.getHouseMates(response.data[0].id),
+      ]));
   }
 
   render() {
@@ -49,6 +53,7 @@ class Room extends PureComponent {
             <Pictures roomId={roomId} apartmentId={apartmentId} />
             <Description roomId={roomId} apartmentId={apartmentId} />
             <DisplayFeatures roomId={roomId} apartmentId={apartmentId} />
+            <HouseMates apartmentId={apartmentId} roomId={roomId} />
             <ApartmentDescription apartmentId={apartmentId} />
           </section>
         </div>
