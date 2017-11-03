@@ -26,6 +26,7 @@ class CardForm extends PureComponent {
       orderId,
       payment: { errors },
       orderBalance,
+      orderStatus,
       receiptNumber,
       payment,
       currYear,
@@ -62,11 +63,17 @@ class CardForm extends PureComponent {
         </IntlProvider>
       );
     }
-    if ( errors.payment ) {
+    if ( errors.payment || orderStatus === 'cancelled' ) {
       return (
         <IntlProvider definition={definition[lang]}>
           <section>
             <div class="handleError">
+              { orderStatus === 'cancelled' ? (
+                <h4>
+                  <Text id="order.cancelled">This order has been cancelled.</Text>
+                </h4>
+              ) : '' }
+
               { errors.payment.hasWrongBalance ? (
                 <div>
                   <h4>
@@ -164,6 +171,21 @@ function InvoiceButton({ lang, orderId, receiptNumber }) {
   );
 }
 
+function mapStateToProps({ route: { lang }, orders, payment }) {
+  const { orderId } = payment;
+  const order = orders[orderId];
+
+  return {
+    lang,
+    payment,
+    orderId: order && order.id,
+    orderBalance: order && order.balance,
+    receiptNumber: order && order.receiptNumber,
+    orderStatus: order && order.status,
+    currYear: Utils.getCurrYear(),
+  };
+}
+
 const definition = { 'fr-FR': {
   errors: {
     paid: 'Cette facture a déjà été payée',
@@ -190,21 +212,10 @@ const definition = { 'fr-FR': {
     cvv: 'cryptogramme',
   },
   downloadInvoice: 'Télécharger votre facture',
+  order: {
+    cancelled: 'Cette facture a été annulée',
+  },
 } };
-
-function mapStateToProps({ route: { lang }, orders, payment }) {
-  const { orderId } = payment;
-  const order = orders[orderId];
-
-  return {
-    lang,
-    payment,
-    orderId: order && order.id,
-    orderBalance: order && order.balance,
-    receiptNumber: order && order.receiptNumber,
-    currYear: Utils.getCurrYear(),
-  };
-}
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };
