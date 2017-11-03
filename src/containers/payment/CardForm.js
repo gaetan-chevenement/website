@@ -31,7 +31,7 @@ class CardForm extends PureComponent {
       currYear,
     } = this.props;
 
-    if (!payment.isValidated && orderBalance === 0) {
+    if (!payment.isValidated && orderBalance >= 0) {
       return (
         <IntlProvider definition={definition[lang]}>
           <section>
