@@ -98,27 +98,12 @@ export const getHouseMates = createActionAsync(
     noRethrow: true,
     ok: { payloadReducer: ({ request: [ apartmentId ] , response }) => ({
       id: apartmentId,
-      HouseMates: response.map((room) => {
-        if ( !room.Rentings.length ) {
-          return {
-            name: room.name,
-            roomId: room.id,
-            availableAt: new Date(),
-          };
-        }
-        if ( room.Rentings && room.Rentings[0].Events.length > 0 ) {
-          return {
-            name: room.name,
-            roomId: room.id,
-            availableAt: new Date(room.Rentings[0].Events[0].startDate) < new Date() ? new Date() : new Date(room.Rentings[0].Events[0].startDate),
-          };
-        }
-        return {
-          name: room.name,
-          roomId: room.id,
-          client: room.Rentings[0].Client.firstName,
-        };
-      }),
+      HouseMates: response.map((room) => ({
+        name: room.name,
+        client: room.client,
+        roomId: room.id,
+        availableAt: room.availableAt,
+      })),
     }) },
   },
 );

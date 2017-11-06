@@ -12,8 +12,8 @@ import * as actions           from '~/actions';
 
 
 class Room extends PureComponent {
-  componentWillMount() {
-    const { roomId, actions } = this.props;
+  loadData(roomId) {
+    const {  actions } = this.props;
 
     return Promise.resolve()
       .then(() => actions.getRoom(roomId))
@@ -27,6 +27,20 @@ class Room extends PureComponent {
         actions.getDistrictTerms(response.included[0].id, response.data[0].id),
         actions.getHouseMates(response.data[0].id),
       ]));
+  }
+
+  componentWillMount() {
+    const { roomId } = this.props;
+    return this.loadData(roomId);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const currentRoomId = this.props.roomId;
+    const nextRoomId = nextProps.roomId;
+
+    if (currentRoomId !== nextRoomId) {
+      this.loadData(nextRoomId);
+    }
   }
 
   render() {

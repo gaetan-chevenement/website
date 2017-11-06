@@ -2,22 +2,34 @@ import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
+import { Button }             from 'react-toolbox/lib/button';
 import { IntlProvider, Text } from 'preact-i18n';
+import capitalize             from 'lodash/capitalize';
 import D                      from 'date-fns';
 import * as actions           from '~/actions';
 
+const _ = { capitalize };
 
 class HouseMates extends PureComponent {
 
   renderHouseMate(houseMate) {
     const { lang } = this.props;
-
+    const _lang = _.capitalize(lang.split('-')[0]);
     return (
       <div>
         <li>{houseMate.name.split('-')[1]}</li>
-        {houseMate.client ?
-          <li>{houseMate.client}</li>
-          : <li><Text id="available">Available</Text> {D.differenceInDays(houseMate.availableAt, new Date()) === 0 ? lang === 'en-US' ? 'now' : 'immédiatement' : lang === 'en-US' ? `at ${D.format(houseMate.availableAt, 'DD/MM/YYYY')}`: `le ${D.format(houseMate.availableAt, 'DD/MM/YYYY')}`}</li>
+        {houseMate.availableAt ?
+          <div>
+            <li><Text id="available">Available</Text> {D.differenceInDays(houseMate.availableAt, new Date()) === 0 ?
+              lang === 'en-US' ? 'now' : 'immédiatement' :
+              lang === 'en-US' ? `at ${D.format(houseMate.availableAt, 'DD/MM/YYYY')}`: `le ${D.format(houseMate.availableAt, 'DD/MM/YYYY')}`}</li>
+            <Button raised primary
+              label={<Text id="book">Book</Text>}
+              href={`/${lang}/room/${houseMate.roomId}`}
+            />
+          </div>
+          : <li>{houseMate.client[`description${_lang}`] ? houseMate.client[`description${_lang}`] : houseMate.client.name}</li>
+
         }
       </div>
     );
