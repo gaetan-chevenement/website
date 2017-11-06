@@ -28,8 +28,10 @@ class HouseMates extends PureComponent {
               href={`/${lang}/room/${houseMate.roomId}`}
             />
           </div>
-          : <li>{houseMate.client[`description${_lang}`] ? houseMate.client[`description${_lang}`] : houseMate.client.name}</li>
-
+          : <div>
+            <li>{houseMate.client[`description${_lang}`] ? houseMate.client[`description${_lang}`] : houseMate.client.name}</li>
+            <li>{houseMate.client.gender}</li>
+          </div>
         }
       </div>
     );
