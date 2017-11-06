@@ -342,25 +342,27 @@ export const savePayment =
       });
     },
     { error: { payloadReducer: (payload) => {
-      if ( /fully paid/i.test(payload.error) ) {
+      const error = JSON.parse(payload.error.message);
+
+      if ( /fully paid/i.test(error.error) ) {
         return { errors: { payment: { hasWrongBalance: true } } };
       }
-      if ( /not found/i.test(payload.error) ) {
+      if ( /not found/i.test(error.error) ) {
         return { errors: { payment: { hasNoOrder: true  } } };
       }
-      if ( /invalid card type/i.test(payload.error) ) {
+      if ( /invalid card type/i.test(error.error) ) {
         return { errors: { cardNumber: 'Invalid card type (only Visa and Mastercard are allowed)' } };
       }
-      if ( /Invalid card/.test(payload.error) ) {
+      if ( /Invalid card/.test(error.error) ) {
         return { errors: { cardNumber: 'Invalid card number' } };
       }
-      if ( /CVV2/i.test(payload.error) ) {
+      if ( /CVV2/i.test(error.error) ) {
         return { errors: { cvv: 'Invalid cvv' } };
       }
-      if ( /no longer available/i.test(payload.error) ) {
+      if ( /no longer available/i.test(error.error) ) {
         return { errors: { payment: { isBooked: 'This room has been booked by someone else.' } } };
       }
-      return { errors: { payment: { unexpected: payload.error.message } } };
+      return { errors: { payment: { unexpected: error.error } } };
     } } },
   );
 
