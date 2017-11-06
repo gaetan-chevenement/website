@@ -236,7 +236,7 @@ class ApartmentDetails extends PureComponent {
             name="elevator"
             required
             auto
-            value={!!apartment.elevator}
+            value={apartment.elevator}
             source={[{ value: true, label: 'yes' } , { value: false, label: 'no' }]}
           />
           <Input type="number"

@@ -21,7 +21,7 @@ class Pictures extends PureComponent {
     const { apartment, lang, room: { Features } } = this.props;
 
     return (
-      <li>{apartment.floor} <Text id="floor">floor</Text> {Features.some((feature) => feature.name === 'noElevator' && feature.taxonomy === 'room-features-negative') ? elevatorDetail.whithout[lang] : elevatorDetail.with[lang]} <Text id="elevator">elevator</Text></li>
+      <li>{apartment.floor} <Text id="floor">floor</Text> {Features.some((feature) => feature.name === 'noElevator' && feature.taxonomy === 'room-features-negative') ? elevatorDetail.without[lang] : elevatorDetail.with[lang]} <Text id="elevator">elevator</Text></li>
     );
   }
   render() {

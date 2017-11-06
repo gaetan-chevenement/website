@@ -17,7 +17,7 @@ class HouseMates extends PureComponent {
     const _lang = _.capitalize(lang.split('-')[0]);
     return (
       <div>
-        <li>{houseMate.name.split('-')[1]}</li>
+        <li><Text id="room">Room</Text> {houseMate.name.split('-')[1].trim().split(' ')[1]}</li>
         {houseMate.availableAt ?
           <div>
             <li><Text id="available">Available</Text> {D.differenceInDays(houseMate.availableAt, new Date()) === 0 ?
@@ -66,6 +66,8 @@ class HouseMates extends PureComponent {
 const definition = { 'fr-FR': {
   title: 'Colocataires',
   available: 'Disponible',
+  book: 'Résever',
+  room: 'Chambre',
 } };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
