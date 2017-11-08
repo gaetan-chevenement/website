@@ -6,7 +6,7 @@
   "keywords": [],
   "author": "@louis_remi",
   "license": "MPL v2.0",
-  "browserlist": [
+  "browserslist": [
     "last 2 versions",
     "safari > 8",
     "not ie < 11"
