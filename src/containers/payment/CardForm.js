@@ -20,6 +20,18 @@ class CardForm extends PureComponent {
     );
   }
 
+  @autobind
+  deletePaymentError() {
+    const { actions } = this.props;
+    batch(
+      actions.deletePaymentError('payment'),
+      ['cardNumber', 'holderName', 'expiryMonth', 'expiryYear', 'cvv']
+        .forEach((field) => {
+          actions.updatePayment({ [field]: '' });
+        })
+    );
+  }
+
   render() {
     const {
       lang,
@@ -63,6 +75,7 @@ class CardForm extends PureComponent {
         </IntlProvider>
       );
     }
+
     if ( errors.payment || orderStatus === 'cancelled' ) {
       return (
         <IntlProvider definition={definition[lang]}>
@@ -98,10 +111,18 @@ class CardForm extends PureComponent {
               ) : '' }
 
               { errors.payment.unexpected ? (
-                <h4>
-                  <Text id="errors.unexpectd">An unexpected error has occured.</Text><br />
-                  { errors.payment.unexpected }
-                </h4>
+                <div>
+                  <h4>
+                    <Text id="errors.unexpected">An unexpected error has occured.</Text><br />
+                    { errors.payment.unexpected }
+                  </h4>
+                  <Button
+                    raised
+                    primary
+                    label={<Text id="errors.tryAgain">Try Again</Text>}
+                    onClick={this.deletePaymentError}
+                  />
+                </div>
               ) : '' }
             </div>
           </section>
@@ -195,6 +216,7 @@ const definition = { 'fr-FR': {
     },
     isBooked: 'Cette chambre a été réservée par un autre client.',
     unexpected: 'Une erreur est survenue.',
+    tryAgain: 'Réessayer',
   },
   payment: {
     ok: {
