@@ -453,6 +453,7 @@ const definition = { 'fr-FR': {
     },
     order: 'Ordre',
     caption: 'Description',
+    floorPlan: 'Télécharger le plan du logement',
   },
 } };
 function mapStateToProps({ route: { lang }, rooms, apartments }, { apartmentId, roomId }) {
