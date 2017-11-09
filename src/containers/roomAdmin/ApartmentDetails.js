@@ -607,6 +607,7 @@ const districts = {
   paris: [
     { value: 'opera-grands-boulevards', label: 'Opéra - Grands Boulevards' },
     { value: 'marais', label: 'Marais' },
+    { value: '1er-arrondissement', label: '1er Arrondissement' },
     { value: '4e-arrondissement', label: '4e Arrondissement' },
     { value: '5e-arrondissement', label: '5e Arrondissement' },
     { value: '6e-arrondissement', label: '6e Arrondissement' },
