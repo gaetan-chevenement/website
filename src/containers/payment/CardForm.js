@@ -25,10 +25,13 @@ class CardForm extends PureComponent {
     const { actions } = this.props;
     batch(
       actions.deletePaymentError('payment'),
-      ['cardNumber', 'holderName', 'expiryMonth', 'expiryYear', 'cvv']
-        .forEach((field) => {
-          actions.updatePayment({ [field]: '' });
-        })
+      actions.updatePayment({
+        cardNumber: '',
+        holderName: '',
+        expiryMonth: '',
+        expiryYear: '',
+        cvv: '',
+      }),
     );
   }
 
