@@ -88,7 +88,7 @@ class ApartmentDetails extends PureComponent {
   @autobind
   onDrop(acceptedFiles, rejectedFiles) {
     const { actions, apartmentId } = this.props;
-    Promise.mapSeries(acceptedFiles, (file) => {
+    acceptedFiles.map((file) => {
       const reader = new FileReader();
       reader.onload = () => {
         actions.addApartmentPicture({
@@ -104,7 +104,7 @@ class ApartmentDetails extends PureComponent {
   @autobind
   floorPlanOnDrop(acceptedFiles, rejectFiles) {
     const { actions, apartmentId } = this.props;
-    Promise.mapSeries(acceptedFiles, (file) => {
+    acceptedFiles.map((file) => {
       const reader = new FileReader();
       reader.onload = () => {
         actions.addApartmentPicture({
@@ -453,6 +453,7 @@ const definition = { 'fr-FR': {
     },
     order: 'Ordre',
     caption: 'Description',
+    floorPlan: 'Télécharger le plan du logement',
   },
 } };
 function mapStateToProps({ route: { lang }, rooms, apartments }, { apartmentId, roomId }) {
