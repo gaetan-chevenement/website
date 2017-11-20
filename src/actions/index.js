@@ -421,7 +421,7 @@ export const savePayment =
 
 function throwIfNotFound(modelName, id) {
   return (response) => {
-    if ( response.meta.count === 0 ) {
+    if ( 'count' in response.meta && response.meta.count === 0 ) {
       throw new Error(`${modelName} ${id} not found`);
     }
 
@@ -432,7 +432,7 @@ function throwIfNotFound(modelName, id) {
 function createGetActionAsync(modelName) {
   return createActionAsync(
     `get ${modelName} by id`,
-    (id) => Utils.fetchJson(`/${modelName}?filterType=and&filter[id]=${id}`)
+    (id) => Utils.fetchJson(`/${modelName}/${id}`)
       // No record returned is an error
       .then(throwIfNotFound(modelName,id)
       ),
