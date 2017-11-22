@@ -150,7 +150,9 @@ export const listOrders =
         return Promise.reject('Can only fetch by rentingId for now');
       }
 
-      return Utils.fetchJson(`/OrderItem?filterType=and&filter[RentingId]=${rentingId}`);
+      return Utils.fetchJson(
+        `/OrderItem?filterType=and&filter[RentingId]=${rentingId}`
+      );
     },
     { ok: { payloadReducer: ({ response: { data, included } }) => ({
       orders: included

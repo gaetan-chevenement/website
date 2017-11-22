@@ -61,6 +61,8 @@ const pureUtils = {
   },
   classifyRentingOrders({ rentingId, orders }) {
     return Object.values(orders)
+      // filter-out non-orders
+      .filter((order) => typeof order === 'object' && 'id' in order)
       // filter orders related to that renting
       .filter((order) => (
         order.OrderItems.some((item) => item.RentingId === rentingId)
@@ -165,8 +167,13 @@ const Utils = {
       yup.string().required().matches(/^\d{3}/),
   }),
 
-  fetchJson(url, _options) {
+  fetchJson(_url, _options) {
     const options = { ..._options };
+    const timezone = window.Intl ?
+      window.Intl.DateTimeFormat().resolvedOptions().timeZone :
+      'Europe/London';
+    const url =
+      `${API_BASE_URL}${_url}${/\?/.test(_url) ? '&' : '?'}timezone=${timezone}`;
     options.credentials = 'include';
     // We assume we will only send json or FormData
     // (anything else will thus cause problems)
@@ -181,7 +188,8 @@ const Utils = {
         options.body = JSON.stringify(options.body);
       }
     }
-    return fetch(`${API_BASE_URL}${url}`, options)
+
+    return fetch(url, options)
       .then((response) => {
         if ( !response.ok ) {
           /* eslint-disable promise/no-nesting */

@@ -23,7 +23,7 @@ class Renting extends PureComponent {
   render() {
     const {
       lang,
-      isRentingLoading,
+      isLoading,
       roomName,
       rentingId,
       clientId,
@@ -32,7 +32,7 @@ class Renting extends PureComponent {
     const paymentUrl =
       `/${lang}/payment/${packOrder.id}?returnUrl=/${lang}/renting/${rentingId}`;
 
-    if ( isRentingLoading ) {
+    if ( isLoading ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -84,15 +84,19 @@ const definition = { 'fr-FR': {
 
 function mapStateToProps({ route: { lang }, rentings, orders, rooms }, { rentingId }) {
   const renting = rentings[rentingId];
-  const room = renting && rooms[renting.roomId];
-  const { pack: packOrder } =
-    Utils.classifyRentingOrders({ rentingId, orders });
+
+  if ( !renting || renting.isLoading || !orders || orders.isLoading ) {
+    return { isLoading: true };
+  }
+
+  const room = rooms[renting.roomId];
+  const { pack: packOrder } = Utils.classifyRentingOrders({ rentingId, orders });
 
   return {
+    isLoading: false,
     lang,
     rentingId,
-    clientId: renting && renting.clientId,
-    isRentingLoading: renting && renting.isLoading,
+    clientId: renting.clientId,
     roomName: room && room.name,
     packOrder,
   };
