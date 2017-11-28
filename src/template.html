@@ -28,6 +28,7 @@
 		}) %>
 		<script defer src="<%= htmlWebpackPlugin.files.chunks['bundle'].entry %>"></script>
 		<script>window.fetch||document.write('<script src="<%= htmlWebpackPlugin.files.chunks["polyfills"].entry %>"><\/script>')</script>
+		<script>Raven.config('https://53f2fffc4a714a8896331939eff077ab@sentry.io/251362').install()</script>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:700|Material+Icons" media="none" onload="if(media!='all')media='all'" />
 	</body>
 </html>
