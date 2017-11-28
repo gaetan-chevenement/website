@@ -10,8 +10,9 @@ export default function LoadingError({ lang, label, error }) {
         </h1>
 
         <section>
+          <p>You should try to <a href="javascript:location.reload();">reload the page</a></p>
           <p>
-            Please contact support:
+            If the error persists, please contact support:
             <a href="mailto:support@chez-nestor.com"
               target="_blank"
               rel="noopener noreferrer"

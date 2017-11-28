@@ -195,12 +195,19 @@ const Utils = {
           /* eslint-disable promise/no-nesting */
           return response.text()
             .then((message) => {
-              throw new Error(message);
+              const error = new Error(message);
+
+              window.Raven.captureException(error);
+              throw error;
             });
           /* eslint-enable promise/no-nesting */
         }
 
         return response.json();
+      })
+      .catch((error) => {
+        window.Raven.captureException(error);
+        throw error;
       });
   },
 };
