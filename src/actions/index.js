@@ -414,6 +414,9 @@ export const savePayment =
       if ( /CVV2/i.test(error.error) ) {
         return { errors: { cvv: 'Invalid cvv' } };
       }
+      if ( /do not honor/i.test(error.error) ) {
+        return { errors: { payment: { wasDeclined: 'Payment has been declined by the bank' } } };
+      }
       if ( /no longer available/i.test(error.error) ) {
         return { errors: { payment: { isBooked: 'This room has been booked by someone else.' } } };
       }

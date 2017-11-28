@@ -97,6 +97,12 @@ class CardForm extends PureComponent {
                 </h4>
               ) : '' }
 
+              { errors.payment.wasDeclined ? (
+                <h4>
+                  <Text id="errors.wasDeclined">The payment has been declined by your bank.</Text>
+                </h4>
+              ) : '' }
+
               { errors.payment.unexpected ? (
                 <h4>
                   <Text id="errors.unexpectd">An unexpected error has occured.</Text><br />
@@ -193,6 +199,7 @@ const definition = { 'fr-FR': {
       first: 'Nous ne parvenons pas à retrouver cette facture.',
       second: 'Veuillez contacter l\'équipe Chez Nestor.',
     },
+    wasDeclined: 'Le paiement a été refusé par votre banque.',
     isBooked: 'Cette chambre a été réservée par un autre client.',
     unexpected: 'Une erreur est survenue.',
   },
