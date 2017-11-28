@@ -121,7 +121,7 @@ const roomsReducer = createReducer({
     ...rooms,
   }),
   ...createListReducer(listRooms, 'room'),
-  [getRenting.ok]: (state, { _room: room }) => ({
+  [getRenting.ok]: (state, { Room: room }) => ({
     ...state,
     [room.id]: room,
   }),

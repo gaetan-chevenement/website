@@ -105,7 +105,6 @@ export default class App extends Component {
             <Room path="/:lang/room/:roomId" />
             <RoomAdmin path="/:lang/room/:roomId/admin" />
           </Router>
-          <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:700|Material+Icons" />
         </div>
       </Provider>
     );

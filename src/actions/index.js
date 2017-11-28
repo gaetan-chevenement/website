@@ -436,14 +436,13 @@ function createGetActionAsync(modelName) {
     `get ${modelName} by id`,
     (id) => Utils.fetchJson(`/${modelName}/${id}`)
       // No record returned is an error
-      .then(throwIfNotFound(modelName,id)
-      ),
+      .then(throwIfNotFound(modelName,id)),
     { noRethrow: true,
       ok: { payloadReducer: ({ response }) => ({
         ...response.data.attributes,
         ...response.included.reduce((attributes, value) => {
           attributes[`${value.type}Id`] = value.id;
-          attributes[`_${value.type}`] = value.attributes;
+          attributes[value.type.capitalize()] = value.attributes;
           return attributes;
         }, {}),
       }) } }
