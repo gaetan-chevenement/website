@@ -17,13 +17,14 @@
     "test": "eslint src && jest __tests__",
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
     "build:holidays": "node serializeFrenchHolidays > src/holidays.json",
-    "build:preact": "preact build --no-prerender --template src/template.html",
+    "build:preact": "preact build --no-prerender --template src/template.html --json",
     "build:netlify": "cp src/_redirects build/_redirects",
     "build": "npm run build:holidays && npm run build:preact && npm run build:netlify",
     "serve": "preact build && preact serve",
     "dev": "preact watch --template src/template.html",
     "diff": "git diff -- . ':(exclude)package-lock.json'",
-    "release": "git checkout release && git reset master --hard && git push origin release && git checkout -"
+    "release": "git checkout release && git reset master --hard && git push origin release && git checkout -",
+    "analyze": "webpack-bundle-analyzer stats.json dist/app"
   },
   "devDependencies": {
     "autobind-decorator": "^2.1.0",
@@ -31,6 +32,8 @@
     "babel-plugin-date-fns": "^0.1.0",
     "babel-plugin-lodash": "^3.2.11",
     "babel-plugin-root-import": "^5.1.0",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "date-holidays": "^1.1.0",
     "eslint": "^4.8.0",
     "eslint-config-synacor": "^2.0.2",
@@ -75,7 +78,6 @@
     "react-leaflet": "^1.7.1",
     "react-leaflet-markercluster": "^1.1.6",
     "react-redux": "^5.0.6",
-    "react-slick": "^0.15.4",
     "react-toolbox": "git+https://github.com/louisremi/react-toolbox.git#built",
     "redux": "^3.7.2",
     "redux-act": "^1.4.1",

@@ -5,8 +5,7 @@ const reactToolboxPath = path.resolve('./node_modules', 'react-toolbox');
 const containersPath = path.resolve('src', 'containers');
 
 export default (config, env, helpers) => {
-  const babelLoader = helpers.getLoadersByName(config, 'babel-loader');
-  const babelLoaderRule = babelLoader[0].rule;
+  const babelLoaderRule = helpers.getLoadersByName(config, 'babel-loader')[0].rule;
   const postcssLoader = helpers.getLoadersByName(config, 'postcss-loader');
   const cssModulesRule = postcssLoader[0].rule;
   const globalCssRule = postcssLoader[1].rule;
@@ -21,6 +20,12 @@ export default (config, env, helpers) => {
     [require.resolve('babel-plugin-root-import'), { rootPathSuffix: 'src' }],
     [require.resolve('babel-plugin-lodash')],
     [require.resolve('babel-plugin-date-fns')],
+    [require.resolve('babel-plugin-transform-regenerator')],
+    [require.resolve('babel-plugin-transform-runtime'), {
+      helpers: false,
+      polyfill: false,
+      regenerator: true,
+    }],
   );
 
   /* Use postcss for every css in react-toolbox module
