@@ -10,7 +10,11 @@ export default function Services({ lang }) {
           <Text id="title">Services included with your housing</Text>
         </h1>
         <p>
-          <Text id="subtitle">At Chez Nestor, everything is included: we take care of it all so that you don\'t have to worry about anything and you can enjoy your apartment!</Text>
+          <Text id="subtitle">
+            At Chez Nestor, everything is included: we take care of it all so
+            that you don't have to worry about anything and you can enjoy your
+            apartment!
+          </Text>
         </p>
         <div class="grid-5 has-gutter-xl">
           {services.map((service) => (

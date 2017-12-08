@@ -28,7 +28,7 @@
 
 .appBar {
   height: var(--header-height);
-  overflow-y: hidden;
+  overflow: hidden;
   color: white;
   background-color: var(--color-primary);
 }
