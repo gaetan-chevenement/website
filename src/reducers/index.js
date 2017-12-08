@@ -1,7 +1,8 @@
-import { combineReducers } from 'redux';
-import { createReducer }   from 'redux-act';
-import memoize             from 'memoize-immutable';
-import NamedTupleMap       from 'namedtuplemap';
+import { combineReducers }  from 'redux';
+import { createReducer }    from 'redux-act';
+import memoize              from 'memoize-immutable';
+import NamedTupleMap        from 'namedtuplemap';
+import pickBy               from 'lodash/pickBy';
 
 import {
   updateRoute,
@@ -51,6 +52,7 @@ import {
   saveRoomAndApartment,
 }                           from '~/actions';
 
+const _ = { pickBy };
 const noErrors = {};
 
 const routeReducer = createReducer({
@@ -121,7 +123,7 @@ const roomsReducer = createReducer({
     ...rooms,
   }),
   ...createListReducer(listRooms, 'room'),
-  [getRenting.ok]: (state, { Room: room }) => ({
+  [getRenting.ok]: (state, { _room: room }) => ({
     ...state,
     [room.id]: room,
   }),
@@ -278,7 +280,8 @@ export function createGetReducer(actionAsync) {
     }),
     [actionAsync.ok]: (state, payload) => ({
       ...state,
-      [payload.id]: payload,
+      // exclude related records from attributes
+      [payload.id]: _.pickBy(payload, (value, key) => !/^_/.test(key)),
     }),
     [actionAsync.error]: (state, { request, error }) => ({
       ...state,

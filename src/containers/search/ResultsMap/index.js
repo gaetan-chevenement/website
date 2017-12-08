@@ -11,12 +11,13 @@ import L                      from 'leaflet';
 import MarkerClusterGroup     from 'react-leaflet-markercluster';
 import filter                 from 'lodash/filter';
 import Room                   from '~/containers/search/Room';
-import { MAPBOX_TOKEN }       from '~/const';
+import _const                 from '~/const';
 import Utils                  from '~/utils';
 
 import 'leaflet/dist/leaflet.css';
 
 const _ = { filter };
+const { MAPBOX_TOKEN } = _const;
 
 const DEFAULT_ICON = new L.Icon({
   iconUrl: require('~/assets/search/map-marker-default.png'),

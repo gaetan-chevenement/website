@@ -5,10 +5,12 @@ import { Button }             from 'react-toolbox/lib/button';
 import { batch }              from 'redux-act';
 import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
+import { API_BASE_URLS }      from 'cheznestor-common/const';
 import { Input }              from 'react-toolbox/lib/input';
 import * as actions           from '~/actions';
 import Utils                  from '~/utils';
-import { API_BASE_URL }       from '~/const';
+
+const API_BASE_URL = API_BASE_URLS[process.env.PREACT_APP_ENV || 'test'];
 
 class CardForm extends PureComponent {
   @autobind

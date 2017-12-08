@@ -140,7 +140,7 @@ function mapStateToProps({ route: { lang, returnUrl }, orders, payment }, { orde
     orderId,
     order,
     payment,
-    isOrderLoading: order === undefined || order.isLoading,
+    isOrderLoading: !order || order.isLoading,
   };
 }
 

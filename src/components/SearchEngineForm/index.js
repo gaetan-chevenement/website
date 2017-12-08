@@ -8,7 +8,6 @@ import { Input }          from 'react-toolbox/lib/input';
 import { Button }         from 'react-toolbox/lib/button';
 import { ContentTowns }   from '~/content';
 import {
-  buttonContainer,
   form,
   noSubmit,
 }                         from './style.css';

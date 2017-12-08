@@ -1,6 +1,7 @@
 .footer {
+  margin-top: 40px;
   padding: 1px 0 70px;
-  background-color: #1c2b4a;
+  background-color: var(--color-primary);
   color: white;
 }
 
@@ -16,6 +17,12 @@
 
 .footer a {
   line-height: 1.7rem;
+  color: inherit;
+}
+
+.footer a:hover {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .social svg {

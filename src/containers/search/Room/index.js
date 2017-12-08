@@ -56,10 +56,6 @@ function getBedsDetails(beds) {
 }
 
 export default class Room extends PureComponent {
-  // handleClick() {
-  //   console.log('here');
-  // }
-
   renderAvailability() {
     const date = new Date(this.props.availableAt);
 

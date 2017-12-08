@@ -1,38 +1,6 @@
-module.exports = {
-  PACK_PRICES: {
-    lyon: {
-      basic:      59000,
-      comfort:    79000,
-      privilege:  99000,
-    },
-    montpellier: {
-      basic:      49000,
-      comfort:    69000,
-      privilege:  89000,
-    },
-    paris: {
-      basic:      89000,
-      comfort:   119000,
-      privilege: 149000,
-    },
-  },
+import common from 'cheznestor-common/const';
 
-  DEPOSIT_PRICES: {
-    lyon:        70000,
-    paris:       90000,
-    montpellier: 50000,
-  },
-
-  SPECIAL_CHECKIN_PRICE: 7900,
-
-  SERVICE_FEES: {
-    1:       5000, // 1 room
-    2:       4000, // 2 rooms
-    default: 3000, // 3 or more rooms
-  },
-
-  UNAVAILABLE_DATE: new Date(1E14),
-
+export default Object.assign({}, common, {
   API_BASE_URL: ((environment) => {
     switch (environment) {
     case 'production':
@@ -50,8 +18,5 @@ module.exports = {
     montpellier: 'Available%20Rooms%20Montpellier',
   },
 
-  IDENTITY_FORM_URL: 'https://forms.chez-nestor.com/50392735671964',
-
-  MAPBOX_TOKEN: `pk.eyJ1IjoiY2hlem5lc3RvciIsImEiOiJjajhtdzhkMGQxMXRqMndsZHRyaXo0ZXhsIn0.\
-8nTAH6da3pvqHKYAARms5A`,
-};
+  MAPBOX_TOKEN: `pk.eyJ1IjoiY2hlem5lc3RvciIsImEiOiJjajhtdzhkMGQxMXRqMndsZHRyaXo0ZXhsIn0.8nTAH6da3pvqHKYAARms5A`,
+});

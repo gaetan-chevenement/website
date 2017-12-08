@@ -1,6 +1,7 @@
-import { IntlProvider } from 'preact-i18n';
+import { IntlProvider }       from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { connect }            from 'react-redux';
+import { route }              from 'preact-router';
 import { bindActionCreators } from 'redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import DisplayFeatures        from '~/containers/room/DisplayFeatures';
@@ -12,21 +13,25 @@ import * as actions           from '~/actions';
 
 
 class Room extends PureComponent {
-  loadData(roomId) {
-    const {  actions } = this.props;
+  async loadData(roomId) {
+    const { actions } = this.props;
+    const { response: roomRes } = await actions.getRoom(roomId);
 
-    return Promise.resolve()
-      .then(() => actions.getRoom(roomId))
-      .then(({ response }) => Promise.all([
-        actions.getDistrict(response.included[0].id),
-        actions.listFeatures(roomId, response.included[0].id),
-        actions.listPictures(roomId, response.included[0].id),
-      ]))
-      .then(([{ response }]) => Promise.all([
-        actions.getDistrictDetails(response.included[0].id, response.data[0].id),
-        actions.getDistrictTerms(response.included[0].id, response.data[0].id),
-        actions.getHouseMates(response.data[0].id),
-      ]));
+    if ( roomRes.data[0].id !== roomId ) {
+      return route(window.location.pathname.replace(/[\w-]+$/, roomRes.data[0].id));
+    }
+
+    const [{ response }] = await Promise.all([
+      actions.getDistrict(roomRes.included[0].id),
+      actions.listFeatures(roomId, roomRes.included[0].id),
+      actions.listPictures(roomId, roomRes.included[0].id),
+    ]);
+
+    return Promise.all([
+      actions.getDistrictDetails(response.included[0].id, response.data[0].id),
+      actions.getDistrictTerms(response.included[0].id, response.data[0].id),
+      actions.getHouseMates(response.data[0].id),
+    ]);
   }
 
   componentWillMount() {

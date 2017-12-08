@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.1",
+    "cheznestor-common": "github:chez-nestor/common",
     "date-fns": "^1.29.0",
     "leaflet": "^1.2.0",
     "leaflet.markercluster": "^1.1.0",
@@ -80,7 +81,7 @@
     "redux-act": "^1.4.1",
     "redux-act-async": "^1.7.0",
     "redux-thunk": "^2.2.0",
-    "shoelace-css": "^1.0.0-beta9",
+    "shoelace-css": "^1.0.0-beta24",
     "uuid": "^3.1.0",
     "yup": "^0.23.0"
   }

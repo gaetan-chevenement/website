@@ -1,5 +1,4 @@
 import Slideshow        from '~/components/home/Slideshow';
-import Footer           from '~/components/Footer';
 import SearchEngine     from '~/components/SearchEngine';
 import Towns            from '~/containers/home/Towns';
 import Services         from '~/components/home/Services';
@@ -38,7 +37,6 @@ export default function Home() {
       <div class="content">
         <Guide />
       </div>
-      <Footer />
     </div>
   );
 }

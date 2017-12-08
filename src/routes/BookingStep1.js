@@ -1,4 +1,5 @@
 import { IntlProvider, Text } from 'preact-i18n';
+import { route }              from 'preact-router';
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
@@ -23,12 +24,24 @@ class BookingStep1 extends PureComponent {
       actions,
     } = this.props;
 
-    if ( roomName === undefined ) {
-      actions.getRoom(roomId);
-    }
-
     if ( hasErrors ) {
       scrollTo(0, 0);
+    }
+
+    if ( roomName === undefined ) {
+      return actions.getRoom(roomId)
+        .then(({ response: { data: [roomData] } }) =>
+          roomData.id !== roomId &&
+            route(window.location.pathname.replace(/[\w-]+$/, roomData.id))
+        );
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { roomId } = nextProps;
+
+    if ( this.props.roomId !== roomId ) {
+      actions.updateBooking({ roomId });
     }
   }
 
@@ -38,13 +51,13 @@ class BookingStep1 extends PureComponent {
       lang,
       roomId,
       roomName,
-      isRoomLoading,
+      isLoading,
       isRoomAvailable,
       isEligible,
       hasAcceptedTerms,
     } = this.props;
 
-    if ( isRoomLoading ) {
+    if ( isLoading ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -52,6 +65,7 @@ class BookingStep1 extends PureComponent {
       );
     }
 
+    // This is probably never true
     if ( roomName === undefined ) {
       return (
         <IntlProvider definition={definition[lang]}>
@@ -91,6 +105,23 @@ class BookingStep1 extends PureComponent {
   }
 }
 
+function mapStateToProps({ route: { lang }, rooms, booking }, { roomId }) {
+  const room = rooms[roomId];
+
+  if ( !room || room.isLoading ) {
+    return { isLoading: true };
+  }
+
+  return {
+    lang,
+    roomName: room.name,
+    roomError: room.error,
+    isRoomAvailable: Utils.isRoomAvailable( room ),
+    isEligible: booking.isEligible,
+    hasAcceptedTerms: booking.hasAcceptedTerms,
+  };
+}
+
 const definition = { 'fr-FR': {
   title: 'Réservation de la chambre',
   datetime: 'Date et heure',
@@ -106,20 +137,6 @@ const definition = { 'fr-FR': {
   },
   button: 'Continuer',
 } };
-
-function mapStateToProps({ route: { lang }, rooms, booking }, { roomId }) {
-  const room = rooms[roomId];
-
-  return {
-    lang,
-    roomName: room && room.name,
-    roomError: room && room.error,
-    isRoomLoading: !room || room.isLoading,
-    isRoomAvailable: room && Utils.isRoomAvailable( room ),
-    isEligible: booking.isEligible,
-    hasAcceptedTerms: booking.hasAcceptedTerms,
-  };
-}
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };

@@ -5,11 +5,6 @@
 @import url('shoelace-css/source/css/utilities.css');
 @import url('./grillade.css');
 @import url('../components/Carousel/style.scss');
-:root {
-  --header-height: 80px;
-  --font-sans-serif: 'Open Sans';
-  --headings-font-family: var(--font-sans-serif);
-}
 
 [class*="brandico-"]:before {
   font-family: 'brandico', sans-serif;
@@ -19,16 +14,20 @@ html,
 body,
 #app {
   height: 100%;
-  background: #FAFAFA;
-  color: #222;
+  background: var(--color-background);
+  font-family: var(--preferred-font);
+  color: var(--color-text);
 }
 
 body {
   overflow-y: scroll;
 }
 
-header+* {
+header + * {
   margin-top: var(--header-height);
+}
+header + .content {
+  margin-top: calc(var(--header-height) + 20px);
 }
 
 .content {
@@ -55,32 +54,15 @@ h2 {
   font-family: 'Open Sans Condensed', sans-serif;
 }
 
+h3, h4, h5, h6 {
+  font-family: var(--preferred-font);
+}
+
 section {
   margin-bottom: 4rem;
 }
 
-.carousel {
-  background-color: grey;
-}
-
-.service {
-  margin-top: 100px;
-  background-color: white;
-  color: #666;
-  padding: 2em 2em 1em 2em;
-  width: calc(100% / 1.4);
-  max-width: none;
-}
-
-a {
-  color: inherit;
-}
-
-a:hover {
-  color: inherit;
-  text-decoration: underline;
-}
-
+/* Leaflet specific classes */
 .map-rooms-cluster {
   & img {
     width: 100%;
@@ -106,78 +88,4 @@ a:hover {
 .leaflet-popup-content {
   width: 250px !important;
   margin: 0 !important;
-}
-
-.services-title {
-  font-size: 1.6em;
-  font-weight: 400;
-  margin-bottom: 2rem;
-}
-
-.services-subtitle {
-  margin-bottom: 2em;
-  font-size: 0.97em;
-}
-div.service-details{
-  text-align: center;
-  box-sizing: border-box;
-  padding: 0;
-  border-width: 0;
-  margin-bottom: 2em;
-}
-
-h2.service-details{
-  font-weight: bold;
-  font-size: 1.96em;
-  word-break: break-all;
-}
-div.service-details>p{
-  font-size: 95%;
-}
-hr {
-  width: 7em;
-  margin: auto;
-  margin-bottom: 2em;
-  border-top:  1px solid #e6e6e6;
-}
-.span-container{
-  width: 100%;
-}
-span.booking {
-  font-size: 0.8rem;
-  padding-left: 12px;
-}
-
-.subtitle {
-  margin: 3em 0 3em 0;
-  text-align: center;
-
-}
-.fancy {
-  line-height: 0.5;
-  text-align: center;
-
-}
-.fancy span {
-  display: inline-block;
-  position: relative;
-}
-.fancy span:before,
-.fancy span:after {
-  content: "";
-  position: absolute;
-  height: 1px;
-  border-bottom: 1px solid #666;
-  border-top: 1px solid #666;
-  top: 0.1em;
-  width: 17rem;
-}
-
-.fancy span:before {
-  right: 100%;
-  margin-right: 16px;
-}
-.fancy span:after {
-  left: 100%;
-  margin-left: 16px;
 }

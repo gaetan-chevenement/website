@@ -24,6 +24,16 @@
   composes: cell;
 }
 
+.colorBasic {
+  color: var(--color-pack-basic);
+}
+.colorComfort {
+  color: var(--color-pack-comfort);
+}
+.colorPrivilege {
+  color: var(--color-pack-privilege);
+}
+
 .valueText {
   font-size: 0.6rem;
 }

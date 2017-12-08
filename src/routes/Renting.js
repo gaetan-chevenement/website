@@ -4,11 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { batch }              from 'redux-act';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
+import { Button }             from 'react-toolbox/lib/button';
 import * as actions           from '~/actions';
-import {
-  IDENTITY_FORM_URL,
-}                             from '~/const';
+import _const                 from '~/const';
 import Utils                  from '~/utils';
+
+const { IDENTITY_FORM_URLS } = _const;
 
 class Renting extends PureComponent {
   componentDidMount() {
@@ -26,8 +27,8 @@ class Renting extends PureComponent {
       isLoading,
       roomName,
       rentingId,
-      clientId,
       packOrder = {},
+      identityFormUrl,
     } = this.props;
     const paymentUrl =
       `/${lang}/payment/${packOrder.id}?returnUrl=/${lang}/renting/${rentingId}`;
@@ -48,31 +49,42 @@ class Renting extends PureComponent {
             <em>{roomName}</em>
           </h1>
 
-          <section>
-            <p>
-              To complete your booking, please pay your Housing Pack invoice
-              on our secure platform:<br />
-              <a href={paymentUrl}>
-                Pay {-packOrder.balance / 100}€ now.
-              </a>
-            </p>
-            <p>
-              After that, please fill in this short identity form:<br />
-              <a href={`${IDENTITY_FORM_URL}?clientId=${clientId}`}>
-                {IDENTITY_FORM_URL}?clientId={clientId}
-              </a>
-            </p>
-
-            <p>
-              Once that is done, you'll receive your lease, to be signed online
-              (<a href="https://drive.google.com/file/d/0B6uBt4Bf8BxuSnRod3d1TGp3bFU/view">
-                specimen here
-              </a>).
-            </p>
-            <p>
-              And your room will be waiting for you!
-            </p>
-          </section>
+          <div class="grid-3-large-1 has-gutter-xl">
+            <div>
+              <h3 class="text-center">1</h3>
+              <p>
+                To complete your booking, please pay your Housing Pack invoice
+                on our secure platform:
+              </p>
+              <p class="text-center">
+                <Button primary raised href={paymentUrl}>
+                  Pay {-packOrder.balance / 100}€ now
+                </Button>
+              </p>
+            </div>
+            <div>
+              <h3 class="text-center">2</h3>
+              <p>
+                We also need your personal details so that we can edit the lease agreement
+                (<a href="https://drive.google.com/file/d/0B6uBt4Bf8BxuSnRod3d1TGp3bFU/view">
+                  specimen here
+                </a>):
+              </p>
+              <p class="text-center">
+                <Button primary raised href={identityFormUrl}>
+                  Fill in the form
+                </Button>
+              </p>
+            </div>
+            <div>
+              <h3 class="text-center">3</h3>
+              <p>
+                Once that is done, you'll receive your lease, to be signed online.
+                And your room will be waiting for you!
+              </p>
+              <h3 class="text-center">☺</h3>
+            </div>
+          </div>
         </div>
       </IntlProvider>
     );
@@ -91,12 +103,17 @@ function mapStateToProps({ route: { lang }, rentings, orders, rooms }, { renting
 
   const room = rooms[renting.roomId];
   const { pack: packOrder } = Utils.classifyRentingOrders({ rentingId, orders });
+  const packLevel =
+    packOrder.OrderItems
+      .find(({ ProductId }) => /-pack$/.test(ProductId))
+      .ProductId.replace(/-pack$/, '');
 
   return {
     isLoading: false,
     lang,
     rentingId,
-    clientId: renting.clientId,
+    identityFormUrl:
+      `https://${IDENTITY_FORM_URLS[packLevel]}?clientId=${renting.clientId}`,
     roomName: room && room.name,
     packOrder,
   };

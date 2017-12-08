@@ -24,33 +24,7 @@ import {
 }                       from '~/actions';
 import Utils            from '~/utils';
 import Header           from './Header';
-
-const store = configureStore({
-  route: {
-    lang: 'en-US',
-  },
-  booking: {
-    minPack: 'basic',
-    pack: 'comfort',
-    errors: {},
-    // firstName: {},
-    // lastName: {},
-    // email: {},
-    // checkinDate: {},
-    // roomId: null,
-  },
-  payment: {
-    errors: {},
-  },
-  search: {
-    errors: {},
-  },
-  orders: {},
-  rooms: {},
-  apartments: {},
-  pictures: {},
-});
-
+import Footer           from './Footer';
 
 export default class App extends Component {
   // Store route parameters in the state when route changes
@@ -86,8 +60,11 @@ export default class App extends Component {
       <Provider store={store}>
         <div id="app">
           <Match path="/">
-            { ({ matches, path, url }) =>
-              /(fr-FR|en-US)(?!(\/invoice))/.test(path) ? <Header lang={this.state.lang} /> : '' }
+            { // No header on invoices
+              ({ matches, path, url }) =>
+                rInvoice.test(path) ?
+                  '' : <Header lang={this.state.lang} />
+            }
           </Match>
           <Router onChange={this.handleRoute}>
             <Home path="/:lang" default />
@@ -101,12 +78,42 @@ export default class App extends Component {
             <Invoice path="/:lang/invoice/:orderId" />
             <Payment path="/:lang/payment/:orderId" />
             <Services path="/:lang/services" />
-            <Booking path="/:lang/booking" />
+            <Booking path="/:lang/booking-process" />
             <Room path="/:lang/room/:roomId" />
             <RoomAdmin path="/:lang/room/:roomId/admin" />
           </Router>
+          <Match path="/">
+            { // No footer on invoice, home
+              ({ matches, path, url }) =>
+                [rInvoice, rSearch].some((regex) => regex.test(path)) ?
+                  '' : <Footer lang={this.state.lang} />
+            }
+          </Match>
         </div>
       </Provider>
     );
   }
 }
+
+const store = configureStore({
+  route: {
+    lang: 'en-US',
+  },
+  booking: {
+    minPack: 'basic',
+    pack: 'comfort',
+    errors: {},
+  },
+  payment: {
+    errors: {},
+  },
+  search: {
+    errors: {},
+  },
+  orders: {},
+  rooms: {},
+  apartments: {},
+  pictures: {},
+});
+const rSearch = /^\/[\w-]{5}\/search/;
+const rInvoice = /^\/[\w-]{5}\/invoice/;

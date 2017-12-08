@@ -1,6 +1,8 @@
 import { h }             from 'preact';
-import { IntlProvider, Text }       from 'preact-i18n';
-import memoize           from 'memoize-immutable';
+import {
+  IntlProvider,
+  Text,
+}                        from 'preact-i18n';
 import featuresEn        from './features-en';
 import featuresFr        from './features-fr';
 import { Button }        from 'react-toolbox/lib/button';
@@ -14,14 +16,41 @@ import {
   featureCell,
   featureLabel,
   featureDetails,
+  colorBasic,
+  colorComfort,
+  colorPrivilege,
 }                        from './style.css';
 
 const TooltipButton = Tooltip(Button);
+const features = Object.assign({}, featuresEn, featuresFr);
+const colorClasses = [colorBasic, colorComfort, colorPrivilege];
+
+export default function FeatureList({ lang, isPriceHidden }) {
+  const sublists = features[lang]
+    .reduce((acc, curr) => (
+      curr.length === 1 ?
+        acc.unshift([curr[0], []]) && acc :
+        acc[0][1].push(curr) && acc
+    ), [])
+    .reverse();
+
+  return (
+    <IntlProvider definition={definition[lang]}>
+      <div>
+        {sublists.map(([header, features], i) => (
+          // the first four sublists aren't prices
+          ( isPriceHidden && i > 3 ) ?
+            '' : <Sublist key={header} {...{ header, features }} />
+        ))}
+      </div>
+    </IntlProvider>
+  );
+}
 
 // Memoization is simpler at this level instead of FeatureList level as element
 // receive arguments more likely to change.
-const renderSublist = memoize(([header, features], lang) => (
-  <IntlProvider definition={definition[lang]}>
+function Sublist({ header, features }) {
+  return (
     <table class={sublist}>
       <thead>
         <tr>
@@ -46,8 +75,8 @@ const renderSublist = memoize(([header, features], lang) => (
               </span>
               <span class={featureDetails}>— {tooltip}</span>
             </td>
-            {values.map((value) => (
-              <td class={valueCell}>
+            {values.map((value, i) => (
+              <td class={`${valueCell} ${colorClasses[i]}`}>
                 {typeof value === 'string' ?
                   <span class={valueText}>{value}</span> : ( value ? '✔' : '✘' )
                 }
@@ -57,17 +86,6 @@ const renderSublist = memoize(([header, features], lang) => (
         ))}
       </tbody>
     </table>
-  </IntlProvider>
-));
-
-export default function FeatureList({ lang }) {
-  const features =
-    lang === 'fr-FR' ? splitOnTitles(featuresFr) : splitOnTitles(featuresEn);
-
-  return (
-    <div>
-      {features.map((feature) => renderSublist(feature, lang)) }
-    </div>
   );
 }
 
@@ -76,14 +94,3 @@ const definition = { 'fr-FR': {
   comfort: 'Confort',
   privilege: 'Privilège',
 } };
-
-
-function splitOnTitles(features) {
-  return features
-    .reduce((acc, curr) => (
-      curr.length === 1 ?
-        acc.unshift([curr, []]) && acc :
-        acc[0][1].push(curr) && acc
-    ), [])
-    .reverse();
-}

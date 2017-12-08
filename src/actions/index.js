@@ -7,11 +7,10 @@ import values                   from 'lodash/values';
 import filter                   from 'lodash/filter';
 import Utils                    from '~/utils';
 import Features                 from '~/components/Features/features';
-import {
-  ROOM_SEGMENTS,
-}                               from '~/const';
+import _const                   from '~/const';
 
 const _ = { mapValues, values, filter, flattenDeep };
+const { ROOM_SEGMENTS } = _const;
 
 export const updateRoute = createAction('Update route object');
 export const updateSearch = createAction('Update search state');
@@ -54,6 +53,7 @@ export const {
 export const getRoom =
   createActionAsync(
     'get Room by id',
+    // We need a list query to use a segment
     (id) => Utils.fetchJson(`/Room?filterType=and&filter[id]=${id}&segment=Availability`)
       .then(throwIfNotFound('Room', id)),
     {
@@ -65,7 +65,7 @@ export const getRenting = createGetActionAsync('Renting');
 export const getApartment = createGetActionAsync('Apartment');
 export const getDistrict = createActionAsync(
   'get District by apartmentId',
-  (apartmentId) => Utils.fetchJson(`/Apartment?filterType=and&filter[id]=${apartmentId}`)
+  (apartmentId) => Utils.fetchJson(`/Apartment/${apartmentId}`)
     .then(throwIfNotFound('Apartment', apartmentId)),
   {
     noRethrow: true,
@@ -78,7 +78,7 @@ export const getDistrict = createActionAsync(
 
 export const getDistrictDetails = createActionAsync(
   'get District by districtId',
-  (districtId, apartmentId) => Utils.fetchJson(`/District?filterType=and&filter[id]=${districtId}`)
+  (districtId, apartmentId) => Utils.fetchJson(`/District/${districtId}`)
     .then(throwIfNotFound('District', districtId)),
   {
     noRethrow: true,
@@ -152,7 +152,7 @@ export const listOrders =
 
       return Utils.fetchJson(
         `/OrderItem?filterType=and&filter[RentingId]=${rentingId}`
-      );
+      ).then(throwIfNotFound('Renting', rentingId));
     },
     { ok: { payloadReducer: ({ response: { data, included } }) => ({
       orders: included
@@ -254,7 +254,9 @@ export const listFeatures =
                 (term, name) => {
                   Object.assign(term, { name, taxonomy, termable: 'Room' });
                   return term.value === true;
-                }))));
+                })
+          ))
+        );
       }
       if ( !features[1].Features.length ) {
         features[1].Features = _.flattenDeep(
@@ -426,7 +428,10 @@ export const savePayment =
 
 function throwIfNotFound(modelName, id) {
   return (response) => {
-    if ( 'count' in response.meta && response.meta.count === 0 ) {
+    // we used to just check meta.count but it is sometimes wrong
+    // (e.g. when we query a room, as we have a hook to modify the select query
+    // but not the count one)
+    if ( Array.isArray(response.data) && response.data.length === 0 ) {
       throw new Error(`${modelName} ${id} not found`);
     }
 
@@ -445,7 +450,7 @@ function createGetActionAsync(modelName) {
         ...response.data.attributes,
         ...response.included.reduce((attributes, value) => {
           attributes[`${value.type}Id`] = value.id;
-          attributes[value.type.capitalize()] = value.attributes;
+          attributes[`_${value.type}`] = value.attributes;
           return attributes;
         }, {}),
       }) } }

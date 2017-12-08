@@ -7,13 +7,11 @@ import capitalize             from 'lodash/capitalize';
 import D                      from 'date-fns';
 import Utils                  from '~/utils';
 import * as actions           from '~/actions';
-import {
-  PACK_PRICES,
-  DEPOSIT_PRICES,
-}                             from '~/const';
+import _const                 from '~/const';
 import theme                  from './theme';
 
 const _ = { capitalize };
+const { PACK_PRICES,  DEPOSIT_PRICES } = _const;
 
 class Summary extends PureComponent {
   @autobind

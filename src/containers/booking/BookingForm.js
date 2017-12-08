@@ -16,7 +16,7 @@ export default function BookingForm({ lang }) {
 
         <section>
           <h3><Text id="detail">Detailed comparison</Text></h3>
-          <FeatureList lang={lang} />
+          <FeatureList lang={lang} isPriceHidden />
         </section>
 
         <section>

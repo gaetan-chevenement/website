@@ -1,4 +1,4 @@
-import { IntlProvider } from 'preact-i18n';
+import { IntlProvider }       from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';

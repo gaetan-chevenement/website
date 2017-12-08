@@ -1,18 +1,22 @@
 // TODO: switch this back to esnext import once preact-cli is better integrated
 // with Jest
-const yup                         = require('yup');
-const D                           = require('date-fns');
-const memoize                     = require('memoize-immutable');
-const reduce                      = require('lodash/reduce');
-const filter                      = require('lodash/filter');
-const holidays                    = require('./holidays.json');
+import yup        from 'yup';
+import D          from 'date-fns';
+import memoize    from 'memoize-immutable';
+import reduce     from 'lodash/reduce';
+import filter     from 'lodash/filter';
+import capitalize from 'lodash/capitalize';
+import _const     from '~/const';
+import holidays   from './holidays.json';
+
+const _ = { reduce, filter, capitalize };
 const {
   SPECIAL_CHECKIN_PRICE,
   UNAVAILABLE_DATE,
   API_BASE_URL,
-}                                 = require('./const');
-
-const _ = { reduce, filter };
+  DEPOSIT_PRICES,
+  PACK_PRICES,
+} = _const;
 
 const pureUtils = {
   roundBy100(value) {
@@ -116,6 +120,16 @@ const pureUtils = {
   filterMatchingRooms(rooms) {
     return _.filter(rooms, (room) => ( typeof room === 'object' ));
   },
+  getDepositLine(city) {
+    return [_.capitalize(city), ''].concat([1,2,3].map(() =>
+      `${DEPOSIT_PRICES[city] / 100}€`
+    ));
+  },
+  getPackLine(city) {
+    return [_.capitalize(city), '']
+      .concat(['basic', 'comfort', 'privilege']
+        .map((level) => `${PACK_PRICES[city][level] / 100}€`));
+  },
 };
 
 const currYear = pureUtils.getCurrYear();
@@ -169,9 +183,8 @@ const Utils = {
 
   fetchJson(_url, _options) {
     const options = { ..._options };
-    const timezone = window.Intl ?
-      window.Intl.DateTimeFormat().resolvedOptions().timeZone :
-      'Europe/London';
+    const timezone =
+      window.Intl && window.Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/London';
     const url =
       `${API_BASE_URL}${_url}${/\?/.test(_url) ? '&' : '?'}timezone=${timezone}`;
     options.credentials = 'include';
@@ -189,6 +202,8 @@ const Utils = {
       }
     }
 
+    // TODO: the requests sometimes fail with 404 errors when they shouldn't
+    // retrying automatically doesn't work as they usually fail for ~1min
     return fetch(url, options)
       .then((response) => {
         if ( !response.ok ) {
@@ -218,4 +233,4 @@ for ( let fnName in pureUtils ) {
   }
 }
 
-module.exports = Utils;
+export default Utils;

@@ -54,7 +54,7 @@ class RoomDetails extends PureComponent {
   @autobind
   onDrop(acceptedFiles, rejectedFiles) {
     const { actions, roomId, room } = this.props;
-      acceptedFiles.map((file) => {
+    acceptedFiles.map((file) => {
       const reader = new FileReader();
       reader.onload = () => {
         actions.addRoomPicture({

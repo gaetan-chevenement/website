@@ -25,7 +25,7 @@ export default (config, env, helpers) => {
 
   /* Use postcss for every css in react-toolbox module
    */
-  cssModulesRule.include.push(reactToolboxPath); // Eenable css modules for react-toolbox
+  cssModulesRule.include.push(reactToolboxPath); // Enable css modules for react-toolbox
   globalCssRule.exclude.push(reactToolboxPath); // Exclude react-toolbox from global css
 
   /* Enable css modules for containers
