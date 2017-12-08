@@ -1,0 +1,23 @@
+.card {
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.cardTitle {
+  margin: 1rem 0;
+
+  text-align: center;
+  font-size: 1.9rem;
+  font-weight: bold;
+  word-break: break-all;
+}
+
+.cardRuler {
+  margin: 0 auto 1rem;
+  width: 7em;
+  border-top:  1px solid #e6e6e6;
+}
+
+.cardContent {
+  font-size: 0.9rem;
+}

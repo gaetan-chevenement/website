@@ -1,0 +1,17 @@
+.service {
+  background-color: white;
+  padding: 2em 2em 1em 2em;
+  width: calc(100% / 1.4);
+  max-width: none;
+}
+
+.service h1 {
+  font-size: 1.6em;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+.service h1 + p {
+  margin-bottom: 2em;
+  font-size: 0.97em;
+}

@@ -1,0 +1,11 @@
+.cardTitle-basic {
+  color: var(--color-pack-basic);
+}
+
+.cardTitle-comfort {
+  color: var(--color-pack-comfort);
+}
+
+.cardTitle-privilege {
+  color: var(--color-pack-privilege);
+}
