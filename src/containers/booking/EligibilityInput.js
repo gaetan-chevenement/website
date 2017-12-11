@@ -32,7 +32,7 @@ class EligibilityInputs extends PureComponent {
         <div>
           <p>
             <Text id="eligible.test">Before booking, you need to ensure you are eligibile for an
-            accommodation with Chez Nestor:</Text>
+            accommodation with Chez Nestor:&nbsp;</Text>
             <Button raised
               icon="launch"
               href="https://forms.chez-nestor.com/72003771604953"

@@ -76,7 +76,7 @@ function Sublist({ header, features }) {
               <span class={featureDetails}>— {tooltip}</span>
             </td>
             {values.map((value, i) => (
-              <td class={`${valueCell} ${colorClasses[i]}`}>
+              <td class={`${valueCell} ${value && colorClasses[i]}`}>
                 {typeof value === 'string' ?
                   <span class={valueText}>{value}</span> : ( value ? '✔' : '✘' )
                 }

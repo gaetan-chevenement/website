@@ -7,11 +7,9 @@ import {
 } from './style.css';
 
 export default function Testimonies() {
-  const $testimonies = ContentTestimonies.list.map(t => <Testimony {...t} />);
-
   return (
     <section className={testimonies}>
-      {$testimonies}
+      {ContentTestimonies.list.map(t => <Testimony {...t} />)}
     </section>
   );
 }
@@ -32,7 +30,7 @@ function Testimony({ avatar, title, comment, author }) {
       <p>
         {comment}
       </p>
-      <div className={authors}>
+      <div className={`${authors} text-bold`}>
         {author}
       </div>
     </div>

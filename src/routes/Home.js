@@ -21,6 +21,8 @@ export default function Home() {
           {' '}{ContentTowns.texts.title}{' '}
         </h2>
         <Towns />
+      </div>
+      <div>
         <h2 class="text-center">
           {' '}{ContentServices.texts.title}{' '}
         </h2>

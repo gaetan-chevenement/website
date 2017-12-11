@@ -40,11 +40,8 @@ class Room extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const currentRoomId = this.props.roomId;
-    const nextRoomId = nextProps.roomId;
-
-    if (currentRoomId !== nextRoomId) {
-      this.loadData(nextRoomId);
+    if ( this.props.roomId !== nextProps.roomId ) {
+      this.loadData(nextProps.roomId);
     }
   }
 

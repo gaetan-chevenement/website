@@ -6,9 +6,11 @@ import { batch }              from 'redux-act';
 import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import { Input }              from 'react-toolbox/lib/input';
-import { API_BASE_URL }       from '~/const';
+import _const                 from '~/const';
 import * as actions           from '~/actions';
 import Utils                  from '~/utils';
+
+const { API_BASE_URL } = _const;
 
 class CardForm extends PureComponent {
   @autobind

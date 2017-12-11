@@ -13,9 +13,9 @@ import RoomAdmin        from '~/routes/RoomAdmin';
 import Room             from '~/routes/Room';
 import Home             from '~/routes/Home';
 import Search           from '~/routes/Search';
-import BookingStep1     from '~/routes/BookingStep1';
-import BookingStep2     from '~/routes/BookingStep2';
-import BookingStep3     from '~/routes/BookingStep3';
+import BookingForm      from '~/routes/BookingForm';
+import BookingSummary   from '~/routes/BookingSummary';
+import BookingConfirmed from '~/routes/BookingConfirmed';
 import Renting          from '~/routes/Renting';
 import Payment          from '~/routes/Payment';
 import Invoice          from '~/routes/Invoice';
@@ -36,15 +36,30 @@ export default class App extends Component {
       returnUrl,
       city,
       admin = false,
+      rentingId,
     } = e.current.attributes;
 
     // route params are only relevant when they're defined, so we'll filter-out
     // all undefined values.
     store.dispatch(updateRoute(Utils.filterOutUndef({
-      lang, minPack, city, returnUrl, admin,
+      lang, minPack, city, returnUrl, admin, rentingId,
     })));
 
     this.setState({ lang });
+
+    // Use setTimeout to make sure this runs after React Router's own listener
+    setTimeout(() => {
+      // Keep default behavior of restoring scroll position when user:
+      // - clicked back button
+      // - clicked on a link that programmatically calls `history.goBack()`
+      // - manually changed the URL in the address bar (here we might want
+      // to scroll to top, but we can't differentiate it from the others)
+      if (location.action === 'POP') {
+        return;
+      }
+      // In all other cases, scroll to top
+      window.scrollTo(0, 0);
+    });
   }
 
   constructor(props) {
@@ -70,10 +85,9 @@ export default class App extends Component {
             <Home path="/:lang" default />
             <Admin path="/admin" />
             <Search path="/:lang/search/:city" />
-            <BookingStep1 path="/:lang/booking/:roomId/" />
-            <BookingStep1 path="/:lang/booking/:roomId/1" />
-            <BookingStep2 path="/:lang/booking/:roomId/2" />
-            <BookingStep3 path="/:lang/booking/:roomId/3" />
+            <BookingForm path="/:lang/booking/:roomId" />
+            <BookingSummary path="/:lang/summary/:rentingId" />
+            <BookingConfirmed path="/:lang/welcome/:rentingId" />
             <Renting path="/:lang/renting/:rentingId" />
             <Invoice path="/:lang/invoice/:orderId" />
             <Payment path="/:lang/payment/:orderId" />
@@ -104,6 +118,7 @@ const store = configureStore({
     pack: 'comfort',
     errors: {},
   },
+  client: {},
   payment: {
     errors: {},
   },

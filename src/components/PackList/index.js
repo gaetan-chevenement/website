@@ -34,7 +34,7 @@ export default function PackList(args) {
             {...{
               ...packs[name][lang],
               stars: packs[name].stars,
-              price: !isPriceHidden && PACK_PRICES[city][name],
+              price: !isPriceHidden && city && PACK_PRICES[city][name],
               isActive: pack === name,
               name,
               handlePackChange,
@@ -64,7 +64,7 @@ function PackCard(args) {
       <CardTitle
         theme={{ cardTitle: style[`cardTitle-${name}`] }}
         title={`${stars} ${title}`}
-        subtitle={`${subtitle}${price ? `- ${price / 100}€` : ''}`}
+        subtitle={<span>{subtitle}<b>{price ? ` - ${price / 100}€` : ''}</b></span>}
       />
       <CardText>
         <List>
@@ -76,7 +76,7 @@ function PackCard(args) {
         <CardActions>
           <Button raised
             primary={isActive}
-            label={<Text id="select" fields={{ name: title }}>Choose </Text>}
+            label={<Text id="select" fields={{ name: title }}>{`Choose ${title}`}</Text>}
             name="pack"
             value={name}
             onClick={handlePackChange}
@@ -95,7 +95,6 @@ const packs = {
       subtitle: 'Les principaux services pour un séjour sans stress dans votre appartement ',
       listHeader: 'Principaux services',
       listItems: [
-        'Checkin rapide',
         'Contrat individuel personnalisé',
         'Oreiller et couette',
         'Activation des services',
@@ -107,11 +106,10 @@ const packs = {
       subtitle: 'All essential services for a stress-free stay in your apartment',
       listHeader: 'Main services including',
       listItems: [
-        'Fast check-in',
         'Customized individual contract',
         'Pillow and duvet',
         'Services activation',
-        'Unlimited maintenance &amp; assistance',
+        'Unlimited maintenance & assistance',
       ],
     },
   },
@@ -122,10 +120,9 @@ const packs = {
       subtitle: 'Plus de facilité pour plus de confort et de sérénité ',
       listHeader: 'Tous les services du pack Basique plus:',
       listItems: [
-        'Checkin 24/7 au domicile',
         'Draps, oreiller et housses de couette',
         'Pack de nourriture',
-        'Priorité de réservation',
+        'Assistance clefs',
         'Assurance annulation - 1 mois',
       ],
     },
@@ -134,10 +131,9 @@ const packs = {
       subtitle: 'An easier move in for more comfort and serenity',
       listHeader: 'All Basic services plus:',
       listItems: [
-        'Check-in 24/7 at home',
         'Sheets, pillow & duvet cases',
         'Food pack',
-        'Booking priority',
+        'Keys assistance',
         'Cancellation insurance - 1 month',
       ],
     },
@@ -150,9 +146,8 @@ const packs = {
       listHeader: 'Tous les services du pack Confort plus:',
       listItems: [
         'Chauffeur privé de l\'aéroport/gare',
-        'Service de bagage illimité',
-        'Assistance clefs 24/7',
-        'Checkout 24/7',
+        'Service de bagagerie',
+        'Agent Dédié',
         'Assurance annulation - 7 jours',
       ],
     },
@@ -163,8 +158,7 @@ const packs = {
       listItems: [
         'Private driver from airport/train station',
         'Unlimited luggage service',
-        'Keys assistance 24/7',
-        'Checkout 24/7',
+        'Dedicated agent',
         'Cancellation insurance - 7 days',
       ],
     },

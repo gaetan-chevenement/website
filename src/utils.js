@@ -11,7 +11,8 @@ import holidays   from './holidays.json';
 
 const _ = { reduce, filter, capitalize };
 const {
-  SPECIAL_CHECKIN_PRICE,
+  BASIC_PACK,
+  SPECIAL_CHECKIN_FEES,
   UNAVAILABLE_DATE,
   API_BASE_URL,
   DEPOSIT_PRICES,
@@ -29,6 +30,15 @@ const pureUtils = {
       amount / daysInMonth * (daysInMonth - D.getDate(bookingDate) + 1)
     );
   },
+  isWorkingHours(date) {
+    const startOfDay = D.startOfDay(date);
+
+    return D.isWithinRange(
+      date,
+      D.addHours(startOfDay, 9),
+      D.addHours(startOfDay, 18)
+    );
+  },
   isHoliday(date) {
     const sDate = date.toISOString();
 
@@ -44,18 +54,15 @@ const pureUtils = {
 
     return false;
   },
-  getCheckinPrice(date, level) {
-    const startOfDay = D.startOfDay(date);
-    const isWorkingHours = D.isWithinRange(
-      date,
-      D.addHours(startOfDay, 9),
-      D.addHours(startOfDay, 18)
-    );
-    const isSpecialDate =
-      D.isWeekend(date) || !isWorkingHours || Utils.isHoliday(date);
+  isSpecialDate(date) {
+    return D.isWeekend(date) || !Utils.isWorkingHours(date) || Utils.isHoliday(date);
+  },
+  getCheckinPrice(date, level, city) {
+    if ( level === BASIC_PACK && Utils.isSpecialDate(date) ) {
+      return SPECIAL_CHECKIN_FEES[city];
+    }
 
-    return level === 'basic' && isSpecialDate ?
-      SPECIAL_CHECKIN_PRICE : 0;
+    return 0;
   },
   isRoomAvailable(room) {
     return D.compareAsc( room.availableAt, UNAVAILABLE_DATE ) !== 0;
@@ -130,6 +137,14 @@ const pureUtils = {
       .concat(['basic', 'comfort', 'privilege']
         .map((level) => `${PACK_PRICES[city][level] / 100}€`));
   },
+  qsStringify(obj) {
+    return _.reduce(obj, (acc, val, key) => `${acc}${acc !== '' ? '&' : ''}${key}=${val}`, '');
+  },
+  getPackLevel(order) {
+    return order.OrderItems
+      .find((item) => /-pack$/.test(item.ProductId))
+      .ProductId.replace('-pack', '');
+  },
 };
 
 const currYear = pureUtils.getCurrYear();
@@ -137,15 +152,10 @@ const Utils = {
   _pure: pureUtils,
 
   bookingSchema: yup.object().shape({
-    bookingDate: yup.date().required(),
     pack: yup.string().required(),
     firstName: yup.string().required().trim(),
     lastName: yup.string().required().trim(),
     email: yup.string().email().required().trim(),
-    checkinDate: yup.date().required().min(
-      yup.ref('bookingDate'),
-      'Checkin cannot happen before the booking date'
-    ),
     isEligible: yup.boolean().required().test({
       name: 'is-elibible',
       message: 'You must verify your eligibility and agree to our terms of service',

@@ -9,10 +9,10 @@ import { Button } from 'react-toolbox/lib/button/index';
 export default function Guide() {
   return (
     <section className={style.guide}>
-      <img src="/assets/home/gallery/home-gallery-1-o.jpg" />
-      <h3>
+      <img src={ContentGuide.img} />
+      <h2>
         {ContentGuide.texts.title}
-      </h3>
+      </h2>
       {ContentGuide.texts.text.map((p) => (
         <p>{p}</p>
       ))}
