@@ -16,7 +16,7 @@ const {
   DEPOSIT_PRICES,
   HOME_CHECKIN_FEES,
   SPECIAL_CHECKIN_FEES,
-  LEASE_URL,
+  LEASE_SPECIMEN_URL,
 } = _const;
 
 class Summary extends PureComponent {
@@ -162,7 +162,7 @@ class Summary extends PureComponent {
                   personal details and we will edit your personal customized lease
                   agreement
                 </Text>
-                &nbsp;(<a href={LEASE_URL} target="_blank">
+                &nbsp;(<a href={LEASE_SPECIMEN_URL} target="_blank">
                   <Text id="lease.link">specimen here</Text>
                 </a>).
               </p>
