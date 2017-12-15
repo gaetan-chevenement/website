@@ -76,7 +76,7 @@ class Summary extends PureComponent {
                   * Until your Housing Pack is paid, the bedroom remains
                   available and can be booked by someone else. From July to
                   October, we recommend that you confirm your booking
-                  quickly as we receive tens of accommodation requests every
+                  quickly as we receive hundreds of accommodation requests every
                   week.
                 </Text>
               </p>
@@ -237,7 +237,7 @@ const definition = {
         * Tant que votre pack logement n'est pas payé, la chambre reste
         disponible et peut être réservée par quelqu'un d'autre. De juillet à
         Octobre, nous vous recommandons de confirmer votre réservation rapidement
-        car nous recevons des dizaines de demandes de logement chaque semaine.
+        car nous recevons des centaines de demandes de logement chaque semaine.
       `,
     },
     checkin: {
