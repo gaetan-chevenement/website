@@ -173,7 +173,7 @@ class Summary extends PureComponent {
                 <Text id="dueDate.title">Due date:</Text>,
                 <Text id="dueDate.checkIn">72h prior to your checkin.</Text>,
               ])}</p>
-            </section>security
+            </section>
 
             <section>
               <h4><Text id="lease.title">Personal lease</Text></h4>
