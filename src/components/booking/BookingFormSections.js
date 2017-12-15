@@ -1,11 +1,10 @@
-import { IntlProvider, Text }       from 'preact-i18n';
+import { IntlProvider, Text } from 'preact-i18n';
 import FeatureList						from '~/components/booking/FeatureList';
-import PackPicker							from './PackPicker';
-import CheckinInputs			    from './CheckinInputs';
-import ClientInputs			      from './ClientInputs';
-import EligibilityInput		   	from './EligibilityInput';
+import PackPicker							from '~/containers/booking/PackPicker';
+import ClientInputs			      from '~/containers/booking/ClientInputs';
+import EligibilityInput		   	from '~/containers/booking/EligibilityInput';
 
-export default function BookingForm({ lang }) {
+export default function BookingFormSections({ lang }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <div>
@@ -22,12 +21,6 @@ export default function BookingForm({ lang }) {
         <section>
           <h3><Text id="personal">Personal info</Text></h3>
           <ClientInputs />
-        </section>
-
-        <section>
-          <h3><Text id="date.first">Planned date and time of check-in</Text></h3>
-          <p><Text id="date.last">(This can be changed at any time.)</Text></p>
-          <CheckinInputs />
         </section>
 
         <section>

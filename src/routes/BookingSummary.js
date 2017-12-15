@@ -2,7 +2,6 @@ import { IntlProvider, Text } from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { route }              from 'preact-router';
 import { Button }             from 'react-toolbox/lib/button';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import Utils                  from '~/utils';
@@ -12,20 +11,21 @@ import Summary                from '~/containers/booking/Summary';
 class BookingStep2 extends PureComponent {
   componentDidMount() {
     const {
-      lang,
-      roomName,
-      booking,
       actions,
+      renting,
+      rentingId,
       bookingDate,
     } = this.props;
 
-    Promise.resolve()
-      // refetch the room if necessary (if the price has changed for example)
-      .then(() => roomName === undefined && actions.getRoom(booking.roomId))
-      // validateBooking has to happen after fetching the room,
-      // as the bookingDate validity might change.
-      .then((args) => actions.validateBooking({ ...booking, bookingDate }))
-      .catch(() => route(`/${lang}/booking/${booking.roomId}/`));
+    if ( !renting ) {
+      return Promise.all([
+        actions.getRenting(rentingId),
+        actions.listOrders({ rentingId }),
+      ])
+        .then(([{ response }]) =>
+          !bookingDate && actions.getRoom(response.data.relationships.Room.data.id)
+        );
+    }
   }
 
   render() {
@@ -33,11 +33,12 @@ class BookingStep2 extends PureComponent {
       lang,
       roomId,
       roomName,
-      isRoomLoading,
-      booking,
+      isLoading,
+      packOrderId,
+      rentingId,
     } = this.props;
 
-    if ( isRoomLoading || booking.isValidating ) {
+    if ( isLoading ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -61,13 +62,13 @@ class BookingStep2 extends PureComponent {
               <Button raised
                 label={<Text id="back">Back</Text>}
                 icon="arrow_backward"
-                href={`/${lang}/booking/${roomId}/1`}
+                href={`/${lang}/booking/${roomId}`}
               />
               {' '}
               <Button raised primary
-                label={<Text id="forward">Continue</Text>}
-                icon="forward"
-                href={`/${lang}/booking/${roomId}/3`}
+                label={<Text id="forward">Book the room</Text>}
+                icon="payment"
+                href={`/${lang}/payment/${packOrderId}?returnUrl=/${lang}/welcome/${rentingId}`}
               />
             </section>
           </nav>
@@ -80,18 +81,27 @@ class BookingStep2 extends PureComponent {
 const definition = { 'fr-FR': {
   title: 'Récapitulatif de la réservation pour la chambre',
   back: 'Retour',
-  forward: 'Continuer',
+  forward: 'Réserver la chambre',
 } };
 
-function mapStateToProps({ route: { lang }, booking, rooms }) {
-  const room = rooms[booking.roomId];
+function mapStateToProps({ rentings, rooms, booking, orders }, { lang, rentingId }) {
+  const renting = rentings[rentingId];
+  const room = renting && rooms[renting.roomId];
+  const bookingDate = room && Utils.getBookingDate(room);
+  const packOrder = Utils.classifyRentingOrders({ rentingId, orders }).pack;
+
+  if ( !renting || renting.isLoading || !room || room.isLoading || !bookingDate ) {
+    return { isLoading: true };
+  }
 
   return {
     lang,
-    booking,
-    bookingDate: room && Utils.getBookingDate(room),
-    roomName: room && room.name,
-    isRoomLoading: !room || room.isLoading,
+    rentingId,
+    renting,
+    roomId: room.id,
+    roomName: room.name,
+    bookingDate,
+    packOrderId: packOrder && packOrder.id,
   };
 }
 

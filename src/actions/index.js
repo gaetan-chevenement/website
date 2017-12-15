@@ -360,17 +360,20 @@ export const saveBooking =
         },
       )
     ),
-    { error: { payloadReducer: (payload) => {
-      if ( /unavailable/.test(payload.error) ) {
-        return { errors: { isUnavailable: true } };
-      }
+    {
+      error: { payloadReducer: ({ error }) => {
+        if ( /unavailable/.test(error) ) {
+          return { errors: { isUnavailable: true } };
+        }
 
-      if ( /price/.test(payload.error) ) {
-        return { errors: { hasPriceChanged: true } };
-      }
+        if ( /price/.test(error) ) {
+          return { errors: { hasPriceChanged: true } };
+        }
 
-      return { errors: { unexpected: payload.error.message } };
-    } } },
+        return { errors: { unexpected: error.message } };
+      } },
+      ok: { payloadReducer: ({ response }) => (response) },
+    },
   );
 
 export const savePayment =

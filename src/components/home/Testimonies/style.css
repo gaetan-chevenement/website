@@ -34,15 +34,11 @@
   }
 }
 
-.testimony:nth-child(even) h3 {
+.testimony:nth-child(even) {
   text-align: right;
   @media screen and (max-width:990px) {
-    text-align: center;
+    text-align: left;
   }
-}
-
-.testimony:nth-child(even) .authors {
-  text-align: right;
 }
 
 .testimony img {
@@ -65,9 +61,4 @@
   display: inline-block;
   width: 1em;
   color: #fac917;
-}
-
-.authors {
-  font-family: 'Lato', sans-serif;
-  font-weight: 900;
 }

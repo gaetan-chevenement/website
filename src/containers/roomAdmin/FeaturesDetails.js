@@ -1,5 +1,6 @@
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
+import { batch }              from 'redux-act';
 import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { Checkbox }           from 'react-toolbox/lib/checkbox';
@@ -21,13 +22,15 @@ class FeaturesDetails extends PureComponent {
     const { actions, room, apartment } = this.props;
 
     Promise.resolve()
-      .then(() => Promise.all([
+      .then(() => batch(
         actions.validateRoom(room),
-        actions.validateApartment(apartment),
-      ]))
-      .then(() => actions.saveRoomAndApartment(this.props))
-      .then(() => actions.savePictures(this.props))
-      .then(() => actions.saveFeatures(this.props))
+        actions.validateApartment(apartment)
+      ))
+      .then(() => batch(
+        actions.saveRoomAndApartment(this.props),
+        actions.savePictures(this.props),
+        actions.saveFeatures(this.props)
+      ))
       .catch((e) => console.error(e));
   }
 

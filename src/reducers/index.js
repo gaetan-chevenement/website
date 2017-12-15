@@ -240,6 +240,10 @@ const picturesReducer = createReducer({
   ...createListReducer(listPictures, 'picture'),
 }, {});
 
+const clientReducer = createReducer({
+  [getRenting.ok]: (state, { _client: client }) => client,
+}, {});
+
 const reducers = {
 
   /* generally modified by the router */
@@ -256,6 +260,7 @@ const reducers = {
   rentings: rentingsReducer,
   orders: ordersReducer,
   pictures: picturesReducer,
+  client: clientReducer,
 };
 
 const memoizedIdentity = memoize((state) => ( state ), { cache: new NamedTupleMap() });

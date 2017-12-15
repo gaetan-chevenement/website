@@ -1,11 +1,17 @@
 .cardTitle-basic {
+  min-height: 9rem; /* Fix CardTitles not always having the same size */
+  align-items: start;
   color: var(--color-pack-basic);
 }
 
 .cardTitle-comfort {
+  min-height: 9rem;
+  align-items: start;
   color: var(--color-pack-comfort);
 }
 
 .cardTitle-privilege {
+  min-height: 9rem;
+  align-items: start;
   color: var(--color-pack-privilege);
 }

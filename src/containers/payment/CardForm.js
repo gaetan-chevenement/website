@@ -6,7 +6,7 @@ import { batch }              from 'redux-act';
 import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import { Input }              from 'react-toolbox/lib/input';
-import _const                  from '~/const';
+import _const                 from '~/const';
 import * as actions           from '~/actions';
 import Utils                  from '~/utils';
 

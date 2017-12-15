@@ -10,6 +10,7 @@ import { ContentTowns }   from '~/content';
 import {
   form,
   noSubmit,
+  buttonContainer,
 }                         from './style.css';
 
 export default class SearchEngineForm extends PureComponent {
@@ -46,18 +47,6 @@ export default class SearchEngineForm extends PureComponent {
   }
 
   render() {
-    let button = null;
-    let buttonContainer = null;
-
-    if (this.props.mode !== 'noSubmit') {
-      button = <Button label="Rechercher" onClick={this.onSubmit} />;
-      buttonContainer = (
-        <div class={buttonContainer}>
-          {button}
-        </div>
-      );
-    }
-
     return (
       <form class={`${form} ${this.props.mode === 'noSubmit' ? noSubmit : ''}`}>
         <div>
@@ -91,7 +80,11 @@ export default class SearchEngineForm extends PureComponent {
             floating={false}
           />
         </div>
-        {buttonContainer}
+        {this.props.mode !== 'noSubmit' ?
+          <div class={buttonContainer}>
+            <Button label="Rechercher" onClick={this.onSubmit} />
+          </div> : ''
+        }
       </form>
     );
   }

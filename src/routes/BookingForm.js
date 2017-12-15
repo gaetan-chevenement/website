@@ -3,13 +3,28 @@ import { route }              from 'preact-router';
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
+import autobind               from 'autobind-decorator';
 import { Button }             from 'react-toolbox/lib/button';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
-import BookingForm					  from '~/containers/booking/BookingForm';
+import BookingFormSections    from '~/components/booking/BookingFormSections';
 import * as actions           from '~/actions';
 import Utils                  from '~/utils';
 
-class BookingStep1 extends PureComponent {
+class BookingForm extends PureComponent {
+  @autobind
+  async handleSubmit() {
+    const {
+      room,
+      booking,
+      actions,
+    } = this.props;
+
+    await actions.validateBooking(booking);
+    const { response: { rentingId } } = await actions.saveBooking({ room, booking });
+
+    route(`/${this.props.lang}/summary/${rentingId}`);
+  }
+
   componentWillMount() {
     const { roomId, actions } = this.props;
 
@@ -18,30 +33,18 @@ class BookingStep1 extends PureComponent {
 
   componentDidMount() {
     const {
-      roomName,
-      hasErrors,
       roomId,
+      room,
       actions,
     } = this.props;
 
-    if ( hasErrors ) {
-      scrollTo(0, 0);
-    }
-
-    if ( roomName === undefined ) {
+    if ( !room ) {
       return actions.getRoom(roomId)
         .then(({ response: { data: [roomData] } }) =>
           roomData.id !== roomId &&
-            route(window.location.pathname.replace(/[\w-]+$/, roomData.id))
+          route(window.location.pathname.replace(/[\w-]+$/, roomData.id)) &&
+          actions.updateBooking({ roomId: roomData.id })
         );
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { roomId } = nextProps;
-
-    if ( this.props.roomId !== roomId ) {
-      actions.updateBooking({ roomId });
     }
   }
 
@@ -49,12 +52,10 @@ class BookingStep1 extends PureComponent {
   render() {
     const {
       lang,
-      roomId,
-      roomName,
+      room,
+      booking,
       isLoading,
       isRoomAvailable,
-      isEligible,
-      hasAcceptedTerms,
     } = this.props;
 
     if ( isLoading ) {
@@ -66,7 +67,7 @@ class BookingStep1 extends PureComponent {
     }
 
     // This is probably never true
-    if ( roomName === undefined ) {
+    if ( room.name === undefined ) {
       return (
         <IntlProvider definition={definition[lang]}>
           <h1 class="content">
@@ -83,21 +84,28 @@ class BookingStep1 extends PureComponent {
         <div class="content">
           <h1>
             <Text id="title">Booking details for room</Text><br />
-            <em>{roomName}</em>
+            <em>{room.name}</em>
           </h1>
 
           { isRoomAvailable ?
-            <BookingForm lang={lang} /> :
-            <p><Text id="errors.unavailable">Sorry, this room isn't available for booking.</Text></p>
+            <BookingFormSections lang={lang} /> :
+            <p>
+              <Text id="errors.unavailable">
+                Sorry, this room isn't available for booking.
+              </Text>
+            </p>
           }
 
           <nav class="text-center">
-            <Button raised primary
-              label="Continue"
-              icon="forward"
-              href={`/${lang}/booking/${roomId}/2`}
-              disabled={!isEligible || !hasAcceptedTerms}
-            />
+            { booking.isSaving ?
+              <ProgressBar type="circular" mode="indeterminate" /> :
+              <Button raised primary
+                label="Continue"
+                icon="forward"
+                onClick={this.handleSubmit}
+                disabled={!booking.isEligible || !booking.hasAcceptedTerms}
+              />
+            }
           </nav>
         </div>
       </IntlProvider>
@@ -114,11 +122,10 @@ function mapStateToProps({ route: { lang }, rooms, booking }, { roomId }) {
 
   return {
     lang,
-    roomName: room.name,
-    roomError: room.error,
+    roomId,
+    room,
+    booking,
     isRoomAvailable: Utils.isRoomAvailable( room ),
-    isEligible: booking.isEligible,
-    hasAcceptedTerms: booking.hasAcceptedTerms,
   };
 }
 
@@ -142,4 +149,4 @@ function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookingStep1);
+export default connect(mapStateToProps, mapDispatchToProps)(BookingForm);

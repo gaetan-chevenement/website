@@ -20,12 +20,7 @@ class Payment extends PureComponent {
       .then(() => actions.validatePayment(payment))
       .then(() => actions.savePayment(payment))
       .then(() => actions.getOrder(orderId))
-      .then(() => {
-        if ( !returnUrl ) {
-          return;
-        }
-        return route(returnUrl);
-      })
+      .then(() => returnUrl && route(returnUrl))
       .catch(console.error);
   }
 

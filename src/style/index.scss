@@ -62,6 +62,10 @@ section {
   margin-bottom: 4rem;
 }
 
+[class^="grid-"] > dd {
+  margin-bottom: 0;
+}
+
 /* Leaflet specific classes */
 .map-rooms-cluster {
   & img {
