@@ -157,7 +157,7 @@ const packs = {
       listHeader: 'All Comfort services plus:',
       listItems: [
         'Private driver from airport/train station',
-        'Unlimited luggage service',
+        'luggage service',
         'Dedicated agent',
         'Cancellation insurance - 7 days',
       ],
