@@ -352,10 +352,7 @@ export const saveBooking =
           body: {
             roomId: room.id,
             pack: booking.pack,
-            client: booking,
-            checkinDate: booking.checkinDate,
-            currentPrice: room['current price'],
-            bookingDate: Utils.getBookingDate(room),
+            booking,
           },
         },
       )
