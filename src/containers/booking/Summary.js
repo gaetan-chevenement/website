@@ -38,7 +38,7 @@ class Summary extends PureComponent {
       lang,
       room,
       apartment,
-      pack,
+      packLevel,
       client: {
         firstName,
         lastName,
@@ -49,8 +49,8 @@ class Summary extends PureComponent {
       proratedRent,
       firstMonths,
     } = this.props;
-    const homeCheckinFee = HOME_CHECKIN_FEES[pack];
-    const specialCheckinFee = SPECIAL_CHECKIN_FEES[pack];
+    const homeCheckinFee = HOME_CHECKIN_FEES[packLevel];
+    const specialCheckinFee = SPECIAL_CHECKIN_FEES[packLevel];
     const free = (<Text id="free">Free</Text>);
 
     return (
@@ -61,13 +61,13 @@ class Summary extends PureComponent {
               <h4><Text id="housingPack.title">Housing Pack</Text></h4>
               <p>
                 <Text id="housingPack.subtitle.0">You have selected a </Text>
-                <b><Text id={`housingPack.${pack}`}>{pack}</Text> </b>
+                <b><Text id={`housingPack.${packLevel}`}>{packLevel}</Text> </b>
                 <Text id="housingPack.subtitle.1">housing-pack </Text>
                 <Text id="housingPack.subtitle.2">(to pay only once when your reserve).</Text>
               </p>
               <p>{this.renderDetails([
                 <Text id="amount">Amount:</Text>,
-                <b>{PACK_PRICES[apartment.addressCity][pack] / 100}€</b>,
+                <b>{PACK_PRICES[apartment.addressCity][packLevel] / 100}€</b>,
                 <Text id="dueDate.title">Due date:</Text>,
                 <span><b><Text id="dueDate.now">Immediately</Text></b>*</span>,
               ])}</p>
@@ -303,7 +303,7 @@ const definition = {
 };
 
 function mapStateToProps(args) {
-  const { route, client, rooms, rentings, apartments, orders } = args;
+  const { route, client, rooms, rentings, apartments, orders, booking } = args;
   const { lang, rentingId } = route;
   const renting = rentings[rentingId];
   const room = rooms[renting.roomId];
@@ -316,7 +316,7 @@ function mapStateToProps(args) {
     lang,
     room,
     apartment,
-    pack: packOrder && Utils.getPackLevel(packOrder),
+    packLevel: booking.pack || packOrder && Utils.getPackLevel(packOrder),
     client,
     bookingDate,
     totalRent,
