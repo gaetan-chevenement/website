@@ -11,33 +11,26 @@ const _ = { capitalize };
 class Pictures extends PureComponent {
 
   renderTransport() {
-    const { apartment: { Features }, lang } = this.props;
-    const transports = [];
-
-    ['subway', 'tramway', 'bus', 'rer', 'transilien', 'nearbyBike']
-      .map((transport) => {
-        transports[transport] = Features.filter((feature) =>
-          new RegExp(`transport-${transport}`).test(feature.taxonomy)
-        );
-      });
+    const { apartmentFeatures, lang } = this.props;
+    const transports = ['subway', 'tramway', 'bus', 'rer', 'transilien', 'nearbyBike']
+      .map((name) => ({
+        name,
+        list: apartmentFeatures.filter(({ taxonomy }) =>
+          new RegExp(`transport-${name}`).test(taxonomy)
+        ),
+      }));
 
     return (
       <section>
-        {Object.keys(transports).map((key, index) => {
-          if ( transports[key].length > 0 ) {
-            return (
-              <div>
-                <h6>{transportName[key][lang]}</h6>
-                <ul class="grid-3">
-                  {transports[key].map((feat) => (
-                    <div>{feat.name}</div>
-                  ))}
-                </ul>
-              </div>
-            );
-          }
-        })
-        }
+        {transports.map(({ name, list }) => list.length > 0 ?
+          <div>
+            <h6>{transportName[name][lang]}</h6>
+            <ul class="grid-3">
+              {list.map(({ name }) => (<div>{name}</div>))}
+            </ul>
+          </div>
+          : ''
+        )}
       </section>
     );
   }
@@ -45,13 +38,13 @@ class Pictures extends PureComponent {
   render() {
     const {
       lang,
+      isLoading,
       apartment,
-      District,
-      NearbySchools,
-      getFeatures,
+      district,
+      districtFeatures,
     } = this.props;
 
-    if (!apartment || !getFeatures || !District || !NearbySchools) {
+    if ( isLoading ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -64,14 +57,14 @@ class Pictures extends PureComponent {
         <section>
           <section>
             <h3><Text id="floorPlan">Floor Plan</Text></h3>
-            <img src={apartment.floorPlan} alt="floorPlan" />
+            <img src={apartment.floorPlan} alt="floor plan" />
           </section>
           <section>
             <h3><Text id="district">Disctrict</Text></h3>
             <ul class="grid-3 has-gutter-l">
               <div class="three-fifth">
-                <h5>{District.label}</h5>
-                <div>{District[`description${_.capitalize(lang.split('-')[0])}`]}</div>
+                <h5>{district.label}</h5>
+                <div>{district[`description${_.capitalize(lang.split('-')[0])}`]}</div>
               </div>
               <div>
                 <h5>Transports</h5>
@@ -79,9 +72,10 @@ class Pictures extends PureComponent {
               </div>
               <div>
                 <h5><Text id="nearbySchool">Nearby School(s)</Text></h5>
-                {NearbySchools.map((school) =>
-                  <li>{school.name}</li>
-                )}
+                {districtFeatures
+                  .filter(({ taxonomy }) => taxonomy === 'nearby-school')
+                  .map((school) => (<li>{school.name}</li>))
+                }
               </div>
             </ul>
           </section>
@@ -106,15 +100,23 @@ const transportName = {
   nearbyBike: { 'fr-FR': 'Vélos', 'en-US': 'Bikes' },
 };
 
-function mapStateToProps({ route: { lang }, apartments }, { apartmentId }) {
-  const apartment = apartments[apartmentId];
+function mapStateToProps({ route: { lang, roomId }, rooms, apartments, districts }) {
+  const apartment = apartments[rooms[roomId].ApartmentId];
+  const district = apartment && districts[apartment._DistrictId];
+console.log(apartment.Terms);
+  if (
+    !apartment || apartment.isLoading || !apartment.Terms ||
+    !district || district.isLoading || !district.Terms
+  ) {
+    return { isLoading: true };
+  }
 
   return {
     lang,
     apartment,
-    getFeatures: apartment && apartment.Features && apartment.Features.length > 0,
-    District: apartment && apartment.District,
-    NearbySchools: apartment && apartment.NearbySchools,
+    district,
+    apartmentFeatures: apartment.Terms,
+    districtFeatures: district.Terms,
   };
 }
 

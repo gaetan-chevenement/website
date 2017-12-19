@@ -3,6 +3,7 @@ import { createReducer }    from 'redux-act';
 import memoize              from 'memoize-immutable';
 import NamedTupleMap        from 'namedtuplemap';
 import pickBy               from 'lodash/pickBy';
+import forEach              from 'lodash/forEach';
 
 import {
   updateRoute,
@@ -28,15 +29,13 @@ import {
   getApartment,
   getRoom,
   getDistrict,
-  getDistrictDetails,
-  getDistrictTerms,
   getHouseMates,
   listRooms,
   getOrder,
   listOrders,
   getRenting,
   listPictures,
-  listFeatures,
+  listTerms,
   addRoomFeature,
   deleteRoomFeature,
   addRoomPicture,
@@ -52,7 +51,7 @@ import {
   saveRoomAndApartment,
 }                           from '~/actions';
 
-const _ = { pickBy };
+const _ = { pickBy, forEach };
 const noErrors = {};
 
 const routeReducer = createReducer({
@@ -131,14 +130,8 @@ const roomsReducer = createReducer({
     ...state,
     ...rooms,
   }),
-  [listFeatures.ok]: (state, [{ id, Features }]) => ({
-    ...state,
-    [id]: { ...state[id], Features },
-  }),
-  [listPictures.ok]: (state, [{ id, Pictures }]) => ({
-    ...state,
-    [id]: { ...state[id], Pictures },
-  }),
+  [listTerms.ok]: listOkReducer('Terms'),
+  [listPictures.ok]: listOkReducer('Pictures'),
   ...createFeatureReducer({
     addFeature: addRoomFeature,
     deleteFeature: deleteRoomFeature,
@@ -172,30 +165,12 @@ const apartmentsReducer = createReducer({
     ...state,
     ...apartments,
   }),
-  [getDistrict.ok]: (state, { id, DistrictId } ) => ({
-    ...state,
-    [id]: { ...state[id], DistrictId },
-  }),
   [listRooms.ok]: (state, { apartments }) => ({
     ...state,
     ...apartments,
   }),
-  [listFeatures.ok]: (state, [,{ id, Features }]) => ({
-    ...state,
-    [id]: { ...state[id], Features },
-  }),
-  [listPictures.ok]: (state, [,{ id, Pictures }]) => ({
-    ...state,
-    [id]: { ...state[id], Pictures },
-  }),
-  [getDistrictDetails.ok]: (state, { id, District }) => ({
-    ...state,
-    [id]: { ...state[id], District },
-  }),
-  [getDistrictTerms.ok]: (state, { id, NearbySchools }) => ({
-    ...state,
-    [id]: { ...state[id], NearbySchools },
-  }),
+  [listTerms.ok]: listOkReducer('Terms'),
+  [listPictures.ok]: listOkReducer('Pictures'),
   [getHouseMates.ok]: (state, { id, HouseMates }) => ({
     ...state,
     [id]: { ...state[id], HouseMates },
@@ -227,6 +202,11 @@ const apartmentsReducer = createReducer({
   }),
 }, {});
 
+const districtsReducer = createReducer({
+  ...createGetReducer(getDistrict),
+  [listTerms.ok]: listOkReducer('Terms'),
+}, {});
+
 const rentingsReducer = createReducer({
   ...createGetReducer(getRenting),
 }, {});
@@ -234,10 +214,6 @@ const rentingsReducer = createReducer({
 const ordersReducer = createReducer({
   ...createGetReducer(getOrder),
   ...createListReducer(listOrders, 'order'),
-}, {});
-
-const picturesReducer = createReducer({
-  ...createListReducer(listPictures, 'picture'),
 }, {});
 
 const clientReducer = createReducer({
@@ -257,9 +233,9 @@ const reducers = {
   /* generally modified by interacting with our REST API */
   rooms: roomsReducer,
   apartments: apartmentsReducer,
+  districts: districtsReducer,
   rentings: rentingsReducer,
   orders: ordersReducer,
-  pictures: picturesReducer,
   client: clientReducer,
 };
 
@@ -434,6 +410,23 @@ export function createFeatureReducer({ addFeature, deleteFeature, saveFeatures }
       ...state,
       errors: payload,
     }),
+  };
+}
+
+export function listOkReducer(modelName) {
+  return (state, payload) => {
+    const muted = {};
+
+    _.forEach(payload, (value, key) => {
+      if ( key in state ) {
+        muted[key] = {
+          ...state[key],
+          [modelName]: value,
+        };
+      }
+    });
+
+    return Object.keys(muted).length > 0 ? { ...state, ...muted } : state;
   };
 }
 

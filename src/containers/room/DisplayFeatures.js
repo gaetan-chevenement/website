@@ -6,47 +6,37 @@ import { IntlProvider, Text } from 'preact-i18n';
 import capitalize             from 'lodash/capitalize';
 import values                 from 'lodash/values';
 import mapValues              from 'lodash/mapValues';
-import Features               from '~/components/Features/features';
 import * as actions           from '~/actions';
 
 const _ = { capitalize, values, mapValues };
 class DisplayFeatures extends PureComponent {
-  renderTerm({ termable, taxonomy, name, label, isChecked }) {
-    return isChecked ? <li>{label}</li> : '';
-  }
+  renderFeatures(category, _taxonomy, allFeatures) {
+    const features = allFeatures.filter(({ taxonomy }) => taxonomy === _taxonomy);
 
-  renderFeatures(taxonomy, category) {
-    const { lang, admin } = this.props;
-    const InitializedFeatures = this.props[`${category}Features`];
-    const featuresList = _.values(_.mapValues(Features[category][taxonomy],(value, key, object) => Object.assign(
-      object[key],
-      {
-        termable: category,
-        taxonomy,
-        name: key,
-        label: object[key][lang],
-        isChecked: InitializedFeatures.some((feature) => feature.name === key && feature.taxonomy === taxonomy),
-      })));
-    const displayTitle = admin ? true : !!featuresList.some((feature) => feature.isChecked !== false);
+    if ( features.length === 0 ) {
+      return '';
+    }
 
     return (
-      featuresList.length > 0 ?
-        <section>
-          {displayTitle ? <div><h5><Text id={taxonomy.split('-')[2]}>{_.capitalize(taxonomy.split('-')[2])}</Text></h5><br /></div> : ''}
-          <ul class="grid-4 has-gutter-l">{featuresList.map((term) => this.renderTerm(term))}</ul>
-        </section>
-        : ''
+      <section>
+        <h5>
+          <Text id={category}>{_.capitalize(category)}</Text>
+        </h5>
+        <ul class="grid-4 has-gutter-l">
+          {features.map(({ name }) => (<li>{name}</li>))}
+        </ul>
+      </section>
     );
   }
 
   render() {
     const {
       lang,
-      isApartmentFeaturesInitialized,
-      isRoomFeaturesInitialized,
+      roomFeatures,
+      apartmentFeatures,
     } = this.props;
 
-    if ( isRoomFeaturesInitialized === undefined && isApartmentFeaturesInitialized === undefined) {
+    if ( !roomFeatures || !apartmentFeatures ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -60,12 +50,12 @@ class DisplayFeatures extends PureComponent {
           <h3><Text id="title">Features</Text></h3>
           <br />
           <h4><Text id="room">Room</Text></h4>
-          {['sleep', 'dress', 'work', 'general'].map((taxonomy) => (
-            this.renderFeatures(`room-features-${taxonomy}`, 'Room')
+          {['sleep', 'dress', 'work', 'general'].map((taxonomy) => this.renderFeatures(
+            taxonomy, `room-features-${taxonomy}`, roomFeatures
           ))}
           <h4><Text id="apartment">Apartment</Text></h4>
-          {['kitchen', 'bathroom', 'general'].map((taxonomy) => (
-            this.renderFeatures(`apartment-features-${taxonomy}`, 'Apartment')
+          {['kitchen', 'bathroom', 'general'].map((taxonomy) => this.renderFeatures(
+            taxonomy, `apartment-features-${taxonomy}`, apartmentFeatures
           ))}
         </section>
       </IntlProvider>
@@ -92,12 +82,8 @@ function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apart
     lang,
     room,
     apartment,
-    RoomFeatures: room && room.Features,
-    RoomPictures: room && room.Pictures,
-    ApartmentPictures: apartment && apartment.Pictures,
-    ApartmentFeatures: apartment && apartment.Features,
-    isApartmentFeaturesInitialized: apartment && apartment.Features && apartment.Features.length > 0,
-    isRoomFeaturesInitialized: room && room.Features && room.Features.length > 0,
+    roomFeatures: room && room.Terms,
+    apartmentFeatures: apartment && apartment.Terms,
   };
 }
 
@@ -106,5 +92,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DisplayFeatures);
-
-

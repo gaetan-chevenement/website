@@ -1,15 +1,12 @@
 import { createAction }         from 'redux-act';
 import { createActionAsync }    from 'redux-act-async';
 import queryString              from 'query-string';
-import mapValues                from 'lodash/mapValues';
-import flattenDeep              from 'lodash/flattenDeep';
-import values                   from 'lodash/values';
-import filter                   from 'lodash/filter';
+import map                      from 'lodash/map';
 import Utils                    from '~/utils';
 import Features                 from '~/components/Features/features';
 import _const                   from '~/const';
 
-const _ = { mapValues, values, filter, flattenDeep };
+const _ = { map };
 const { ROOM_SEGMENTS } = _const;
 
 export const updateRoute = createAction('Update route object');
@@ -61,35 +58,26 @@ export const getRoom =
       ok: { payloadReducer: reduceRooms },
     }
   );
-export const getRenting = createGetActionAsync('Renting');
-export const getApartment = createGetActionAsync('Apartment');
-export const getDistrict = createActionAsync(
-  'get District by apartmentId',
-  (apartmentId) => Utils.fetchJson(`/Apartment/${apartmentId}`)
-    .then(throwIfNotFound('Apartment', apartmentId)),
-  {
-    noRethrow: true,
-    ok: { payloadReducer: ({ request: [ apartmentId ], response: { included } }) => ({
-      id: apartmentId,
-      DistrictId: included.find((_included) => _included.type === 'district').id,
-    }) },
-  },
-);
 
-export const getDistrictDetails = createActionAsync(
-  'get District by districtId',
-  (districtId, apartmentId) => Utils.fetchJson(`/District/${districtId}`)
-    .then(throwIfNotFound('District', districtId)),
-  {
-    noRethrow: true,
-    ok: { payloadReducer: ({ request: [ districtId, apartmentId ], response: { data, included } }) => ({
-      id: apartmentId,
-      District: data
-        .find((item) => item.type === 'district').attributes,
-    }) },
-
-  },
-);
+export const [
+  getRenting,
+  getApartment,
+  getDistrict,
+] = ['Renting', 'Apartment', 'District'].map((modelName) => createActionAsync(
+  `get ${modelName} by id`,
+  (id) => Utils.fetchJson(`/${modelName}/${id}`)
+    // No record returned is an error
+    .then(throwIfNotFound(modelName,id)),
+  { noRethrow: true,
+    ok: { payloadReducer: ({ response }) => ({
+      ...response.data.attributes,
+      ...(response.included || []).reduce((attributes, value) => {
+        attributes[`${value.type}Id`] = value.id;
+        attributes[`_${value.type}`] = value.attributes;
+        return attributes;
+      }, {}),
+    }) } }
+) );
 
 export const getHouseMates = createActionAsync(
   'get Housemates by ApartmentId',
@@ -108,27 +96,6 @@ export const getHouseMates = createActionAsync(
   },
 );
 
-export const getDistrictTerms = createActionAsync(
-  'get nearbySchool by districtId',
-  (districtId, apartmentId) => {
-    const params = {
-      'page[number]': 1,
-      'page[size]': 100,
-    };
-    const qs = queryString.stringify(params, { encode: false });
-    return Utils.fetchJson(`/Term?filterType=or&filter[TermableId]=${districtId}&${qs}`)
-      .then(throwIfNotFound('District', districtId));
-  },
-  {
-    noRethrow: true,
-    ok: { payloadReducer: ({ request: [ districtId, apartmentId ], response: { data, included } }) => ({
-      id: apartmentId,
-      NearbySchools:  data
-        .filter((_data) => _data.attributes.termable === 'District' && _data.attributes.taxonomy === 'nearbySchool')
-        .map(({ attributes }) => attributes ),
-    }) },
-  },
-);
 export const getOrder =
   createActionAsync(
     'get Order and associated OrderItems by Order id',
@@ -185,93 +152,35 @@ export const listRooms =
     { ok: { payloadReducer: reduceRooms } }
   );
 
-export const listPictures =
-  createActionAsync('List pictures',
-    (roomId, apartmentId) => {
-      if (roomId === undefined || apartmentId === undefined ) {
-        return Promise.reject('Can only fetch by roomId or by ApartmentIdfor now');
-      }
+const termsAndPics = { Term: 'TermableId', Picture: '_PicturableId' };
 
-      const params = {
-        'page[number]': 1,
-        'page[size]': 100,
-      };
-      const qs = queryString.stringify(params, { encode: false });
-
-      return Utils.fetchJson(`/Picture?filterType=or&filter[PicturableId]=${roomId},${apartmentId}&${qs}`);
-    },
-    { ok: { payloadReducer: ({ request: [ roomId, apartmentId ], response: { data, included } }) => ([{
-      id: roomId,
-      Pictures: data
-        .filter((_data) => _data.attributes.picturable === 'Room')
-        .map(({ attributes }) => attributes ),
-    }, {
-      id: apartmentId,
-      Pictures: data
-        .filter((_data) => _data.attributes.picturable === 'Apartment')
-        .map(({ attributes }) =>  attributes  ),
-    }]),
-    } }
-  );
-
-export const listFeatures =
+export const [listTerms, listPictures] = _.map(termsAndPics, (xableId, modelName) =>
   createActionAsync(
-    'list Features of a room and apartment',
-    (roomId, apartmentId) => {
-      if (roomId === undefined || apartmentId === undefined ) {
-        return Promise.reject('Can only fetch by roomId or by ApartmentIdfor now');
-      }
+    `list ${modelName}s for any ${modelName}able`,
+    (ids) => {
+      const querystring = queryString.stringify(
+        {
+          'page[number]': 1,
+          'page[size]': 100,
+          filterType: 'or',
+          [`filter[${xableId.replace('_', '')}]`]: ids.join(','),
+        },
+        { encode: false }
+      );
 
-      const params = {
-        'page[number]': 1,
-        'page[size]': 100,
-      };
-      const qs = queryString.stringify(params, { encode: false });
-
-      return Utils.fetchJson(`/Term?filterType=or&filter[TermableId]=${roomId},${apartmentId}&${qs}`);
+      return Utils.fetchJson(`/${modelName}?${querystring}`);
     },
-    { ok: { payloadReducer: ({ request: [ roomId, apartmentId ], response: { data, included } }) => {
-      // TODO: refactor
-      const features = [{
-        id: roomId,
-        Features: data
-          .filter((_data) => _data.attributes.termable === 'Room' && /^room-features-/.test(_data.attributes.taxonomy))
-          .map(({ attributes }) => attributes ),
-      }, {
-        id: apartmentId,
-        Features: data
-          .filter((_data) => _data.attributes.termable === 'Apartment' && /^apartment-features-/.test(_data.attributes.taxonomy))
-          .map(({ attributes }) =>  attributes  ),
-      }];
-      // TODO: refactor (and simplify if possible)
-      if ( !features[0].Features.length ) {
-        features[0].Features = _.flattenDeep(
-          _.values(_.mapValues(
-            Features.Room,
-            (value, taxonomy, object) =>
-              _.filter(
-                object[taxonomy],
-                (term, name) => {
-                  Object.assign(term, { name, taxonomy, termable: 'Room' });
-                  return term.value === true;
-                })
-          ))
-        );
-      }
-      if ( !features[1].Features.length ) {
-        features[1].Features = _.flattenDeep(
-          _.values(_.mapValues(
-            Features.Apartment,
-            (value, taxonomy, object) => _.filter(
-              object[taxonomy],
-              (term, name) => {
-                Object.assign(term, { name, taxonomy, termable: 'Apartment' });
-                return term.value === true;
-              }))));
-      }
-      return features;
-    } } }
-  );
+    { ok: { payloadReducer: ({ response: { data } }) => (
+      data.reduce((acc, { attributes }) => {
+        if ( !acc[attributes[xableId]] ) {
+          acc[attributes[xableId]] = [];
+        }
+        acc[attributes[xableId]].push(attributes);
+        return acc;
+      }, {})
+    ) } }
+  )
+);
 
 export const saveFeatures =
   createActionAsync(
@@ -437,24 +346,6 @@ function throwIfNotFound(modelName, id) {
 
     return response;
   };
-}
-
-function createGetActionAsync(modelName) {
-  return createActionAsync(
-    `get ${modelName} by id`,
-    (id) => Utils.fetchJson(`/${modelName}/${id}`)
-      // No record returned is an error
-      .then(throwIfNotFound(modelName,id)),
-    { noRethrow: true,
-      ok: { payloadReducer: ({ response }) => ({
-        ...response.data.attributes,
-        ...response.included.reduce((attributes, value) => {
-          attributes[`${value.type}Id`] = value.id;
-          attributes[`_${value.type}`] = value.attributes;
-          return attributes;
-        }, {}),
-      }) } }
-  );
 }
 
 function createFormAction(formName, schema) {

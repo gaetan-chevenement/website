@@ -18,21 +18,28 @@ class Pictures extends PureComponent {
   }
 
   renderElevatorDetail() {
-    const { apartment, lang, room: { Features } } = this.props;
+    const { apartment, lang, roomFeatures } = this.props;
 
     return (
-      <li>{apartment.floor} <Text id="floor">floor</Text> {Features.some((feature) => feature.name === 'noElevator' && feature.taxonomy === 'room-features-negative') ? elevatorDetail.without[lang] : elevatorDetail.with[lang]} <Text id="elevator">elevator</Text></li>
+      <li>
+        {apartment.floor}{' '}
+        <Text id="floor">floor</Text>{' '}
+        {roomFeatures.some(({ name, taxonomy }) => name === 'noElevator') ?
+          elevatorDetail.without[lang] : elevatorDetail.with[lang]
+        }{' '}
+        <Text id="elevator">elevator</Text>
+      </li>
     );
   }
   render() {
     const {
       lang,
       room,
-      room: { Features },
+      roomFeatures,
       apartment,
     } = this.props;
 
-    if ( !room || !apartment || !Features ) {
+    if ( !room || !apartment || !roomFeatures ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -90,7 +97,7 @@ function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apart
   return {
     lang,
     room,
-    RoomFeatures: room && room.Features,
+    roomFeatures: room && room.Terms,
     apartment,
   };
 }

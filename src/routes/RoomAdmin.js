@@ -15,8 +15,8 @@ class Room extends PureComponent {
       .then(() => actions.getRoom(roomId))
       .then(({ response }) => Promise.all([
         actions.getDistrict(response.included[0].id),
-        actions.listFeatures(roomId, response.included[0].id),
-        actions.listPictures(roomId, response.included[0].id),
+        actions.listTerms([roomId, response.included[0].id]),
+        actions.listPictures([roomId, response.included[0].id]),
       ]));
   }
 
@@ -27,6 +27,7 @@ class Room extends PureComponent {
       lang,
       isRoomLoading,
     } = this.props;
+
     if ( isRoomLoading ) {
       return (
         <div class="content text-center">
@@ -34,6 +35,7 @@ class Room extends PureComponent {
         </div>
       );
     }
+
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="content">

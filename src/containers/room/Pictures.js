@@ -19,26 +19,22 @@ class Pictures extends PureComponent {
   render() {
     const {
       lang,
-      RoomPictures,
-      ApartmentPictures,
+      pictures,
     } = this.props;
 
-    if ( ApartmentPictures === undefined && RoomPictures === undefined) {
+    if ( pictures.length === 0 ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
         </div>
       );
     }
-    const allPictures = [].concat(RoomPictures.sort((a, b) => a.order - b.order), ApartmentPictures.filter((picture) => picture.alt !== 'floorPlan').sort((a, b) => a.order - b.order));
 
     return (
       <IntlProvider definition={definition[lang]}>
         <section>
           <h3><Text id="title">Pictures</Text></h3>
-          {allPictures.map((picture) => (
-            this.renderPicture(picture)
-          ))}
+          {pictures.map((picture) => this.renderPicture(picture))}
         </section>
       </IntlProvider>
     );
@@ -50,15 +46,16 @@ const definition = { 'fr-FR': {
 } };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
-
   const room = rooms[roomId];
   const apartment = apartments[apartmentId];
+  const pictures = [].concat(...[
+    (room && room.Pictures || []),
+    (apartment && apartment.Pictures || []).filter(({ alt }) => alt !== 'floorPlan'),
+  ].map((pics) => pics.sort((a, b) => a.order - b.order)));
+
   return {
     lang,
-    room,
-    apartment,
-    RoomPictures: room && room.Pictures,
-    ApartmentPictures: apartment && apartment.Pictures,
+    pictures,
   };
 }
 

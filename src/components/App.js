@@ -7,7 +7,7 @@ import autobind         from 'autobind-decorator';
 
 import configureStore   from '~/stores';
 import Services         from 'async!../routes/Services';
-import Booking          from 'async!../routes/Booking';
+import Process          from 'async!../routes/Process';
 import Admin            from '~/routes/Admin';
 import RoomAdmin        from '~/routes/RoomAdmin';
 import Room             from '~/routes/Room';
@@ -16,7 +16,6 @@ import Search           from '~/routes/Search';
 import BookingForm      from '~/routes/BookingForm';
 import BookingSummary   from '~/routes/BookingSummary';
 import BookingConfirmed from '~/routes/BookingConfirmed';
-import Renting          from '~/routes/Renting';
 import Payment          from '~/routes/Payment';
 import Invoice          from '~/routes/Invoice';
 import {
@@ -37,12 +36,13 @@ export default class App extends Component {
       city,
       admin = false,
       rentingId,
+      roomId,
     } = e.current.attributes;
 
     // route params are only relevant when they're defined, so we'll filter-out
     // all undefined values.
     store.dispatch(updateRoute(Utils.filterOutUndef({
-      lang, minPack, city, returnUrl, admin, rentingId,
+      lang, minPack, city, returnUrl, admin, rentingId, roomId,
     })));
 
     this.setState({ lang });
@@ -88,11 +88,10 @@ export default class App extends Component {
             <BookingForm path="/:lang/booking/:roomId" />
             <BookingSummary path="/:lang/summary/:rentingId" />
             <BookingConfirmed path="/:lang/welcome/:rentingId" />
-            <Renting path="/:lang/renting/:rentingId" />
             <Invoice path="/:lang/invoice/:orderId" />
             <Payment path="/:lang/payment/:orderId" />
             <Services path="/:lang/services" />
-            <Booking path="/:lang/booking-process" />
+            <Process path="/:lang/booking-process" />
             <Room path="/:lang/room/:roomId" />
             <RoomAdmin path="/:lang/room/:roomId/admin" />
           </Router>
@@ -128,7 +127,7 @@ const store = configureStore({
   orders: {},
   rooms: {},
   apartments: {},
-  pictures: {},
+  districts: {},
 });
 const rSearch = /^\/[\w-]{5}\/search/;
 const rInvoice = /^\/[\w-]{5}\/invoice/;

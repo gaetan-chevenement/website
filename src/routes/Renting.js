@@ -1,3 +1,5 @@
+// THIS FILE IS DEPRECTAED
+
 import { IntlProvider, Text } from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
