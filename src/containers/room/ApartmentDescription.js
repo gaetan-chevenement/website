@@ -5,6 +5,7 @@ import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { IntlProvider, Text } from 'preact-i18n';
 import capitalize             from 'lodash/capitalize';
 import * as actions           from '~/actions';
+import style from './style.css';
 
 const _ = { capitalize };
 
@@ -56,28 +57,32 @@ class Pictures extends PureComponent {
       <IntlProvider definition={definition[lang]}>
         <section>
           <section>
-            <h3><Text id="floorPlan">Floor Plan</Text></h3>
+            <h3 className={style.heading}><Text id="floorPlan">Floor Plan</Text></h3>
             <img src={apartment.floorPlan} alt="floor plan" />
+            <div className={style.planNotice}>
+              La surface au sol de chaque chambre inclut ses placards, balcons, loggias,
+              salle de bain, WC, espaces sous pentes... avec accès privatif
+            </div>
           </section>
           <section>
-            <h3><Text id="district">Disctrict</Text></h3>
-            <ul class="grid-3 has-gutter-l">
-              <div class="three-fifth">
+            <h3 className={style.heading}><Text id="district">Disctrict</Text></h3>
+            <div className={['grid-10 has-gutter-l', style.districtContent].join(' ')}>
+              <div className="one-half">
                 <h5>{district.label}</h5>
                 <div>{district[`description${_.capitalize(lang.split('-')[0])}`]}</div>
               </div>
-              <div>
+              <div className="one-quarter">
                 <h5>Transports</h5>
                 {this.renderTransport()}
               </div>
-              <div>
+              <div className="one-quarter">
                 <h5><Text id="nearbySchool">Nearby School(s)</Text></h5>
                 {districtFeatures
                   .filter(({ taxonomy }) => taxonomy === 'nearby-school')
                   .map((school) => (<li>{school.name}</li>))
                 }
               </div>
-            </ul>
+            </div>
           </section>
         </section>
       </IntlProvider>

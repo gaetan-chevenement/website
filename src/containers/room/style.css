@@ -1,0 +1,183 @@
+
+
+.coverPicture {
+  height: calc(100vh - var(--header-height) * 2);
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: 0;
+}
+
+.coverPictureInner {
+  position: relative;
+}
+
+.headers {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 0;
+  /*margin-left: 5px;
+  margin-right: 5px;*/
+}
+
+.leftHeader, .rightHeader {
+  background: rgba(0, 0, 0, 0.6);
+  height: 60px;
+  line-height: 40px;
+  color: white;
+  font-family: var(--headings-font-family);
+  font-size: 1.7rem;
+  font-weight: bold;
+  padding: 10px 20px;
+}
+
+.rightHeader {
+  text-align: center;
+}
+
+.bookingInfo {
+  border: 1px solid black;
+  border-width: 0 1px 1px 1px;
+  box-sizing: border-box;
+  padding-top: 10px;
+}
+
+.roomContent {
+  position: relative;
+  margin-top: -60px;
+}
+
+.links ul {
+  display: flex;
+  padding: 0;
+  margin-top: 10px;
+  border-bottom: 1px solid black;
+}
+
+.links li {
+  margin-left: 20px;
+  margin-right: 10px;
+  padding: 0;
+}
+
+.links ul li:first-child {
+  margin-left: 0;
+  list-style-type: none;
+}
+
+.pictures {
+  display: flex;
+  height: 100px;
+}
+
+.pictures > div {
+  flex: 0 100 200px;
+
+  text-indent: -9999px;
+  overflow: hidden;
+  background-size: cover;
+  margin-right: 10px;
+}
+
+.heading {
+  background-color: var(--color-primary);
+  color: white;
+  font-size: 19px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  margin-bottom: 15px;
+}
+
+
+.featuresPart {
+  font-size: 1.1rem;
+  position: relative;
+  color: rgb(136, 136, 136);
+}
+
+.featuresPart span {
+  background: var(--color-background);
+  position: relative;
+  z-index: 10000;
+  padding-right: 15px;
+}
+
+
+.featuresPart::after {
+  content: ' ';
+  position: absolute;
+  top: calc(50% - 1px);
+  left: 0px;
+  right: 0;
+  height: 1px;
+  background: black;
+}
+
+.featuresContent {
+  display: flex;
+  margin-top: 20px;
+}
+
+.featuresColumn {
+  flex: 1 1;
+}
+
+
+.featuresColumn:not(:last-child) {
+  border-right: 1px solid black;
+}
+
+.featuresColumn:not(:first-child) {
+  margin-left: 20px;
+}
+
+.planNotice {
+  color: rgb(136, 136, 136);
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.7rem;
+}
+
+.districtContent > div:not(:first-child) {
+  border-left: 1px solid black;
+  padding-left: 20px;
+}
+
+.service {
+  margin-top: 20px;
+}
+
+.service img {
+  float: left;
+  height: 75px;
+  margin-right: 10px;
+}
+
+.service h5 {
+  padding-top: 2px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.service p {
+  font-size: 0.8rem;
+}
+
+.services {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.questions {
+  background-color: rgb(58, 88, 148);
+  color: white;
+}
+
+.guide {
+  background-color: rgb(243, 244, 245);
+  padding: 0 50% 0 20%;
+
+}

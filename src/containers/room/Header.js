@@ -7,28 +7,29 @@ import * as actions           from '~/actions';
 
 import style from './style.css';
 
-class Pictures extends PureComponent {
-
-  renderPicture({ url, alt, order }) {
-    const st = {
-      backgroundImage: `url(${url})`,
-    };
-    return (
-      <div style={st}>
-        {alt}
-      </div>
-    );
-  }
+class Header extends PureComponent {
   render() {
     const {
       lang,
       pictures,
+      roomName
     } = this.props;
+
+    if ( pictures.length === 0 ) {
+      return (
+        <div class="content text-center">
+          <ProgressBar type="circular" mode="indeterminate" />
+        </div>
+      );
+    }
+
+    const localStyle = {
+      backgroundImage: `url(${pictures[0].url})`,
+    };
 
     return (
       <IntlProvider definition={definition[lang]}>
-        <section className={style.pictures}>
-          {pictures.slice(0, 5).map((picture) => this.renderPicture(picture))}
+        <section className={style.coverPicture} style={localStyle}>
         </section>
       </IntlProvider>
     );
@@ -36,7 +37,7 @@ class Pictures extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
-  title: 'Photos',
+    title: 'Photos',
 } };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
@@ -50,6 +51,7 @@ function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apart
   return {
     lang,
     pictures,
+    roomName: room.name,
   };
 }
 
@@ -57,4 +59,4 @@ function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Pictures);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

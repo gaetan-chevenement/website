@@ -5,13 +5,9 @@ import { route }              from 'preact-router';
 import { bindActionCreators } from 'redux';
 import { batch }              from 'redux-act';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
-import DisplayFeatures        from '~/containers/room/DisplayFeatures';
-import Pictures               from '~/containers/room/Pictures';
-import HouseMates             from '~/containers/room/HouseMates';
-import Description            from '~/containers/room/Description';
-import ApartmentDescription   from '~/containers/room/ApartmentDescription';
+import RoomContent            from '~/containers/room/RoomContent';
 import * as actions           from '~/actions';
-
+import Header                 from '~/containers/room/Header';
 
 class Room extends PureComponent {
   async loadData(roomId) {
@@ -52,8 +48,6 @@ class Room extends PureComponent {
   render() {
     const {
       roomId,
-      roomName,
-      coverPicture,
       apartmentId,
       lang,
       isLoading,
@@ -69,16 +63,9 @@ class Room extends PureComponent {
 
     return (
       <IntlProvider definition={definition[lang]}>
-        <div class="content">
-          <section>
-            <img src={coverPicture} />
-            <h2>{roomName}</h2>
-            <Pictures roomId={roomId} apartmentId={apartmentId} />
-            <Description roomId={roomId} apartmentId={apartmentId} />
-            <DisplayFeatures roomId={roomId} apartmentId={apartmentId} />
-            <HouseMates apartmentId={apartmentId} roomId={roomId} />
-            <ApartmentDescription />
-          </section>
+        <div>
+          <Header roomId={roomId} apartmentId={apartmentId} />
+          <RoomContent roomId={roomId} apartmentId={apartmentId}/>
         </div>
       </IntlProvider>
     );

@@ -10,6 +10,9 @@ import * as actions           from '~/actions';
 
 const _ = { capitalize };
 
+import style from './style.css';
+
+
 class HouseMates extends PureComponent {
 
   renderHouseMate(houseMate) {
@@ -53,7 +56,7 @@ class HouseMates extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <section>
-          <h3><Text id="title">HouseMates</Text></h3>
+          <h3 className={style.heading}><Text id="title">HouseMates</Text></h3>
           <ul class="grid-6 has-gutter">
             {HouseMates.filter((data) => data.roomId !== roomId).map((houseMate) => (
               this.renderHouseMate(houseMate)
