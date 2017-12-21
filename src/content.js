@@ -251,3 +251,26 @@ export const ContentGuide = {
     'button-download': 'Téléchargez votre guide logement offert',
   },
 };
+
+export const RoomServices = [
+  {
+    title: 'Meublés à 100%',
+    img: require('./assets/home/experience-2-imageoptim.png'),
+    desc: 'Nos logements sont meublés averc soin pour offrir design et confort',
+  },
+  {
+    title: 'Equipés de A à Z',
+    img: require('./assets/home/experience-3-imageoptim.png'),
+    desc: 'N\'apportez que votre valise, nous gérons le reste !',
+  },
+  {
+    title: 'Tout inclus',
+    img: require('./assets/home/experience-4-imageoptim.png'),
+    desc: 'Assurance, wifi, gaz... Aucun frais caché',
+  },
+  {
+    title: 'Réservation rapide',
+    img: require('./assets/home/experience-6-imageoptim.png'),
+    desc: 'Quelques clics : réerver n\'a jamais été aussi simple',
+  },
+];

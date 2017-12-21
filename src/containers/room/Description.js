@@ -6,6 +6,9 @@ import { IntlProvider, Text } from 'preact-i18n';
 import capitalize             from 'lodash/capitalize';
 import * as actions           from '~/actions';
 
+import style from './style.css';
+
+
 const _ = { capitalize };
 
 class Pictures extends PureComponent {
@@ -50,7 +53,7 @@ class Pictures extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <section>
-          <h3><Text id="title">Description</Text></h3>
+          <h3 className={style.heading}><Text id="title">Description</Text></h3>
           <ul class="grid-4 has-gutter">
             <li>{apartment.floorArea}m² (<Text id="apartment">apartment</Text>)</li>
             {this.renderElevatorDetail()}

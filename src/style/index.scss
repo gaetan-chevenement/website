@@ -40,6 +40,10 @@ header + .content {
   margin-right: auto;
 }
 
+.content-wide {
+  max-width: 1280px;
+}
+
 .handleError {
   text-align: center;
   color: rgb(222, 50, 38);

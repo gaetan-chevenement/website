@@ -8,6 +8,9 @@ import values                 from 'lodash/values';
 import mapValues              from 'lodash/mapValues';
 import * as actions           from '~/actions';
 
+import style from './style.css';
+
+
 const _ = { capitalize, values, mapValues };
 class DisplayFeatures extends PureComponent {
   renderFeatures(category, _taxonomy, allFeatures) {
@@ -18,11 +21,11 @@ class DisplayFeatures extends PureComponent {
     }
 
     return (
-      <section>
-        <h5>
+      <section className={style.featuresColumn}>
+        <h5 className={style.featuresRoom}>
           <Text id={category}>{_.capitalize(category)}</Text>
         </h5>
-        <ul class="grid-4 has-gutter-l">
+        <ul>
           {features.map(({ name }) => (<li>{name}</li>))}
         </ul>
       </section>
@@ -47,16 +50,28 @@ class DisplayFeatures extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <section>
-          <h3><Text id="title">Features</Text></h3>
+          <h3 className={style.heading}><Text id="title">Features</Text></h3>
           <br />
-          <h4><Text id="room">Room</Text></h4>
-          {['sleep', 'dress', 'work', 'general'].map((taxonomy) => this.renderFeatures(
-            taxonomy, `room-features-${taxonomy}`, roomFeatures
-          ))}
-          <h4><Text id="apartment">Apartment</Text></h4>
-          {['kitchen', 'bathroom', 'general'].map((taxonomy) => this.renderFeatures(
-            taxonomy, `apartment-features-${taxonomy}`, apartmentFeatures
-          ))}
+          <h4 className={style.featuresPart}>
+            <span>
+              <Text id="room" >Room</Text>
+            </span>
+          </h4>
+          <div className={style.featuresContent}>
+            {['sleep', 'dress', 'work', 'general'].map((taxonomy) => this.renderFeatures(
+              taxonomy, `room-features-${taxonomy}`, roomFeatures
+            ))}
+          </div>
+          <h4 className={style.featuresPart}>
+            <span>
+              <Text id="apartment">Apartment</Text>
+            </span>
+          </h4>
+          <div className={style.featuresContent}>
+            {['kitchen', 'bathroom', 'general'].map((taxonomy) => this.renderFeatures(
+              taxonomy, `apartment-features-${taxonomy}`, apartmentFeatures
+            ))}
+          </div>
         </section>
       </IntlProvider>
     );
