@@ -18,7 +18,7 @@
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
     "build:holidays": "node serializeFrenchHolidays > src/holidays.json",
     "build:preact": "preact build --no-prerender --template src/template.html --json",
-    "build:netlify": "cp src/_redirects build/_redirects",
+    "build:netlify": "cp src/_redirects build/_redirects && cp src/_headers build/_headers",
     "build": "npm run build:holidays && npm run build:preact && npm run build:netlify",
     "serve": "preact build && preact serve",
     "dev": "preact watch --template src/template.html",
