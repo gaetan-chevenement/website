@@ -103,7 +103,7 @@ function mapStateToProps({ route: { lang }, rentings, orders, rooms }, { renting
     return { isLoading: true };
   }
 
-  const room = rooms[renting.roomId];
+  const room = rooms[renting.RoomId];
   const { pack: packOrder } = Utils.classifyRentingOrders({ rentingId, orders });
   const packLevel =
     packOrder.OrderItems
@@ -115,7 +115,7 @@ function mapStateToProps({ route: { lang }, rentings, orders, rooms }, { renting
     lang,
     rentingId,
     identityFormUrl:
-      `https://${IDENTITY_FORM_URLS[packLevel]}?clientId=${renting.clientId}`,
+      `https://${IDENTITY_FORM_URLS[packLevel]}?clientId=${renting.ClientId}`,
     roomName: room && room.name,
     packOrder,
   };
