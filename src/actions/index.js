@@ -104,7 +104,7 @@ export const getOrder =
     {
       noRethrow: true,
       ok: { payloadReducer: ({ request, response: { meta, data, included } }) => ({
-        ...( included.find((inc) => inc.type === 'order').attributes ),
+        ...( included.find((inc) => inc.type === 'Order').attributes ),
         OrderItems: mapOrderItems(data, request[0]),
       }) },
     }
@@ -123,7 +123,7 @@ export const listOrders =
     },
     { ok: { payloadReducer: ({ response: { data, included } }) => ({
       orders: included
-        .filter((inc) => inc.type === 'order')
+        .filter((inc) => inc.type === 'Order')
         .map((order) => ({
           ...order.attributes,
           OrderItems: mapOrderItems(data, order.id),
@@ -381,7 +381,7 @@ function mapOrderItems(data, orderId) {
 function reduceRooms({ response: { data = [], included = [] } }) {
   return {
     rooms: data
-      .filter((item) => item.type === 'room')
+      .filter((item) => item.type === 'Room')
       .map((item) => ({
         ...item.attributes,
         ApartmentId: item.relationships.Apartment.data.id,
@@ -389,7 +389,7 @@ function reduceRooms({ response: { data = [], included = [] } }) {
       }))
       .reduce(arrayToMap, {}),
     apartments: included
-      .filter((item) => item.type === 'apartment')
+      .filter((item) => item.type === 'Apartment')
       .map((item) => ({ ...item.attributes }))
       .reduce(arrayToMap, {}),
   };
