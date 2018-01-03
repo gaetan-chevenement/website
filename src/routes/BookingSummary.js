@@ -89,7 +89,7 @@ function mapStateToProps({ rentings, rooms, booking, orders }, { lang, rentingId
   const room = renting && rooms[renting.RoomId];
   const bookingDate = room && Utils.getBookingDate(room);
   const packOrder = Utils.classifyRentingOrders({ rentingId, orders }).pack;
-console.log(renting, room, bookingDate);
+
   if ( !renting || renting.isLoading || !room || room.isLoading || !bookingDate ) {
     return { isLoading: true };
   }

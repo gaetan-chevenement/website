@@ -65,7 +65,7 @@ export default {
         'en-US': 'Storage',
         'fr-FR': 'Rangements',
       },
-      'coat-hanger': {
+      coatHanger: {
         value: false,
         'en-US': ' Coat-hanger',
         'fr-FR': 'Cintres',
@@ -315,7 +315,7 @@ export default {
         'en-US': 'Storage',
         'fr-FR': 'Rangements',
       },
-      'coat-hanger': {
+      coatHanger: {
         value: false,
         'en-US': ' Coat-hanger',
         'fr-FR': 'Cintres',
