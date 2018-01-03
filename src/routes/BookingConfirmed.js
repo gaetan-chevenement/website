@@ -86,7 +86,7 @@ function mapStateToProps({ route: { lang }, rentings, rooms, client }, { renting
 
   return {
     lang,
-    roomName: rooms[renting.roomId].name,
+    roomName: rooms[renting.RoomId].name,
     email: client.email,
   };
 }

@@ -98,11 +98,10 @@ class FeaturesDetails extends PureComponent {
       roomId,
       apartmentId,
       isFeaturesValidated,
-      isApartmentFeaturesInitialized,
-      isRoomFeaturesInitialized,
+      isLoading,
     } = this.props;
 
-    if ( isRoomFeaturesInitialized === undefined && isApartmentFeaturesInitialized === undefined) {
+    if ( isLoading ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -172,6 +171,7 @@ const definition = { 'fr-FR': {
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
   const room = rooms[roomId];
   const apartment = apartments[apartmentId];
+
   return {
     lang,
     room,
@@ -182,8 +182,6 @@ function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apart
     RoomPictures: room && room.Pictures,
     ApartmentPictures: apartment && apartment.Pictures,
     ApartmentFeatures: apartment && apartment.Features,
-    isApartmentFeaturesInitialized: apartment && apartment.Features && apartment.Features.length > 0,
-    isRoomFeaturesInitialized: room && room.Features && room.Features.length > 0,
   };
 }
 
