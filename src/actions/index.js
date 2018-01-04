@@ -3,7 +3,6 @@ import { createActionAsync }    from 'redux-act-async';
 import queryString              from 'query-string';
 import map                      from 'lodash/map';
 import Utils                    from '~/utils';
-import Features                 from '~/components/Features/features';
 import _const                   from '~/const';
 
 const _ = { map };
@@ -22,18 +21,6 @@ export const addApartmentPicture = createAction('add picture to apartment');
 export const deleteApartmentPicture = createAction('delete picture from apartment');
 export const updateApartmentPicture = createAction('update picture from apartment');
 
-export const {
-  updateRoom,
-  setRoomErrors,
-  deleteRoomError,
-  validateRoom,
-} = createFormAction('Room', Utils.roomSchema);
-export const {
-  updateApartment,
-  setApartmentErrors,
-  deleteApartmentError,
-  validateApartment,
-} = createFormAction('Apartment', Utils.apartmentSchema);
 export const {
   updateBooking,
   setBookingErrors,
@@ -180,74 +167,6 @@ export const [listTerms, listPictures] = _.map(termsAndPics, (xableId, modelName
     ) } }
   )
 );
-
-export const saveFeatures =
-  createActionAsync(
-    'save Terms of Room and Apartment in the backoffice',
-    ({ roomId, apartmentId, ApartmentFeatures, RoomFeatures }) => (
-      Utils.fetchJson(
-        '/actions/update-terms',
-        {
-          method: 'post',
-          body: {
-            roomId,
-            apartmentId,
-            RoomFeatures,
-            ApartmentFeatures,
-          },
-        },
-      )
-    ),
-    {
-      noRethrow: true,
-      error: { payloadReducer: (payload) => ({
-        unauthorized: 'You must be log to the backoffice to update room\'s features',
-      }) },
-    },
-  );
-
-export const savePictures =
-  createActionAsync(
-    'save Pictures of Room and Apartment in the backoffice',
-    ({ roomId, apartmentId, ApartmentPictures, RoomPictures }) => (
-      Utils.fetchJson(
-        '/actions/update-pictures',
-        {
-          method: 'post',
-          body: {
-            roomId,
-            apartmentId,
-            RoomPictures,
-            ApartmentPictures,
-          },
-        },
-      )
-    ),
-    {
-      noRethrow: true,
-      error: { payloadReducer: (payload) => ({
-        unauthorized: 'You must be log to the backoffice to update room\'s pictures',
-      }) },
-    },
-  );
-
-export const saveRoomAndApartment =
-  createActionAsync(
-    'save Room and Apartment in the backoffice',
-    ({ room, apartment }) => (
-      Utils.fetchJson(
-        '/actions/update-apartment-and-room',
-        {
-          method: 'post',
-          body: {
-            room,
-            apartment,
-          },
-        },
-      )
-    ),
-    { error: { payloadReducer: (payload) => ({ errors: { unexpected: payload.error.message } }) } },
-  );
 
 export const saveBooking =
   createActionAsync(

@@ -137,9 +137,6 @@ const pureUtils = {
       .concat(['basic', 'comfort', 'privilege']
         .map((level) => `${PACK_PRICES[city][level] / 100}€`));
   },
-  qsStringify(obj) {
-    return _.reduce(obj, (acc, val, key) => `${acc}${acc !== '' ? '&' : ''}${key}=${val}`, '');
-  },
   getPackLevel(order) {
     return order.OrderItems
       .find((item) => /-pack$/.test(item.ProductId))
@@ -161,22 +158,6 @@ const Utils = {
       message: 'You must verify your eligibility and agree to our terms of service',
       test: Boolean,
     }),
-  }),
-
-  apartmentSchema: yup.object().shape({
-    addressStreet: yup.string().required().trim(),
-    addressZip: yup.number().required(),
-    addressCity: yup.string().required(),
-    addressCountry: yup.string().required(),
-    floor: yup.number().required(),
-    floorArea: yup.number().min(1).required(),
-    DistrictId: yup.string().required(),
-  }),
-
-  roomSchema: yup.object().shape({
-    basePrice: yup.number().min(1).required(),
-    floorArea: yup.number().min(1).required(),
-    beds: yup.string().required(),
   }),
 
   paymentSchema: yup.object().shape({
@@ -212,8 +193,6 @@ const Utils = {
       }
     }
 
-    // TODO: the requests sometimes fail with 404 errors when they shouldn't
-    // retrying automatically doesn't work as they usually fail for ~1min
     return fetch(url, options)
       .then((response) => {
         if ( !response.ok ) {
