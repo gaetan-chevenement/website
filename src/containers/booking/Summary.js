@@ -306,7 +306,7 @@ function mapStateToProps(args) {
   const { route, client, rooms, rentings, apartments, orders, booking } = args;
   const { lang, rentingId } = route;
   const renting = rentings[rentingId];
-  const room = rooms[renting.roomId];
+  const room = rooms[renting.RoomId];
   const totalRent = room['current price'] + room['service fees'];
   const packOrder = Utils.classifyRentingOrders({ rentingId, orders }).pack;
   const bookingDate = Utils.getBookingDate(room);

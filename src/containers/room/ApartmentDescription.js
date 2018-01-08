@@ -108,7 +108,7 @@ const transportName = {
 function mapStateToProps({ route: { lang, roomId }, rooms, apartments, districts }) {
   const apartment = apartments[rooms[roomId].ApartmentId];
   const district = apartment && districts[apartment._DistrictId];
-console.log(apartment.Terms);
+
   if (
     !apartment || apartment.isLoading || !apartment.Terms ||
     !district || district.isLoading || !district.Terms

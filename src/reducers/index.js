@@ -122,7 +122,7 @@ const roomsReducer = createReducer({
     ...rooms,
   }),
   ...createListReducer(listRooms, 'room'),
-  [getRenting.ok]: (state, { _room: room }) => ({
+  [getRenting.ok]: (state, { _Room: room }) => ({
     ...state,
     [room.id]: room,
   }),
@@ -217,7 +217,7 @@ const ordersReducer = createReducer({
 }, {});
 
 const clientReducer = createReducer({
-  [getRenting.ok]: (state, { _client: client }) => client,
+  [getRenting.ok]: (state, { _Client: client }) => client,
 }, {});
 
 const reducers = {
