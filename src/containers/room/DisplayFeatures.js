@@ -7,15 +7,14 @@ import capitalize             from 'lodash/capitalize';
 import values                 from 'lodash/values';
 import mapValues              from 'lodash/mapValues';
 import * as actions           from '~/actions';
-
+import featureDetails         from '~/components/Features/features';
 import style from './style.css';
 
 
 const _ = { capitalize, values, mapValues };
 class DisplayFeatures extends PureComponent {
-  renderFeatures(category, _taxonomy, allFeatures) {
+  renderFeatures(category, _taxonomy, allFeatures, featureDetails, lang) {
     const features = allFeatures.filter(({ taxonomy }) => taxonomy === _taxonomy);
-
     if ( features.length === 0 ) {
       return '';
     }
@@ -26,7 +25,15 @@ class DisplayFeatures extends PureComponent {
           <Text id={category}>{_.capitalize(category)}</Text>
         </h5>
         <ul>
-          {features.map(({ name }) => (<li>{name}</li>))}
+          {features.map(({ name }) => {
+            if (featureDetails[name] === undefined) {
+              return (<li>{name}</li>);
+            }
+            return (<li>
+              <i className={featureDetails[name].css} />
+              <span>{featureDetails[name][lang]}</span>
+            </li>);
+          })}
         </ul>
       </section>
     );
@@ -59,7 +66,8 @@ class DisplayFeatures extends PureComponent {
           </h4>
           <div className={style.featuresContent}>
             {['sleep', 'dress', 'work', 'general'].map((taxonomy) => this.renderFeatures(
-              taxonomy, `room-features-${taxonomy}`, roomFeatures
+              taxonomy, `room-features-${taxonomy}`,
+              roomFeatures, featureDetails.Room[`room-features-${taxonomy}`], lang
             ))}
           </div>
           <h4 className={style.subtitle}>
@@ -69,7 +77,8 @@ class DisplayFeatures extends PureComponent {
           </h4>
           <div className={style.featuresContent}>
             {['kitchen', 'bathroom', 'general'].map((taxonomy) => this.renderFeatures(
-              taxonomy, `apartment-features-${taxonomy}`, apartmentFeatures
+              taxonomy, `apartment-features-${taxonomy}`,
+              apartmentFeatures, featureDetails.Apartment[`apartment-features-${taxonomy}`], lang
             ))}
           </div>
         </section>
