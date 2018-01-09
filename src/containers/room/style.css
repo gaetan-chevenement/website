@@ -171,11 +171,13 @@
 .services {
   margin-left: 20px;
   margin-right: 20px;
+  margin-top: 20px;
 }
 
 .questions {
   background-color: rgb(58, 88, 148);
   color: white;
+  padding: 5px 0;
 }
 
 .guide {
@@ -208,7 +210,7 @@
 }
 
 .bookingFeatures li {
-  list-style-type: none; 
+  list-style-type: none;
   display: flex;
   align-items: center;
   max-height: 35px;
@@ -250,5 +252,36 @@
   transform: scale(0.4);
   display: inline-block;
   background-color: blue;
-  
+}
+
+.descriptionItems, .featuresColumn ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.descriptionItems li, .featuresColumn li {
+  list-style-type: none;
+  display: flex;
+  max-height: 30px;
+  align-items: center;
+}
+
+.descriptionItems li i, .featuresColumn li i {
+  flex: 0 0 65px;
+  transform: scale(0.3);
+  display: inline-block;
+}
+
+.questionsButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.questionsButton {
+  background: #1c2b4a;
+  height: 40px;
+  width: 200px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }

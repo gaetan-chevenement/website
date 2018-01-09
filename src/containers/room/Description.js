@@ -11,12 +11,16 @@ import style from './style.css';
 
 const _ = { capitalize };
 
-class Pictures extends PureComponent {
+class Description extends PureComponent {
   renderBedDetail() {
     const { room, lang } = this.props;
 
     return (
-      <li>{bedDetails[room.beds][lang]}</li>
+      <li>
+        <i className={bedDetails[room.beds].css} />
+        <span>{bedDetails[room.beds][lang]}
+        </span>
+      </li>
     );
   }
 
@@ -25,15 +29,20 @@ class Pictures extends PureComponent {
 
     return (
       <li>
-        {apartment.floor}{' '}
-        <Text id="floor">floor</Text>{' '}
-        {roomFeatures.some(({ name, taxonomy }) => name === 'noElevator') ?
-          elevatorDetail.without[lang] : elevatorDetail.with[lang]
-        }{' '}
-        <Text id="elevator">elevator</Text>
+        <i className="bg-elevator" />
+        <span>
+          {apartment.floor}{' '}
+          <Text id="floor">floor</Text>{' '}
+          {roomFeatures.some(({ name, taxonomy }) => name === 'noElevator') ?
+            elevatorDetail.without[lang] : elevatorDetail.with[lang]
+          }{' '}
+          <Text id="elevator">elevator</Text>
+        </span>
       </li>
     );
   }
+
+
   render() {
     const {
       lang,
@@ -50,16 +59,26 @@ class Pictures extends PureComponent {
       );
     }
 
+    const fullAddress = <span>{apartment.addressStreet} {apartment.addressZip} {_.capitalize(apartment.addressCity)}, {_.capitalize(apartment.addressCountry)}</span>
     return (
       <IntlProvider definition={definition[lang]}>
         <section>
           <h3 className={style.heading}><Text id="title">Description</Text></h3>
-          <ul class="grid-4 has-gutter">
-            <li>{apartment.floorArea}m² (<Text id="apartment">apartment</Text>)</li>
+          <ul className={'grid-4 has-gutter ' + style.descriptionItems}>
+            <li>
+              <i className="bg-description_surface" />
+              <span>{apartment.floorArea}m² (<Text id="apartment">apartment</Text>)</span>
+            </li>
             {this.renderElevatorDetail()}
             {this.renderBedDetail()}
-            <li>{room.floorArea}m² (<Text id="room">room</Text>)</li>
-            <li class="two-thirds">{apartment.addressStreet} {apartment.addressZip} {_.capitalize(apartment.addressCity)}, {_.capitalize(apartment.addressCountry)}</li>
+            <li>
+              <i className="bg-description_surface" />
+              <span>{room.floorArea}m² (<Text id="room">room</Text>)</span>
+            </li>
+            <li class="two-thirds">
+              <i className="bg-picto_adresse" />
+              <span>{fullAddress}</span>
+            </li>
           </ul>
           <div>{room[`description${_.capitalize(lang.split('-')[0])}`]}
             <br />
@@ -80,12 +99,12 @@ const definition = { 'fr-FR': {
 } };
 
 const bedDetails = {
-  double: { 'fr-FR': '1 lit double', 'en-US': '1 double bed' },
-  simple: { 'fr-FR': '1 lit simple', 'en-US': '1 simple bed' },
-  sofa: { 'fr-FR': '1 canapé-lit', 'en-US': '1 sofa bed' },
-  'double+sofa': { 'fr-FR': '1 lit double et un canapé-lit', 'en-US': '1 double bed and a sofa bed' },
-  'simple+sofa': { 'fr-FR': '1 lit simple et un canapé-lit', 'en-US': '1 simple bed and a sofa bed' },
-  'simple+simple': { 'fr-FR': '2 lits simple', 'en-US': '2 simple beds' },
+  double: { 'fr-FR': '1 lit double', 'en-US': '1 double bed', css: 'bg-equipement_chambre_lit_double' },
+  simple: { 'fr-FR': '1 lit simple', 'en-US': '1 simple bed', css: 'bg-equipement_chambre_lit_double' },
+  sofa: { 'fr-FR': '1 canapé-lit', 'en-US': '1 sofa bed', css: 'bg-bg-equipement_chambre_canape_ou_canape_lit' },
+  'double+sofa': { 'fr-FR': '1 lit double et un canapé-lit', 'en-US': '1 double bed and a sofa bed', css: 'bg-equipement_chambre_lit_double' },
+  'simple+sofa': { 'fr-FR': '1 lit simple et un canapé-lit', 'en-US': '1 simple bed and a sofa bed', css: 'bg-equipement_chambre_lit_double'  },
+  'simple+simple': { 'fr-FR': '2 lits simple', 'en-US': '2 simple beds', css: 'bg-equipement_chambre_lit_double' },
 };
 
 const elevatorDetail = {
@@ -109,4 +128,4 @@ function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Pictures);
+export default connect(mapStateToProps, mapDispatchToProps)(Description);
