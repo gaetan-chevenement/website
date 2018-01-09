@@ -52,7 +52,7 @@ class DisplayFeatures extends PureComponent {
         <section>
           <h3 className={style.heading}><Text id="title">Features</Text></h3>
           <br />
-          <h4 className={style.featuresPart}>
+          <h4 className={style.subtitle}>
             <span>
               <Text id="room" >Room</Text>
             </span>
@@ -62,7 +62,7 @@ class DisplayFeatures extends PureComponent {
               taxonomy, `room-features-${taxonomy}`, roomFeatures
             ))}
           </div>
-          <h4 className={style.featuresPart}>
+          <h4 className={style.subtitle}>
             <span>
               <Text id="apartment">Apartment</Text>
             </span>

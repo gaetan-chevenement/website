@@ -62,6 +62,11 @@ class RoomContent extends PureComponent {
                   XX
                 </div>
                 <BookingInfo roomId={roomId} apartmentId={apartmentId} />
+                <div className={style.sameRoomCount}>
+                  423 autres personnes ont consulté cette annonce au cours 
+                  des 7 derniers jours. Nous vous recommandons de réserver
+                  sans tarder.
+                </div>
               </div>
             </div>
           </div>

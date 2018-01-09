@@ -40,7 +40,7 @@
   border: 1px solid black;
   border-width: 0 1px 1px 1px;
   box-sizing: border-box;
-  padding-top: 10px;
+  padding: 25px 20px 30px 20px;
 }
 
 .roomContent {
@@ -92,13 +92,15 @@
 }
 
 
-.featuresPart {
+.subtitle {
   font-size: 1.1rem;
   position: relative;
   color: rgb(136, 136, 136);
+  margin-top: 25px;
+  margin-bottom: 15px;
 }
 
-.featuresPart span {
+.subtitle span {
   background: var(--color-background);
   position: relative;
   z-index: 10000;
@@ -106,7 +108,7 @@
 }
 
 
-.featuresPart::after {
+.subtitle::after {
   content: ' ';
   position: absolute;
   top: calc(50% - 1px);
@@ -180,4 +182,73 @@
   background-color: rgb(243, 244, 245);
   padding: 0 50% 0 20%;
 
+}
+
+
+.priceLine {
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.cafNotice {
+  font-size: 11px;
+  color: #888;
+  margin-top: 10px;
+}
+
+.priceLineDesc {
+  margin-top: 5px;
+  font-size: 11px;
+  color: #888;
+}
+
+.bookingFeatures {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.bookingFeatures li {
+  list-style-type: none; 
+  display: flex;
+  align-items: center;
+  max-height: 35px;
+}
+
+.bookingFeatures i {
+  flex: 0 0 65px;
+  transform: scale(0.4);
+  display: inline-block;
+}
+
+.bookThisRoom {
+  background-color: #1c2b4a !important;
+  color: white !important;
+  border-radius: 5px;
+  font-size: 18px;
+  height: 55px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.bookThisRoom a {
+  color: white;
+}
+
+.btnWhite {
+  border: 1px solid #1c2b4a;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btnWhite i {
+  flex: 0 0 65px;
+  transform: scale(0.4);
+  display: inline-block;
+  background-color: blue;
+  
 }
