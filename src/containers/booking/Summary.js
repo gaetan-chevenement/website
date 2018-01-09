@@ -126,7 +126,9 @@ class Summary extends PureComponent {
                 <Text id="rent.subtitle.0">This room is available</Text>
                 { D.compareAsc( bookingDate, new Date() ) === -1 ?
                   <Text id="rent.subtitle.1"> immediatly </Text> :
-                  <div><Text id="rent.subtitle.2"> from the </Text>{bookingDate.toLocaleDateString(lang)} </div>
+                  <span>
+                    <Text id="rent.subtitle.2"> from the </Text>{bookingDate.toLocaleDateString(lang)}{''}
+                  </span>
                 }
                 <Text id="rent.subtitle.3">and rent starts on the</Text>
                 <b> {bookingDate.toLocaleDateString(lang)}. </b>
