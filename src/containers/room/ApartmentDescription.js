@@ -24,10 +24,12 @@ class Pictures extends PureComponent {
     return (
       <section>
         {transports.map(({ name, list }) => list.length > 0 ?
-          <div>
-            <h6>{transportName[name][lang]}</h6>
-            <ul class="grid-3">
-              {list.map(({ name }) => (<div>{name}</div>))}
+          <div className={'grid-4'}>
+            <h6 className={'one-third'}>{transportName[name][lang]}</h6>
+            <ul className={'two-thirds'}>
+              {list.map((i) => (
+                <div className={style[`transport-${name}`]}>{i.name}</div>
+              ))}
             </ul>
           </div>
           : ''
@@ -53,19 +55,26 @@ class Pictures extends PureComponent {
       );
     }
 
+    let floorPlan = null;
+
+    if (apartment.floorPlan !== undefined) {
+      floorPlan = (
+        <section>
+          <h3 className={style.heading}><Text id="floorPlan">Floor Plan</Text></h3>
+          <img src={apartment.floorPlan} alt="floor plan" />
+          <div className={style.planNotice}>
+            La surface au sol de chaque chambre inclut ses placards, balcons, loggias,
+            salle de bain, WC, espaces sous pentes... avec accès privatif
+          </div>
+        </section>
+      );
+    }
     return (
       <IntlProvider definition={definition[lang]}>
         <section>
+          {floorPlan}
           <section>
-            <h3 className={style.heading}><Text id="floorPlan">Floor Plan</Text></h3>
-            <img src={apartment.floorPlan} alt="floor plan" />
-            <div className={style.planNotice}>
-              La surface au sol de chaque chambre inclut ses placards, balcons, loggias,
-              salle de bain, WC, espaces sous pentes... avec accès privatif
-            </div>
-          </section>
-          <section>
-            <h3 className={style.heading}><Text id="district">Disctrict</Text></h3>
+            <h3 className={style.heading}><Text id="district">District</Text></h3>
             <div className={['grid-10 has-gutter-l', style.districtContent].join(' ')}>
               <div className="one-half">
                 <h5>{district.label}</h5>
@@ -77,10 +86,12 @@ class Pictures extends PureComponent {
               </div>
               <div className="one-quarter">
                 <h5><Text id="nearbySchool">Nearby School(s)</Text></h5>
-                {districtFeatures
-                  .filter(({ taxonomy }) => taxonomy === 'nearby-school')
-                  .map((school) => (<li>{school.name}</li>))
-                }
+                <ul className={style.nearbySchools}>
+                  {districtFeatures
+                    .filter(({ taxonomy }) => taxonomy === 'nearby-school')
+                    .map((school) => (<li>{school.name}</li>))
+                  }
+                </ul>
               </div>
             </div>
           </section>

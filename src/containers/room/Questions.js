@@ -12,10 +12,10 @@ const Questions = () => (
           <div className={style.questionsButton}>Poser une question</div>
           <div className={style.questionsButton}>Demander une visite</div>
         </div>
-        <div className="one-half">
-          <div>0 972 323 102</div>
-          <p>International +33 972 323 102</p>
-          <p>Du lundi au vendredi de 9h à 18h</p>
+        <div className={'one-half ' + style.questionsInfos}>
+          <div className={style.questionsPhone}>0 972 323 102</div>
+          <div className={style.questionsCoords}>International +33 972 323 102</div>
+          <div className={style.questionsCoords}>Du lundi au vendredi de 9h à 18h</div>
         </div>
       </div>
     </div>

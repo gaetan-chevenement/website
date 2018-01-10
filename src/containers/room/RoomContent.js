@@ -1,8 +1,7 @@
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
-import { IntlProvider, Text } from 'preact-i18n';
+import { IntlProvider } from 'preact-i18n';
 import DisplayFeatures        from '~/containers/room/DisplayFeatures';
 import Pictures               from '~/containers/room/Pictures';
 import HouseMates             from '~/containers/room/HouseMates';
@@ -20,6 +19,7 @@ import style from './style.css';
 class RoomContent extends PureComponent {
   render() {
     const { lang, roomId, apartmentId, roomName, apartment } = this.props;
+    console.log(this.props.room)
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
@@ -59,11 +59,11 @@ class RoomContent extends PureComponent {
               </div>
               <div className="one-third">
                 <div className={style.rightHeader}>
-                  XX
+                  Disponible immédiatement
                 </div>
                 <BookingInfo roomId={roomId} apartmentId={apartmentId} />
                 <div className={style.sameRoomCount}>
-                  423 autres personnes ont consulté cette annonce au cours 
+                  423 autres personnes ont consulté cette annonce au cours
                   des 7 derniers jours. Nous vous recommandons de réserver
                   sans tarder.
                 </div>
