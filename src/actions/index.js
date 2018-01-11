@@ -185,16 +185,17 @@ export const saveBooking =
       )
     ),
     {
-      error: { payloadReducer: ({ error }) => {
-        if ( /unavailable/.test(error) ) {
+      error: { payloadReducer: ({ error, code }) => {
+        // TODO: remove following regexp test in a bit
+        if ( code === 'renting.roomUnavailable' || /unavailable/.test(error) ) {
           return { errors: { isUnavailable: true } };
         }
 
-        if ( /price/.test(error) ) {
-          return { errors: { hasPriceChanged: true } };
+        if ( code === 'renting.roomNotFound' ) {
+          return { errors: { unexpected: error } };
         }
 
-        return { errors: { unexpected: error.message } };
+        return { errors: { unexpected: error } };
       } },
       ok: { payloadReducer: ({ response }) => (response) },
     },
@@ -228,12 +229,6 @@ export const savePayment =
     { error: { payloadReducer: (payload) => {
       const error = JSON.parse(payload.error.message);
 
-      if ( /fully paid/i.test(error.error) ) {
-        return { errors: { payment: { hasWrongBalance: true } } };
-      }
-      if ( /not found/i.test(error.error) ) {
-        return { errors: { payment: { hasNoOrder: true  } } };
-      }
       if ( /invalid card type/i.test(error.error) ) {
         return { errors: { cardNumber: 'Invalid card type (only Visa and Mastercard are allowed)' } };
       }
@@ -242,6 +237,12 @@ export const savePayment =
       }
       if ( /CVV2/i.test(error.error) ) {
         return { errors: { cvv: 'Invalid cvv' } };
+      }
+      if ( /fully paid/i.test(error.error) ) {
+        return { errors: { payment: { hasWrongBalance: true } } };
+      }
+      if ( /not found/i.test(error.error) ) {
+        return { errors: { payment: { hasNoOrder: true  } } };
       }
       if ( /do not honor/i.test(error.error) ) {
         return { errors: { payment: { wasDeclined: 'Payment has been declined by the bank' } } };

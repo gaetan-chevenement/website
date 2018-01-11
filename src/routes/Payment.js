@@ -19,8 +19,7 @@ class Payment extends PureComponent {
     return Promise.resolve()
       .then(() => actions.validatePayment(payment))
       .then(() => actions.savePayment(payment))
-      .then(() => actions.getOrder(orderId))
-      .then(() => returnUrl && route(returnUrl))
+      .then(() => returnUrl ? route(returnUrl) : actions.getOrder(orderId))
       .catch(console.error);
   }
 
@@ -57,11 +56,10 @@ class Payment extends PureComponent {
       orderId,
       order,
       payment,
-      payment: { errors },
-      isOrderLoading,
+      isLoading,
     } = this.props;
 
-    if ( isOrderLoading ) {
+    if ( isLoading ) {
       return (
         <div class="content text-center">
           <ProgressBar type="circular" mode="indeterminate" />
@@ -79,6 +77,8 @@ class Payment extends PureComponent {
       );
     }
 
+    const { isValidated, errors } = payment;
+
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="content">
@@ -88,15 +88,16 @@ class Payment extends PureComponent {
             <OrderDetails order={order} lang={lang} />
           </section>
           <section>
-            { !payment.isValidated && !errors.payment && order.balance !== 0 ?
+            { !isValidated && !errors.payment && order.balance !== 0 ?
               <h3>
                 <Text id="payment.title">Payment can be made by Mastercard or Visa.</Text>
               </h3>
-              : '' }
+              : ''
+            }
             <CardForm />
           </section>
 
-          { !payment.isValidated && !errors.payment && order.balance !== 0?
+          { !isValidated && !errors.payment && order.balance !== 0 ?
             <nav class="text-center">
               { payment.isValidating || payment.isSaving ?
                 <ProgressBar type="circular" mode="indeterminate" /> :
@@ -104,7 +105,11 @@ class Payment extends PureComponent {
                   <Button raised primary
                     disabled={!payment.cardNumber || !payment.cvv || !payment.expiryMonth
                     || !payment.expiryYear || !payment.holderName}
-                    label={<Text id="payment.button">Pay Now</Text>}
+                    label={(
+                      <Text id="payment.button" fields={{ amount: order.balance / -100 }}>
+                        Pay AMOUNT€ Now
+                      </Text>
+                    )}
                     icon="payment"
                     onClick={this.handleSubmitPayment}
                   />
@@ -118,24 +123,32 @@ class Payment extends PureComponent {
   }
 }
 
-const definition = { 'fr-FR': {
-  title: 'Paiement sécurisé pour la facture de',
-  payment: {
-    title: 'Le Paiement peut s\'effectuer avec une carte Mastercard ou Visa.',
-    button: 'payer',
+const definition = {
+  'fr-FR': {
+    title: 'Paiement sécurisé pour la facture de',
+    payment: {
+      title: 'Le Paiement peut s\'effectuer avec une carte Mastercard ou Visa.',
+      button: 'Payer {{amount}}€',
+    },
   },
-} };
+  'en-US': {
+    payment: { button: 'Pay {{amount}}€' }
+  },
+};
 
 function mapStateToProps({ route: { lang, returnUrl }, orders, payment }, { orderId }) {
   const order = orders[orderId];
 
+  if ( !order || order.isLoading ) {
+    return { isLoading: true };
+  }
+console.log(order.balance);
   return {
     lang,
     returnUrl,
     orderId,
     order,
     payment,
-    isOrderLoading: !order || order.isLoading,
   };
 }
 

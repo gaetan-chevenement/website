@@ -161,6 +161,7 @@ const Utils = {
   }),
 
   paymentSchema: yup.object().shape({
+    balance: yup.number().required(),
     holderName: yup.string().required().trim(),
     cardNumber:
       yup.string().transform(pureUtils.transformCardNumber).required().matches(/^(\d{4} ){4}$/),

@@ -91,6 +91,10 @@ const paymentReducer = createReducer({
     isSaving: false,
     errors: payload.errors,
   }),
+  [getOrder.ok]: (state, payload) => (payload.id !== state.orderId ?
+    state :
+    { ...state, balance: payload.balance }
+  )
 }, { errors: noErrors });
 
 const roomsReducer = createReducer({
