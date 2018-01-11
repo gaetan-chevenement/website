@@ -29,7 +29,7 @@ class Description extends PureComponent {
 
     return (
       <li>
-        <i className="bg-elevator" />
+        <i className="picto-elevator" />
         <span>
           {apartment.floor}{' '}
           <Text id="floor">floor</Text>{' '}
@@ -66,17 +66,17 @@ class Description extends PureComponent {
           <h3 className={style.heading}><Text id="title">Description</Text></h3>
           <ul className={'grid-4 has-gutter ' + style.descriptionItems}>
             <li>
-              <i className="bg-description_surface" />
+              <i className="picto-description_surface" />
               <span>{apartment.floorArea}m² (<Text id="apartment">apartment</Text>)</span>
             </li>
             {this.renderElevatorDetail()}
             {this.renderBedDetail()}
             <li>
-              <i className="bg-description_surface" />
+              <i className="picto-description_surface" />
               <span>{room.floorArea}m² (<Text id="room">room</Text>)</span>
             </li>
             <li class="two-thirds">
-              <i className="bg-picto_adresse" />
+              <i className="picto-picto_adresse" />
               <span>{fullAddress}</span>
             </li>
           </ul>
@@ -99,12 +99,12 @@ const definition = { 'fr-FR': {
 } };
 
 const bedDetails = {
-  double: { 'fr-FR': '1 lit double', 'en-US': '1 double bed', css: 'bg-equipement_chambre_lit_double' },
-  simple: { 'fr-FR': '1 lit simple', 'en-US': '1 simple bed', css: 'bg-equipement_chambre_lit_double' },
-  sofa: { 'fr-FR': '1 canapé-lit', 'en-US': '1 sofa bed', css: 'bg-bg-equipement_chambre_canape_ou_canape_lit' },
-  'double+sofa': { 'fr-FR': '1 lit double et un canapé-lit', 'en-US': '1 double bed and a sofa bed', css: 'bg-equipement_chambre_lit_double' },
-  'simple+sofa': { 'fr-FR': '1 lit simple et un canapé-lit', 'en-US': '1 simple bed and a sofa bed', css: 'bg-equipement_chambre_lit_double'  },
-  'simple+simple': { 'fr-FR': '2 lits simple', 'en-US': '2 simple beds', css: 'bg-equipement_chambre_lit_double' },
+  double: { 'fr-FR': '1 lit double', 'en-US': '1 double bed', css: 'picto-equipement_chambre_lit_double' },
+  simple: { 'fr-FR': '1 lit simple', 'en-US': '1 simple bed', css: 'picto-equipement_chambre_lit_double' },
+  sofa: { 'fr-FR': '1 canapé-lit', 'en-US': '1 sofa bed', css: 'picto-equipement_chambre_canape_ou_canape_lit' },
+  'double+sofa': { 'fr-FR': '1 lit double et un canapé-lit', 'en-US': '1 double bed and a sofa bed', css: 'picto-equipement_chambre_lit_double' },
+  'simple+sofa': { 'fr-FR': '1 lit simple et un canapé-lit', 'en-US': '1 simple bed and a sofa bed', css: 'picto-equipement_chambre_lit_double'  },
+  'simple+simple': { 'fr-FR': '2 lits simple', 'en-US': '2 simple beds', css: 'picto-equipement_chambre_lit_double' },
 };
 
 const elevatorDetail = {

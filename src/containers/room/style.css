@@ -126,10 +126,15 @@
 .featuresContent {
   display: flex;
   margin-top: 20px;
+  justify-content: space-between;
 }
 
 .featuresColumn {
-  flex: 1 1;
+  flex: 1 0 200px;
+}
+
+.featuresColumnLarge {
+  flex: 2 0 400px;
 }
 
 
@@ -216,12 +221,17 @@
   display: flex;
   align-items: center;
   max-height: 35px;
+  margin-bottom: 10px;
 }
 
 .bookingFeatures i {
-  flex: 0 0 65px;
-  transform: scale(0.4);
+  flex: 0 0 24px;
+  height: 24px;
+  margin-right: 10px;
   display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .bookThisRoom {
@@ -234,7 +244,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .bookThisRoom a {
@@ -246,14 +256,17 @@
   border-radius: 5px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+  height: 45px;
 }
 
 .btnWhite i {
-  flex: 0 0 65px;
-  transform: scale(0.4);
+  flex: 0 0 24px;
+  height: 24px;
   display: inline-block;
-  background-color: blue;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 .descriptionItems, .featuresColumn ul {
@@ -266,12 +279,17 @@
   display: flex;
   max-height: 30px;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .descriptionItems li i, .featuresColumn li i {
-  flex: 0 0 65px;
-  transform: scale(0.3);
+  flex: 0 0 24px;
+  height: 24px;
+  margin-right: 15px;
   display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .questionsButtons {
@@ -370,4 +388,25 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+.housemate {
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 100px;
+  text-align: center;
+  padding: 5px;
+}
+
+.housemateTitle {
+  font-weight: bold;
+}
+
+.housemateIcon, .availableRoom {
+  height: 128px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
