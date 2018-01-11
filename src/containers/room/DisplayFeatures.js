@@ -19,22 +19,38 @@ class DisplayFeatures extends PureComponent {
       return '';
     }
 
+    let leftFeatures = features.slice(0, Math.ceil(features.length / 2));
+    let rightFeatures = features.slice(Math.ceil(features.length / 2));
+
+    const renderFeature = ({ name }) => {
+      if (featureDetails[name] === undefined) {
+        return (<li>{name}</li>);
+      }
+      return (<li>
+        <i className={featureDetails[name].css} />
+        <span>{featureDetails[name][lang]}</span>
+      </li>);
+    };
+
     return (
-      <section className={style.featuresColumn}>
+      <section className={[style.featuresColumn, features.length > 10 ? style.featuresColumnLarge: ''].join(' ')}>
         <h5 className={style.featuresRoom}>
           <Text id={category}>{_.capitalize(category)}</Text>
         </h5>
-        <ul>
-          {features.map(({ name }) => {
-            if (featureDetails[name] === undefined) {
-              return (<li>{name}</li>);
-            }
-            return (<li>
-              <i className={featureDetails[name].css} />
-              <span>{featureDetails[name][lang]}</span>
-            </li>);
-          })}
-        </ul>
+        { features.length > 10 ? (
+          <div className="grid-2">
+            <div className="one-half">
+              <ul>
+                {leftFeatures.map(renderFeature)}
+              </ul>
+            </div>
+            <div className="one-half">
+              <ul>
+                {rightFeatures.map(renderFeature)}
+              </ul>
+            </div>
+          </div>
+        ) : <ul>{features.map(renderFeature)}</ul> }
       </section>
     );
   }
