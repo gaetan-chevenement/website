@@ -16,9 +16,20 @@ class CardForm extends PureComponent {
   @autobind
   handleChange(value, event) {
     const { actions } = this.props;
+
     batch(
       actions.updatePayment({ [event.target.name]: value }),
       actions.deletePaymentError(event.target.name)
+    );
+  }
+
+  @autobind
+  handleRetry(event) {
+    const { actions, orderId } = this.props;
+
+    batch(
+      actions.resetPayment(),
+      actions.getOrder(orderId), // The balance might have been updated
     );
   }
 
@@ -34,13 +45,16 @@ class CardForm extends PureComponent {
       currYear,
     } = this.props;
 
-    if (!payment.isValidated && orderBalance >= 0) {
+    if ( payment.isValidated || orderBalance >= 0 || /orderPaid/.test(errors.payment) ) {
       return (
         <IntlProvider definition={definition[lang]}>
           <section>
-            <div class="handleError">
+            <div class={payment.isValidated ? 'text-center' : 'handleError'}>
               <h4>
-                <Text id="errors.paid">This order has already been paid.</Text>
+                { payment.isValidated ?
+                  <Text id="payment.success">Your payment has succeeded.</Text> :
+                  <Text id="errors.paid">This order has already been paid.</Text>
+                }
               </h4>
               <br />
               <InvoiceButton {...{ lang, orderId, receiptNumber }} />
@@ -50,72 +64,68 @@ class CardForm extends PureComponent {
         </IntlProvider>
       );
     }
-    if ( payment.isValidated ) {
-      return (
-        <IntlProvider definition={definition[lang]}>
-          <div class="text-center">
-            <h3>
-              <Text id="payment.ok.first">Your payment has been approved.</Text>
-              <br />
-              <Text id="payment.ok.second">The Chez Nestor Team would like to wish you a great day!</Text>
-            </h3>
-            <br />
-            <InvoiceButton {...{ lang, orderId, receiptNumber }} />
-          </div>
-        </IntlProvider>
-      );
-    }
+
     if ( errors.payment || orderStatus === 'cancelled' ) {
+      let errorMessage;
+      let canRetry;
+
+      if ( orderStatus === 'cancelled' || /orderCancelled/.test(errors.payment) ) {
+        errorMessage =
+          <Text id="errors.orderCancelled">This order has been cancelled.</Text>;
+      }
+      else if ( /roomUnavailable/.test(errors.payment) ) {
+        errorMessage =
+          <Text id="errors.roomUnavailable">This room is no longer available.</Text>
+      }
+      else if ( /balanceMismatch/.test(errors.payment) ) {
+        errorMessage = (
+          <Text id="errors.balanceMismatch">
+            The price of this order has been updated.
+            Please check the updated price and try again.
+          </Text>
+        );
+        canRetry = true;
+      }
+      else if ( /(doNotHonor|unauthorized|tooManyAttempts)/.test(errors.payment) ) {
+        errorMessage =
+          <Text id="errors.doNotHonor">The payment has been declined by your bank.</Text>;
+        canRetry = true;
+      }
+      else {
+        errorMessage = (
+          <span>
+            <Text id="errors.unexpected">An unexpected error has occured.</Text><br />
+            <i>code: {errors.payment}</i>
+          </span>
+        );
+        canRetry = true;
+      }
+
       return (
         <IntlProvider definition={definition[lang]}>
           <section>
             <div class="handleError">
-              { orderStatus === 'cancelled' ? (
-                <h4>
-                  <Text id="order.cancelled">This order has been cancelled.</Text>
-                </h4>
-              ) : '' }
-
-              { errors.payment.hasWrongBalance ? (
-                <div>
-                  <h4>
-                    <Text id="errors.paid">This order has already been paid.</Text>
-                  </h4>
-                  <br />
-                  <InvoiceButton {...{ lang, orderId, receiptNumber }} />
-                </div>
-              ) : '' }
-
-              { errors.payment.hasNoOrder ? (
-                <h4>
-                  <Text id="errors.noOrder.first">We cannot retrieve this order.</Text><br />
-                  <Text id="errors.noOrder.second">Please contact the Chez Nestor Support Team.</Text>
-                </h4>
-              ) : '' }
-
-              { errors.payment.isBooked ? (
-                <h4>
-                  <Text id="errors.isBooked">This room has been booked by someone else.</Text>
-                </h4>
-              ) : '' }
-
-              { errors.payment.wasDeclined ? (
-                <h4>
-                  <Text id="errors.wasDeclined">The payment has been declined by your bank.</Text>
-                </h4>
-              ) : '' }
-
-              { errors.payment.unexpected ? (
-                <h4>
-                  <Text id="errors.unexpectd">An unexpected error has occured.</Text><br />
-                  { errors.payment.unexpected }
-                </h4>
-              ) : '' }
+              <h4>{errorMessage}</h4><br />
+              { !canRetry ? '' : (
+                <span>
+                  <Button raised primary
+                    label={<Text id="errors.retry">Retry</Text>}
+                    onClick={this.handleRetry}
+                  />
+                  {' '}
+                  <Button raised primary
+                    label={<Text id="errors.support">Contact Support</Text>}
+                    href="mailto:support@chez-nestor.com"
+                    target="_blank"
+                  />
+                </span>
+              )}
             </div>
           </section>
         </IntlProvider>
       );
     }
+
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
@@ -169,13 +179,11 @@ function InvoiceButton({ lang, orderId, receiptNumber }) {
   const params = `orderId=${orderId}&lang=${lang}`;
 
   return (
-    <IntlProvider definition={definition[lang]}>
-      <Button raised primary
-        label={<Text id="downloadInvoice">Download your invoice</Text>}
-        href={`${url}?${params}`}
-        target="_blank"
-      />
-    </IntlProvider>
+    <Button raised primary
+      label={<Text id="downloadInvoice">Download your invoice</Text>}
+      href={`${url}?${params}`}
+      target="_blank"
+    />
   );
 }
 
@@ -197,19 +205,17 @@ function mapStateToProps({ route: { lang }, orders, payment }) {
 const definition = { 'fr-FR': {
   errors: {
     paid: 'Cette facture a déjà été payée',
-    noOrder: {
-      first: 'Nous ne parvenons pas à retrouver cette facture.',
-      second: 'Veuillez contacter l\'équipe Chez Nestor.',
-    },
-    wasDeclined: 'Le paiement a été refusé par votre banque.',
-    isBooked: 'Cette chambre a été réservée par un autre client.',
-    unexpected: 'Une erreur est survenue.',
+    orderCancelled: 'Cette facture a été annulée',
+    doNotHonor: 'Le paiement a été refusé par votre banque.',
+    roomUnavailable: 'Cette chambre n\'est plus disponible.',
+    balanceMismatch: `
+      Le prix de cette facture a été modifié.
+      Merci de vérifier le nouveau prix et de retenter le paiement.
+    `,
+    unexpected: 'Une erreur inatendue est survenue.',
   },
   payment: {
-    ok: {
-      first: 'votre paiement a été validé.',
-      second: 'l\'équipe Chez Nestor vous souhaite une excellente journée',
-    },
+    success: 'Votre paiement a bien été effectué.',
   },
   card: {
     number: 'Numéro de carte bleue',
@@ -221,9 +227,6 @@ const definition = { 'fr-FR': {
     cvv: 'cryptogramme',
   },
   downloadInvoice: 'Télécharger votre facture',
-  order: {
-    cancelled: 'Cette facture a été annulée',
-  },
 } };
 
 function mapDispatchToProps(dispatch) {

@@ -18,6 +18,7 @@ import {
   deletePaymentError,
   validatePayment,
   savePayment,
+  resetPayment,
   getApartment,
   getRoom,
   getDistrict,
@@ -90,6 +91,15 @@ const paymentReducer = createReducer({
     ...state,
     isSaving: false,
     errors: payload.errors,
+  }),
+  [resetPayment]: (state) => ({
+    ...state,
+    errors: noErrors,
+    cardNumber: '',
+    holderName: '',
+    expiryMonth: '',
+    expiryYear: '',
+    cvv: '',
   }),
   [getOrder.ok]: (state, payload) => (payload.id !== state.orderId ?
     state :

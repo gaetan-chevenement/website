@@ -142,7 +142,7 @@ function mapStateToProps({ route: { lang, returnUrl }, orders, payment }, { orde
   if ( !order || order.isLoading ) {
     return { isLoading: true };
   }
-console.log(order.balance);
+
   return {
     lang,
     returnUrl,

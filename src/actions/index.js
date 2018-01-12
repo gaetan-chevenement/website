@@ -2,10 +2,11 @@ import { createAction }         from 'redux-act';
 import { createActionAsync }    from 'redux-act-async';
 import queryString              from 'query-string';
 import map                      from 'lodash/map';
+import pick                     from 'lodash/pick';
 import Utils                    from '~/utils';
 import _const                   from '~/const';
 
-const _ = { map };
+const _ = { map, pick };
 const { ROOM_SEGMENTS } = _const;
 
 export const updateRoute = createAction('Update route object');
@@ -33,6 +34,7 @@ export const {
   deletePaymentError,
   validatePayment,
 } = createFormAction('Payment', Utils.paymentSchema);
+export const resetPayment = createAction('reset payment data and errors');
 
 export const getRoom =
   createActionAsync(
@@ -205,52 +207,24 @@ export const savePayment =
   createActionAsync(
     'save Payment and associated Order in the backoffice',
     (payment) => {
-      const {
-        cardNumber,
-        cvv,
-        expiryMonth,
-        expiryYear,
-        holderName,
-        orderId,
-      } = payment;
+      const pickKeys =
+        'cardNumber,cvv,expiryMonth,expiryYear,holderName,orderId,balance'
+          .split(',');
 
       return Utils.fetchJson('/actions/public/create-payment', {
         method: 'post',
-        body: {
-          cardNumber,
-          cvv,
-          expiryMonth,
-          expiryYear,
-          holderName,
-          orderId,
-        },
+        body: _.pick(payment, pickKeys),
       });
     },
     { error: { payloadReducer: (payload) => {
       const error = JSON.parse(payload.error.message);
 
-      if ( /invalid card type/i.test(error.error) ) {
-        return { errors: { cardNumber: 'Invalid card type (only Visa and Mastercard are allowed)' } };
-      }
-      if ( /Invalid card/.test(error.error) ) {
-        return { errors: { cardNumber: 'Invalid card number' } };
-      }
-      if ( /CVV2/i.test(error.error) ) {
-        return { errors: { cvv: 'Invalid cvv' } };
-      }
-      if ( /fully paid/i.test(error.error) ) {
-        return { errors: { payment: { hasWrongBalance: true } } };
-      }
-      if ( /not found/i.test(error.error) ) {
-        return { errors: { payment: { hasNoOrder: true  } } };
-      }
-      if ( /do not honor/i.test(error.error) ) {
-        return { errors: { payment: { wasDeclined: 'Payment has been declined by the bank' } } };
-      }
-      if ( /no longer available/i.test(error.error) ) {
-        return { errors: { payment: { isBooked: 'This room has been booked by someone else.' } } };
-      }
-      return { errors: { payment: { unexpected: error.error } } };
+      // This is the only line required to deal with the new server errors.
+      // We used to have a special treatment for card-data related
+      // server-side errors, so that they appeared like client-side validation
+      // errors. But this was too much trouble for errors that aren't supposed
+      // to happen.
+      return { errors: { payment: error.code } };
     } } },
   );
 

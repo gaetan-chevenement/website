@@ -19,6 +19,11 @@ const {
   PACK_PRICES,
 } = _const;
 
+const rCard = /^\d{16}$/;
+const rVisa = /^4[0-9]{12}(?:[0-9]{3})?$/;
+const rMastercard =
+  /^(?:5[1-5][\d]{2}|222[1-9]|22[3-9][\d]|2[3-6][\d]{2}|27[01][\d]|2720)[\d]{12}$/;
+
 const pureUtils = {
   roundBy100(value) {
     return Math.round( value / 100 ) * 100;
@@ -97,9 +102,6 @@ const pureUtils = {
       D.format(D.addMonths(bookingDate, offset), 'MMM')
     );
   },
-  transformCardNumber(value) {
-    return value.replace(' ', '').replace(/(\d{4})/g, '$1 ');
-  },
   getCurrYear(now = new Date()) {
     return now.getFullYear() % 100;
   },
@@ -142,6 +144,18 @@ const pureUtils = {
       .find((item) => /-pack$/.test(item.ProductId))
       .ProductId.replace('-pack', '');
   },
+  getCardType(number) {
+    if ( !rCard.test(number) ) {
+      return null;
+    }
+    if ( rVisa.test(number) ) {
+      return 'visa';
+    }
+    if ( rMastercard.test(number) ) {
+      return 'mastercard';
+    }
+    return null;
+  },
 };
 
 const currYear = pureUtils.getCurrYear();
@@ -161,10 +175,16 @@ const Utils = {
   }),
 
   paymentSchema: yup.object().shape({
-    balance: yup.number().required(),
+    balance: yup.number().integer().required(),
     holderName: yup.string().required().trim(),
     cardNumber:
-      yup.string().transform(pureUtils.transformCardNumber).required().matches(/^(\d{4} ){4}$/),
+      yup.string().required()
+        .transform((str) => str.replace(' ', ''))
+        .test({
+          name: 'is-valid-number',
+          message: 'your card number isn\'t a valid MasterCard or Visa card number',
+          test: pureUtils.getCardType,
+        }),
     expiryMonth:
       yup.number().integer().required().min(1).max(12),
     expiryYear:
@@ -176,7 +196,8 @@ const Utils = {
   fetchJson(_url, _options) {
     const options = { ..._options };
     const timezone =
-      window.Intl && window.Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/London';
+      window.Intl &&
+      window.Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/London';
     const url =
       `${API_BASE_URL}${_url}${/\?/.test(_url) ? '&' : '?'}timezone=${timezone}`;
     options.credentials = 'include';
