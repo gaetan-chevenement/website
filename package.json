@@ -62,7 +62,7 @@
     "webpack-bundle-analyzer": "^2.9.0"
   },
   "dependencies": {
-    "cheznestor-common": "github:chez-nestor/common",
+    "cheznestor-common": "github:chez-nestor/common#master",
     "date-fns": "^1.29.0",
     "leaflet": "^1.2.0",
     "leaflet.markercluster": "^1.1.0",
