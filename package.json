@@ -72,6 +72,7 @@
     "preact": "^8.2.5",
     "preact-compat": "^3.17.0",
     "preact-i18n": "^1.1.1",
+    "preact-portal": "^1.1.2",
     "preact-router": "^2.5.7",
     "react-leaflet": "^1.7.1",
     "react-leaflet-markercluster": "^1.1.6",

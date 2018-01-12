@@ -1,20 +1,31 @@
-import { PureComponent }      from 'react';
+import { Component }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { IntlProvider, Text } from 'preact-i18n';
 import * as actions           from '~/actions';
+import Portal                 from 'preact-portal';
+import Carousel                   from '~/components/Carousel';
 
 import style from './style.css';
 
-class Pictures extends PureComponent {
+class Pictures extends Component {
 
-  renderPicture({ url, alt, order }) {
+  constructor() {
+    super();
+    this.state = {
+      showSlideshow: false,
+    };
+    this.__onContClicked = () => this.setState({
+      showSlideshow: !this.state.showSlideshow,
+    });
+  }
+
+  renderPicture({ url, alt, order }, onClick) {
     const st = {
       backgroundImage: `url(${url})`,
     };
     return (
-      <div style={st}>
+      <div style={st} className={'one-sixth'} onClick={onClick}>
         {alt}
       </div>
     );
@@ -25,10 +36,37 @@ class Pictures extends PureComponent {
       pictures,
     } = this.props;
 
+    let cont = null, portal = null;
+
+    if (pictures.length > 5) {
+      cont = (
+        <div className={[style.picturesCont, 'picto-photocamera_64px', 'one-sixth'].join(' ')}
+          onClick={this.__onContClicked}
+        >
+          + {pictures.length - 5}
+        </div>
+      );
+    }
+
+    if (this.state.showSlideshow) {
+      portal = (
+        <Portal into="body">
+          <div className={style.carouselOverlay} onClick={this.__onContClicked}>
+            <Carousel lazy slide arrows className={style.coverPicture}>
+              {pictures.map(({ url }) => <img src={url} />)}
+            </Carousel>
+          </div>
+        </Portal>
+      );
+    }
+
     return (
       <IntlProvider definition={definition[lang]}>
-        <section className={style.pictures}>
-          {pictures.slice(0, 5).map((picture) => this.renderPicture(picture))}
+        <section className={[style.pictures, 'grid-12', 'has-gutter'].join(' ')}>
+          {pictures.slice(0, 5).map((picture) =>
+            this.renderPicture(picture, this.__onContClicked))}
+          {cont}
+          {portal}
         </section>
       </IntlProvider>
     );

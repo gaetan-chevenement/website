@@ -51,10 +51,15 @@ class RoomContent extends PureComponent {
                     </li>
                   </ul>
                 </div>
+                <a id="pictures" className={style.roomAnchor} />
                 <Pictures roomId={roomId} apartmentId={apartmentId} />
+                <a id="description" className={style.roomAnchor} />
                 <Description roomId={roomId} apartmentId={apartmentId} />
+                <a id="features" className={style.roomAnchor} />
                 <DisplayFeatures roomId={roomId} apartmentId={apartmentId} />
+                <a id="housemates" className={style.roomAnchor} />
                 <HouseMates apartmentId={apartmentId} roomId={roomId} />
+                <a id="district" className={style.roomAnchor} />
                 <ApartmentDescription />
               </div>
               <div className="one-third">
