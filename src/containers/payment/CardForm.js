@@ -10,7 +10,10 @@ import _const                 from '~/const';
 import * as actions           from '~/actions';
 import Utils                  from '~/utils';
 
-const { API_BASE_URL } = _const;
+const {
+  API_BASE_URL,
+  SUPPORT_EMAIL,
+} = _const;
 
 class CardForm extends PureComponent {
   @autobind
@@ -115,7 +118,7 @@ class CardForm extends PureComponent {
                   {' '}
                   <Button raised primary
                     label={<Text id="errors.support">Contact Support</Text>}
-                    href="mailto:support@chez-nestor.com"
+                    href={`mailto:${SUPPORT_EMAIL}`}
                     target="_blank"
                   />
                 </span>
