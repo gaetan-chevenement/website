@@ -141,23 +141,30 @@ class Summary extends PureComponent {
                 <span>
                   <Text id="rent.month" fields={{ month: firstMonths[0] }}>{firstMonths[0]}. rent:</Text>
                 </span>,
-                <b>{proratedRent / 100}€</b>,
+                <b>{proratedRent / 100}€*</b>,
                 <span>
                   <Text id="rent.month" fields={{ month: firstMonths[1] }}>{firstMonths[1]}. rent:</Text>
                 </span>,
-                <b>{totalRent / 100}€</b>,
+                <b>{totalRent / 100}€*</b>,
                 <span>
                   <Text id="rent.month" fields={{ month: firstMonths[2] }}>{firstMonths[2]}. rent:</Text>
                 </span>,
-                <b>{totalRent / 100}€</b>,
+                <b>{totalRent / 100}€*</b>,
                 <i>etc.</i>,
-                <b>{totalRent / 100}€</b>,
+                <b>{totalRent / 100}€*</b>,
                 <Text id="dueDate.title">Due date:</Text>,
                 <Text id="dueDate.rent">
                   First rent is due 72h prior to your checkin and subsequent
                   rents are due on the first of the month.
                 </Text>,
               ])}</p>
+
+              <p class="text-italic">
+                <Text id="rent.description">
+                  * Until your Housing Pack is paid, the monthly rent is likely
+                  to be updated to match demand.
+                </Text>
+              </p>
             </section>
 
             <section>
@@ -269,6 +276,10 @@ const definition = {
         wifi illimitée, assurance habitation et maintenance) seraient :`,
       ],
       month: 'Loyer {{month}}.',
+      description: `
+        * Tant que votre pack logement n'est pas payé, le loyer mensuel est
+        susceptible d'être mis à jour pour s'adapter à la demande.
+      `
     },
     deposit: {
       title: 'Dépôt de garantie',

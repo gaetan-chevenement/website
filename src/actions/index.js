@@ -188,13 +188,8 @@ export const saveBooking =
     ),
     {
       error: { payloadReducer: ({ error, code }) => {
-        // TODO: remove following regexp test in a bit
-        if ( code === 'renting.roomUnavailable' || /unavailable/.test(error) ) {
+        if ( /roomUnavailable/.test(error) ) {
           return { errors: { isUnavailable: true } };
-        }
-
-        if ( code === 'renting.roomNotFound' ) {
-          return { errors: { unexpected: error } };
         }
 
         return { errors: { unexpected: error } };
