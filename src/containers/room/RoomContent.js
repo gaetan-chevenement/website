@@ -64,7 +64,8 @@ class RoomContent extends PureComponent {
               </div>
               <div className="one-third">
                 <div className={style.rightHeader}>
-                  Disponible immédiatement
+                  <i className="picto-picto_disponibilite_ok" />
+                  <span>Disponible immédiatement</span>
                 </div>
                 <BookingInfo roomId={roomId} apartmentId={apartmentId} />
                 <div className={style.sameRoomCount}>
