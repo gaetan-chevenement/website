@@ -28,7 +28,7 @@ class Room extends PureComponent {
     }
 
     // We need to fetch the district before we fetch its terms, otherwise
-    // they're going to be lost
+    // the reducer won't be able to handle them at all
     await actions.getDistrict(districtId);
 
     return batch(

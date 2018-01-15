@@ -1,4 +1,7 @@
 import { IntlProvider, Text } from 'preact-i18n';
+import _const                 from '~/const';
+
+const { SUPPORT_EMAIL } = _const;
 
 export default function LoadingError({ lang, label, error }) {
   return (
@@ -13,11 +16,11 @@ export default function LoadingError({ lang, label, error }) {
           <p>You should try to <a href="javascript:location.reload();">reload the page</a></p>
           <p>
             If the error persists, please contact support:
-            <a href="mailto:support@chez-nestor.com"
+            <a href={`mailto:${SUPPORT_EMAIL}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              support@chez-nestor.com
+              {SUPPORT_EMAIL}
             </a>
           </p>
           <p>Error: <i>{error.message}</i></p>

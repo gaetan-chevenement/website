@@ -17,15 +17,8 @@ import {
   setPaymentErrors,
   deletePaymentError,
   validatePayment,
-  updateApartment,
-  setApartmentErrors,
-  deleteApartmentError,
-  validateApartment,
-  updateRoom,
-  setRoomErrors,
-  deleteRoomError,
-  validateRoom,
   savePayment,
+  resetPayment,
   getApartment,
   getRoom,
   getDistrict,
@@ -36,19 +29,6 @@ import {
   getRenting,
   listPictures,
   listTerms,
-  addRoomFeature,
-  deleteRoomFeature,
-  addRoomPicture,
-  deleteRoomPicture,
-  updateRoomPicture,
-  savePictures,
-  addApartmentPicture,
-  deleteApartmentPicture,
-  updateApartmentPicture,
-  addApartmentFeature,
-  deleteApartmentFeature,
-  saveFeatures,
-  saveRoomAndApartment,
 }                           from '~/actions';
 
 const _ = { pickBy, forEach };
@@ -112,6 +92,19 @@ const paymentReducer = createReducer({
     isSaving: false,
     errors: payload.errors,
   }),
+  [resetPayment]: (state) => ({
+    ...state,
+    errors: noErrors,
+    cardNumber: '',
+    holderName: '',
+    expiryMonth: '',
+    expiryYear: '',
+    cvv: '',
+  }),
+  [getOrder.ok]: (state, payload) => (payload.id !== state.orderId ?
+    state :
+    { ...state, balance: payload.balance }
+  )
 }, { errors: noErrors });
 
 const roomsReducer = createReducer({
@@ -132,31 +125,6 @@ const roomsReducer = createReducer({
   }),
   [listTerms.ok]: listOkReducer('Terms'),
   [listPictures.ok]: listOkReducer('Pictures'),
-  ...createFeatureReducer({
-    addFeature: addRoomFeature,
-    deleteFeature: deleteRoomFeature,
-    saveFeatures,
-  }),
-  ...createPictureReducer({
-    updatePicture: updateRoomPicture,
-    addPicture: addRoomPicture,
-    deletePicture: deleteRoomPicture,
-    savePictures,
-  }),
-  ...createRoomApartmentFormReducer({
-    update: updateRoom,
-    setErrors: setRoomErrors,
-    deleteError: deleteRoomError,
-    validate: validateRoom,
-  }),
-  [saveRoomAndApartment.ok]: (state) => ({
-    ...state,
-    isValidated: true,
-  }),
-  [saveRoomAndApartment.error]: (state, payload) => ({
-    ...state,
-    errors: payload,
-  }),
 }, {});
 
 const apartmentsReducer = createReducer({
@@ -174,31 +142,6 @@ const apartmentsReducer = createReducer({
   [getHouseMates.ok]: (state, { id, HouseMates }) => ({
     ...state,
     [id]: { ...state[id], HouseMates },
-  }),
-  ...createPictureReducer({
-    updatePicture: updateApartmentPicture,
-    addPicture: addApartmentPicture,
-    deletePicture: deleteApartmentPicture,
-    savePictures,
-  }),
-  ...createFeatureReducer({
-    addFeature: addApartmentFeature,
-    deleteFeature: deleteApartmentFeature,
-    saveFeatures,
-  }),
-  ...createRoomApartmentFormReducer({
-    update: updateApartment,
-    setErrors: setApartmentErrors,
-    deleteError: deleteApartmentError,
-    validate: validateApartment,
-  }),
-  [saveRoomAndApartment.ok]: (state) => ({
-    ...state,
-    isValidated: true,
-  }),
-  [saveRoomAndApartment.error]: (state, payload) => ({
-    ...state,
-    errors: payload,
   }),
 }, {});
 
@@ -295,37 +238,6 @@ export function createListReducer(actionAsync, modelName) {
     }),
   };
 }
-export function createRoomApartmentFormReducer({ update, setErrors, deleteError, validate }) {
-  return {
-    [update]: (state, payload) => ({
-      ...state,
-      [payload.id]: { ...state[payload.id], ...payload },
-    } ),
-    [setErrors]: (state, payload) => ({
-      ...state,
-      errors: payload,
-    }),
-    [deleteError]: (state, payload) => ({
-      ...state,
-      errors: dissoc(payload, state.errors),
-    }),
-    [validate.request]: (state) => ({
-      ...state,
-      isValidating: true,
-    }),
-    [validate.ok]: (state, { response }) => ({
-      ...state,
-      ...response.data,
-      isValidating: false,
-      errors: noErrors,
-    }),
-    [validate.error]: (state, payload) =>  ({
-      ...state,
-      isValidating: false,
-      errors: payload,
-    }),
-  };
-}
 
 export function createFormReducer({ update, setErrors, deleteError, validate }) {
   return {
@@ -351,63 +263,6 @@ export function createFormReducer({ update, setErrors, deleteError, validate }) 
     [validate.error]: (state, payload) =>  ({
       ...state,
       isValidating: false,
-      errors: payload,
-    }),
-  };
-}
-
-export function createPictureReducer({ updatePicture, addPicture, deletePicture, savePicture }) {
-  return {
-    [addPicture]: (state, picture) => ({
-      ...state,
-      [picture.PicturableId]: {
-        ...state[picture.PicturableId],
-        Pictures: [...state[picture.PicturableId].Pictures, picture],
-      },
-    }),
-    [updatePicture]: (state, { picture, id }) => ({
-      ...state,
-      [id]: {
-        ...state[id],
-        Pictures:
-        state[id].Pictures.map((oldPicture) => picture.id === oldPicture.id ? { ...oldPicture, ...picture } : oldPicture),
-      },
-    }),
-    [deletePicture]: (state, picture) => ({
-      ...state,
-      [picture.PicturableId]: {
-        ...state[picture.PicturableId],
-        Pictures:
-        state[picture.PicturableId].Pictures.filter((oldPicture) => oldPicture.id !== picture.id),
-      },
-    }),
-  };
-}
-
-export function createFeatureReducer({ addFeature, deleteFeature, saveFeatures }) {
-  return {
-    [addFeature]: (state, feature) => ({
-      ...state,
-      isValidated: false,
-      [feature.TermableId]: {
-        ...state[feature.TermableId],
-        Features: [...state[feature.TermableId].Features, feature],
-      },
-    }),
-    [deleteFeature]: (state, feature) => ({
-      ...state,
-      isValidated: false,
-      [feature.TermableId]: {
-        ...state[feature.TermableId],
-        Features: state[feature.TermableId].Features.filter((oldFeature) => oldFeature.name !== feature.name || oldFeature.taxonomy !== feature.taxonomy),
-      },
-    }),
-    [saveFeatures.ok]: (state) => ({
-      ...state,
-      isValidated: true,
-    }),
-    [saveFeatures.error]: (state, payload) => ({
-      ...state,
       errors: payload,
     }),
   };

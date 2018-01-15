@@ -62,8 +62,7 @@
     "webpack-bundle-analyzer": "^2.9.0"
   },
   "dependencies": {
-    "bluebird": "^3.5.1",
-    "cheznestor-common": "github:chez-nestor/common",
+    "cheznestor-common": "github:chez-nestor/common#master",
     "date-fns": "^1.29.0",
     "leaflet": "^1.2.0",
     "leaflet.markercluster": "^1.1.0",
@@ -74,7 +73,6 @@
     "preact-compat": "^3.17.0",
     "preact-i18n": "^1.1.1",
     "preact-router": "^2.5.7",
-    "react-dropzone": "^4.2.1",
     "react-leaflet": "^1.7.1",
     "react-leaflet-markercluster": "^1.1.6",
     "react-redux": "^5.0.6",
