@@ -11,7 +11,7 @@ export default { 'fr-FR': [
                                                                   '49€', 1, 1],
   ['Serviette de bain', 'Large (150x100cm) pour tout votre séjour',
                                                                   '15€', 1, 1],
-  ['Pack de nourriture', 'Thé, jus, eau, cola, lait, crackers, soupe, riz, pâtes, sauce, sel, compotes, savon',
+  ['Pack de nourriture', 'Thé, jus, eau, cola, crackers, soupe, riz, pâtes, sauce, sel, compotes, savon',
                                                                   '49€', 1, 1],
   ['Livraison à domicile', 'De vos draps permanents, serviette et foodpack',
                                                                   '49€', 1, 1],

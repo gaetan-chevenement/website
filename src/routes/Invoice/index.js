@@ -4,9 +4,11 @@ import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import D                      from 'date-fns';
 import capitalize             from 'lodash/capitalize';
 import Utils                  from '~/utils';
+import _const                 from '~/const';
 import style                  from './style';
 
 const _ = { capitalize };
+const { SUPPORT_EMAIL } = _const;
 
 export default class Invoice extends PureComponent {
   constructor(props) {
@@ -107,7 +109,7 @@ export default class Invoice extends PureComponent {
               <td>16, Rue de Condé</td>
             </tr>
             <tr>
-              <td><a href="mailto:support@chez-nestor.com">support@chez-nestor.com</a>
+              <td><a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
               </td>
               <td>69002, Lyon</td>
             </tr>

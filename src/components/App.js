@@ -8,8 +8,6 @@ import autobind         from 'autobind-decorator';
 import configureStore   from '~/stores';
 import Services         from 'async!../routes/Services';
 import Process          from 'async!../routes/Process';
-import Admin            from '~/routes/Admin';
-import RoomAdmin        from '~/routes/RoomAdmin';
 import Room             from '~/routes/Room';
 import Home             from '~/routes/Home';
 import Search           from '~/routes/Search';
@@ -83,7 +81,6 @@ export default class App extends Component {
           </Match>
           <Router onChange={this.handleRoute}>
             <Home path="/:lang" default />
-            <Admin path="/admin" />
             <Search path="/:lang/search/:city" />
             <BookingForm path="/:lang/booking/:roomId" />
             <BookingSummary path="/:lang/summary/:rentingId" />
@@ -93,7 +90,6 @@ export default class App extends Component {
             <Services path="/:lang/services" />
             <Process path="/:lang/booking-process" />
             <Room path="/:lang/room/:roomId" />
-            <RoomAdmin path="/:lang/room/:roomId/admin" />
           </Router>
           <Match path="/">
             { // No footer on invoice, home

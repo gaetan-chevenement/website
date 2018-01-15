@@ -10,7 +10,7 @@ export default { 'en-US': [
   ['Permanent bed linen', 'Fitted sheet, pillow cases & duvet case for your whole stay',
                                                                   '49€', 1, 1],
   ['Bath towel', 'Large (150x100cm), for your whole stay',        '15€', 1, 1],
-  ['Food pack', 'Tea, juice, water, Cola, milk, crackers, soup rice, pasta, sauce, salt, dessert, soap.',
+  ['Food pack', 'Tea, juice, water, Cola, crackers, soup rice, pasta, sauce, salt, dessert, soap.',
                                                                   '49€', 1, 1],
   ['Home delivery', 'Of your permanent bed linen, bath towel and foodpack',
                                                                   '49€', 1, 1],

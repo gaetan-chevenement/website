@@ -2,11 +2,11 @@ import { createAction }         from 'redux-act';
 import { createActionAsync }    from 'redux-act-async';
 import queryString              from 'query-string';
 import map                      from 'lodash/map';
+import pick                     from 'lodash/pick';
 import Utils                    from '~/utils';
-import Features                 from '~/components/Features/features';
 import _const                   from '~/const';
 
-const _ = { map };
+const _ = { map, pick };
 const { ROOM_SEGMENTS } = _const;
 
 export const updateRoute = createAction('Update route object');
@@ -23,18 +23,6 @@ export const deleteApartmentPicture = createAction('delete picture from apartmen
 export const updateApartmentPicture = createAction('update picture from apartment');
 
 export const {
-  updateRoom,
-  setRoomErrors,
-  deleteRoomError,
-  validateRoom,
-} = createFormAction('Room', Utils.roomSchema);
-export const {
-  updateApartment,
-  setApartmentErrors,
-  deleteApartmentError,
-  validateApartment,
-} = createFormAction('Apartment', Utils.apartmentSchema);
-export const {
   updateBooking,
   setBookingErrors,
   deleteBookingError,
@@ -46,6 +34,7 @@ export const {
   deletePaymentError,
   validatePayment,
 } = createFormAction('Payment', Utils.paymentSchema);
+export const resetPayment = createAction('reset payment data and errors');
 
 export const getRoom =
   createActionAsync(
@@ -181,74 +170,6 @@ export const [listTerms, listPictures] = _.map(termsAndPics, (xableId, modelName
   )
 );
 
-export const saveFeatures =
-  createActionAsync(
-    'save Terms of Room and Apartment in the backoffice',
-    ({ roomId, apartmentId, ApartmentFeatures, RoomFeatures }) => (
-      Utils.fetchJson(
-        '/actions/update-terms',
-        {
-          method: 'post',
-          body: {
-            roomId,
-            apartmentId,
-            RoomFeatures,
-            ApartmentFeatures,
-          },
-        },
-      )
-    ),
-    {
-      noRethrow: true,
-      error: { payloadReducer: (payload) => ({
-        unauthorized: 'You must be log to the backoffice to update room\'s features',
-      }) },
-    },
-  );
-
-export const savePictures =
-  createActionAsync(
-    'save Pictures of Room and Apartment in the backoffice',
-    ({ roomId, apartmentId, ApartmentPictures, RoomPictures }) => (
-      Utils.fetchJson(
-        '/actions/update-pictures',
-        {
-          method: 'post',
-          body: {
-            roomId,
-            apartmentId,
-            RoomPictures,
-            ApartmentPictures,
-          },
-        },
-      )
-    ),
-    {
-      noRethrow: true,
-      error: { payloadReducer: (payload) => ({
-        unauthorized: 'You must be log to the backoffice to update room\'s pictures',
-      }) },
-    },
-  );
-
-export const saveRoomAndApartment =
-  createActionAsync(
-    'save Room and Apartment in the backoffice',
-    ({ room, apartment }) => (
-      Utils.fetchJson(
-        '/actions/update-apartment-and-room',
-        {
-          method: 'post',
-          body: {
-            room,
-            apartment,
-          },
-        },
-      )
-    ),
-    { error: { payloadReducer: (payload) => ({ errors: { unexpected: payload.error.message } }) } },
-  );
-
 export const saveBooking =
   createActionAsync(
     'save Renting and associated Client in the backoffice',
@@ -266,16 +187,12 @@ export const saveBooking =
       )
     ),
     {
-      error: { payloadReducer: ({ error }) => {
-        if ( /unavailable/.test(error) ) {
+      error: { payloadReducer: ({ error, code }) => {
+        if ( /roomUnavailable/.test(error) ) {
           return { errors: { isUnavailable: true } };
         }
 
-        if ( /price/.test(error) ) {
-          return { errors: { hasPriceChanged: true } };
-        }
-
-        return { errors: { unexpected: error.message } };
+        return { errors: { unexpected: error } };
       } },
       ok: { payloadReducer: ({ response }) => (response) },
     },
@@ -285,52 +202,24 @@ export const savePayment =
   createActionAsync(
     'save Payment and associated Order in the backoffice',
     (payment) => {
-      const {
-        cardNumber,
-        cvv,
-        expiryMonth,
-        expiryYear,
-        holderName,
-        orderId,
-      } = payment;
+      const pickKeys =
+        'cardNumber,cvv,expiryMonth,expiryYear,holderName,orderId,balance'
+          .split(',');
 
       return Utils.fetchJson('/actions/public/create-payment', {
         method: 'post',
-        body: {
-          cardNumber,
-          cvv,
-          expiryMonth,
-          expiryYear,
-          holderName,
-          orderId,
-        },
+        body: _.pick(payment, pickKeys),
       });
     },
     { error: { payloadReducer: (payload) => {
       const error = JSON.parse(payload.error.message);
 
-      if ( /fully paid/i.test(error.error) ) {
-        return { errors: { payment: { hasWrongBalance: true } } };
-      }
-      if ( /not found/i.test(error.error) ) {
-        return { errors: { payment: { hasNoOrder: true  } } };
-      }
-      if ( /invalid card type/i.test(error.error) ) {
-        return { errors: { cardNumber: 'Invalid card type (only Visa and Mastercard are allowed)' } };
-      }
-      if ( /Invalid card/.test(error.error) ) {
-        return { errors: { cardNumber: 'Invalid card number' } };
-      }
-      if ( /CVV2/i.test(error.error) ) {
-        return { errors: { cvv: 'Invalid cvv' } };
-      }
-      if ( /do not honor/i.test(error.error) ) {
-        return { errors: { payment: { wasDeclined: 'Payment has been declined by the bank' } } };
-      }
-      if ( /no longer available/i.test(error.error) ) {
-        return { errors: { payment: { isBooked: 'This room has been booked by someone else.' } } };
-      }
-      return { errors: { payment: { unexpected: error.error } } };
+      // This is the only line required to deal with the new server errors.
+      // We used to have a special treatment for card-data related
+      // server-side errors, so that they appeared like client-side validation
+      // errors. But this was too much trouble for errors that aren't supposed
+      // to happen.
+      return { errors: { payment: error.code } };
     } } },
   );
 

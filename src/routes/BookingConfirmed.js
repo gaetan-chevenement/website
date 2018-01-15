@@ -8,6 +8,7 @@ import * as actions           from '~/actions';
 import _const                 from '~/const';
 
 const { IDENTITY_FORM_URL } = _const;
+console.log('IDENTITY_FORM_URL', IDENTITY_FORM_URL);
 
 class BookingStep3 extends PureComponent {
   componentDidMount() {
