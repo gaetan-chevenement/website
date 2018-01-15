@@ -27,13 +27,25 @@
   line-height: 40px;
   color: white;
   font-family: var(--headings-font-family);
-  font-size: 1.7rem;
+  font-size: 1.4rem;
   font-weight: bold;
   padding: 10px 20px;
 }
 
 .rightHeader {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rightHeader i {
+  width: 32px;
+  height: 32px;
+  margin-right: 5px;
+  -webkit-background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
 }
 
 .bookingInfo {
@@ -192,11 +204,6 @@
   padding: 1px 0 5px 0;
 }
 
-.guide {
-  background-color: rgb(243, 244, 245);
-  padding: 10px 50% 20px 20%;
-}
-
 
 .priceLine {
   font-size: 14px;
@@ -309,8 +316,19 @@
   border-radius: 5px;
   margin-bottom: 10px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  padding-left: 15px;
+  font-size: 13px;
+}
+
+.questionsButton i {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 10px;
 }
 
 .downloadGuideBtn {
@@ -324,12 +342,32 @@
   align-items: center;
 }
 
+.downloadGuideBtn i {
+  max-width: 32px;
+  min-width: 32px;
+  margin-left: 20px;
+  height: 10px;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 .questions h2 {
   margin-bottom: 10px;
 }
 
 .questionsInfos {
   padding-left: 30px;
+  display: flex;
+}
+
+.questionsInfosPicto {
+  width: 50px;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center top;
+  margin-right: 10px;
 }
 
 .questionsSubtitle {
@@ -337,12 +375,13 @@
 }
 
 .questionsPhone {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .questionsCoords {
-  font-size: 12px;
+  font-size: 13px;
 }
 
 
@@ -458,4 +497,46 @@
   height: 90px;
   margin-top: -90px;
   visibility: hidden;
+}
+
+.guide {
+  background-color: rgb(243, 244, 245);
+  padding: 10px 20% 0 20%;
+  margin-top: 200px;
+}
+
+.guideImg {
+  margin-left: 10vw;
+  height: 300px;
+  width: 400px;
+  background-image: url('../../assets/rooms/guide_logement.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-top: -100px;
+}
+
+.guide h2 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.guide ul {
+  padding-left: 0;
+}
+
+.guideBullet {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.guideBullet i {
+  display: inline-block;
+  width:  20px;
+  height: 20px;
+  -webkit-background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 10px;
 }
