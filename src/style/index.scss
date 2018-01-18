@@ -98,3 +98,34 @@ section {
   width: 250px !important;
   margin: 0 !important;
 }
+
+
+.single-map .leaflet-pane {
+  z-index: 20;
+}
+
+.single-map .leaflet-top {
+  z-index: 21 !important;
+}
+
+
+
+.icon-32 {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.icon-24 {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
+}

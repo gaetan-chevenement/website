@@ -1,24 +1,17 @@
 import { h }                  from 'preact';
 import { PureComponent }      from 'react';
-import { connect }            from 'react-redux';
 import {
   Map,
   TileLayer,
   Marker,
-  Popup,
 }                             from 'react-leaflet';
 import L                      from 'leaflet';
-import MarkerClusterGroup     from 'react-leaflet-markercluster';
-import filter                 from 'lodash/filter';
-import Room                   from '~/containers/search/Room';
 import _const                 from '~/const';
 import Utils                  from '~/utils';
 
 import 'leaflet/dist/leaflet.css';
 
-const _ = { filter };
 const { MAPBOX_TOKEN } = _const;
-
 
 const HIGHLIGHT_ICON = new L.Icon({
   iconUrl: require('~/assets/search/map-marker-highlight.png'),
@@ -37,14 +30,8 @@ class SingleMap extends PureComponent {
   }
 
   render() {
-
-    console.log(apartment);
-
-
     const { apartment } = this.props;
     const latLng = Utils.getApartmentLatLng(apartment);
-
-    console.log(latLng);
 
     return (
       <Map
@@ -58,6 +45,7 @@ class SingleMap extends PureComponent {
         scrollWheelZoom={false}
         attributionControl={false}
         maxZoom={15}
+        className="single-map"
         zoom={12}
         ref={map => (this._map = map)}
       >

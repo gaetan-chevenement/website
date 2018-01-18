@@ -1,12 +1,23 @@
 import { Component }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { IntlProvider, Text } from 'preact-i18n';
+import { IntlProvider } from 'preact-i18n';
 import * as actions           from '~/actions';
 import Portal                 from 'preact-portal';
 import Carousel                   from '~/components/Carousel';
 
 import style from './style.css';
+
+const Picture = ({ picture, onClick }) => {
+  const st = {
+    backgroundImage: `url(${picture.url})`,
+  };
+  return (
+    <div style={st} className={'one-sixth'} onClick={onClick}>
+      {picture.alt}
+    </div>
+  );
+};
 
 class Pictures extends Component {
 
@@ -21,14 +32,7 @@ class Pictures extends Component {
   }
 
   renderPicture({ url, alt, order }, onClick) {
-    const st = {
-      backgroundImage: `url(${url})`,
-    };
-    return (
-      <div style={st} className={'one-sixth'} onClick={onClick}>
-        {alt}
-      </div>
-    );
+
   }
   render() {
     const {
@@ -63,8 +67,9 @@ class Pictures extends Component {
     return (
       <IntlProvider definition={definition[lang]}>
         <section className={[style.pictures, 'grid-12', 'has-gutter'].join(' ')}>
-          {pictures.slice(0, 5).map((picture) =>
-            this.renderPicture(picture, this.__onContClicked))}
+          {pictures.slice(0, 5).map((picture) => (
+            <Picture picture={picture} onClick={this.__onContClicked} />
+          ))}
           {cont}
           {portal}
         </section>

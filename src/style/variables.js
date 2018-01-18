@@ -13,4 +13,10 @@ export default {
   'color-pack-basic': '#63AC3E',
   'color-pack-comfort': '#9336C1',
   'color-pack-privilege': '#6282AD',
+  'color-greyish': 'rgb(136, 136, 136)',
+  'color-blue-background': 'rgb(58, 88, 148)',
+  'text-notice': '0.5rem',
+  'text-small': '0.8rem',
+  'text-normal': '1rem',
+  'text-big': '1.2rem',
 };

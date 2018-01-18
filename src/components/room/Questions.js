@@ -1,4 +1,5 @@
-import style from './style.css';
+import { Button }             from 'react-toolbox/lib/button';
+import style from '~/containers/room/style.css';
 
 const Questions = () => (
   <div className={style.questions}>
@@ -9,12 +10,14 @@ const Questions = () => (
       </div>
       <div className="grid-2">
         <div className={'one-half ' + style.questionsButtons}>
-          <div className={style.questionsButton}>
-            <i className="picto-questionmark" />
-            <span>Poser une question</span></div>
-          <div className={style.questionsButton}>
-            <i className="picto-photocamera" />
-            <span>Demander une visite</span></div>
+          <Button className={style.questionsButton}>
+            <i className="icon-24 picto-questionmark" />
+            <span>Poser une question</span>
+          </Button>
+          <Button className={style.questionsButton}>
+            <i className="icon-24 picto-photocamera" />
+            <span>Demander une visite</span>
+          </Button>
         </div>
         <div className={'one-half ' + style.questionsInfos}>
           <i className={'picto-smartphonecall_64px ' + style.questionsInfosPicto} />
@@ -28,7 +31,6 @@ const Questions = () => (
     </div>
   </div>
 );
-
 
 export default Questions;
 
