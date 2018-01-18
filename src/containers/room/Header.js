@@ -1,43 +1,33 @@
-import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
-import { IntlProvider, Text } from 'preact-i18n';
+import { IntlProvider } from 'preact-i18n';
 import * as actions           from '~/actions';
 
-import style from './style.css';
+import style from '~/containers/room/style.css';
 
-class Header extends PureComponent {
-  render() {
-    const {
-      lang,
-      pictures,
-      roomName
-    } = this.props;
-
-    if ( pictures.length === 0 ) {
-      return (
-        <div class="content text-center">
-          <ProgressBar type="circular" mode="indeterminate" />
-        </div>
-      );
-    }
-
-    const localStyle = {
-      backgroundImage: `url(${pictures[0].url})`,
-    };
-
+const Header = ({ lang, pictures, roomName }) => {
+  if ( pictures.length === 0 ) {
     return (
-      <IntlProvider definition={definition[lang]}>
-        <section className={style.coverPicture} style={localStyle}>
-        </section>
-      </IntlProvider>
+      <div class="content text-center">
+        <ProgressBar type="circular" mode="indeterminate" />
+      </div>
     );
   }
-}
+
+  const localStyle = {
+    backgroundImage: `url(${pictures[0].url})`,
+  };
+
+  return (
+    <IntlProvider definition={definition[lang]}>
+      <section className={style.coverPicture} style={localStyle} />
+    </IntlProvider>
+  );
+};
 
 const definition = { 'fr-FR': {
-    title: 'Photos',
+  title: 'Photos',
 } };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {

@@ -8,10 +8,13 @@ import values                 from 'lodash/values';
 import mapValues              from 'lodash/mapValues';
 import * as actions           from '~/actions';
 import featureDetails         from '~/components/Features/features';
+import CroppedContainer       from '~/components/room/CroppedContainer';
 import style from './style.css';
 
 
+
 const _ = { capitalize, values, mapValues };
+
 class DisplayFeatures extends PureComponent {
   renderFeatures(category, _taxonomy, allFeatures, featureDetails, lang) {
     const features = allFeatures.filter(({ taxonomy }) => taxonomy === _taxonomy);
@@ -27,7 +30,7 @@ class DisplayFeatures extends PureComponent {
         return (<li>{name}</li>);
       }
       return (<li>
-        <i className={featureDetails[name].css} />
+        <i className={'icon-24 ' + featureDetails[name].css} />
         <span>{featureDetails[name][lang]}</span>
       </li>);
     };
@@ -37,6 +40,7 @@ class DisplayFeatures extends PureComponent {
         <h5 className={style.featuresRoom}>
           <Text id={category}>{_.capitalize(category)}</Text>
         </h5>
+        <CroppedContainer height={170}>
         { features.length > 10 ? (
           <div className="grid-2">
             <div className="one-half">
@@ -51,6 +55,7 @@ class DisplayFeatures extends PureComponent {
             </div>
           </div>
         ) : <ul>{features.map(renderFeature)}</ul> }
+        </CroppedContainer>
       </section>
     );
   }

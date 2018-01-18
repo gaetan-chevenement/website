@@ -1,4 +1,6 @@
-import style from './style.css';
+import style from '~/containers/room/style.css';
+
+import { Button }             from 'react-toolbox/lib/button';
 
 const Guide = () => (
   <div className={style.guide}>
@@ -28,10 +30,10 @@ const Guide = () => (
           </ul>
         </div>
         <div>
-          <a href="/" className={style.downloadGuideBtn}>
+          <Button className={style.downloadGuideBtn}>
             <span>Je télécharge mon Guide Logement</span>
             <i className="picto-picto_fleche_guide_logement_64px" />
-          </a>
+          </Button>
         </div>
       </div>
       <div className="one-half">

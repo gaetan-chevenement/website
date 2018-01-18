@@ -1,4 +1,13 @@
 
+/* = GENERAL = */
+
+.roomPage {
+
+}
+
+.roomPage section {
+  margin-bottom: 2em;
+}
 
 .coverPicture {
   height: calc(100vh - var(--header-height) * 2);
@@ -17,8 +26,6 @@
   bottom: 0;
   width: 100%;
   margin-bottom: 0;
-  /*margin-left: 5px;
-  margin-right: 5px;*/
 }
 
 .leftHeader, .rightHeader {
@@ -39,32 +46,62 @@
 }
 
 .rightHeader i {
-  width: 32px;
-  height: 32px;
   margin-right: 5px;
-  -webkit-background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  display: inline-block;
-}
-
-.bookingInfo {
-  border: 1px solid black;
-  border-width: 0 1px 1px 1px;
-  box-sizing: border-box;
-  padding: 25px 20px 30px 20px;
-  margin-bottom: 10px;
 }
 
 .roomContent {
   position: relative;
   margin-top: -60px;
   font-size: 12px;
-  font-family: "Open Sans";
+  font-family: var(--preferred-font);
 }
 
-.cafHelp {
-  color: green;
+
+.heading {
+  background-color: var(--color-primary);
+  color: white;
+  font-size: 1.2em;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  margin-bottom: 15px;
+}
+
+
+.subtitle {
+  font-size: 1em;
+  position: relative;
+  color: var(--greyish);
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+.subtitle span {
+  background: var(--color-background);
+  position: relative;
+  z-index: 40;
+  padding-right: 15px;
+}
+
+
+.subtitle::after {
+  content: ' ';
+  position: absolute;
+  top: calc(50% - 1px);
+  left: 0px;
+  right: 0;
+  height: 1px;
+  background: black;
+}
+
+/* = NAVIGATION = */
+
+.roomAnchor {
+  display: block;
+  height: 90px;
+  margin-top: -90px;
+  visibility: hidden;
 }
 
 .links ul {
@@ -90,136 +127,75 @@
   color: black;
 }
 
-.pictures {
-  height: 100px;
-}
-
-.pictures > div {
-  text-indent: -9999px;
-  overflow: hidden;
-  background-size: cover;
+.shortcut {
+  border: 1px solid var(--color-greyish);
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 0 5px;
+  color: var(--color-greyish);
   cursor: pointer;
+  font-size: var(--text-notice);
+  display: inline-block;
 }
 
-.heading {
-  background-color: var(--color-primary);
-  color: white;
-  font-size: 19px;
-  height: 25px;
-  display: flex;
-  align-items: center;
-  padding-left: 10px;
-  margin-bottom: 15px;
+.shortcut a {
+  color: var(--color-greyish);
+  font-size: var(--text-notice);
 }
 
+.croppedCont {
+}
 
-.subtitle {
-  font-size: 1.1rem;
+.croppedContCont {
   position: relative;
-  color: rgb(136, 136, 136);
-  margin-top: 25px;
-  margin-bottom: 15px;
 }
 
-.subtitle span {
-  background: var(--color-background);
-  position: relative;
-  z-index: 10000;
-  padding-right: 15px;
-}
-
-
-.subtitle::after {
-  content: ' ';
+.croppedContOverlay {
   position: absolute;
-  top: calc(50% - 1px);
-  left: 0px;
+  top: 0;
+  left: 0;
   right: 0;
-  height: 1px;
-  background: black;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 40%, var(--color-background) 90%);
+  pointer-events: none;
 }
 
-.featuresContent {
-  display: flex;
-  margin-top: 20px;
-  justify-content: space-between;
+/* = BOOKING INFO = */
+
+.sameRoomCount {
+  color: red;
+  border: 1px solid red;
+  font-size: 12px;
+  padding: 10px 20px;
 }
 
-.featuresColumn {
-  flex: 1 0 200px;
+.bookingInfo {
+  border: 1px solid black;
+  border-width: 0 1px 1px 1px;
+  box-sizing: border-box;
+  padding: 25px 20px 30px 20px;
+  margin-bottom: 10px;
 }
 
-.featuresColumnLarge {
-  flex: 2 0 400px;
+.cafHelp {
+  color: green;
 }
-
-
-.featuresColumn:not(:last-child) {
-  border-right: 1px solid black;
-}
-
-.featuresColumn:not(:first-child) {
-  margin-left: 20px;
-}
-
-.planNotice {
-  color: rgb(136, 136, 136);
-  text-align: center;
-  margin-top: 30px;
-  font-size: 0.7rem;
-}
-
-.districtContent > div:not(:first-child) {
-  border-left: 1px solid black;
-  padding-left: 20px;
-}
-
-.service {
-  margin-top: 20px;
-}
-
-.service img {
-  float: left;
-  height: 75px;
-  margin-right: 10px;
-}
-
-.service h5 {
-  padding-top: 2px;
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-.service p {
-  font-size: 0.8rem;
-}
-
-.services {
-  margin: 20px;
-}
-
-.questions {
-  background-color: rgb(58, 88, 148);
-  color: white;
-  padding: 1px 0 5px 0;
-}
-
 
 .priceLine {
-  font-size: 14px;
+  font-size: var(--text-small);
   margin-top: 20px;
 }
 
 .cafNotice {
-  font-size: 11px;
-  color: #888;
+  font-size: var(--text-notice);
+  color: var(--color-greyish);
   margin-top: 10px;
 }
 
 .priceLineDesc {
   margin-top: 5px;
-  font-size: 11px;
-  color: #888;
+  font-size: var(--text-notice);
+  color: var(--color-greyish);
 }
 
 .bookingFeatures {
@@ -236,13 +212,7 @@
 }
 
 .bookingFeatures i {
-  flex: 0 0 24px;
-  height: 24px;
   margin-right: 10px;
-  display: inline-block;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .bookThisRoom {
@@ -269,16 +239,61 @@
   align-items: center;
   justify-content: space-around;
   height: 45px;
+  width: 100%;
 }
 
-.btnWhite i {
-  flex: 0 0 24px;
-  height: 24px;
-  display: inline-block;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
+/* = PICTURES = */
+
+.pictures {
+  height: 100px;
 }
+
+.pictures > div {
+  text-indent: -9999px;
+  overflow: hidden;
+  background-size: cover;
+  cursor: pointer;
+}
+
+.picturesCont {
+  background-color: grey;
+  background-size: 48px !important;
+  background-position: center 10px;
+  background-repeat: no-repeat;
+  text-indent: 0 !important;
+  color: white;
+  font-weight: bold;
+  position: relative;
+  padding-top: 55px;
+  text-align: center;
+}
+
+.picturesCont::after {
+  content: '...';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 20px;
+}
+
+.carouselOverlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  padding-left: 10%;
+  padding-right: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* = DESCRIPTION = */
 
 .descriptionItems, .featuresColumn ul {
   margin-left: 0;
@@ -294,102 +309,90 @@
 }
 
 .descriptionItems li i, .featuresColumn li i {
-  flex: 0 0 24px;
-  height: 24px;
   margin-right: 15px;
-  display: inline-block;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
-.questionsButtons {
+/* = FEATURES = */
+
+.featuresContent {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  margin-top: 20px;
+  justify-content: space-between;
 }
 
-.questionsButton {
-  background: #1c2b4a;
-  height: 40px;
-  width: 200px;
-  border-radius: 5px;
-  margin-bottom: 10px;
+.featuresColumn {
+  flex: 1 0 200px;
+}
+
+.featuresColumnLarge {
+  flex: 2 0 400px;
+}
+
+.featuresColumn:not(:last-child) {
+  border-right: 1px solid black;
+}
+
+.featuresColumn:not(:first-child) {
+  margin-left: 20px;
+}
+
+/* = FLOOR PLAN = */
+
+.planNotice {
+  color: var(--greyish);
+  text-align: center;
+  margin-top: 30px;
+  font-size: var(--text-small);
+}
+
+/* = HOUSEMATES = */
+
+
+.housemates {
   display: flex;
-  align-items: center;
-  padding-left: 15px;
-  font-size: 13px;
+  flex-wrap: wrap;
 }
 
-.questionsButton i {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  -webkit-background-size: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
-  margin-right: 10px;
-}
-
-.downloadGuideBtn {
-  color: black;
+.housemate {
   border: 1px solid black;
   border-radius: 5px;
-  width: 100%;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 9em;
+  text-align: center;
+  padding: 5px;
+  margin-right: .5em;
 }
 
-.downloadGuideBtn i {
-  max-width: 32px;
-  min-width: 32px;
-  margin-left: 20px;
-  height: 10px;
-  -webkit-background-size: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.questions h2 {
-  margin-bottom: 10px;
-}
-
-.questionsInfos {
-  padding-left: 30px;
-  display: flex;
-}
-
-.questionsInfosPicto {
-  width: 50px;
-  height: 100%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center top;
-  margin-right: 10px;
-}
-
-.questionsSubtitle {
-  margin-bottom: 30px;
-}
-
-.questionsPhone {
-  font-size: 20px;
+.housemateTitle {
   font-weight: bold;
-  margin-bottom: 10px;
 }
 
-.questionsCoords {
-  font-size: 13px;
+.housemateIcon, .availableRoom {
+  height: 96px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
+.housemateBookBtn {
+  background-color: #1c2b4a !important;
+  color: white !important;
+  border-radius: 5px;
+  font-size: 1em;
+  height: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+}
 
-.sameRoomCount {
-  color: red;
-  border: 1px solid red;
-  font-size: 12px;
-  padding: 10px 20px;
+/* = DISTRICT = */
+
+.districtContent > div:not(:first-child) {
+  border-left: 1px solid black;
+  padding-left: 20px;
 }
 
 .transport-subway {
@@ -433,70 +436,120 @@
   padding: 0;
 }
 
-.housemate {
+
+/* = SERVICES = */
+
+.service {
+  margin-top: 20px;
+}
+
+.service img {
+  float: left;
+  height: 75px;
+  margin-right: 10px;
+}
+
+.service h5 {
+  padding-top: 2px;
+  font-size: var(--text-big);
+  font-weight: bold;
+}
+
+.service p {
+  font-size: 0.8rem;
+}
+
+.services {
+  margin: 20px;
+}
+
+/* = QUESTIONS = */
+
+.questions {
+  background-color: var(--color-blue-background);
+  color: white;
+  padding: 1px 0 5px 0;
+}
+
+.questionsButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.questionsButton {
+  background: #1c2b4a;
+  color: white !important;
+  height: 40px;
+  width: 200px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  font-size: 13px;
+}
+
+.questionsButton i {
+  margin-right: 10px;
+}
+
+.questions h2 {
+  margin-top: 0.5em;
+  margin-bottom: 0.3em;
+}
+
+.questionsInfos {
+  padding-left: 30px;
+  display: flex;
+}
+
+.questionsInfosPicto {
+  width: 50px;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center top;
+  margin-right: 10px;
+}
+
+.questionsSubtitle {
+  margin-bottom: 30px;
+}
+
+.questionsPhone {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.questionsCoords {
+  font-size: 13px;
+}
+
+/* = GUIDE = */
+
+.downloadGuideBtn {
+  color: black;
   border: 1px solid black;
   border-radius: 5px;
-  width: 100px;
-  text-align: center;
-  padding: 5px;
-}
-
-.housemateTitle {
-  font-weight: bold;
-}
-
-.housemateIcon, .availableRoom {
-  height: 128px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.picturesCont {
-  background-color: grey;
-  background-size: 48px !important;
-  background-position: center 10px;
-  background-repeat: no-repeat;
-  text-indent: 0 !important;
-  color: white;
-  font-weight: bold;
-  position: relative;
-  padding-top: 55px;
-  text-align: center;
-}
-
-.picturesCont::after {
-  content: '...';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-size: 20px;
-}
-
-.carouselOverlay {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 10000;
-  padding-left: 10%;
-  padding-right: 10%;
+  width: 80%;
+  height: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 0.8em;
+  text-transform: none;
 }
 
-.roomAnchor {
-  display: block;
-  height: 90px;
-  margin-top: -90px;
-  visibility: hidden;
+.downloadGuideBtn i {
+  max-width: 32px;
+  min-width: 32px;
+  margin-left: 20px;
+  height: 10px;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .guide {
@@ -506,9 +559,9 @@
 }
 
 .guideImg {
-  margin-left: 10vw;
   height: 300px;
   width: 400px;
+  margin-left: 25px;
   background-image: url('../../assets/rooms/guide_logement.png');
   background-size: contain;
   background-repeat: no-repeat;
@@ -529,6 +582,7 @@
   display: flex;
   align-items: center;
   margin-top: 10px;
+  font-size: var(--text-small);
 }
 
 .guideBullet i {

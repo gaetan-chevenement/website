@@ -3,13 +3,14 @@ import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { IntlProvider, Text } from 'preact-i18n';
+import CroppedContainer       from '~/components/room/CroppedContainer';
 import capitalize             from 'lodash/capitalize';
 import * as actions           from '~/actions';
 import style from './style.css';
 
 const _ = { capitalize };
 
-class Pictures extends PureComponent {
+class ApartmentDescription extends PureComponent {
 
   renderTransport() {
     const { apartmentFeatures, lang } = this.props;
@@ -23,17 +24,17 @@ class Pictures extends PureComponent {
 
     return (
       <section>
-        {transports.map(({ name, list }) => list.length > 0 ?
-          <div className={'grid-4'}>
-            <h6 className={'one-third'}>{transportName[name][lang]}</h6>
-            <ul className={'two-thirds'}>
-              {list.map((i) => (
-                <div className={style[`transport-${name}`]}>{i.name}</div>
-              ))}
-            </ul>
-          </div>
-          : ''
-        )}
+          {transports.map(({ name, list }) => list.length > 0 ?
+            <div className={'grid-4'}>
+              <h6 className={'one-third'}>{transportName[name][lang]}</h6>
+              <ul className={'two-thirds'}>
+                {list.map((i) => (
+                  <div className={style[`transport-${name}`]}>{i.name}</div>
+                ))}
+              </ul>
+            </div>
+            : ''
+          )}
       </section>
     );
   }
@@ -77,21 +78,27 @@ class Pictures extends PureComponent {
             <h3 className={style.heading}><Text id="district">District</Text></h3>
             <div className={['grid-10 has-gutter-l', style.districtContent].join(' ')}>
               <div className="one-half">
-                <h5>{district.label}</h5>
-                <div>{district[`description${_.capitalize(lang.split('-')[0])}`]}</div>
+                <CroppedContainer height={150}>
+                  <h5>{district.label}</h5>
+                  <div>{district[`description${_.capitalize(lang.split('-')[0])}`]}</div>
+                </CroppedContainer>
               </div>
               <div className="one-quarter">
-                <h5>Transports</h5>
-                {this.renderTransport()}
+                <CroppedContainer height={150}>
+                  <h5>Transports</h5>
+                  {this.renderTransport()}
+                </CroppedContainer>
               </div>
               <div className="one-quarter">
-                <h5><Text id="nearbySchool">Nearby School(s)</Text></h5>
-                <ul className={style.nearbySchools}>
-                  {districtFeatures
-                    .filter(({ taxonomy }) => taxonomy === 'nearby-school')
-                    .map((school) => (<li>{school.name}</li>))
-                  }
-                </ul>
+                <CroppedContainer height={150}>
+                  <h5><Text id="nearbySchool">Nearby School(s)</Text></h5>
+                  <ul className={style.nearbySchools}>
+                    {districtFeatures
+                      .filter(({ taxonomy }) => taxonomy === 'nearby-school')
+                      .map((school) => (<li>{school.name}</li>))
+                    }
+                  </ul>
+                </CroppedContainer>
               </div>
             </div>
           </section>
@@ -140,4 +147,4 @@ function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Pictures);
+export default connect(mapStateToProps, mapDispatchToProps)(ApartmentDescription);

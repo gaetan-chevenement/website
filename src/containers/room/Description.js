@@ -5,7 +5,7 @@ import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { IntlProvider, Text } from 'preact-i18n';
 import capitalize             from 'lodash/capitalize';
 import * as actions           from '~/actions';
-
+import CroppedContainer            from '~/components/room/CroppedContainer';
 import style from './style.css';
 
 
@@ -17,7 +17,7 @@ class Description extends PureComponent {
 
     return (
       <li>
-        <i className={bedDetails[room.beds].css} />
+        <i className={'icon-24 ' + bedDetails[room.beds].css} />
         <span>{bedDetails[room.beds][lang]}
         </span>
       </li>
@@ -29,7 +29,7 @@ class Description extends PureComponent {
 
     return (
       <li>
-        <i className="picto-elevator" />
+        <i className="icon-24 picto-elevator" />
         <span>
           {apartment.floor}{' '}
           <Text id="floor">floor</Text>{' '}
@@ -59,31 +59,36 @@ class Description extends PureComponent {
       );
     }
 
-    const fullAddress = <span>{apartment.addressStreet} {apartment.addressZip} {_.capitalize(apartment.addressCity)}, {_.capitalize(apartment.addressCountry)}</span>
+    const fullAddress = <span>{apartment.addressStreet} {apartment.addressZip} {_.capitalize(apartment.addressCity)}, {_.capitalize(apartment.addressCountry)}</span>;
     return (
       <IntlProvider definition={definition[lang]}>
         <section>
           <h3 className={style.heading}><Text id="title">Description</Text></h3>
           <ul className={'grid-4 has-gutter ' + style.descriptionItems}>
             <li>
-              <i className="picto-description_surface" />
+              <i className="icon-24 picto-description_surface" />
               <span>{apartment.floorArea}m² (<Text id="apartment">apartment</Text>)</span>
             </li>
             {this.renderElevatorDetail()}
             {this.renderBedDetail()}
             <li>
-              <i className="picto-description_surface" />
+              <i className="icon-24 picto-description_surface" />
               <span>{room.floorArea}m² (<Text id="room">room</Text>)</span>
             </li>
             <li class="two-thirds">
-              <i className="picto-picto_adresse" />
+              <i className="icon-24 picto-picto_adresse" />
               <span>{fullAddress}</span>
+              <div className={style.shortcut}>
+                <a href="#map">Voir le plan</a>
+              </div>
             </li>
           </ul>
-          <div>{room[`description${_.capitalize(lang.split('-')[0])}`]}
+
+          <CroppedContainer height={40}>
+            {room[`description${_.capitalize(lang.split('-')[0])}`]}
             <br />
             {apartment[`description${_.capitalize(lang.split('-')[0])}`]}
-          </div>
+          </CroppedContainer>
         </section>
       </IntlProvider>
     );
