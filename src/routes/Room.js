@@ -23,13 +23,8 @@ class Room extends PureComponent {
       return route(window.location.pathname.replace(/[\w-]+$/, roomData.id));
     }
 
-    // We need to fetch the district before we fetch its terms, otherwise
-    // the reducer won't be able to handle them at all
-    await actions.getDistrict(districtId);
-
     return batch(
-      actions.listTerms([roomId, apartmentData.id, districtId]),
-      actions.listPictures([roomId, apartmentData.id]),
+      actions.getDistrict(districtId),
       actions.getHouseMates(apartmentData.id),
     );
   }
@@ -65,7 +60,7 @@ class Room extends PureComponent {
       <IntlProvider definition={definition[lang]}>
         <div>
           <Header roomId={roomId} apartmentId={apartmentId} />
-          <RoomContent roomId={roomId} apartmentId={apartmentId}/>
+          <RoomContent roomId={roomId} apartmentId={apartmentId} />
         </div>
       </IntlProvider>
     );

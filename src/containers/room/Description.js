@@ -1,12 +1,11 @@
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { IntlProvider, Text } from 'preact-i18n';
 import capitalize             from 'lodash/capitalize';
+import CroppedContainer       from '~/components/room/CroppedContainer';
 import * as actions           from '~/actions';
-import CroppedContainer            from '~/components/room/CroppedContainer';
-import style from './style.css';
+import style                  from './style.css';
 
 
 const _ = { capitalize };
@@ -17,7 +16,7 @@ class Description extends PureComponent {
 
     return (
       <li>
-        <i className={'icon-24 ' + bedDetails[room.beds].css} />
+        <i className={`icon-24 ${bedDetails[room.beds].css}`} />
         <span>{bedDetails[room.beds][lang]}
         </span>
       </li>
@@ -25,7 +24,7 @@ class Description extends PureComponent {
   }
 
   renderElevatorDetail() {
-    const { apartment, lang, roomFeatures } = this.props;
+    const { apartment, lang } = this.props;
 
     return (
       <li>
@@ -33,9 +32,7 @@ class Description extends PureComponent {
         <span>
           {apartment.floor}{' '}
           <Text id="floor">floor</Text>{' '}
-          {roomFeatures.some(({ name, taxonomy }) => name === 'noElevator') ?
-            elevatorDetail.without[lang] : elevatorDetail.with[lang]
-          }{' '}
+          {elevatorDetail[apartment.elevator ? 'with' : 'without'][lang]}{' '}
           <Text id="elevator">elevator</Text>
         </span>
       </li>
@@ -47,17 +44,8 @@ class Description extends PureComponent {
     const {
       lang,
       room,
-      roomFeatures,
       apartment,
     } = this.props;
-
-    if ( !room || !apartment || !roomFeatures ) {
-      return (
-        <div class="content text-center">
-          <ProgressBar type="circular" mode="indeterminate" />
-        </div>
-      );
-    }
 
     const fullAddress = <span>{apartment.addressStreet} {apartment.addressZip} {_.capitalize(apartment.addressCity)}, {_.capitalize(apartment.addressCountry)}</span>;
     return (
@@ -124,7 +112,6 @@ function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apart
   return {
     lang,
     room,
-    roomFeatures: room && room.Terms,
     apartment,
   };
 }

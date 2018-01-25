@@ -3,38 +3,39 @@ import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { IntlProvider, Text } from 'preact-i18n';
-import CroppedContainer       from '~/components/room/CroppedContainer';
 import capitalize             from 'lodash/capitalize';
+import Utils                  from '~/utils';
+import CroppedContainer       from '~/components/room/CroppedContainer';
 import * as actions           from '~/actions';
-import style from './style.css';
+import style                  from './style.css';
 
 const _ = { capitalize };
 
 class ApartmentDescription extends PureComponent {
 
   renderTransport() {
-    const { apartmentFeatures, lang } = this.props;
-    const transports = ['subway', 'tramway', 'bus', 'rer', 'transilien', 'nearbyBike']
-      .map((name) => ({
-        name,
-        list: apartmentFeatures.filter(({ taxonomy }) =>
-          new RegExp(`transport-${name}`).test(taxonomy)
-        ),
-      }));
+    // const { apartmentFeatures, lang } = this.props;
+    // const transports = ['subway', 'tramway', 'bus', 'rer', 'transilien', 'nearbyBike']
+    //   .map((name) => ({
+    //     name,
+    //     list: (apartmentFeatures || []).filter(({ taxonomy }) =>
+    //       new RegExp(`transport-${name}`).test(taxonomy)
+    //     ),
+    //   }));
 
     return (
       <section>
-          {transports.map(({ name, list }) => list.length > 0 ?
-            <div className={'grid-4'}>
-              <h6 className={'one-third'}>{transportName[name][lang]}</h6>
-              <ul className={'two-thirds'}>
-                {list.map((i) => (
-                  <div className={style[`transport-${name}`]}>{i.name}</div>
-                ))}
-              </ul>
-            </div>
-            : ''
-          )}
+        {/*transports.map(({ name, list }) => list.length > 0 ?
+          <div className={'grid-4'}>
+            <h6 className={'one-third'}>{transportName[name][lang]}</h6>
+            <ul className={'two-thirds'}>
+              {list.map((i) => (
+                <div className={style[`transport-${name}`]}>{i.name}</div>
+              ))}
+            </ul>
+          </div>
+          : ''
+        )*/}
       </section>
     );
   }
@@ -93,10 +94,10 @@ class ApartmentDescription extends PureComponent {
                 <CroppedContainer height={150}>
                   <h5><Text id="nearbySchool">Nearby School(s)</Text></h5>
                   <ul className={style.nearbySchools}>
-                    {districtFeatures
+                    {/*districtFeatures
                       .filter(({ taxonomy }) => taxonomy === 'nearby-school')
                       .map((school) => (<li>{school.name}</li>))
-                    }
+                    */}
                   </ul>
                 </CroppedContainer>
               </div>
@@ -127,10 +128,7 @@ function mapStateToProps({ route: { lang, roomId }, rooms, apartments, districts
   const apartment = apartments[rooms[roomId].ApartmentId];
   const district = apartment && districts[apartment._DistrictId];
 
-  if (
-    !apartment || apartment.isLoading || !apartment.Terms ||
-    !district || district.isLoading || !district.Terms
-  ) {
+  if ( !apartment || apartment.isLoading || !district || district.isLoading ) {
     return { isLoading: true };
   }
 
@@ -138,8 +136,8 @@ function mapStateToProps({ route: { lang, roomId }, rooms, apartments, districts
     lang,
     apartment,
     district,
-    apartmentFeatures: apartment.Terms,
-    districtFeatures: district.Terms,
+    apartmentFeatures: Utils.getFeatures(apartment),
+    districtFeatures: Utils.getFeatures(district),
   };
 }
 

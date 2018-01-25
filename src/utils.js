@@ -6,10 +6,11 @@ import memoize    from 'memoize-immutable';
 import reduce     from 'lodash/reduce';
 import filter     from 'lodash/filter';
 import capitalize from 'lodash/capitalize';
+import values     from 'lodash/values';
 import _const     from '~/const';
 import holidays   from './holidays.json';
 
-const _ = { reduce, filter, capitalize };
+const _ = { reduce, filter, capitalize, values };
 const {
   BASIC_PACK,
   SPECIAL_CHECKIN_FEES,
@@ -155,6 +156,29 @@ const pureUtils = {
       return 'mastercard';
     }
     return null;
+  },
+  getPictures(place) {
+    return _.values(_.reduce(place, (acc, attr, attrName) => {
+      const matches = attrName.match(/^pic (\d+) (\w+)/);
+
+      if ( matches ) {
+        acc[matches[1]] = Object.assign({ [matches[2]]: attr }, acc[matches[1]]);
+      }
+
+      return acc;
+    }, {}));
+  },
+  getFeatures(place) {
+    return _.reduce(place, (acc, val, attrName) => {
+      const matches =
+        val === true && attrName.match(/^[^-]+-features-([^-]+)-([^-]+)/);
+
+      if ( matches ) {
+        acc[matches[1]] = (acc[matches[1]] || []).concat(matches[2]);
+      }
+
+      return acc;
+    }, {});
   },
 };
 

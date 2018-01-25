@@ -1,10 +1,11 @@
-import { Component }      from 'react';
+import { Component }          from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { IntlProvider } from 'preact-i18n';
-import * as actions           from '~/actions';
+import { IntlProvider }       from 'preact-i18n';
 import Portal                 from 'preact-portal';
-import Carousel                   from '~/components/Carousel';
+import Utils                  from '~/utils';
+import * as actions           from '~/actions';
+import Carousel               from '~/components/Carousel';
 
 import style from './style.css';
 
@@ -85,10 +86,7 @@ const definition = { 'fr-FR': {
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
   const room = rooms[roomId];
   const apartment = apartments[apartmentId];
-  const pictures = [].concat(...[
-    (room && room.Pictures || []),
-    (apartment && apartment.Pictures || []).filter(({ alt }) => alt !== 'floorPlan'),
-  ].map((pics) => pics.sort((a, b) => a.order - b.order)));
+  const pictures = [].concat(Utils.getPictures(room), Utils.getPictures(apartment));
 
   return {
     lang,
