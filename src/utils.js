@@ -200,7 +200,7 @@ const Utils = {
       window.Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/London';
     const url =
       `${API_BASE_URL}${_url}${/\?/.test(_url) ? '&' : '?'}timezone=${timezone}`;
-    options.credentials = 'include';
+    //options.credentials = 'include';
     // We assume we will only send json or FormData
     // (anything else will thus cause problems)
     if ( /^post$/i.test(options.method) ) {

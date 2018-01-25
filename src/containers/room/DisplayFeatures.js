@@ -7,24 +7,55 @@ import capitalize             from 'lodash/capitalize';
 import values                 from 'lodash/values';
 import mapValues              from 'lodash/mapValues';
 import * as actions           from '~/actions';
+import featureDetails         from '~/components/Features/features';
+import CroppedContainer       from '~/components/room/CroppedContainer';
+import style from './style.css';
+
+
 
 const _ = { capitalize, values, mapValues };
-class DisplayFeatures extends PureComponent {
-  renderFeatures(category, _taxonomy, allFeatures) {
-    const features = allFeatures.filter(({ taxonomy }) => taxonomy === _taxonomy);
 
+class DisplayFeatures extends PureComponent {
+  renderFeatures(category, _taxonomy, allFeatures, featureDetails, lang) {
+    const features = allFeatures.filter(({ taxonomy }) => taxonomy === _taxonomy);
     if ( features.length === 0 ) {
       return '';
     }
 
+    let leftFeatures = features.slice(0, Math.ceil(features.length / 2));
+    let rightFeatures = features.slice(Math.ceil(features.length / 2));
+
+    const renderFeature = ({ name }) => {
+      if (featureDetails[name] === undefined) {
+        return (<li>{name}</li>);
+      }
+      return (<li>
+        <i className={'icon-24 ' + featureDetails[name].css} />
+        <span>{featureDetails[name][lang]}</span>
+      </li>);
+    };
+
     return (
-      <section>
-        <h5>
+      <section className={[style.featuresColumn, features.length > 10 ? style.featuresColumnLarge: ''].join(' ')}>
+        <h5 className={style.featuresRoom}>
           <Text id={category}>{_.capitalize(category)}</Text>
         </h5>
-        <ul class="grid-4 has-gutter-l">
-          {features.map(({ name }) => (<li>{name}</li>))}
-        </ul>
+        <CroppedContainer height={170}>
+        { features.length > 10 ? (
+          <div className="grid-2">
+            <div className="one-half">
+              <ul>
+                {leftFeatures.map(renderFeature)}
+              </ul>
+            </div>
+            <div className="one-half">
+              <ul>
+                {rightFeatures.map(renderFeature)}
+              </ul>
+            </div>
+          </div>
+        ) : <ul>{features.map(renderFeature)}</ul> }
+        </CroppedContainer>
       </section>
     );
   }
@@ -47,16 +78,30 @@ class DisplayFeatures extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <section>
-          <h3><Text id="title">Features</Text></h3>
+          <h3 className={style.heading}><Text id="title">Features</Text></h3>
           <br />
-          <h4><Text id="room">Room</Text></h4>
-          {['sleep', 'dress', 'work', 'general'].map((taxonomy) => this.renderFeatures(
-            taxonomy, `room-features-${taxonomy}`, roomFeatures
-          ))}
-          <h4><Text id="apartment">Apartment</Text></h4>
-          {['kitchen', 'bathroom', 'general'].map((taxonomy) => this.renderFeatures(
-            taxonomy, `apartment-features-${taxonomy}`, apartmentFeatures
-          ))}
+          <h4 className={style.subtitle}>
+            <span>
+              <Text id="room" >Room</Text>
+            </span>
+          </h4>
+          <div className={style.featuresContent}>
+            {['sleep', 'dress', 'work', 'general'].map((taxonomy) => this.renderFeatures(
+              taxonomy, `room-features-${taxonomy}`,
+              roomFeatures, featureDetails.Room[`room-features-${taxonomy}`], lang
+            ))}
+          </div>
+          <h4 className={style.subtitle}>
+            <span>
+              <Text id="apartment">Apartment</Text>
+            </span>
+          </h4>
+          <div className={style.featuresContent}>
+            {['kitchen', 'bathroom', 'general'].map((taxonomy) => this.renderFeatures(
+              taxonomy, `apartment-features-${taxonomy}`,
+              apartmentFeatures, featureDetails.Apartment[`apartment-features-${taxonomy}`], lang
+            ))}
+          </div>
         </section>
       </IntlProvider>
     );
