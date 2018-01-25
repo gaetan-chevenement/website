@@ -942,16 +942,16 @@
     background-image: url(../assets/rooms/picto_disponibilite_ok_64px.png);
 }
 
-.picto-picto_disponibilité_indisponible {
-    background-image: url(../assets/rooms/picto_disponibilité_indisponible.png);
+.picto-picto_disponibilite_indisponible {
+    background-image: url(../assets/rooms/picto_disponibilite_indisponible.png);
 }
 
-.picto-picto_disponibilité_indisponible_16px {
-    background-image: url(../assets/rooms/picto_disponibilité_indisponible_16px.png);
+.picto-picto_disponibilite_indisponible_16px {
+    background-image: url(../assets/rooms/picto_disponibilite_indisponible_16px.png);
 }
 
-.picto-picto_disponibilité_indisponible_64px {
-    background-image: url(../assets/rooms/picto_disponibilité_indisponible_64px.png);
+.picto-picto_disponibilite_indisponible_64px {
+    background-image: url(../assets/rooms/picto_disponibilite_indisponible_64px.png);
 }
 
 .picto-picto_fleche_guide_logement {
@@ -1049,4 +1049,3 @@
 .picto-smartphonecall_64px {
     background-image: url(../assets/rooms/smartphonecall_64px.png);
 }
-

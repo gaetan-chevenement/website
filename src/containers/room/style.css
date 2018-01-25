@@ -72,7 +72,7 @@
 .subtitle {
   font-size: 1em;
   position: relative;
-  color: var(--greyish);
+  color: var(--color-greyish);
   margin-top: 25px;
   margin-bottom: 15px;
 }
@@ -339,7 +339,7 @@
 /* = FLOOR PLAN = */
 
 .planNotice {
-  color: var(--greyish);
+  color: var(--color-greyish);
   text-align: center;
   margin-top: 30px;
   font-size: var(--text-small);

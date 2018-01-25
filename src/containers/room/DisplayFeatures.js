@@ -7,13 +7,12 @@ import capitalize             from 'lodash/capitalize';
 import values                 from 'lodash/values';
 import mapValues              from 'lodash/mapValues';
 import * as actions           from '~/actions';
-import featureDetails         from '~/components/Features/features';
+import _const                 from '~/const';
 import CroppedContainer       from '~/components/room/CroppedContainer';
 import style from './style.css';
 
-
-
 const _ = { capitalize, values, mapValues };
+const { ENUMS } = _const;
 
 class DisplayFeatures extends PureComponent {
   renderFeatures(category, _taxonomy, allFeatures, featureDetails, lang) {
@@ -41,20 +40,20 @@ class DisplayFeatures extends PureComponent {
           <Text id={category}>{_.capitalize(category)}</Text>
         </h5>
         <CroppedContainer height={170}>
-        { features.length > 10 ? (
-          <div className="grid-2">
-            <div className="one-half">
-              <ul>
-                {leftFeatures.map(renderFeature)}
-              </ul>
+          { features.length > 10 ? (
+            <div className="grid-2">
+              <div className="one-half">
+                <ul>
+                  {leftFeatures.map(renderFeature)}
+                </ul>
+              </div>
+              <div className="one-half">
+                <ul>
+                  {rightFeatures.map(renderFeature)}
+                </ul>
+              </div>
             </div>
-            <div className="one-half">
-              <ul>
-                {rightFeatures.map(renderFeature)}
-              </ul>
-            </div>
-          </div>
-        ) : <ul>{features.map(renderFeature)}</ul> }
+          ) : <ul>{features.map(renderFeature)}</ul> }
         </CroppedContainer>
       </section>
     );
@@ -88,7 +87,7 @@ class DisplayFeatures extends PureComponent {
           <div className={style.featuresContent}>
             {['sleep', 'dress', 'work', 'general'].map((taxonomy) => this.renderFeatures(
               taxonomy, `room-features-${taxonomy}`,
-              roomFeatures, featureDetails.Room[`room-features-${taxonomy}`], lang
+              roomFeatures, ENUMS[`room-features-${taxonomy}`], lang
             ))}
           </div>
           <h4 className={style.subtitle}>
@@ -99,7 +98,7 @@ class DisplayFeatures extends PureComponent {
           <div className={style.featuresContent}>
             {['kitchen', 'bathroom', 'general'].map((taxonomy) => this.renderFeatures(
               taxonomy, `apartment-features-${taxonomy}`,
-              apartmentFeatures, featureDetails.Apartment[`apartment-features-${taxonomy}`], lang
+              apartmentFeatures, ENUMS[`apartment-features-${taxonomy}`], lang
             ))}
           </div>
         </section>
