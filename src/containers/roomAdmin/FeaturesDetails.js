@@ -12,10 +12,12 @@ import mapValues              from 'lodash/mapValues';
 import autobind               from 'autobind-decorator';
 import ApartmentDetails       from '~/containers/roomAdmin/ApartmentDetails';
 import RoomDetails            from '~/containers/roomAdmin/RoomDetails';
-import Features               from '~/components/Features/features';
+import _const                 from '~/const';
 import * as actions           from '~/actions';
 
 const _ = { capitalize, values, mapValues };
+const { ENUMS } = _const;
+
 class FeaturesDetails extends PureComponent {
   @autobind
   saveChange(event, value) {
@@ -71,7 +73,7 @@ class FeaturesDetails extends PureComponent {
   renderFeatures(taxonomy, category) {
     const { lang } = this.props;
     const InitializedFeatures = this.props[`${category}Features`];
-    const featuresList = _.values(_.mapValues(Features[category][taxonomy],(value, key, object) => Object.assign(
+    const featuresList = _.values(_.mapValues(ENUMS[taxonomy],(value, key, object) => Object.assign(
       object[key],
       {
         termable: category,
