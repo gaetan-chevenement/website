@@ -89,9 +89,13 @@ class CardForm extends PureComponent {
         );
         canRetry = true;
       }
-      else if ( /(doNotHonor|unauthorized|tooManyAttempts)/.test(errors.payment) ) {
-        errorMessage =
-          <Text id="errors.doNotHonor">The payment has been declined by your bank.</Text>;
+      else if ( /(doNotHonor|unauthorized|tooManyAttempts|amountLimit)/.test(errors.payment) ) {
+        errorMessage = (
+          <span>
+            <Text id="errors.doNotHonor">The payment has been declined by your bank.</Text><br />
+            <i>code: {errors.payment}</i>
+          </span>
+        );
         canRetry = true;
       }
       else {
