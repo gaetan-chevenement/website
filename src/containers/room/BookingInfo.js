@@ -1,12 +1,13 @@
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { IntlProvider } from 'preact-i18n';
-import * as actions           from '~/actions';
+import { IntlProvider }       from 'preact-i18n';
+import { Link }               from 'preact-router/match';
 import { Button }             from 'react-toolbox/lib/button';
+import * as actions           from '~/actions';
 
 import style from './style.css';
 
-const BookingInfo = ({ lang }) => {
+const BookingInfo = ({ lang, roomId }) => {
   const priceLineClasses = ['grid-4', 'has-gutter', style.priceLine].join(' ');
   return (
     <IntlProvider definition={definition[lang]}>
@@ -104,8 +105,8 @@ const BookingInfo = ({ lang }) => {
           </li>
         </ul>
 
-        <Button className={style.bookThisRoom}>
-          <a>Réserver ce logement</a>
+        <Button className={style.bookThisRoom} href={`/${lang}/booking/${roomId}`}>
+          Réserver ce logement
         </Button>
 
         <div className="grid-2 has-gutter">
