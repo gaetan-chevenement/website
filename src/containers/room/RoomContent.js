@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { IntlProvider } from 'preact-i18n';
-import DisplayFeatures        from '~/containers/room/DisplayFeatures';
+import { IntlProvider }       from 'preact-i18n';
+import Features               from '~/containers/room/Features';
 import Pictures               from '~/containers/room/Pictures';
 import HouseMates             from '~/components/room/HouseMates';
 import Description            from '~/containers/room/Description';
@@ -51,7 +51,7 @@ const RoomContent = ({ lang, roomId, apartmentId, roomName, apartment }) => (
             <a id="description" className={style.roomAnchor} />
             <Description roomId={roomId} apartmentId={apartmentId} />
             <a id="features" className={style.roomAnchor} />
-            <DisplayFeatures roomId={roomId} apartmentId={apartmentId} />
+            <Features roomId={roomId} apartmentId={apartmentId} />
             <a id="housemates" className={style.roomAnchor} />
             <HouseMates lang={lang} houseMates={apartment && apartment.HouseMates} roomId={roomId} />
             <a id="district" className={style.roomAnchor} />

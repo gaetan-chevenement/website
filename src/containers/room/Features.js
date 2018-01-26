@@ -15,7 +15,7 @@ import style from './style.css';
 const _ = { capitalize, values, mapValues };
 const { ENUMS } = _const;
 
-class DisplayFeatures extends PureComponent {
+class Features extends PureComponent {
   renderFeatures(category, _taxonomy, features = [], featureDetails, lang) {
     if ( features.length === 0 ) {
       return '';
@@ -140,4 +140,4 @@ function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DisplayFeatures);
+export default connect(mapStateToProps, mapDispatchToProps)(Features);
