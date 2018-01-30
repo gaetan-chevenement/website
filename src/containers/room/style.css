@@ -37,12 +37,21 @@
   margin-bottom: 2em;
 }
 
+.allPicsBtn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+
+}
+
 .coverPicture {
   height: calc(100vh - var(--header-height) * 2);
   width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
   margin-bottom: 0;
+  position: relative;
 }
 
 .coverPictureRoomName {

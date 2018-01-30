@@ -32,9 +32,6 @@ class Pictures extends Component {
     });
   }
 
-  renderPicture({ url, alt, order }, onClick) {
-
-  }
   render() {
     const {
       lang,

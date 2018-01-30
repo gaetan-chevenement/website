@@ -4,21 +4,30 @@ import { IntlProvider }       from 'preact-i18n';
 import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 import { Button }             from 'react-toolbox/lib/button';
+import Portal                 from 'preact-portal';
+import Carousel               from '~/components/Carousel';
 
 import style from '~/containers/room/style.css';
 import { Component } from 'preact';
 
 class Header extends Component {
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this._handleScroll);
-  }
 
   constructor(props) {
     super(props);
     this.state = {
       showBookBtn: false,
+      showSlideshow: false
     };
     this._handleScroll = this.handleScroll.bind(this);
+    this._toggleSlideshow = () => this.setState({showSlideshow: !this.state.showSlideshow});
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this._handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._handleScroll);
   }
 
   handleScroll() {
@@ -32,10 +41,6 @@ class Header extends Component {
     }
   }
 
-  componentDidMount() {
-    window.addEventListener('scroll', this._handleScroll);
-  }
-
   render() {
     const { lang, pictures, roomName, roomId } = this.props;
     const localStyle = {
@@ -43,9 +48,23 @@ class Header extends Component {
     };
     const btnState =  this.state.showBookBtn ? style.fixedHeaderShown : style.fixedHeaderHidden;
 
+    let portal = null;
+    if (this.state.showSlideshow) {
+      portal = (
+        <Portal into="body">
+          <div className={style.carouselOverlay} onClick={this._toggleSlideshow}>
+            <Carousel lazy slide arrows className={style.coverPicture}>
+              {pictures.map(({ url }) => <img src={url} />)}
+            </Carousel>
+          </div>
+        </Portal>
+      );
+    }
+
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
+          {portal}
           <div className={[style.fixedHeader, btnState].join(' ')}>
             <Button className={style.bookThisRoom} href={`/${lang}/booking/${roomId}`}>
               Réserver ce logement
@@ -53,6 +72,9 @@ class Header extends Component {
           </div>
           <section className={style.coverPicture} style={localStyle}>
             <div className={style.coverPictureRoomName}>{ roomName }</div>
+            <Button className={style.allPicsBtn} onClick={this._toggleSlideshow}>
+              Voir toutes les photos
+            </Button>
           </section>
         </div>
       </IntlProvider>
