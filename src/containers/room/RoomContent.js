@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { IntlProvider }       from 'preact-i18n';
+import { IntlProvider } from 'preact-i18n';
 import Features               from '~/containers/room/Features';
 import Pictures               from '~/containers/room/Pictures';
 import HouseMates             from '~/components/room/HouseMates';
@@ -19,8 +19,8 @@ const RoomContent = ({ lang, roomId, apartmentId, roomName, apartment }) => (
   <IntlProvider definition={definition[lang]}>
     <div className={style.roomPage}>
       <div className={['content', 'content-wide', style.roomContent].join(' ')}>
-        <div className="grid-10 has-gutter">
-          <div className="two-thirds">
+        <div className={style.mainColumns}>
+          <div>
             <div className={[style.leftHeader]}>
               {roomName}
             </div>
@@ -57,7 +57,7 @@ const RoomContent = ({ lang, roomId, apartmentId, roomName, apartment }) => (
             <a id="district" className={style.roomAnchor} />
             <ApartmentDescription />
           </div>
-          <div className="one-third">
+          <div>
             <div className={style.rightHeader}>
               <i className="icon-32 picto-picto_disponibilite_ok" />
               <span>Disponible immédiatement</span>

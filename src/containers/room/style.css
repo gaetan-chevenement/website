@@ -5,6 +5,34 @@
 
 }
 
+.fixedHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 80px;
+  width: 100%;
+  background: white;
+  padding: 10px 20%;
+  z-index: 1000;
+  transition: opacity ease-out 250ms;
+}
+
+.fixedHeaderHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fixedHeaderShown {
+  opacity: 1;
+  pointer-events: all;
+}
+
+@media screen and (min-width: 1025px) {
+  .fixedHeader {
+    display: none;
+  }
+}
+
 .roomPage section {
   margin-bottom: 2em;
 }
@@ -15,6 +43,18 @@
   background-size: cover;
   background-repeat: no-repeat;
   margin-bottom: 0;
+}
+
+.coverPictureRoomName {
+  background: rgba(0, 0, 0, 0.6);
+  height: 60px;
+  line-height: 40px;
+  color: white;
+  font-family: var(--headings-font-family);
+  font-size: 1.4rem;
+  font-weight: bold;
+  padding: 10px 20px;
+
 }
 
 .coverPictureInner {
@@ -39,6 +79,12 @@
   padding: 10px 20px;
 }
 
+@media screen and (max-width: 1024px) {
+  .leftHeader {
+    display: none;
+  }
+}
+
 .rightHeader {
   display: flex;
   justify-content: center;
@@ -49,11 +95,37 @@
   margin-right: 5px;
 }
 
+.mainColumns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mainColumns > div:first-child {
+  flex: 0 0 63%;
+}
+
+.mainColumns > div:last-child {
+  flex: 0 0 35%;
+}
+
+@media screen and (max-width: 1024px) {
+  .mainColumns {
+    flex-direction: column-reverse;
+  }
+}
+
 .roomContent {
   position: relative;
   margin-top: -60px;
   font-size: 12px;
   font-family: var(--preferred-font);
+}
+
+
+@media screen and (max-width: 1024px) {
+  .roomContent {
+    margin-top: 20px;
+  }
 }
 
 
@@ -72,9 +144,15 @@
 .subtitle {
   font-size: 1em;
   position: relative;
-  color: var(--color-greyish);
+  color: var(--greyish);
   margin-top: 25px;
   margin-bottom: 15px;
+}
+
+@media screen and (max-width: 1024px) {
+  .subtitle {
+    margin-top: 0px;
+  }
 }
 
 .subtitle span {
@@ -109,6 +187,7 @@
   margin-top: 20px;
   padding: 0 0 5px;
   border-bottom: 1px solid black;
+  flex-wrap: wrap;
 }
 
 .links li {
@@ -278,6 +357,12 @@
   font-size: 20px;
 }
 
+@media screen and (max-width: 1024px) {
+  .pictures {
+    display: none;
+  }
+}
+
 .carouselOverlay {
   position: fixed;
   left: 0;
@@ -321,7 +406,7 @@
 }
 
 .featuresColumn {
-  flex: 1 0 200px;
+  flex: 1 2 200px;
 }
 
 .featuresColumnLarge {
@@ -336,10 +421,37 @@
   margin-left: 20px;
 }
 
+@media screen and (max-width: 1024px) {
+  .featuresContent {
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  .featuresColumn {
+    flex: 1 2 100%;
+    margin-left: 0 !important;
+    border-right: 0 !important;
+  }
+
+  .featuresColumn ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .featuresColumn ul li {
+    margin-right: 20px;
+  }
+
+  .featuresColumnLarge {
+    flex: 2 0 100%;
+  }
+}
+
+
 /* = FLOOR PLAN = */
 
 .planNotice {
-  color: var(--color-greyish);
+  color: var(--greyish);
   text-align: center;
   margin-top: 30px;
   font-size: var(--text-small);
@@ -387,6 +499,21 @@
   justify-content: center;
   margin-top: 5px;
 }
+
+@media screen and (max-width: 1024px) {
+  .housemates {
+    justify-content: space-between;
+  }
+
+  .housemate {
+    width: 23%;
+  }
+
+  .housemateBookBtn {
+    min-width: 0;
+  }
+}
+
 
 /* = DISTRICT = */
 
@@ -436,11 +563,19 @@
   padding: 0;
 }
 
+@media screen and (max-width: 1024px) {
+  .districtContent > div:not(:first-child) {
+    border: 0;
+    padding-left: 0;
+    margin-top: 20px;
+  }
+}
 
 /* = SERVICES = */
 
 .service {
-  margin-top: 20px;
+  clear: both;
+  padding-top: 20px;
 }
 
 .service img {
@@ -527,6 +662,16 @@
   font-size: 13px;
 }
 
+@media screen and (max-width: 1024px) {
+  .questionsButtons {
+    align-items: center;
+  }
+
+  .questionsInfos {
+    text-align: center;
+  }
+}
+
 /* = GUIDE = */
 
 .downloadGuideBtn {
@@ -593,4 +738,24 @@
   background-size: contain;
   background-repeat: no-repeat;
   margin-right: 10px;
+}
+
+@media screen and (max-width: 1024px) {
+  .guide {
+    padding: 10px 20px;
+    margin-top: 20px;
+  }
+  .guideImg {
+    display: none;
+  }
+}
+
+
+.buttonsDivide {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonsDivide > div {
+  flex: 0 0 48%;
 }
