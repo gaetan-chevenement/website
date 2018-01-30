@@ -57,6 +57,12 @@
 
 }
 
+@media screen and (min-width: 1025px) {
+  .coverPictureRoomName {
+    display: none;
+  }
+}
+
 .coverPictureInner {
   position: relative;
 }

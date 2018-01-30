@@ -71,6 +71,7 @@ const RoomContent = ({ lang, roomId, apartmentId, roomName, apartment }) => (
           </div>
         </div>
       </div>
+      <a id="map" className={style.roomAnchor} />
       <SingleMap apartment={apartment} />
       <RoomServices />
       <Questions />
