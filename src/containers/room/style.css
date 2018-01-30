@@ -27,8 +27,20 @@
   pointer-events: all;
 }
 
+.allPicsBtn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+
+}
+
 @media screen and (min-width: 1025px) {
   .fixedHeader {
+    display: none;
+  }
+
+  .allPicsBtn {
     display: none;
   }
 }
@@ -37,12 +49,13 @@
   margin-bottom: 2em;
 }
 
-.allPicsBtn {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background: white;
 
+
+.slideshowImg {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
 }
 
 .coverPicture {

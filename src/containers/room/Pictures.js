@@ -55,7 +55,7 @@ class Pictures extends Component {
         <Portal into="body">
           <div className={style.carouselOverlay} onClick={this.__onContClicked}>
             <Carousel lazy slide arrows className={style.coverPicture}>
-              {pictures.map(({ url }) => <img src={url} />)}
+              {pictures.map(({ url }) => <div className={style.slideshowImg} style={`background-image: url(${url})`} />)}
             </Carousel>
           </div>
         </Portal>
