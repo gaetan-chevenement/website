@@ -430,6 +430,7 @@
 
 .featuresColumn {
   flex: 1 2 200px;
+  margin-bottom: 5px !important;
 }
 
 .featuresColumnLarge {
