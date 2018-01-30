@@ -626,7 +626,7 @@
 .questions {
   background-color: var(--color-blue-background);
   color: white;
-  padding: 1px 0 5px 0;
+  padding: 1px 0 0.9em 0;
 }
 
 .questionsButtons {
@@ -722,7 +722,7 @@
 
 .guide {
   background-color: rgb(243, 244, 245);
-  padding: 10px 20% 0 20%;
+  padding: 0 15% 5px 15%;
   margin-top: 200px;
 }
 
@@ -734,6 +734,8 @@
   background-size: contain;
   background-repeat: no-repeat;
   margin-top: -100px;
+  position: relative;
+  top: 5px;
 }
 
 .guide h2 {
