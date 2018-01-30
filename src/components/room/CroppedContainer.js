@@ -29,14 +29,18 @@ class CroppedContainer extends Component {
     this.state = {
       showAll: false,
       container: null,
+      toggledOnce: false
     };
-    this.__toggleFunc = () => this.setState({ showAll: ! this.state.showAll });
+    this.__toggleFunc = () => this.setState({
+      showAll: ! this.state.showAll,
+      toggledOnce: true,
+    });
     this.__setRefFunc = container => this.setState({ container });
   }
 
   render() {
     const { children, height } = this.props;
-    const { showAll, container } = this.state;
+    const { showAll, container, toggledOnce } = this.state;
 
     let elstyle = {
       transition: 'max-height 500ms ease-out',
@@ -45,7 +49,7 @@ class CroppedContainer extends Component {
 
     let isOverflowing = false;
 
-    if (!showAll && (container === null || checkOverflow(container))) {
+    if (!showAll && (toggledOnce || container === null || checkOverflow(container))) {
       isOverflowing = true;
       elstyle.maxHeight = `${height}px`;
       elstyle.overflow = 'hidden';
