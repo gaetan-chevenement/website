@@ -105,18 +105,18 @@ const BookingInfo = ({ lang, roomId }) => {
           </li>
         </ul>
 
-        <Button className={style.bookThisRoom} href={`/${lang}/booking/${roomId}`}>
+        <Button className={style.bookThisRoom} href={`/${lang}/booking/${roomId}`} id="bookBtn">
           Réserver ce logement
         </Button>
 
-        <div className="grid-2 has-gutter">
-          <div className="one-half">
+        <div className={style.buttonsDivide}>
+          <div>
             <Button className={style.btnWhite}>
               <i class="icon-24 picto-bouton_visite" />
               <span>Visiter</span>
             </Button>
           </div>
-          <div className="one-half">
+          <div>
             <Button className={style.btnWhite}>
               <i class="icon-24 picto-r" />
               <span>Demander</span>
