@@ -15,7 +15,7 @@ export default {
   'color-pack-privilege': '#6282AD',
   'color-greyish': 'rgb(136, 136, 136)',
   'color-blue-background': 'rgb(58, 88, 148)',
-  'text-notice': '0.5rem',
+  'text-notice': '0.6rem',
   'text-small': '0.8rem',
   'text-normal': '1rem',
   'text-big': '1.2rem',

@@ -11,6 +11,16 @@ import style from '~/containers/room/style.css';
 import { Component } from 'preact';
 
 class Header extends Component {
+  handleScroll() {
+    const $el = document.getElementById('bookBtn');
+    if ($el !== null) {
+      const maxPos = $el.offsetTop + window.innerHeight;
+      const showBookBtn = document.documentElement.scrollTop > maxPos;
+      if (this.state.showBookBtn !== showBookBtn) {
+        this.setState({ showBookBtn });
+      }
+    }
+  }
 
   constructor(props) {
     super(props);
@@ -28,17 +38,6 @@ class Header extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this._handleScroll);
-  }
-
-  handleScroll() {
-    const $el = document.getElementById('bookBtn');
-    if ($el !== null) {
-      const maxPos = $el.offsetTop + window.innerHeight;
-      const showBookBtn = document.documentElement.scrollTop > maxPos;
-      if (this.state.showBookBtn !== showBookBtn) {
-        this.setState({ showBookBtn });
-      }
-    }
   }
 
   render() {

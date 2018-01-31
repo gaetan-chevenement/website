@@ -44,11 +44,9 @@ const HouseMate = ({ houseMate, idx, lang }) => {
             lang === 'en-US' ? 'now' : 'immédiatement' :
             lang === 'en-US' ? `at ${D.format(houseMate.availableAt, 'DD/MM/YYYY')}`: `le ${D.format(houseMate.availableAt, 'DD/MM/YYYY')}`}
         </div>
-        <Button raised primary
-          className={style.housemateBookBtn}
-          label={'Book'}
-          href={`/${lang}/room/${houseMate.roomId}`}
-        />
+        <Button raised primary href={`/${lang}/room/${houseMate.roomId}`}>
+          Book
+        </Button>
       </div>
     );
   }

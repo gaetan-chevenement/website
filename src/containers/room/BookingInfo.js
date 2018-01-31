@@ -105,21 +105,21 @@ const BookingInfo = ({ lang, roomId }) => {
           </li>
         </ul>
 
-        <Button className={style.bookThisRoom} href={`/${lang}/booking/${roomId}`} id="bookBtn">
-          Réserver ce logement
-        </Button>
+        <p>
+          <Button raised primary href={`/${lang}/booking/${roomId}`} id="bookBtn" style="width: 100%">
+            Réserver ce logement
+          </Button>
+        </p>
 
         <div className={style.buttonsDivide}>
           <div>
-            <Button className={style.btnWhite}>
-              <i class="icon-24 picto-bouton_visite" />
+            <Button raised icon="local_see" style="width: 100%">
               <span>Visiter</span>
             </Button>
           </div>
           <div>
-            <Button className={style.btnWhite}>
-              <i class="icon-24 picto-r" />
-              <span>Demander</span>
+            <Button raised icon="question_answer" style="width: 100%">
+              <span>Demande d'info</span>
             </Button>
           </div>
         </div>

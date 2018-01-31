@@ -172,7 +172,7 @@
 .subtitle {
   font-size: 1em;
   position: relative;
-  color: var(--greyish);
+  color: var(--color-greyish);
   margin-top: 25px;
   margin-bottom: 15px;
 }
@@ -417,7 +417,7 @@
 }
 
 .descriptionItems li i, .featuresColumn li i {
-  margin-right: 15px;
+  margin-right: 10px;
 }
 
 /* = FEATURES = */
@@ -475,7 +475,7 @@
 /* = FLOOR PLAN = */
 
 .planNotice {
-  color: var(--greyish);
+  color: var(--color-greyish);
   text-align: center;
   margin-top: 30px;
   font-size: var(--text-small);
@@ -630,27 +630,10 @@
   padding: 1px 0 0.9em 0;
 }
 
-.questionsButtons {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.questionsButton {
-  background: #1c2b4a;
-  color: white !important;
-  height: 40px;
-  width: 200px;
-  border-radius: 5px;
+.questions [class*="button"] {
   margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  padding-left: 15px;
-  font-size: 13px;
-}
-
-.questionsButton i {
-  margin-right: 10px;
+  min-width: 50%;
+  display: inline-block;
 }
 
 .questions h2 {
@@ -658,12 +641,18 @@
   margin-bottom: 0.3em;
 }
 
-.questionsInfos {
+.questionsLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.questionsRight {
   padding-left: 30px;
   display: flex;
 }
 
-.questionsInfosPicto {
+.questionsPhone {
   width: 50px;
   height: 100%;
   background-size: contain;
@@ -676,22 +665,12 @@
   margin-bottom: 30px;
 }
 
-.questionsPhone {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.questionsCoords {
-  font-size: 13px;
-}
-
 @media screen and (max-width: 1024px) {
-  .questionsButtons {
+  .questionsLeft {
     align-items: center;
   }
 
-  .questionsInfos {
+  .questionsRight {
     text-align: center;
   }
 }

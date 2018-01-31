@@ -1,12 +1,12 @@
-import style from '~/containers/room/style.css';
-
 import { Button }             from 'react-toolbox/lib/button';
+
+import style from '~/containers/room/style.css';
 
 const Guide = () => (
   <div className={style.guide}>
     <div className="grid-2">
       <div className="one-half">
-        <h2>Notre guide logement offert</h2>
+        <h2>Guide logement gratuit</h2>
         <div className="grid-2">
           <ul className="one-half">
             <li className={style.guideBullet}>
@@ -30,9 +30,8 @@ const Guide = () => (
           </ul>
         </div>
         <div>
-          <Button className={style.downloadGuideBtn}>
-            <span>Je télécharge mon Guide Logement</span>
-            <i className="picto-picto_fleche_guide_logement_64px" />
+          <Button raised icon="file_download">
+            <span>Obtenir le guide logement</span>
           </Button>
         </div>
       </div>
@@ -45,4 +44,3 @@ const Guide = () => (
 
 
 export default Guide;
-

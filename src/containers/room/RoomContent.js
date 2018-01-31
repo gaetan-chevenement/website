@@ -60,7 +60,7 @@ const RoomContent = ({ lang, roomId, apartmentId, roomName, apartment }) => (
           <div>
             <div className={style.rightHeader}>
               <i className="icon-32 picto-picto_disponibilite_ok" />
-              <span>Disponible immédiatement</span>
+              <span>Dispo. Immédiate</span>
             </div>
             <BookingInfo roomId={roomId} apartmentId={apartmentId} />
             <div className={style.sameRoomCount}>
