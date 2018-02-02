@@ -17,15 +17,13 @@ class BookingStep2 extends PureComponent {
       bookingDate,
     } = this.props;
 
-    if ( !renting ) {
-      return Promise.all([
-        actions.getRenting(rentingId),
-        actions.listOrders({ rentingId }),
-      ])
-        .then(([{ response }]) =>
-          !bookingDate && actions.getRoom(response.data.relationships.Room.data.id)
-        );
-    }
+    return Promise.all([
+      !renting && actions.getRenting(rentingId),
+      actions.listOrders({ rentingId }),
+    ])
+      .then(([{ response }]) =>
+        !bookingDate && actions.getRoom(response.data.relationships.Room.data.id)
+      );
   }
 
   render() {
@@ -90,7 +88,11 @@ function mapStateToProps({ rentings, rooms, booking, orders }, { lang, rentingId
   const bookingDate = room && Utils.getBookingDate(room);
   const packOrder = Utils.classifyRentingOrders({ rentingId, orders }).pack;
 
-  if ( !renting || renting.isLoading || !room || room.isLoading || !bookingDate ) {
+  if (
+    !renting || renting.isLoading ||
+    !room || room.isLoading ||
+    orders.isLoading || !bookingDate
+  ) {
     return { isLoading: true };
   }
 

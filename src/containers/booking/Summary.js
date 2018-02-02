@@ -39,6 +39,7 @@ class Summary extends PureComponent {
       room,
       apartment,
       packLevel,
+      packPrice,
       client: {
         firstName,
         lastName,
@@ -67,7 +68,7 @@ class Summary extends PureComponent {
               </p>
               <p>{this.renderDetails([
                 <Text id="amount">Amount:</Text>,
-                <b>{PACK_PRICES[apartment.addressCity][packLevel] / 100}€</b>,
+                <b>{packPrice / 100}€</b>,
                 <Text id="dueDate.title">Due date:</Text>,
                 <span><b><Text id="dueDate.now">Immediately</Text></b>*</span>,
               ])}</p>
@@ -330,6 +331,7 @@ function mapStateToProps(args) {
     room,
     apartment,
     packLevel: booking.pack || packOrder && Utils.getPackLevel(packOrder),
+    packPrice: packOrder.amount,
     client,
     bookingDate,
     totalRent,
