@@ -94,93 +94,101 @@ export default class Invoice extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <div class={`invoice-content ${style['invoice-content']}`}>
-          <div class={style.logo}>
+          <header class={style.logo}>
             <span>
-              <img src={require('~/assets/icons/favicon-128.png')} />
+              <img src={require('~/assets/icons/favicon-128.png')} width="128" height="128" />
             </span>
-          </div>
-          <table class={`${style['table-0']} ${style.noborder}`} cellspacing="0" cellpadding="0">
-            <tr>
-              <td class={style.title}>Chez Nestor</td>
-              <td>Chez Nestor</td>
-            </tr>
-            <tr>
-              <td><a href="http://www.chez-nestor.com">www.chez-nestor.com</a></td>
-              <td>16, Rue de Condé</td>
-            </tr>
-            <tr>
-              <td><a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
-              </td>
-              <td>69002, Lyon</td>
-            </tr>
-            <tr>
-              <td>+33 (0) 972 323 102</td>
-              <td>France</td>
-            </tr>
-          </table>
-          <div class={style['invoice-title']}>
-            <p><Text id="title">Invoice</Text> #{order.receiptNumber}</p>
-          </div>
-          <table class={`${style['table-1']} ${style.noborder}`}>
-            <tr>
-              <td class={style.top}><b><Text id="due.date">Due Date</Text></b></td>
-              <td class={style.top}><b><Text id="due.amount">Amount Due</Text></b></td>
-              <td class={style.top}><b><Text id="address.billing">Billing Address</Text></b></td>
-              <td class={style.top}><b><Text id="address.property">Property Address</Text></b></td>
-            </tr>
-            <tr>
-              <td class="text-left">{D.format(order.dueDate, 'DD/MM/YYYY')}</td>
-              <td class="text-left">{order.amount / 100}€</td>
-              <td>{client.firstName} {client.lastName}</td>
-              <td>{addressStreet ? addressStreet : ''}</td>
-            </tr>
-            <tr>
-              <td />
-              <td />
-              <td >{address ? `${address.addr_line1} ${address.addr_line2}`: ''}</td>
-              <td>{addressZip && addressCity ? `${addressZip}, ${_.capitalize(addressCity)}` : ''}</td>
-            </tr>
-            <tr>
-              <td />
-              <td />
-              <td>{address ? `${address.postal}, ${address.city}, ${address.state}`: ''}</td>
-              <td>{addressCountry ? `${_.capitalize(addressCountry)}` : ''}</td>
-            </tr>
-            <tr>
-              <td />
-              <td />
-              <td>{address ? `${address.country}`: ''}</td>
-              <td />
-            </tr>
-            <tr>
-              <td class={style.bottom} />
-              <td class={style.bottom} />
-              <td class={style.bottom}>{client.email}</td>
-              <td class={style.bottom} />
-            </tr>
-          </table>
-          <table class={style['table-2']}>
-            <tr>
-              <td class="text-left"><strong><Text id="item">Item</Text></strong></td>
-              <td class="text-right"><strong><Text id="unitPrice">Unit Price</Text></strong></td>
-              <td class="text-right"><strong><Text id="vat">VAT Rate</Text></strong></td>
-              <td class="text-right"><strong><Text id="quantity">Quantity</Text></strong></td>
-              <td class="text-right"><strong>Total</strong></td>
-            </tr>
-            { ( order.OrderItems || [] ).map(this.renderOrderItem) }
-          </table>
-          <div class={style['invoice-part3']}>
-            <div class={style.conditions}>
-              <p>Conditions</p>
-              <p><Text id="conditions">
-                This rent invoice is valid only for the specified time period
-                and annuls any financial obligation. It does not waiver the
-                occupant from earlier unpaid rents and is provided subject
-                to any undergoing legal procedures.
-              </Text></p>
+          </header>
+          { isLoading ? (
+            <div class="content text-center">
+              <ProgressBar type="circular" mode="indeterminate" />
             </div>
-            {this.renderInvoiceDetails({ order, lang })}
-          </div>
+          ) : (
+            <div class="invoice-data">
+              <table class={`${style['table-0']} ${style.noborder}`} cellspacing="0" cellpadding="0">
+                <tr>
+                  <td class={style.title}>Chez Nestor</td>
+                  <td>Chez Nestor</td>
+                </tr>
+                <tr>
+                  <td><a href="http://www.chez-nestor.com">www.chez-nestor.com</a></td>
+                  <td>16, Rue de Condé</td>
+                </tr>
+                <tr>
+                  <td><a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
+                  </td>
+                  <td>69002, Lyon</td>
+                </tr>
+                <tr>
+                  <td>+33 (0) 972 323 102</td>
+                  <td>France</td>
+                </tr>
+              </table>
+              <div class={style['invoice-title']}>
+                <p><Text id="title">Invoice</Text> #{order.receiptNumber}</p>
+              </div>
+              <table class={`${style['table-1']} ${style.noborder}`}>
+                <tr>
+                  <td class={style.top}><b><Text id="due.date">Due Date</Text></b></td>
+                  <td class={style.top}><b><Text id="due.amount">Amount Due</Text></b></td>
+                  <td class={style.top}><b><Text id="address.billing">Billing Address</Text></b></td>
+                  <td class={style.top}><b><Text id="address.property">Property Address</Text></b></td>
+                </tr>
+                <tr>
+                  <td class="text-left">{D.format(order.dueDate, 'DD/MM/YYYY')}</td>
+                  <td class="text-left">{order.amount / 100}€</td>
+                  <td>{client.firstName} {client.lastName}</td>
+                  <td>{addressStreet ? addressStreet : ''}</td>
+                </tr>
+                <tr>
+                  <td />
+                  <td />
+                  <td >{address ? `${address.addr_line1} ${address.addr_line2}`: ''}</td>
+                  <td>{addressZip && addressCity ? `${addressZip}, ${_.capitalize(addressCity)}` : ''}</td>
+                </tr>
+                <tr>
+                  <td />
+                  <td />
+                  <td>{address ? `${address.postal}, ${address.city}, ${address.state}`: ''}</td>
+                  <td>{addressCountry ? `${_.capitalize(addressCountry)}` : ''}</td>
+                </tr>
+                <tr>
+                  <td />
+                  <td />
+                  <td>{address ? `${address.country}`: ''}</td>
+                  <td />
+                </tr>
+                <tr>
+                  <td class={style.bottom} />
+                  <td class={style.bottom} />
+                  <td class={style.bottom}>{client.email}</td>
+                  <td class={style.bottom} />
+                </tr>
+              </table>
+              <table class={style['table-2']}>
+                <tr>
+                  <td class="text-left"><strong><Text id="item">Item</Text></strong></td>
+                  <td class="text-right"><strong><Text id="unitPrice">Unit Price</Text></strong></td>
+                  <td class="text-right"><strong><Text id="vat">VAT Rate</Text></strong></td>
+                  <td class="text-right"><strong><Text id="quantity">Quantity</Text></strong></td>
+                  <td class="text-right"><strong>Total</strong></td>
+                </tr>
+                { ( order.OrderItems || [] ).map(this.renderOrderItem) }
+              </table>
+              <div class={style['invoice-part3']}>
+                <div class={style.conditions}>
+                  <p>Conditions</p>
+                  <p><Text id="conditions">
+                    This rent invoice is valid only for the specified time period
+                    and annuls any financial obligation. It does not waiver the
+                    occupant from earlier unpaid rents and is provided subject
+                    to any undergoing legal procedures.
+                  </Text></p>
+                </div>
+                {this.renderInvoiceDetails({ order, lang })}
+              </div>
+            </div>
+          )}
           <footer class={style.footer}>
             <p>Someby | 16 rue de Condé 69002 Lyon | +33 (0)972323102 | hello@chez-nestor.com</p>
             <p>www.chez-nestor.com | SARL au capital de 170.000€ immatriculée au RCS de Lyon</p>
