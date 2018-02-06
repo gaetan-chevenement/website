@@ -674,7 +674,12 @@
   }
 
   .questionsRight {
+    margin-top: 10px;
     text-align: center;
+  }
+
+  .questionsRight i {
+    display: none;
   }
 }
 
@@ -753,8 +758,17 @@
     padding: 10px 20px;
     margin-top: 20px;
   }
+
+  .guide ul {
+    margin-bottom: 0;
+  }
+
   .guideImg {
     display: none;
+  }
+
+  .guideBtn {
+    margin-top: 20px;
   }
 }
 

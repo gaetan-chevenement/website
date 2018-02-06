@@ -30,7 +30,7 @@ const Guide = () => (
           </ul>
         </div>
         <div>
-          <Button raised icon="file_download">
+          <Button raised icon="file_download" className={style.guideBtn}>
             <span>Obtenir le guide logement</span>
           </Button>
         </div>
