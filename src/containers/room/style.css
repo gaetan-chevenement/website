@@ -158,6 +158,7 @@
 
 
 .heading {
+  font-weight: bold;
   background-color: var(--color-primary);
   color: white;
   font-size: 1.2em;
@@ -180,6 +181,8 @@
 
 .subtitle span {
   background: var(--color-background);
+  color: black;
+  font-weight: bold;
   position: relative;
   z-index: 40;
   padding-right: 15px;
@@ -392,10 +395,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
   z-index: 10000;
-  padding-left: 10%;
-  padding-right: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -431,6 +431,11 @@
 .featuresColumn {
   flex: 1 2 200px;
   margin-bottom: 5px !important;
+}
+
+.featuresRoom {
+  font-weight: bold;
+  padding-bottom: 10px;
 }
 
 .featuresColumnLarge {

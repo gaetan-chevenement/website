@@ -52,7 +52,7 @@ class Header extends Component {
       portal = (
         <Portal into="body">
           <div className={style.carouselOverlay} onClick={this._toggleSlideshow}>
-            <Carousel lazy slide arrows className={style.coverPicture}>
+            <Carousel lazy slide arrows className="slideshow-full">
               {pictures.map(({ url }) => <div className={style.slideshowImg} style={`background-image: url(${url})`} />)}
             </Carousel>
           </div>
