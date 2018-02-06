@@ -460,6 +460,7 @@
   .featuresColumn ul {
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 0.2em;
   }
 
   .featuresColumn ul li {
@@ -530,7 +531,9 @@
   }
 
   .housemate {
-    width: 23%;
+    width: 49%;
+    margin-right: 0;
+    margin-top: 5px;
   }
 
   .housemateBookBtn {
