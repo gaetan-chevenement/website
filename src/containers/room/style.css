@@ -7,12 +7,11 @@
 
 .fixedHeader {
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
-  height: 80px;
   width: 100%;
   background: white;
-  padding: 10px 20%;
+  padding: 10px 5%;
   z-index: 1000;
   transition: opacity ease-out 250ms;
 }
@@ -321,16 +320,12 @@
 }
 
 .bookThisRoom {
-  background-color: #1c2b4a !important;
-  color: white !important;
-  border-radius: 5px;
-  font-size: 18px;
-  height: 55px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1024px) {
+  .bookThisRoom {
+    display: none;
+  }
 }
 
 .bookThisRoom a {

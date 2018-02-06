@@ -105,7 +105,7 @@ const BookingInfo = ({ lang, roomId }) => {
           </li>
         </ul>
 
-        <p>
+        <p className={style.bookThisRoom}>
           <Button raised primary href={`/${lang}/booking/${roomId}`} id="bookBtn" style="width: 100%">
             Réserver ce logement
           </Button>

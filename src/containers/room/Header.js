@@ -65,7 +65,7 @@ class Header extends Component {
         <div>
           {portal}
           <div className={[style.fixedHeader, btnState].join(' ')}>
-            <Button className={style.bookThisRoom} href={`/${lang}/booking/${roomId}`}>
+            <Button raised primary href={`/${lang}/booking/${roomId}`} id="bookBtn" style="width: 100%">
               Réserver ce logement
             </Button>
           </div>
