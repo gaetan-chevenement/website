@@ -38,9 +38,9 @@ class Features extends PureComponent {
 
     return (
       <section className={[style.featuresColumn, features.length > 10 ? style.featuresColumnLarge: ''].join(' ')}>
-        <h5 className={style.featuresRoom}>
+        <div className={style.featuresRoom}>
           <Text id={category}>{_.capitalize(category)}</Text>
-        </h5>
+        </div>
         <CroppedContainer height={170}>
           { features.length > 10 ? (
             <div className="grid-2">

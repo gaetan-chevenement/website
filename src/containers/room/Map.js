@@ -29,6 +29,17 @@ class SingleMap extends PureComponent {
     }
   }
 
+  componentDidMount() {
+    var map = this._map.leafletElement;
+    map.dragging.disable();
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.scrollWheelZoom.disable();
+    map.boxZoom.disable();
+    map.keyboard.disable();
+    if (map.tap) map.tap.disable();
+  }
+
   render() {
     const { apartment } = this.props;
     const latLng = Utils.getApartmentLatLng(apartment);

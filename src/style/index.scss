@@ -129,3 +129,30 @@ section {
   background-repeat: no-repeat;
   display: inline-block;
 }
+
+.slideshow-full {
+  height: calc(100vh);
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.slideshow-full:before {
+  content: 'X';
+  font-weight: bold;
+  pointer-events: none;
+  color: white;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.carousel-arrows {
+  top: 80px;
+}
+
+.slideshow-full .carousel {
+  background: rgba(0, 0, 0, 0.5);
+}

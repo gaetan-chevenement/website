@@ -52,7 +52,7 @@ class Header extends Component {
       portal = (
         <Portal into="body">
           <div className={style.carouselOverlay} onClick={this._toggleSlideshow}>
-            <Carousel lazy slide arrows className={style.coverPicture}>
+            <Carousel lazy slide arrows className="slideshow-full">
               {pictures.map(({ url }) => <div className={style.slideshowImg} style={`background-image: url(${url})`} />)}
             </Carousel>
           </div>
@@ -65,7 +65,7 @@ class Header extends Component {
         <div>
           {portal}
           <div className={[style.fixedHeader, btnState].join(' ')}>
-            <Button className={style.bookThisRoom} href={`/${lang}/booking/${roomId}`}>
+            <Button raised primary href={`/${lang}/booking/${roomId}`} id="bookBtn" style="width: 100%">
               Réserver ce logement
             </Button>
           </div>
