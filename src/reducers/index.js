@@ -22,13 +22,10 @@ import {
   getApartment,
   getRoom,
   getDistrict,
-  getHouseMates,
   listRooms,
   getOrder,
   listOrders,
   getRenting,
-  listPictures,
-  listTerms,
 }                           from '~/actions';
 
 const _ = { pickBy, forEach };
@@ -104,7 +101,7 @@ const paymentReducer = createReducer({
   [getOrder.ok]: (state, payload) => (payload.id !== state.orderId ?
     state :
     { ...state, balance: payload.balance }
-  )
+  ),
 }, { errors: noErrors });
 
 const roomsReducer = createReducer({
@@ -123,8 +120,6 @@ const roomsReducer = createReducer({
     ...state,
     ...rooms,
   }),
-  [listTerms.ok]: listOkReducer('Terms'),
-  [listPictures.ok]: listOkReducer('Pictures'),
 }, {});
 
 const apartmentsReducer = createReducer({
@@ -137,17 +132,10 @@ const apartmentsReducer = createReducer({
     ...state,
     ...apartments,
   }),
-  [listTerms.ok]: listOkReducer('Terms'),
-  [listPictures.ok]: listOkReducer('Pictures'),
-  [getHouseMates.ok]: (state, { id, HouseMates }) => ({
-    ...state,
-    [id]: { ...state[id], HouseMates },
-  }),
 }, {});
 
 const districtsReducer = createReducer({
   ...createGetReducer(getDistrict),
-  [listTerms.ok]: listOkReducer('Terms'),
 }, {});
 
 const rentingsReducer = createReducer({

@@ -42,10 +42,7 @@ export const getRoom =
     // We need a list query to use a segment
     (id) => Utils.fetchJson(`/Room?filterType=and&filter[id]=${id}&segment=Availability`)
       .then(throwIfNotFound('Room', id)),
-    {
-      noRethrow: true,
-      ok: { payloadReducer: reduceRooms },
-    }
+    { ok: { payloadReducer: reduceRooms } }
   );
 
 export const [
@@ -66,23 +63,6 @@ export const [
     }, {}),
   }) } }
 ) );
-
-export const getHouseMates = createActionAsync(
-  'get Housemates by ApartmentId',
-  (apartmentId) => Utils.fetchJson(`/Apartment/house-mates?ApartmentId=${apartmentId}`),
-  {
-    noRethrow: true,
-    ok: { payloadReducer: ({ request: [ apartmentId ] , response }) => ({
-      id: apartmentId,
-      HouseMates: response.map((room) => ({
-        name: room.name,
-        client: room.client,
-        roomId: room.id,
-        availableAt: room.availableAt,
-      })),
-    }) },
-  },
-);
 
 export const getOrder =
   createActionAsync(
@@ -139,36 +119,6 @@ export const listRooms =
     },
     { ok: { payloadReducer: reduceRooms } }
   );
-
-const termsAndPics = { Term: 'TermableId', Picture: '_PicturableId' };
-
-export const [listTerms, listPictures] = _.map(termsAndPics, (xableId, modelName) =>
-  createActionAsync(
-    `list ${modelName}s for any ${modelName}able`,
-    (ids) => {
-      const querystring = queryString.stringify(
-        {
-          'page[number]': 1,
-          'page[size]': 100,
-          filterType: 'or',
-          [`filter[${xableId.replace('_', '')}]`]: ids.join(','),
-        },
-        { encode: false }
-      );
-
-      return Utils.fetchJson(`/${modelName}?${querystring}`);
-    },
-    { ok: { payloadReducer: ({ response: { data } }) => (
-      data.reduce((acc, { attributes }) => {
-        if ( !acc[attributes[xableId]] ) {
-          acc[attributes[xableId]] = [];
-        }
-        acc[attributes[xableId]].push(attributes);
-        return acc;
-      }, {})
-    ) } }
-  )
-);
 
 export const saveBooking =
   createActionAsync(

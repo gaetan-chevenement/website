@@ -26,10 +26,12 @@ class Header extends Component {
     super(props);
     this.state = {
       showBookBtn: false,
-      showSlideshow: false
+      showSlideshow: false,
     };
     this._handleScroll = this.handleScroll.bind(this);
-    this._toggleSlideshow = () => this.setState({showSlideshow: !this.state.showSlideshow});
+    this._toggleSlideshow = () => this.setState({
+      showSlideshow: !this.state.showSlideshow,
+    });
   }
 
   componentDidMount() {

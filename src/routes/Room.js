@@ -3,7 +3,6 @@ import { PureComponent }      from 'react';
 import { connect }            from 'react-redux';
 import { route }              from 'preact-router';
 import { bindActionCreators } from 'redux';
-import { batch }              from 'redux-act';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import RoomContent            from '~/containers/room/RoomContent';
 import * as actions           from '~/actions';
@@ -23,10 +22,7 @@ class Room extends PureComponent {
       return route(window.location.pathname.replace(/[\w-]+$/, roomData.id));
     }
 
-    return batch(
-      actions.getDistrict(districtId),
-      actions.getHouseMates(apartmentData.id),
-    );
+    return actions.getDistrict(districtId);
   }
 
   componentWillMount() {

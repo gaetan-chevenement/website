@@ -74,7 +74,7 @@ const pureUtils = {
     return D.compareAsc( room.availableAt, UNAVAILABLE_DATE ) !== 0;
   },
   getBookingDate({ availableAt }, now = new Date()) {
-    return D.compareAsc( availableAt, now ) === -1 ? now : availableAt;
+    return D.max( now, availableAt );
   },
   classifyRentingOrders({ rentingId, orders }) {
     return Object.values(orders)
@@ -180,6 +180,20 @@ const pureUtils = {
       return acc;
     }, {});
   },
+  parseHouseMates(housemates, lang) {
+    return housemates.map((housemate) => {
+      const lines = housemate.split('\n');
+
+      return lines.length > 2 ? {
+        firstName: lines[0],
+        gender: lines[1],
+        description: lang === 'en-US' ? lines[2] : lines[3],
+      } : {
+        roomId: lines[0],
+        availableAt: new Date(lines[1]),
+      };
+    });
+  },
 };
 
 const currYear = pureUtils.getCurrYear();
@@ -224,6 +238,7 @@ const Utils = {
       window.Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/London';
     const url =
       `${API_BASE_URL}${_url}${/\?/.test(_url) ? '&' : '?'}timezone=${timezone}`;
+
     //options.credentials = 'include';
     // We assume we will only send json or FormData
     // (anything else will thus cause problems)

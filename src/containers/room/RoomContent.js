@@ -3,7 +3,7 @@ import { connect }            from 'react-redux';
 import { IntlProvider } from 'preact-i18n';
 import Features               from '~/containers/room/Features';
 import Pictures               from '~/containers/room/Pictures';
-import HouseMates             from '~/components/room/HouseMates';
+import Housemates             from '~/containers/room/Housemates';
 import Description            from '~/containers/room/Description';
 import ApartmentDescription   from '~/containers/room/ApartmentDescription';
 import BookingInfo            from '~/containers/room/BookingInfo';
@@ -53,7 +53,7 @@ const RoomContent = ({ lang, roomId, apartmentId, roomName, apartment }) => (
             <a id="features" className={style.roomAnchor} />
             <Features roomId={roomId} apartmentId={apartmentId} />
             <a id="housemates" className={style.roomAnchor} />
-            <HouseMates lang={lang} houseMates={apartment && apartment.HouseMates} roomId={roomId} />
+            <Housemates apartmentId={apartmentId} />
             <a id="district" className={style.roomAnchor} />
             <ApartmentDescription />
           </div>

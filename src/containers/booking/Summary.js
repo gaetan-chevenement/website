@@ -280,7 +280,7 @@ const definition = {
       description: `
         * Tant que votre pack logement n'est pas payé, le loyer mensuel est
         susceptible d'être mis à jour pour s'adapter à la demande.
-      `
+      `,
     },
     deposit: {
       title: 'Dépôt de garantie',
