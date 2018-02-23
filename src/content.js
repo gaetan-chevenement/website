@@ -245,8 +245,7 @@ export const ContentGuide = {
     text: [
       'Où rechercher mon logement ?',
       'Quel dossier fournir pour un étudiant ?',
-      'Quels sont les frais à prévoir pour une location',
-      'Qui sont les différents acteurs du logement ?',
+      'Quels sont les frais à prévoir pour une location ?',
     ],
     'button-download': 'Téléchargez votre guide logement offert',
   },

@@ -12,7 +12,6 @@ import theme                  from './theme';
 
 const _ = { capitalize };
 const {
-  PACK_PRICES,
   DEPOSIT_PRICES,
   HOME_CHECKIN_FEES,
   SPECIAL_CHECKIN_FEES,
@@ -321,7 +320,7 @@ function mapStateToProps(args) {
   const { lang, rentingId } = route;
   const renting = rentings[rentingId];
   const room = rooms[renting.RoomId];
-  const totalRent = room['current price'] + room['service fees'];
+  const totalRent = room._currentPrice + room._serviceFees;
   const packOrder = Utils.classifyRentingOrders({ rentingId, orders }).pack;
   const bookingDate = Utils.getBookingDate(room);
   const apartment = apartments[room.ApartmentId];
@@ -335,7 +334,7 @@ function mapStateToProps(args) {
     client,
     bookingDate,
     totalRent,
-    proratedRent: Utils.prorateFirstRent(totalRent, bookingDate.getTime()),
+    proratedRent: Utils.prorateFirstRent(totalRent, bookingDate),
     firstMonths: Utils.getFirstMonths(bookingDate),
   };
 }

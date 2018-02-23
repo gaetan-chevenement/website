@@ -78,7 +78,7 @@ class CardForm extends PureComponent {
       }
       else if ( /roomUnavailable/.test(errors.payment) ) {
         errorMessage =
-          <Text id="errors.roomUnavailable">This room is no longer available.</Text>
+          <Text id="errors.roomUnavailable">This room is no longer available.</Text>;
       }
       else if ( /balanceMismatch/.test(errors.payment) ) {
         errorMessage = (

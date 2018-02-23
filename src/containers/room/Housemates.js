@@ -2,7 +2,6 @@
 import { IntlProvider, Text } from 'preact-i18n';
 import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
-import D                      from 'date-fns';
 import { Button }             from 'react-toolbox/lib/button';
 import * as actions           from '~/actions';
 import Utils                  from '~/utils';
@@ -32,14 +31,7 @@ const Housemate = ({ housemate, index, lang }) => {
   if ('availableAt' in housemate) {
     content = (
       <div>
-        <div>
-          <div className={`${style.availableRoom} picto-colocataire_disponible_256px`} />
-          <Text id="available">Available</Text>&nbsp;
-          {D.differenceInDays(housemate.availableAt, new Date()) === 0 ?
-            (lang === 'en-US' ? 'now' : 'immédiatement') :
-            (`→ ${housemate.availableAt.toLocaleDateString()}`)
-          }
-        </div>
+        <div className={`${style.availableRoom} picto-colocataire_disponible_256px`} />
         <Button raised primary href={`/${lang}/room/${housemate.roomId}`}>
           Book
         </Button>
@@ -57,7 +49,7 @@ const Housemate = ({ housemate, index, lang }) => {
   return (
     <div className={style.housemate}>
       <div className={style.housemateTitle}>
-        <Text id="room">Room</Text>&nbsp;{index}
+        <Text id="room">Room</Text>&nbsp;{index + 1}
       </div>
       {content}
     </div>
@@ -89,7 +81,7 @@ const definition = { 'fr-FR': {
 function mapStateToProps({ route: { lang }, apartments, rooms }, { apartmentId }) {
   const apartment = apartments[apartmentId];
   const housemates = Utils.parseHouseMates(apartment.housemates, lang);
-console.log(housemates);
+
   return {
     lang,
     housemates,

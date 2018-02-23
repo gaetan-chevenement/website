@@ -82,15 +82,17 @@ const definition = { 'fr-FR': {
   forward: 'Réserver la chambre',
 } };
 
-function mapStateToProps({ rentings, rooms, booking, orders }, { lang, rentingId }) {
+function mapStateToProps({ rentings, rooms, apartments, booking, orders }, { lang, rentingId }) {
   const renting = rentings[rentingId];
   const room = renting && rooms[renting.RoomId];
+  const apartment = room && apartments[room.ApartmentId];
   const bookingDate = room && Utils.getBookingDate(room);
   const packOrder = Utils.classifyRentingOrders({ rentingId, orders }).pack;
 
   if (
     !renting || renting.isLoading ||
     !room || room.isLoading ||
+    !apartment || apartment.isLoading ||
     orders.isLoading || !bookingDate
   ) {
     return { isLoading: true };

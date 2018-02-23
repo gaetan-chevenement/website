@@ -1,7 +1,6 @@
 import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { IntlProvider, Text } from 'preact-i18n';
 import capitalize             from 'lodash/capitalize';
 import values                 from 'lodash/values';

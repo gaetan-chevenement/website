@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { IntlProvider }       from 'preact-i18n';
-import { Link }               from 'preact-router/match';
+// import { Link }               from 'preact-router/match';
 import { Button }             from 'react-toolbox/lib/button';
 import * as actions           from '~/actions';
 

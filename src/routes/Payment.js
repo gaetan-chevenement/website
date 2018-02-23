@@ -132,7 +132,7 @@ const definition = {
     },
   },
   'en-US': {
-    payment: { button: 'Pay {{amount}}€' }
+    payment: { button: 'Pay {{amount}}€' },
   },
 };
 

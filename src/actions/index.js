@@ -40,7 +40,7 @@ export const getRoom =
   createActionAsync(
     'get Room by id',
     // We need a list query to use a segment
-    (id) => Utils.fetchJson(`/Room?filterType=and&filter[id]=${id}&segment=Availability`)
+    (id) => Utils.fetchJson(`/Room?filterType=and&filter[id]=${id}&segment=default`)
       .then(throwIfNotFound('Room', id)),
     { ok: { payloadReducer: reduceRooms } }
   );

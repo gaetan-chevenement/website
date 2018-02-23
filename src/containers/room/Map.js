@@ -22,22 +22,25 @@ const tileLayerUrl =
   `https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${MAPBOX_TOKEN}`;
 
 class SingleMap extends PureComponent {
-  componentDidUpdate() {
-    // Force l'actualisation de la carte si les propriétés sont mises à jour
-    if (this._map) {
-      this._map.leafletElement.invalidateSize();
-    }
-  }
-
   componentDidMount() {
-    var map = this._map.leafletElement;
+    let map = this._map.leafletElement;
+
     map.dragging.disable();
     map.touchZoom.disable();
     map.doubleClickZoom.disable();
     map.scrollWheelZoom.disable();
     map.boxZoom.disable();
     map.keyboard.disable();
-    if (map.tap) map.tap.disable();
+    if ( map.tap ) {
+      map.tap.disable();
+    }
+  }
+
+  componentDidUpdate() {
+    // Force l'actualisation de la carte si les propriétés sont mises à jour
+    if (this._map) {
+      this._map.leafletElement.invalidateSize();
+    }
   }
 
   render() {

@@ -46,7 +46,6 @@ class ApartmentDescription extends PureComponent {
       isLoading,
       apartment,
       district,
-      districtFeatures,
     } = this.props;
 
     if ( isLoading ) {
@@ -115,14 +114,14 @@ const definition = { 'fr-FR': {
   district: 'Quartier',
 } };
 
-const transportName = {
-  subway: { 'fr-FR': 'Métro', 'en-US': 'Subway' },
-  tramway: { 'fr-FR': 'Tramway', 'en-US': 'Tramway' },
-  bus: { 'fr-FR': 'Bus', 'en-US': 'Bus' },
-  rer: { 'fr-FR': 'Rer', 'en-US': 'Rer' },
-  transilien: { 'fr-FR': 'Transilien', 'en-US': 'Transilien' },
-  nearbyBike: { 'fr-FR': 'Vélos', 'en-US': 'Bikes' },
-};
+// const transportName = {
+//   subway: { 'fr-FR': 'Métro', 'en-US': 'Subway' },
+//   tramway: { 'fr-FR': 'Tramway', 'en-US': 'Tramway' },
+//   bus: { 'fr-FR': 'Bus', 'en-US': 'Bus' },
+//   rer: { 'fr-FR': 'Rer', 'en-US': 'Rer' },
+//   transilien: { 'fr-FR': 'Transilien', 'en-US': 'Transilien' },
+//   nearbyBike: { 'fr-FR': 'Vélos', 'en-US': 'Bikes' },
+// };
 
 function mapStateToProps({ route: { lang, roomId }, rooms, apartments, districts }) {
   const apartment = apartments[rooms[roomId].ApartmentId];

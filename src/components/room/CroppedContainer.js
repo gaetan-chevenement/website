@@ -29,7 +29,7 @@ class CroppedContainer extends Component {
     this.state = {
       showAll: false,
       container: null,
-      toggledOnce: false
+      toggledOnce: false,
     };
     this.__toggleFunc = () => this.setState({
       showAll: ! this.state.showAll,

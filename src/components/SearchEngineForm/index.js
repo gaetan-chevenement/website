@@ -24,7 +24,11 @@ export default class SearchEngineForm extends PureComponent {
   }
 
   @autobind
-  handleCityChange(value) {
+  handleCityChange(value, e) {
+    // For some reason, two clicks are required without the following workaround
+    // See https://github.com/react-toolbox/react-toolbox/pull/1725
+    e.preventDefault();
+
     if (this.props.mode === 'noSubmit') {
       return route(`/fr/search/${value}`);
     }

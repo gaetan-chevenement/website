@@ -1,6 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { IntlProvider } from 'preact-i18n';
+import { IntlProvider }       from 'preact-i18n';
+import D                      from 'date-fns';
 import Features               from '~/containers/room/Features';
 import Pictures               from '~/containers/room/Pictures';
 import Housemates             from '~/containers/room/Housemates';
@@ -15,7 +16,7 @@ import * as actions           from '~/actions';
 
 import style from './style.css';
 
-const RoomContent = ({ lang, roomId, apartmentId, roomName, apartment }) => (
+const RoomContent = ({ lang, roomId, apartmentId, roomName, room, apartment }) => (
   <IntlProvider definition={definition[lang]}>
     <div className={style.roomPage}>
       <div className={['content', 'content-wide', style.roomContent].join(' ')}>
@@ -59,8 +60,17 @@ const RoomContent = ({ lang, roomId, apartmentId, roomName, apartment }) => (
           </div>
           <div>
             <div className={style.rightHeader}>
-              <i className="icon-32 picto-picto_disponibilite_ok" />
-              <span>Dispo. Immédiate</span>
+              {D.isBefore(room.availableAt, new Date()) ? (
+                <b>
+                  <i className="icon-32 picto-picto_disponibilite_ok" />
+                  <span>Dispo. Immédiate</span>
+                </b>
+              ) : (
+                <b>
+                  <i className="icon-32 picto-picto_disponibilite_ok" />
+                  <span>Dispo. </span>{D.parse(room.availableAt).toLocaleDateString()}
+                </b>
+              )}
             </div>
             <BookingInfo roomId={roomId} apartmentId={apartmentId} />
             <div className={style.sameRoomCount}>
