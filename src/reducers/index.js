@@ -19,7 +19,6 @@ import {
   validatePayment,
   savePayment,
   resetPayment,
-  getApartment,
   getRoom,
   getDistrict,
   listRooms,
@@ -123,7 +122,6 @@ const roomsReducer = createReducer({
 }, {});
 
 const apartmentsReducer = createReducer({
-  ...createGetReducer(getApartment),
   [getRoom.ok]: (state, { apartments }) => ({
     ...state,
     ...apartments,
