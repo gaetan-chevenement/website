@@ -54,7 +54,8 @@ function AppBarTitle({ lang }) {
   return (
     <h1 class={appbarTheme.title} style={{ margin: '0 0 0 -44px' }}>
       <div>
-        <Link href={`/${lang}`}>
+        { /*<Link href={`/${lang}`}>*/ }
+        <Link href="http://www.chez-nestor.com">
           <img src="/assets/logo370x130.png" alt="Chez Nestor" />
         </Link>
       </div>
