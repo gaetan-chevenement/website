@@ -7,6 +7,7 @@ import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 import Summary                from '~/containers/booking/Summary';
+import Heading                from '~/components/booking/Heading';
 
 class BookingStep2 extends PureComponent {
   componentDidMount() {
@@ -29,8 +30,7 @@ class BookingStep2 extends PureComponent {
   render() {
     const {
       lang,
-      roomId,
-      roomName,
+      room,
       isLoading,
       packOrderId,
       rentingId,
@@ -48,10 +48,7 @@ class BookingStep2 extends PureComponent {
       <IntlProvider definition={definition[lang]}>
 
         <div class="content">
-          <h1>
-            <Text id="title">Booking summary for room</Text><br />
-            <em>{roomName}</em>
-          </h1>
+          <Heading room={room} type="summary" />
 
           <Summary />
 
@@ -60,7 +57,7 @@ class BookingStep2 extends PureComponent {
               <Button raised
                 label={<Text id="back">Back</Text>}
                 icon="arrow_backward"
-                href={`/${lang}/booking/${roomId}`}
+                href={`/${lang}/booking/${room.id}`}
               />
               {' '}
               <Button raised primary
@@ -102,8 +99,7 @@ function mapStateToProps({ rentings, rooms, apartments, booking, orders }, { lan
     lang,
     rentingId,
     renting,
-    roomId: room.id,
-    roomName: room.name,
+    room,
     bookingDate,
     packOrderId: packOrder && packOrder.id,
   };

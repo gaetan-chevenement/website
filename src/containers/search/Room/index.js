@@ -5,7 +5,6 @@ import { SearchResultsOptions }   from '~/content';
 import Carousel                   from '~/components/Carousel';
 import style                      from './style.css';
 
-const DAYS_COUNT_FOR_NEW = 10;
 const MONTHS = [
   'Janvier',
   'Février',
@@ -20,11 +19,8 @@ const MONTHS = [
   'Novembre',
   'Décembre',
 ];
+const DAYS_COUNT_FOR_NEW = 10;
 const { pictos, bedNames } = SearchResultsOptions;
-
-function getClassForRoomAttribute(cssClass) {
-  return [style.roomAttributesIcon, cssClass].join(' ');
-}
 
 function isNew(createdAt) {
   let oneDay = 24 * 60 * 60 * 1000;
@@ -55,31 +51,31 @@ function getBedsDetails(beds) {
   return { bedText, bedIcons };
 }
 
-export default class Room extends PureComponent {
-  renderAvailability() {
-    const date = new Date(this.props.availableAt);
-
-    if ( this.props.availableAt === null ) {
-      return (
-        <div class={`{style.availability} ${style.notAvailable}`}>
-          Non disponible
-        </div>
-      );
-    }
-    else if ( +date > +Date.now() ) {
-      return (
-        <div class={`{style.availability} ${style.availableSoon}`}>
-          Disponible le {date.getDate()} {MONTHS[date.getMonth()]}
-        </div>
-      );
-    }
-
+function Availability({ availableAt }) {
+  if ( availableAt === null ) {
     return (
-      <div class={`${style.availability} ${style.available}`}>
-        Disponible immédiatement
+      <div class={`${style.availability} ${style.unavailable}`}>
+        Non disponible
       </div>
     );
   }
+  else if ( +availableAt > +Date.now() ) {
+    return (
+      <div class={`${style.availability} ${style.availableSoon}`}>
+        Dispo. le {availableAt.getDate()} {MONTHS[availableAt.getMonth()]}
+      </div>
+    );
+  }
+
+  return (
+    <div class={`${style.availability} ${style.available}`}>
+      Dispo. immédiate
+    </div>
+  );
+}
+
+export default class Room extends PureComponent {
+
 
   renderCarousel() {
     // const { 'cover picture': coverPicture } = this.props.room;
@@ -106,6 +102,7 @@ export default class Room extends PureComponent {
     const {
       lang,
       room: {
+        availableAt,
         basePrice,
         beds,
         name,
@@ -137,22 +134,22 @@ export default class Room extends PureComponent {
           <h4 className={style.roomName}>
             {name}
           </h4>
-          {this.renderAvailability()}
+          <Availability availableAt={availableAt} />
           {newElement}
           <div className={style.price}>
             {basePrice / 100}€/mois
           </div>
           <div className={style.roomAttributesIcons}>
-            <div className={getClassForRoomAttribute(style.chambersCount)}>
+            <div className={`${style.roomAttributesIcon} ${style.chambersCount}`}>
               {roomCount} {isThumbnail ? '' : 'chambres'}
             </div>
-            <div className={getClassForRoomAttribute(style.roomsCount)}>
+            <div className={`${style.roomAttributesIcon} ${style.roomsCount}`}>
               {roomCount + 2} {isThumbnail ? '' : 'pièces'}
             </div>
-            <div className={getClassForRoomAttribute(style.roomSize)}>
+            <div className={`${style.roomAttributesIcon} ${style.roomSize}`}>
               {floorArea} m²
             </div>
-            <div className={getClassForRoomAttribute(style.roomBedText)}>
+            <div className={`${style.roomAttributesIcon} ${style.roomBedText}`}>
               {bedIcons} {isThumbnail ? '' : bedText}
             </div>
           </div>

@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { Button }             from 'react-toolbox/lib/button';
+import Heading                from '~/components/booking/Heading';
 import * as actions           from '~/actions';
 import _const                 from '~/const';
 
@@ -26,7 +27,7 @@ class BookingStep3 extends PureComponent {
     const {
       lang,
       isLoading,
-      roomName,
+      room,
       email,
     } = this.props;
 
@@ -41,10 +42,7 @@ class BookingStep3 extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="content">
-          <h1>
-            <Text id="title">Booking confirmed for room</Text><br />
-            <em>{roomName}</em>
-          </h1>
+          <Heading room={room} type="confirmed" />
 
           <section>
             <p>
@@ -86,7 +84,7 @@ function mapStateToProps({ route: { lang }, rentings, rooms, client }, { renting
 
   return {
     lang,
-    roomName: rooms[renting.RoomId].name,
+    room: rooms[renting.RoomId],
     email: client.email,
   };
 }

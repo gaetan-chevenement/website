@@ -7,8 +7,14 @@ import * as actions           from '~/actions';
 
 import style from './style.css';
 
-const BookingInfo = ({ lang, roomId }) => {
-  const priceLineClasses = ['grid-4', 'has-gutter', style.priceLine].join(' ');
+const BookingInfo = ({ lang, roomId, room }) => {
+  const {
+    availableAt,
+    _currentPrice: currentPrice,
+    _serviceFees: serviceFees,
+    depositPrice,
+  } = room;
+  const priceLineClasses = `grid-4 has-gutter ${style.priceLine}`;
   return (
     <IntlProvider definition={definition[lang]}>
       <section className={style.bookingInfo}>
@@ -18,7 +24,7 @@ const BookingInfo = ({ lang, roomId }) => {
             Loyer
           </div>
           <div className="one-half text-right">
-            668€/mois
+            {currentPrice / 100}€/mois
           </div>
         </div>
         <div className={priceLineClasses}>
@@ -26,7 +32,7 @@ const BookingInfo = ({ lang, roomId }) => {
             Charges
           </div>
           <div className="one-half text-right">
-            30€/mois
+            {serviceFees / 100}€/mois
           </div>
         </div>
         <div className={priceLineClasses + ' ' + style.cafHelp}>
@@ -50,7 +56,7 @@ const BookingInfo = ({ lang, roomId }) => {
             Dépôt de garantie
           </div>
           <div className="one-half text-right">
-            690€
+            {depositPrice / 100}€
           </div>
         </div>
         <div className={style.priceLineDesc}>
@@ -106,14 +112,25 @@ const BookingInfo = ({ lang, roomId }) => {
         </ul>
 
         <p className={style.bookThisRoom}>
-          <Button raised primary href={`/${lang}/booking/${roomId}`} id="bookBtn" style="width: 100%">
+          <Button
+            raised
+            primary
+            disabled={availableAt === null}
+            href={`/${lang}/booking/${roomId}`}
+            id="bookBtn"
+            style="width: 100%"
+          >
             Réserver ce logement
           </Button>
         </p>
 
         <div className={style.buttonsDivide}>
           <div>
-            <Button raised icon="local_see" style="width: 100%">
+            <Button icon="local_see"
+              raised
+              disabled={availableAt === null}
+              style="width: 100%"
+            >
               <span>Visiter</span>
             </Button>
           </div>

@@ -70,9 +70,6 @@ const pureUtils = {
 
     return 0;
   },
-  isRoomAvailable(room) {
-    return D.compareAsc( room.availableAt, UNAVAILABLE_DATE ) !== 0;
-  },
   getBookingDate({ availableAt }, now = new Date()) {
     return D.max( now, availableAt );
   },

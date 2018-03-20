@@ -202,9 +202,6 @@ class Summary extends PureComponent {
 
           <div class="one-third">
             <section>
-              <img src={room['cover picture']} alt="Picture of the room" width="100%" />
-            </section>
-            <section>
               <h4><Text id="acommodation.title">Accommodation details</Text></h4>
               <ul class={theme.unstyled}>
                 <li>{room.name.split('-')[1]}</li>

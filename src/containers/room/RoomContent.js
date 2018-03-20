@@ -1,7 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { IntlProvider }       from 'preact-i18n';
-import D                      from 'date-fns';
 import Features               from '~/containers/room/Features';
 import Pictures               from '~/containers/room/Pictures';
 import Housemates             from '~/containers/room/Housemates';
@@ -16,14 +15,41 @@ import * as actions           from '~/actions';
 
 import style from './style.css';
 
-const RoomContent = ({ lang, roomId, apartmentId, roomName, room, apartment }) => (
+function Availability({ availableAt }) {
+  if ( availableAt === null ) {
+    return (
+      <b>
+        <i className="icon-32 picto-picto_disponibilite_indisponible" />
+        <span>Non disponible</span>
+      </b>
+    );
+  }
+  else if ( +availableAt > +Date.now() ) {
+    return (
+      <b>
+        <i className="icon-32 picto-picto_disponibilite_attention" />
+        <span>Dispo. </span>{availableAt.toLocaleDateString()}
+      </b>
+    );
+  }
+
+  return (
+    <b>
+      <i className="icon-32 picto-picto_disponibilite_ok" />
+      <span>Dispo. immédiate</span>
+    </b>
+
+  );
+}
+
+const RoomContent = ({ lang, roomId, apartmentId, roomName, room, apartment }) => (console.log(room),
   <IntlProvider definition={definition[lang]}>
     <div className={style.roomPage}>
       <div className={['content', 'content-wide', style.roomContent].join(' ')}>
         <div className={style.mainColumns}>
           <div>
             <div className={[style.leftHeader]}>
-              {roomName}
+              {room.name}
             </div>
             <div className={style.links}>
               <ul>
@@ -60,17 +86,7 @@ const RoomContent = ({ lang, roomId, apartmentId, roomName, room, apartment }) =
           </div>
           <div>
             <div className={style.rightHeader}>
-              {D.isBefore(room.availableAt, new Date()) ? (
-                <b>
-                  <i className="icon-32 picto-picto_disponibilite_ok" />
-                  <span>Dispo. Immédiate</span>
-                </b>
-              ) : (
-                <b>
-                  <i className="icon-32 picto-picto_disponibilite_ok" />
-                  <span>Dispo. </span>{D.parse(room.availableAt).toLocaleDateString()}
-                </b>
-              )}
+              <Availability availableAt={room.availableAt} />
             </div>
             <BookingInfo roomId={roomId} apartmentId={apartmentId} />
             <div className={style.sameRoomCount}>
@@ -97,9 +113,8 @@ function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apart
   const apartment = apartments[apartmentId];
 
   return {
-    roomName: room.name,
-    room,
     lang,
+    room,
     apartment,
   };
 }

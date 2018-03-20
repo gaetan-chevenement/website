@@ -7,6 +7,7 @@ import autobind               from 'autobind-decorator';
 import { Button }             from 'react-toolbox/lib/button';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import BookingFormSections    from '~/components/booking/BookingFormSections';
+import Heading                from '~/components/booking/Heading';
 import * as actions           from '~/actions';
 import Utils                  from '~/utils';
 
@@ -55,7 +56,6 @@ class BookingForm extends PureComponent {
       room,
       booking,
       isLoading,
-      isRoomAvailable,
     } = this.props;
 
     if ( isLoading ) {
@@ -82,18 +82,15 @@ class BookingForm extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="content">
-          <h1>
-            <Text id="title">Booking details for room</Text><br />
-            <em>{room.name}</em>
-          </h1>
+          <Heading room={room} type="details" />
 
-          { isRoomAvailable ?
-            <BookingFormSections lang={lang} /> :
+          { room.availableAt === null ?
             <p>
               <Text id="errors.unavailable">
                 Sorry, this room isn't available for booking.
               </Text>
-            </p>
+            </p> :
+            <BookingFormSections lang={lang} />
           }
 
           <nav class="text-center">
@@ -125,7 +122,6 @@ function mapStateToProps({ route: { lang }, rooms, booking }, { roomId }) {
     roomId,
     room,
     booking,
-    isRoomAvailable: Utils.isRoomAvailable( room ),
   };
 }
 

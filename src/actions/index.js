@@ -219,10 +219,10 @@ function reduceRooms({ response: { data = [], included = [] } }) {
   return {
     rooms: data
       .filter((item) => item.type === 'Room')
-      .map((item) => ({
-        ...item.attributes,
-        ApartmentId: item.relationships.Apartment.data.id,
-        availableAt: new Date(item.attributes.availableAt),
+      .map(({ attributes, relationships }) => ({
+        ...attributes,
+        ApartmentId: relationships.Apartment.data.id,
+        availableAt: attributes.availableAt && new Date(attributes.availableAt),
       }))
       .reduce(arrayToMap, {}),
     apartments: included

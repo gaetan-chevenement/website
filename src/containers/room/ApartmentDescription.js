@@ -93,10 +93,11 @@ class ApartmentDescription extends PureComponent {
                 <CroppedContainer height={150}>
                   <h5><Text id="nearbySchool">Nearby School(s)</Text></h5>
                   <ul className={style.nearbySchools}>
-                    {/*districtFeatures
-                      .filter(({ taxonomy }) => taxonomy === 'nearby-school')
-                      .map((school) => (<li>{school.name}</li>))
-                    */}
+                    {district.nearbySchools
+                      .replace(/(^|\n)- /g, '\n')
+                      .split('\n')
+                      .map((school) => (<li>{school}</li>))
+                    }
                   </ul>
                 </CroppedContainer>
               </div>
