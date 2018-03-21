@@ -9,7 +9,6 @@ import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import BookingFormSections    from '~/components/booking/BookingFormSections';
 import Heading                from '~/components/booking/Heading';
 import * as actions           from '~/actions';
-import Utils                  from '~/utils';
 
 class BookingForm extends PureComponent {
   @autobind

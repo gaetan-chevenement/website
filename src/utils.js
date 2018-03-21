@@ -14,7 +14,6 @@ const _ = { reduce, filter, capitalize, values };
 const {
   BASIC_PACK,
   SPECIAL_CHECKIN_FEES,
-  UNAVAILABLE_DATE,
   API_BASE_URL,
   DEPOSIT_PRICES,
   PACK_PRICES,
