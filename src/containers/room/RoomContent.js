@@ -42,7 +42,7 @@ function Availability({ availableAt }) {
   );
 }
 
-const RoomContent = ({ lang, roomId, apartmentId, roomName, room, apartment }) => (console.log(room),
+const RoomContent = ({ lang, roomId, apartmentId, roomName, room, apartment }) => (
   <IntlProvider definition={definition[lang]}>
     <div className={style.roomPage}>
       <div className={['content', 'content-wide', style.roomContent].join(' ')}>
