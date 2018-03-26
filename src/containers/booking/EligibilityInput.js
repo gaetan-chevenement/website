@@ -6,8 +6,11 @@ import { IntlProvider, Text }       from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import { Button }             from 'react-toolbox/lib/button';
 import { Checkbox }           from 'react-toolbox/lib/checkbox';
+import _const                 from '~/const';
 import * as actions           from '~/actions';
 import theme                  from './theme';
+
+const { ELIGIBILITY_FORM_URL } = _const;
 
 class EligibilityInputs extends PureComponent {
   @autobind
@@ -35,7 +38,7 @@ class EligibilityInputs extends PureComponent {
             accommodation with Chez Nestor:&nbsp;</Text>
             <Button raised
               icon="launch"
-              href="https://forms.chez-nestor.com/72003771604953"
+              href={ELIGIBILITY_FORM_URL}
               target="_blank"
             >
               <Text id="eligibility">Test your eligibility</Text>
