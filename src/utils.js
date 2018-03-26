@@ -122,10 +122,6 @@ const pureUtils = {
       lng: Number(latLngArr[1]),
     };
   },
-  // TODO: implement proper room filtering
-  filterMatchingRooms(rooms) {
-    return _.filter(rooms, (room) => ( typeof room === 'object' ));
-  },
   getDepositLine(city) {
     return [_.capitalize(city), ''].concat([1,2,3].map(() =>
       `${DEPOSIT_PRICES[city] / 100}€`

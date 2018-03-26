@@ -41,6 +41,10 @@ const searchReducer = createReducer({
     ...state,
     ...payload,
   }),
+  [listRooms.ok]: (state, { count }) => ({
+    ...state,
+    count,
+  }),
 }, {});
 
 const bookingReducer = createReducer({
@@ -110,15 +114,11 @@ const roomsReducer = createReducer({
     ...state,
     ...rooms,
   }),
-  ...createListReducer(listRooms, 'room'),
   [getRenting.ok]: (state, { _Room: room }) => ({
     ...state,
     [room.id]: room,
   }),
-  [listRooms.ok]: (state, { rooms }) => ({
-    ...state,
-    ...rooms,
-  }),
+  ...createListReducer(listRooms, 'room'),
 }, {});
 
 const apartmentsReducer = createReducer({
@@ -207,12 +207,10 @@ export function createGetReducer(actionAsync) {
 export function createListReducer(actionAsync, modelName) {
   return {
     [actionAsync.request]: (state) => ({
-      ...state,
       isLoading: true,
       error: false,
     }),
     [actionAsync.ok]: (state, payload) => ({
-      ...state,
       isLoading: false,
       error: false,
       ...payload[`${modelName}s`],

@@ -1,6 +1,4 @@
 export const SameSearchCountOptions = {
-  min: 750,
-  max: 950,
   texts: {
     content: (count) => (
       `<b>${count} personnes</b> ont fait la <b>même recherche</b> cette semaine.`
@@ -8,20 +6,7 @@ export const SameSearchCountOptions = {
   },
 };
 
-export const SlideshowOptions = {
-  images: [
-    '/assets/home/gallery/home-gallery-1-o.jpg',
-    '/assets/home/gallery/home-gallery-2-o.jpg',
-    '/assets/home/gallery/home-gallery-3-o.jpg',
-    '/assets/home/gallery/home-gallery-4-o.jpg',
-    '/assets/home/gallery/home-gallery-5-o.jpg',
-    '/assets/home/gallery/home-gallery-6-o.jpg',
-    '/assets/home/gallery/home-gallery-7-o.jpg',
-  ],
-};
-
 export const SearchResultsOptions = {
-  imagesBaseUrl: 'http://chez-nestor.com/wp-content/uploads/',
   pictos: {
     double: require('./assets/search/Picto description 4a.png'),
     simple: require('./assets/search/Picto description 4b.png'),
@@ -36,16 +21,6 @@ export const SearchResultsOptions = {
 };
 
 export const SearchOptions = {
-  baseUrl: 'https://scqg8r1bs4.execute-api.eu-west-1.amazonaws.com/latest',
-  params: {
-    'page[number]': 1,
-    'page[size]': 10,
-  },
-  segmentForTown: {
-    Lyon: 'Available%20Rooms%20Lyon',
-    Paris: 'Available%20Rooms%20Paris',
-    Montpellier: 'Available%20Rooms%20Montpellier',
-  },
   texts: {
     introduction: {
       title: (town) => (`Colocations à ${town}`),
@@ -59,117 +34,8 @@ export const SearchOptions = {
   },
 };
 
-export const ContentSearchEngine = {
-  texts: {
-    title: 'Votre colocation prête à vivre',
-    subtitle:
-      "Trouvez aujourd'hui votre colocation meublée, équipée, tout inclus, en plein centre. ",
-    'button-search': 'Rechercher',
-  },
-};
-
-export const ContentTowns = {
-  list: [
-    {
-      name: 'Lyon',
-      roomsCount: 328,
-      image: '/assets/home/cities/lyon-imageoptim.jpg',
-      searchable: true,
-    },
-    {
-      name: 'Montpellier',
-      roomsCount: 64,
-      image: '/assets/home/cities/montpellier-imageoptim.jpg',
-      searchable: true,
-    },
-    {
-      name: 'Paris',
-      roomsCount: 500,
-      image: '/assets/home/cities/paris-imageoptim.jpg',
-      searchable: true,
-    },
-
-    /*
-    {
-      name: 'Aix en Provence',
-      roomsCount: 250,
-      image: '/assets/home/Ville - Aix en Provence - CC0 Creative Commons - Wikimedia.jpg',
-    },
-    {
-      name: 'Bordeaux',
-      roomsCount: 127,
-      image: './assets/home/Ville - Bordeaux - CC0 Creative Commons - Pixabay.jpg',
-    },
-    {
-      name: 'Grenoble',
-      roomsCount: 126,
-      image: './assets/home/Ville - Grenoble - CC0 Creative Commons - Wikimedia.jpg',
-    },
-    {
-      name: 'Le Havre',
-      roomsCount: 222,
-      image: './assets/home/Ville - Le Havre - CC0 Creative Commons - Wkipedia.JPG',
-    },
-    {
-      name: 'Lille',
-      roomsCount: 645,
-      image: './assets/home/Ville - Lille - CC0 Creative Commons - Wikipedia.JPG',
-    },
-    {
-      name: 'Marseille',
-      roomsCount: 324,
-      image: './assets/home/Ville - Marseille - CC0 Creative Commons - Wikimedia.jpg',
-    },
-    {
-      name: 'Nantes',
-      roomsCount: 223,
-      image: './assets/home/Ville - Nantes - CC0 Creative Commons - Wikipedia.JPG',
-    },
-    {
-      name: 'Nice',
-      roomsCount: 544,
-      image: './assets/home/Ville - Nice - CC0 Creative Commons - Pixabay.jpg',
-    },
-    {
-      name: 'Reims',
-      roomsCount: 24,
-      image: './assets/home/Ville - Reims - CC0 Creative Commons - Wikimedia.jpg',
-    },
-    {
-      name: 'Rennes',
-      roomsCount: 6425,
-      image: './assets/home/Ville - Rennes - CC0 Creative Commons - Wikipedia.JPG',
-    },
-    {
-      name: 'Saint Etienne',
-      roomsCount: 53,
-      image: './assets/home/Ville - Saint Etienne - CC0 Creative Commons - Wikipedia.jpg',
-    },
-    {
-      name: 'Strasbourg',
-      roomsCount: 23,
-      image: './assets/home/Ville - Strasbourg - CC0 Creative Commons - Pixabay.jpg',
-    },
-    {
-      name: 'Toulon',
-      roomsCount: 343,
-      image: './assets/home/Ville - Toulon - CC0 Creative Commons - Wikipedia.jpg',
-    },
-    {
-      name: 'Toulouse',
-      roomsCount: 555,
-      image: './assets/home/Ville - Toulouse - CC0 Creative Commons Wikimedia.jpg',
-    },
-    */
-  ],
-  texts: {
-    title: 'Découvrez les villes Chez Nestor',
-  },
-};
-
 export const ContentServices = {
   texts: {
-    title: 'Une nouvelle expérience de la colocation',
     'button-discover': 'Découvrez nos services inclus',
   },
   list: [
@@ -207,9 +73,6 @@ export const ContentServices = {
 };
 
 export const ContentTestimonies = {
-  texts: {
-    title: 'Nos colocataires nous recommandent',
-  },
   list: [
     {
       avatar: require('./assets/home/testimony-anna-imageoptim.jpg'),

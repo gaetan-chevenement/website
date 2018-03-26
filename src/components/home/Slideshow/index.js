@@ -1,6 +1,3 @@
-import {
-  SlideshowOptions,
-}                           from '~/content';
 import Carousel             from '~/components/Carousel';
 import {
   carousel,
@@ -12,9 +9,12 @@ export default function Slideshow({ children }) {
   return (
     <div>
       <Carousel lazy autoplay autoplayInterval={7000} fade className={carousel}>
-        {SlideshowOptions.images.map(imgUrl =>
-          <div class={image} style={{ backgroundImage: `url(${imgUrl})` }} />,
-        )}
+        {Array.from(Array(7)).map((val, i) => (
+          <div
+            class={image}
+            style={{ backgroundImage: `url(/assets/home/gallery/home-gallery-${i+1}-o.jpg)` }}
+          />
+        ))}
       </Carousel>
       <div class={searchEngineContainer}>
         {children}

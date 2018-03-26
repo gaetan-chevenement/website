@@ -3,7 +3,7 @@ import { ContentServices }  from '~/content.js';
 import Service              from './service';
 import theme                from './style.css';
 
-export default function Services() {
+export default function Services({ lang }) {
   return (
     <section>
       <div class="grid-6-large-2 grid-6-small-1 has-gutter">
@@ -12,7 +12,7 @@ export default function Services() {
         )}
       </div>
       <div className="button-bar text-center">
-        <Button theme={theme}>
+        <Button href={`/${lang}/services`} theme={theme}>
           {ContentServices.texts['button-discover']}
         </Button>
       </div>

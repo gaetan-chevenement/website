@@ -3,17 +3,14 @@ import { PureComponent }      from 'react';
 import autobind               from 'autobind-decorator';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import * as actions           from '~/actions';
-import SearchEngineForm       from '~/components/SearchEngineForm';
+import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import SameSearchCount        from '~/components/SameSearchCount';
+import SearchForm             from '~/components/SearchForm';
 import ResultsList            from '~/containers/search/ResultsList';
 import ResultsMap             from '~/containers/search/ResultsMap';
-import {
-  SameSearchCountOptions,
-}                             from '~/content';
-import {
-  CreateAlertButton,
-}                             from '~/components/CreateAlertButton';
+import Paging                 from '~/containers/search/Paging';
+// import { CreateAlertButton }  from '~/components/CreateAlertButton';
+import * as actions           from '~/actions';
 import {
   mapPane,
   leftPane,
@@ -25,7 +22,7 @@ import {
   mobileShow,
 }                             from './style.css';
 
-export class SearchContainer extends PureComponent {
+export class Search extends PureComponent {
   @autobind
   onRoomOver(room) {
     this.setState({ overRoom: room });
@@ -42,7 +39,9 @@ export class SearchContainer extends PureComponent {
   }
 
   getUsersCount() {
-    const { min, max } = SameSearchCountOptions;
+    const min = 750;
+    const max = 950;
+
     return min + Math.ceil((max - min) * Math.random());
   }
 
@@ -54,24 +53,28 @@ export class SearchContainer extends PureComponent {
       sameSearchCounter: this.getUsersCount(),
       mobilePane: 'list',
     };
-
-    this.props.actions.updateSearch({ city: this.props.city });
   }
 
   componentDidMount() {
-    this.props.actions.listRooms({ city: this.props.city });
+    this.props.actions.listRooms({ city: this.props.city, page: this.props.page });
   }
 
-  // componentWillReceiveProps({ city }) {
-  //   if (this.props.city !== city) {
-  //     this.props.dispatch(listRooms({ city }));
-  //     this.setState({
-  //       sameSearchCounter: this.getUsersCount(),
-  //     });
-  //   }
-  // }
+  componentWillReceiveProps({ city, page }) {
+    if ( city !== this.props.city || page !== this.props.page ) {
+      this.props.actions.listRooms({ city, page });
+      this.setState({
+        sameSearchCounter: this.getUsersCount(),
+      });
+    }
+  }
 
   render() {
+    const {
+      lang,
+      city,
+      isLoading,
+    } = this.props;
+
     return (
       <div className={viewport}>
         <div
@@ -89,11 +92,23 @@ export class SearchContainer extends PureComponent {
         >
           <div className={leftPane}>
             <div className={searchEngineAndAlerts}>
-              <SearchEngineForm mode="noSubmit" city={this.state.city} />
-              <CreateAlertButton />
+              <SearchForm mode="noSubmit"
+                lang={lang}
+                city={city}
+                date={new Date()}
+              />
+              { /* TODO: implement alerts: <CreateAlertButton /> */ }
             </div>
-            <SameSearchCount count={this.state.sameSearchCounter} />
-            <ResultsList onRoomOver={this.onRoomOver} />
+            { isLoading ? (
+              <div class="text-center">
+                <ProgressBar type="circular" mode="indeterminate" />
+              </div> ) : (
+              <div>
+                <SameSearchCount count={this.state.sameSearchCounter} />
+                <ResultsList onRoomOver={this.onRoomOver} />
+                <Paging />
+              </div>
+            ) }
           </div>
         </div>
         <div className={switchMapList}>
@@ -119,7 +134,7 @@ function mapStateToProps({ rooms, route: { lang } }, { city }) {
   return {
     lang,
     city,
-    rooms,
+    isLoading: rooms.isLoading,
   };
 }
 
@@ -127,4 +142,4 @@ function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

@@ -3,7 +3,7 @@ import { town } from './style.css';
 export default function Town({ lang, name, roomsCount, image }) {
   return (
     <a
-      href={`/${lang}/search/${name.toLowerCase()}`}
+      href={`/${lang}/search/${name}`}
       className={town}
       style={{ backgroundImage: `url(${image})` }}
     >

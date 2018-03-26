@@ -1,10 +1,15 @@
 import { h }                      from 'preact';
 import { PureComponent }          from 'react';
+import autobind                   from 'autobind-decorator';
 import { Link }                   from 'preact-router';
+import map                        from 'lodash/map';
 import { SearchResultsOptions }   from '~/content';
 import Carousel                   from '~/components/Carousel';
 import style                      from './style.css';
 
+const _ = { map };
+
+// TODO: get rid of this
 const MONTHS = [
   'Janvier',
   'Février',
@@ -75,25 +80,13 @@ function Availability({ availableAt }) {
 }
 
 export default class Room extends PureComponent {
-
-
+  @autobind
   renderCarousel() {
-    // const { 'cover picture': coverPicture } = this.props.room;
-    // const baseUrl = SearchResultsOptions.imagesBaseUrl;
-    // let images = pictures.map((pic) => (
-    //   <div
-    //     className={style.image}
-    //     onMouseOver={onOver}
-    //     style={{
-    //       backgroundImage: `url('${baseUrl}${pic.attributes.href}')`,
-    //     }}
-    //   />
-    // ));
-
     return (
-      <Carousel lazy slide arrows className={style.coverPicture}>
-        <img src="https://s3-eu-west-1.amazonaws.com/pictures.chez-nestor.com/10cf4563-4aa7-4347-8b43-f7ae6eec78fd" />
-        <img src="https://s3-eu-west-1.amazonaws.com/pictures.chez-nestor.com/31f53798-1548-4d98-b5aa-1b0199ffc112?1507301466951" />
+      <Carousel lazy slide arrows className={style.roomCarousel}>
+        {_.map(this.props.room.galery, (url) => (
+          <div className={style.roomPic} style={{ backgroundImage: `url(${url})` }} />
+        ))}
       </Carousel>
     );
   }

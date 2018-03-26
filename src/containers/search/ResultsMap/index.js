@@ -10,13 +10,14 @@ import {
 import L                      from 'leaflet';
 import MarkerClusterGroup     from 'react-leaflet-markercluster';
 import filter                 from 'lodash/filter';
-import Room                   from '~/containers/search/Room';
+import orderBy                from 'lodash/orderBy';
+import Room                   from '~/components/search/Room';
 import _const                 from '~/const';
 import Utils                  from '~/utils';
 
 import 'leaflet/dist/leaflet.css';
 
-const _ = { filter };
+const _ = { filter, orderBy };
 const { MAPBOX_TOKEN } = _const;
 
 const DEFAULT_ICON = new L.Icon({
@@ -59,9 +60,9 @@ class ResultsMap extends PureComponent {
   }
 
   renderMarkers() {
-    const { lang, highlightedRoomId, roomsArr } = this.props;
+    const { lang, highlightedRoomId, arrRooms } = this.props;
 
-    return roomsArr.map((room) => (
+    return arrRooms.map((room) => (
       <Marker
         position={room.latLng}
         icon={
@@ -78,15 +79,15 @@ class ResultsMap extends PureComponent {
   }
 
   render() {
-    const { roomsArr } = this.props;
+    const { arrRooms } = this.props;
     let bounds;
 
-    if (roomsArr.length === 0) {
+    if (arrRooms.length === 0) {
       bounds = DEFAULT_BBOX;
     }
     else {
       bounds = new L.LatLngBounds(
-        roomsArr.map(({ latLng }) => (latLng))
+        arrRooms.map(({ latLng }) => (latLng))
       ).pad(0.2);
     }
 
@@ -94,7 +95,7 @@ class ResultsMap extends PureComponent {
       <Map
         style={{
           width: '100%',
-          height: '400px',
+          height: '100%',
           position: 'relative',
           overflow: 'hidden',
         }}
@@ -134,11 +135,17 @@ const mapStateToProps = (state, { hightlightedRoomId }) => {
 
   return {
     lang,
-    roomsArr: _.filter(rooms, (room) => (typeof room === 'object')).map((room) => ({
-      ...room,
-      latLng: Utils.getApartmentLatLng(apartments[room.ApartmentId]),
-      roomCount: apartments[room.ApartmentId].roomCount,
-    })),
+    arrRooms: _.orderBy(rooms, ['availableAt'])
+      .filter((room) => typeof room === 'object')
+      .map((room) => ({
+        ...room,
+        latLng: Utils.getApartmentLatLng(apartments[room.ApartmentId]),
+        roomCount: apartments[room.ApartmentId].roomCount,
+        pictures: [].concat(
+          Utils.getPictures(room),
+          Utils.getPictures(apartments[room.ApartmentId])
+        ),
+      })),
     hightlightedRoomId,
   };
 };

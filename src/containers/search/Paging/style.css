@@ -1,0 +1,21 @@
+.paging {
+  text-align: center;
+}
+
+.paging ul {
+  display: block;
+  padding: 0;
+  list-style: none;
+}
+
+.paging li {
+  display: inline-block;
+}
+
+.activeLink a {
+  color: #000;
+}
+
+.paging a {
+  padding: 10px;
+}

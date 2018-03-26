@@ -12,11 +12,35 @@ export default Object.assign({}, common, {
     }
   })(process.env.PREACT_APP_ENV),
 
-  ROOM_SEGMENTS: {
-    lyon: 'Available%20Rooms%20Lyon',
-    paris: 'Available%20Rooms%20Paris',
-    montpellier: 'Available%20Rooms%20Montpellier',
-  },
-
   MAPBOX_TOKEN: `pk.eyJ1IjoiY2hlem5lc3RvciIsImEiOiJjajhtdzhkMGQxMXRqMndsZHRyaXo0ZXhsIn0.8nTAH6da3pvqHKYAARms5A`,
+
+  RESULTS_PER_PAGE: 12,
+
+  SEARCHABLE_CITIES: [{
+    name: 'Lyon',
+    roomsCount: 300,
+    image: '/assets/home/cities/lyon-imageoptim.jpg',
+  }, {
+    name: 'Lyon 3e 6e 7e 8e',
+  }, {
+    name: 'Lyon 1er 2e 4e',
+  }, {
+    name: 'Lyon 5e 9e',
+  }, {
+    name: 'Montpellier',
+    roomsCount: 120,
+    image: '/assets/home/cities/montpellier-imageoptim.jpg',
+  }, {
+    name: 'Paris',
+    roomsCount: 70,
+    image: '/assets/home/cities/paris-imageoptim.jpg',
+  }, {
+    name: 'Lille',
+    roomsCount: 20,
+    image: '/assets/home/cities/lille-imageoptim.jpg',
+  }, {
+    name: 'Toulouse',
+    roomsCount: 20,
+    image: '/assets/home/cities/toulouse-imageoptim.jpg',
+  }],
 });

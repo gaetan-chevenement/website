@@ -67,12 +67,14 @@ class Carousel extends PureComponent {
   render({ children, className, fade, lazy, arrows }) {
     const { prevIndex, currIndex, nextIndex } = this.state;
 
-    // ❬❭⧼⧽
     return (
       <div className={`${className} carousel-wrapper`}>
         { arrows ? this.renderArrows() : '' }
         <div className={`carousel ${fade ? 'fade' : 'slide'}`}>
           {(Array.isArray(children) ? children : [children]).map((child, i) => {
+            if ( !child ) {
+              return '';
+            }
             if ( i === currIndex ) {
               return cloneWithClass(child, 'curr');
             }

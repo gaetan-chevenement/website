@@ -1,18 +1,24 @@
 import { connect }        from 'react-redux';
-import { ContentTowns }   from '~/content';
+import _const             from '~/const';
 import Town               from './town';
+import style              from './style';
+
+const { SEARCHABLE_CITIES } = _const;
 
 function Towns({ lang }) {
   return (
-    <section class="grid-3-large-1 has-gutter">
-      {ContentTowns.list.map((town) => (
-        <Town
-          lang={lang}
-          name={town.name}
-          roomsCount={town.roomsCount}
-          image={town.image}
-        />
-      ))}
+    <section class={`grid-3-large-1 has-gutter ${style.towns}`}>
+      {SEARCHABLE_CITIES
+        .filter(({ image }) => Boolean(image))
+        .map((town) => (
+          <Town
+            lang={lang}
+            name={town.name}
+            roomsCount={town.roomsCount}
+            image={town.image}
+          />
+        ))
+      }
     </section>
   );
 }

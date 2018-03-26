@@ -3,11 +3,12 @@ import { createActionAsync }    from 'redux-act-async';
 import queryString              from 'query-string';
 import map                      from 'lodash/map';
 import pick                     from 'lodash/pick';
+import capitalize               from 'lodash/capitalize';
 import Utils                    from '~/utils';
 import _const                   from '~/const';
 
-const _ = { map, pick };
-const { ROOM_SEGMENTS } = _const;
+const _ = { map, pick, capitalize };
+const { RESULTS_PER_PAGE } = _const;
 
 export const updateRoute = createAction('Update route object');
 export const updateSearch = createAction('Update search state');
@@ -102,19 +103,22 @@ export const listOrders =
 export const listRooms =
   createActionAsync(
     'List Rooms',
-    ({ city }) => {
+    ({ city, page = 1 }) => {
       if ( city === undefined ) {
         return Promise.reject('Can only list Rooms by city for now');
       }
 
       const params = {
-        segment: ROOM_SEGMENTS[city.toLowerCase()],
-        'page[number]': 1,
-        'page[size]': 10,
+        zone: city.replace(/ (\d)er?/g, '$1,').replace(/,$/, '').toLowerCase(),
+        'fields[Room]': 'name,Apartment,availableAt,_currentPrice,floorArea,galery',
+        'fields[Apartment]': 'roomCount',
+        'page[number]': page,
+        'page[size]': RESULTS_PER_PAGE,
+        sort: 'Rentings->Events.startDate',
       };
       const qs = queryString.stringify(params, { encode: false });
 
-      return Utils.fetchJson(`/Room?${qs}`);
+      return Utils.fetchJson(`/SellableRoom?${qs}`);
     },
     { ok: { payloadReducer: reduceRooms } }
   );
@@ -215,7 +219,7 @@ function mapOrderItems(data, orderId) {
     }));
 }
 
-function reduceRooms({ response: { data = [], included = [] } }) {
+function reduceRooms({ response: { data = [], included = [], meta: { count } } }) {
   return {
     rooms: data
       .filter((item) => item.type === 'Room')
@@ -229,6 +233,7 @@ function reduceRooms({ response: { data = [], included = [] } }) {
       .filter((item) => item.type === 'Apartment')
       .map((item) => ({ ...item.attributes }))
       .reduce(arrayToMap, {}),
+    count,
   };
 }
 

@@ -16,7 +16,11 @@ export default function Guide() {
       {ContentGuide.texts.text.map((p) => (
         <p>{p}</p>
       ))}
-      <Button theme={style}>
+      <Button
+        href="http://forms.chez-nestor.com/cheznestor/HousingGuide"
+        target="_blank"
+        theme={style}
+      >
         {ContentGuide.texts['button-download']}
       </Button>
       <div style={{ clear: 'both' }} />

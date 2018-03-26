@@ -32,6 +32,7 @@ export default class App extends Component {
       minPack,
       returnUrl,
       city,
+      page,
       admin = false,
       rentingId,
       roomId,
@@ -40,7 +41,7 @@ export default class App extends Component {
     // route params are only relevant when they're defined, so we'll filter-out
     // all undefined values.
     store.dispatch(updateRoute(Utils.filterOutUndef({
-      lang, minPack, city, returnUrl, admin, rentingId, roomId,
+      lang, minPack, city, page: +page, returnUrl, admin, rentingId, roomId,
     })));
 
     this.setState({ lang });
@@ -81,7 +82,7 @@ export default class App extends Component {
           </Match>
           <Router onChange={this.handleRoute}>
             <Home path="/:lang" default />
-            <Search path="/:lang/search/:city" />
+            <Search path="/:lang/search/:city/:page?" />
             <BookingForm path="/:lang/booking/:roomId" />
             <BookingSummary path="/:lang/summary/:rentingId" />
             <BookingConfirmed path="/:lang/welcome/:rentingId" />

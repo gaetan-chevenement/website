@@ -30,9 +30,9 @@ class Room extends PureComponent {
     return this.loadData(roomId);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if ( this.props.roomId !== nextProps.roomId ) {
-      this.loadData(nextProps.roomId);
+  componentWillReceiveProps({ roomId }) {
+    if ( roomId !== this.props.roomId ) {
+      this.loadData(roomId);
     }
   }
 
@@ -70,7 +70,7 @@ const definition = { 'fr-FR': {
 function mapStateToProps({ route: { lang }, apartments, rooms }, { roomId }) {
   const room = rooms[roomId];
 
-  if ( !room || room.isLoading ) {
+  if ( !room || room.isLoading || !('pic 0 url' in room) ) {
     return { isLoading: true };
   }
 
