@@ -103,7 +103,7 @@ export const listOrders =
 export const listRooms =
   createActionAsync(
     'List Rooms',
-    ({ city, page = 1 }) => {
+    ({ city, page }) => {
       if ( city === undefined ) {
         return Promise.reject('Can only list Rooms by city for now');
       }
@@ -112,7 +112,7 @@ export const listRooms =
         zone: city.replace(/ (\d)er?/g, '$1,').replace(/,$/, '').toLowerCase(),
         'fields[Room]': 'name,Apartment,availableAt,_currentPrice,floorArea,galery',
         'fields[Apartment]': 'roomCount',
-        'page[number]': page,
+        'page[number]': page || 1,
         'page[size]': RESULTS_PER_PAGE,
         sort: 'Rentings->Events.startDate',
       };

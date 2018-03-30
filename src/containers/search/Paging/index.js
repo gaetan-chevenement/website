@@ -8,7 +8,7 @@ const { RESULTS_PER_PAGE } = _const;
 
 function Paging({ lang, count, city, page }) {
   const pageCount = Math.ceil(count / RESULTS_PER_PAGE);
-  const startsAt = (page - 1) * RESULTS_PER_PAGE;
+  const startsAt = 1 + (page - 1) * RESULTS_PER_PAGE;
   const endsAt = Math.min(page * RESULTS_PER_PAGE, count);
 
   return (
