@@ -1,10 +1,17 @@
-import CSS from './style.css';
-import { Button } from 'react-toolbox/lib/button/index';
+import { IntlProvider, Text } from 'preact-i18n';
+import { Button }             from 'react-toolbox/lib/button/index';
+import CSS                    from './style.css';
 
-export function CreateAlertButton() {
+export function CreateAlertButton({ lang }) {
   return (
-    <Button className={CSS.createAlertButton} icon="add_alert" theme={CSS}>
-      Créer une alerte
-    </Button>
+    <IntlProvider definition={definition[lang]}>
+      <Button className={CSS.createAlertButton} icon="add_alert" theme={CSS}>
+        <Text id="create">Create an alert</Text>
+      </Button>
+    </IntlProvider>
   );
 }
+
+const definition = { 'fr-FR': {
+  create: 'Créer une alerte',
+} };

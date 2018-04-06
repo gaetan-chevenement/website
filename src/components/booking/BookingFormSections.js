@@ -36,9 +36,5 @@ const definition = { 'fr-FR': {
   housingPack: 'Choisissez Votre Pack Logement',
   detail: 'Comparaison Détaillée',
   personal: 'Infos personnelles',
-  date: {
-    first: 'Date et heure prévues de checkin',
-    last: '(Possibilité de changer à n\'importe quel moment)',
-  },
   eligibility: 'Eligibilité, modalités et Conditions',
 } };

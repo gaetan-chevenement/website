@@ -42,7 +42,7 @@ class BookingStep3 extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="content">
-          <Heading room={room} type="confirmed" />
+          <Heading room={room} type="Booking confirmed" />
 
           <section>
             <p>
@@ -59,6 +59,12 @@ class BookingStep3 extends PureComponent {
               </Button>
             </p>
           </section>
+
+          { /* Nestpick tracking: Booking */ }
+          <iframe src={`https://nestpick.go2cloud.org/aff_goal?a=l&goal_id=3&adv_sub=${room.id}`}
+            scrolling="no" frameborder="0" width="1" height="1"
+          />
+          { /* End Nestpick tracking: Booking */ }
         </div>
       </IntlProvider>
     );

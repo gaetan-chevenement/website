@@ -34,44 +34,6 @@ export const SearchOptions = {
   },
 };
 
-export const ContentServices = {
-  texts: {
-    'button-discover': 'Découvrez nos services inclus',
-  },
-  list: [
-    {
-      title: 'Plein centre',
-      img: require('./assets/home/experience-1-imageoptim.png'),
-      subtitle: 'Au cœur de la ville',
-    },
-    {
-      title: 'Meublé',
-      img: require('./assets/home/experience-2-imageoptim.png'),
-      subtitle: 'De A à Z',
-    },
-    {
-      title: 'Equipé',
-      img: require('./assets/home/experience-3-imageoptim.png'),
-      subtitle: 'Du sol au plafond',
-    },
-    {
-      title: 'Tout inclus',
-      img: require('./assets/home/experience-4-imageoptim.png'),
-      subtitle: 'Assurance, eau, gaz...',
-    },
-    {
-      title: 'Wifi',
-      img: require('./assets/home/experience-5-imageoptim.png'),
-      subtitle: 'Haut débit',
-    },
-    {
-      title: '3 clics',
-      img: require('./assets/home/experience-6-imageoptim.png'),
-      subtitle: 'Pour réserver',
-    },
-  ],
-};
-
 export const ContentTestimonies = {
   list: [
     {
@@ -99,19 +61,6 @@ export const ContentTestimonies = {
       author: 'Emilie, 23 ans, française',
     },
   ],
-};
-
-export const ContentGuide = {
-  img: require('./assets/home/gallery/home-gallery-1-o.jpg'),
-  texts: {
-    title: 'Guide logement gratuit',
-    text: [
-      'Où rechercher mon logement ?',
-      'Quel dossier fournir pour un étudiant ?',
-      'Quels sont les frais à prévoir pour une location ?',
-    ],
-    'button-download': 'Téléchargez votre guide logement offert',
-  },
 };
 
 export const RoomServices = [

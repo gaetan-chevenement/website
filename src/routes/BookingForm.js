@@ -81,7 +81,7 @@ class BookingForm extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="content">
-          <Heading room={room} type="details" />
+          <Heading room={room} type="Booking details" />
 
           { room.availableAt === null ?
             <p>
@@ -125,14 +125,6 @@ function mapStateToProps({ route: { lang }, rooms, booking }, { roomId }) {
 }
 
 const definition = { 'fr-FR': {
-  title: 'Réservation de la chambre',
-  datetime: 'Date et heure',
-  description: 'Cette chambre est disponible immédiatement et la location commencera au',
-  pack: {
-    basic: 'Basique',
-    comfort: 'Confort',
-    privilege: 'Privilège',
-  },
   errors: {
     unavailable: 'Désolé, cette chambre n\'est plus dispobible.',
     room: 'Désolé, une erreur est survenue lors de la préparation de votre réservation.',

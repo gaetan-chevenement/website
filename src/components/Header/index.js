@@ -67,7 +67,7 @@ function AppNavigation({ type, lang, className }) {
     <IntlProvider definition={definition[lang]}>
       <Navigation className={className} type={type} theme={style}>
         <NavLink href={`/${lang}/services`} theme={style}>
-          <Text id="included">Included Services</Text>
+          <Text id="included">Included services</Text>
         </NavLink>
         <NavLink href={`/${lang}/booking-process`} theme={style}>
           <Text id="booking">Booking</Text>
@@ -83,6 +83,6 @@ function AppNavigation({ type, lang, className }) {
 export default Header;
 
 const definition = { 'fr-FR': {
-  included: 'Services Inclus',
+  included: 'Services inclus',
   booking: 'Réserver',
 } };
