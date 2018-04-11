@@ -13,13 +13,13 @@ function Guide({ lang }) {
         </h2>
         <p><Text id="text.0">Where to look for an accomodation?</Text></p>
         <p><Text id="text.1">Which files are required for a student?</Text></p>
-        <p><Text id="text.2">What fees to expect when renting a flat?</Text></p>
+        <p><Text id="text.2">What fees are expected for a leasing?</Text></p>
         <Button
           href="http://forms.chez-nestor.com/cheznestor/HousingGuide"
           target="_blank"
           theme={style}
         >
-          <Text id="downlod">Downlod your free housing guide</Text>
+          <Text id="downlod">Download your free housing guide</Text>
         </Button>
         <div style={{ clear: 'both' }} />
       </section>
@@ -30,11 +30,11 @@ function Guide({ lang }) {
 const definition = { 'fr-FR': {
   title: 'Guide logement gratuit',
   text: [
-    'Où rechercher mon logement ?',
-    'Quel dossier fournir pour un étudiant ?',
+    'Où rechercher un logement ?',
+    'Quels dossiers fournir pour un étudiant ?',
     'Quels sont les frais à prévoir pour une location ?',
   ],
-  download: 'Téléchargez votre guide logement offert',
+  download: 'Téléchargez votre guide logement gratuit',
 } };
 
 export default Utils.connectLang(Guide);
