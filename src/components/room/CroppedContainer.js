@@ -1,29 +1,23 @@
-import style from '~/containers/room/style.css';
-import { Component } from 'preact';
+import { PureComponent }      from 'react';
+import autobind               from 'autobind-decorator';
+import { IntlProvider, Text } from 'preact-i18n';
+import Utils                  from '~/utils';
+import style                  from './style.css';
 
+class CroppedContainer extends PureComponent {
+  @autobind
+  handleToggleClick() {
+    this.setState({
+      showAll: ! this.state.showAll,
+      toggledOnce: true,
+    });
+  }
 
-// https://stackoverflow.com/questions/143815/determine-if-an-html-elements-content-overflows
-function checkOverflow(el) {
-  let curOverflow = el.style.overflow;
+  @autobind
+  setRefFunc(container) {
+    this.setState({ container });
+  }
 
-  if ( !curOverflow || curOverflow === 'visible' )
-    el.style.overflow = 'hidden';
-
-  let isOverflowing = el.clientWidth < el.scrollWidth
-      || el.clientHeight < el.scrollHeight;
-
-  el.style.overflow = curOverflow;
-
-  return isOverflowing;
-}
-
-const ContButton = ({ onClick, toggled }) => (
-  <div className={style.shortcut} onClick={onClick}>
-    { toggled ? 'Masquer ↑' : 'Voir plus ↓' }
-  </div>
-);
-
-class CroppedContainer extends Component {
   constructor() {
     super();
     this.state = {
@@ -31,14 +25,9 @@ class CroppedContainer extends Component {
       container: null,
       toggledOnce: false,
     };
-    this.__toggleFunc = () => this.setState({
-      showAll: ! this.state.showAll,
-      toggledOnce: true,
-    });
-    this.__setRefFunc = container => this.setState({ container });
   }
 
-  render() {
+  render({ lang }) {
     const { children, height } = this.props;
     const { showAll, container, toggledOnce } = this.state;
 
@@ -56,16 +45,43 @@ class CroppedContainer extends Component {
     }
 
     return (
-      <div className={style.croppedCont}>
-        <div className={style.croppedContCont} style={elstyle} ref={this.__setRefFunc}>
-          {children}
-          {isOverflowing ? <div className={style.croppedContOverlay} /> : null }
+      <IntlProvider definition={definition[lang]}>
+        <div className={style.croppedCont}>
+          <div className={style.croppedContCont} style={elstyle} ref={this.setRefFunc}>
+            {children}
+            {isOverflowing && <div className={style.croppedContOverlay} /> }
+          </div>
+          { ( isOverflowing || showAll ) && (
+            <div className={style.shortcut} onClick={this.handleToggleClick}>
+              { showAll ?
+                <Text id="less">Show less ↑</Text> :
+                <Text id="more">Show more ↓</Text> }
+            </div>
+          ) }
         </div>
-        { isOverflowing || showAll ? <ContButton onClick={this.__toggleFunc} toggled={showAll} /> : null }
-
-      </div>
+      </IntlProvider>
     );
   }
 }
 
-export default CroppedContainer;
+// https://stackoverflow.com/questions/143815/determine-if-an-html-elements-content-overflows
+function checkOverflow(el) {
+  let curOverflow = el.style.overflow;
+
+  if ( !curOverflow || curOverflow === 'visible' )
+    el.style.overflow = 'hidden';
+
+  let isOverflowing = el.clientWidth < el.scrollWidth
+      || el.clientHeight < el.scrollHeight;
+
+  el.style.overflow = curOverflow;
+
+  return isOverflowing;
+}
+
+const definition = { 'fr-FR': {
+  less: 'Voir moins ↑',
+  more: 'Voir plus ↓',
+} };
+
+export default Utils.connectLang(CroppedContainer);

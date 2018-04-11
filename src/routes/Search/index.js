@@ -1,10 +1,10 @@
-import { h }                  from 'preact';
+import random                 from 'lodash/random';
 import { PureComponent }      from 'react';
 import autobind               from 'autobind-decorator';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
-import SameSearchCount        from '~/components/SameSearchCount';
+import SameSearchCount        from '~/components/search/SameSearchCount';
 import SearchForm             from '~/components/SearchForm';
 import ResultsList            from '~/containers/search/ResultsList';
 import ResultsMap             from '~/containers/search/ResultsMap';
@@ -21,6 +21,8 @@ import {
   viewport,
   mobileShow,
 }                             from './style.css';
+
+const _ = { random };
 
 export class Search extends PureComponent {
   @autobind
@@ -39,10 +41,7 @@ export class Search extends PureComponent {
   }
 
   getUsersCount() {
-    const min = 750;
-    const max = 950;
-
-    return min + Math.ceil((max - min) * Math.random());
+    return _.random(750, 950);
   }
 
   constructor(props) {
@@ -70,7 +69,6 @@ export class Search extends PureComponent {
 
   render() {
     const {
-      lang,
       city,
       isLoading,
     } = this.props;
@@ -93,7 +91,7 @@ export class Search extends PureComponent {
           <div className={leftPane}>
             <div className={searchEngineAndAlerts}>
               <SearchForm mode="noSubmit"
-                lang={lang}
+
                 city={city}
                 date={new Date()}
               />
@@ -130,9 +128,8 @@ export class Search extends PureComponent {
   }
 }
 
-function mapStateToProps({ rooms, route: { lang } }, { city }) {
+function mapStateToProps({ rooms }, { city }) {
   return {
-    lang,
     city,
     isLoading: rooms.isLoading,
   };

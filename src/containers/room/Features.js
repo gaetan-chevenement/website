@@ -1,4 +1,3 @@
-import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { IntlProvider, Text } from 'preact-i18n';
@@ -14,104 +13,76 @@ import style from './style.css';
 const _ = { capitalize, values, mapValues };
 const { ENUMS } = _const;
 
-class Features extends PureComponent {
-  renderFeatures(category, _taxonomy, features = [], featureDetails, lang) {
-    if ( features.length === 0 ) {
-      return '';
-    }
-
-    let leftFeatures = features.slice(0, Math.ceil(features.length / 2));
-    let rightFeatures = features.slice(Math.ceil(features.length / 2));
-
-    const renderFeature = (name) => {
-      const details = featureDetails[name];
-
-      if ( details === undefined) {
-        return (<li>{name}</li>);
-      }
-      return (<li>
-        <i className={`icon-24 ${details.css}`} />
-        <span>{details[lang]}</span>
-      </li>);
-    };
-
-    return (
-      <section className={[style.featuresColumn, features.length > 10 ? style.featuresColumnLarge: ''].join(' ')}>
-        <div className={style.featuresRoom}>
-          <Text id={category}>{_.capitalize(category)}</Text>
+function Features({ lang, roomFeatures, apartmentFeatures }) {
+  return (
+    <IntlProvider definition={definition[lang]}>
+      <section>
+        <h3 className={style.heading}><Text id="title">Features</Text></h3>
+        <br />
+        <h4 className={style.subtitle}>
+          <span>
+            <Text id="room" >Room</Text>
+          </span>
+        </h4>
+        <div className={style.featuresContent}>
+          {['sleep', 'dress', 'work', 'general'].map((group) => (
+            <FeaturesList
+              lang={lang}
+              group={group}
+              features={roomFeatures[group]}
+              featureDetails={ENUMS[`room-features-${group}`]}
+            />
+          ))}
         </div>
-        <CroppedContainer height={170}>
-          { features.length > 10 ? (
-            <div className="grid-2">
-              <div className="one-half">
-                <ul>
-                  {leftFeatures.map(renderFeature)}
-                </ul>
-              </div>
-              <div className="one-half">
-                <ul>
-                  {rightFeatures.map(renderFeature)}
-                </ul>
-              </div>
-            </div>
-          ) : <ul>{features.map(renderFeature)}</ul> }
-        </CroppedContainer>
+        <h4 className={style.subtitle}>
+          <span>
+            <Text id="apartment">Apartment</Text>
+          </span>
+        </h4>
+        <div className={style.featuresContent}>
+          {['kitchen', 'bathroom', 'general'].map((group) => (
+            <FeaturesList
+              lang={lang}
+              group={group}
+              features={apartmentFeatures[group]}
+              featureDetails={ENUMS[`apartment-features-${group}`]}
+            />
+          ))}
+        </div>
       </section>
-    );
-  }
+    </IntlProvider>
+  );
+}
 
-  render() {
-    const {
-      lang,
-      roomFeatures,
-      apartmentFeatures,
-    } = this.props;
+function FeaturesList({ lang, group, taxonomy, features = [], featureDetails }) {
+  return features.length > 0 && (
+    <section className={style.featuresColumn}>
+      <div className={style.featuresRoom}>
+        <Text id={group}>{_.capitalize(group)}</Text>
+      </div>
+      <CroppedContainer height={170}>
+        <ul>{features.map((name) => (
+          <Feature
+            label={featureDetails[name][lang]}
+            className={featureDetails[name].css}
+          />
+        ))}</ul>
+      </CroppedContainer>
+    </section>
+  );
+}
 
-    return (
-      <IntlProvider definition={definition[lang]}>
-        <section>
-          <h3 className={style.heading}><Text id="title">Features</Text></h3>
-          <br />
-          <h4 className={style.subtitle}>
-            <span>
-              <Text id="room" >Room</Text>
-            </span>
-          </h4>
-          <div className={style.featuresContent}>
-            {['sleep', 'dress', 'work', 'general'].map((taxonomy) =>
-              this.renderFeatures(
-                taxonomy,
-                `room-features-${taxonomy}`,
-                roomFeatures[taxonomy],
-                ENUMS[`room-features-${taxonomy}`],
-                lang
-              )
-            )}
-          </div>
-          <h4 className={style.subtitle}>
-            <span>
-              <Text id="apartment">Apartment</Text>
-            </span>
-          </h4>
-          <div className={style.featuresContent}>
-            {['kitchen', 'bathroom', 'general'].map((taxonomy) =>
-              this.renderFeatures(
-                taxonomy,
-                `apartment-features-${taxonomy}`,
-                apartmentFeatures[taxonomy],
-                ENUMS[`apartment-features-${taxonomy}`],
-                lang
-              )
-            )}
-          </div>
-        </section>
-      </IntlProvider>
-    );
-  }
+function Feature({ label, className }) {
+  return (
+    <li>
+      <i className={`icon-24 ${className}`} />
+      <span>{label}</span>
+    </li>
+  );
 }
 
 const definition = { 'fr-FR': {
-  title: 'Equipements',
+  title: 'Équipements',
   room: 'Chambre',
   apartment: 'Appartement',
   sleep: 'Dormir',

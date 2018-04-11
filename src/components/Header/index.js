@@ -1,17 +1,16 @@
-import { PureComponent }      from 'react';
+import { Component }          from 'react';
 import { IntlProvider, Text } from 'preact-i18n';
-import { h }                  from 'preact';
 import { Link }               from 'preact-router/match';
 import autobind               from 'autobind-decorator';
 import { Link as NavLink }    from 'react-toolbox/lib/link';
 import { AppBar }             from 'react-toolbox/lib/app_bar';
 import { Navigation }         from 'react-toolbox/lib/navigation';
 import { Drawer }             from 'react-toolbox/lib/drawer';
-
 import appbarTheme            from 'react-toolbox/components/app_bar/theme.css';
+import Utils                  from '~/utils';
 import style                  from './style';
 
-class Header extends PureComponent {
+class Header extends Component {
   @autobind
   handleToggle() {
     this.setState({ isDrawerActive: !this.state.isDrawerActive });
@@ -80,9 +79,9 @@ function AppNavigation({ type, lang, className }) {
   );
 }
 
-export default Header;
-
 const definition = { 'fr-FR': {
   included: 'Services inclus',
   booking: 'Réserver',
 } };
+
+export default Utils.connectLang(Header);

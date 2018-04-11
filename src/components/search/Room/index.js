@@ -1,38 +1,83 @@
-import { h }                      from 'preact';
-import { PureComponent }          from 'react';
-import autobind                   from 'autobind-decorator';
-import { Link }                   from 'preact-router';
 import map                        from 'lodash/map';
-import { SearchResultsOptions }   from '~/content';
+import { Link }                   from 'preact-router';
+import { IntlProvider, Text }     from 'preact-i18n';
+import Utils                      from '~/utils';
 import Carousel                   from '~/components/Carousel';
+import Availability               from '~/components/Availability';
 import style                      from './style.css';
 
 const _ = { map };
+const pictos = {
+  double: require('../../../assets/search/Picto description 4a.png'),
+  simple: require('../../../assets/search/Picto description 4b.png'),
+  sofa: require('../../../assets/search/Picto description 4c.png'),
+};
+const bedNames = {
+  double: 'Double couchage',
+  simple: 'Lit simple',
+  sofa: 'Canapé lit',
+  multiple: '{n} couchages',
+};
 
-// TODO: get rid of this
-const MONTHS = [
-  'Janvier',
-  'Février',
-  'Mars',
-  'Avril',
-  'Mai',
-  'Juin',
-  'Juillet',
-  'Août',
-  'Septembre',
-  'Octobre',
-  'Novembre',
-  'Décembre',
-];
-const DAYS_COUNT_FOR_NEW = 10;
-const { pictos, bedNames } = SearchResultsOptions;
+function Room(args) {
+  const {
+    lang,
+    room: {
+      availableAt,
+      _currentPrice,
+      beds,
+      name,
+      floorArea,
+      createdAt,
+      id,
+      roomCount,
+      galery,
+    },
+    isThumbnail,
+  } = args;
+  const { bedIcons, bedText } = getBedsDetails(beds);
 
-function isNew(createdAt) {
-  let oneDay = 24 * 60 * 60 * 1000;
-  let diffDays = Math.round(
-    Math.abs((Date.now() - new Date(createdAt)) / oneDay),
+  return (
+    <IntlProvider definition={definition[lang]}>
+      <Link
+        className={`${style.room} ${isThumbnail ? style['is-thumbnail'] : ''}`}
+        href={`/${lang}/room/${id}`}
+      >
+        <Carousel lazy slide arrows className={style.roomCarousel}>
+          {_.map(galery, (url) => (
+            <div className={style.roomPic} style={{ backgroundImage: `url(${url})` }} />
+          ))}
+        </Carousel>
+        <div className={style.roomAttributes}>
+          <h4 className={style.roomName}>
+            {name}
+          </h4>
+          <Availability
+            {...{ lang, className: style.availability, availableAt }}
+          />
+          { /* NEW should not be translated */ }
+          {!Utils.isNew(createdAt) ? <div className={style.isNew}>NEW</div> : ''}
+          <div className={style.price}>
+            {_currentPrice / 100}€/{ isThumbnail ? 'm.' : <Text id="month">month</Text> }
+          </div>
+          <div className={style.roomAttributesIcons}>
+            <div className={`${style.roomAttributesIcon} ${style.chambersCount}`}>
+              {roomCount} {!isThumbnail ? <Text id="bedroom">Bedrooms</Text> : ''}
+            </div>
+            <div className={`${style.roomAttributesIcon} ${style.roomsCount}`}>
+              {roomCount + 2} {!isThumbnail ? <Text id="room">Rooms</Text> : ''}
+            </div>
+            <div className={`${style.roomAttributesIcon} ${style.roomSize}`}>
+              {floorArea} m²
+            </div>
+            <div className={`${style.roomAttributesIcon} ${style.roomBedText}`}>
+              {bedIcons} {!isThumbnail ? bedText : ''}
+            </div>
+          </div>
+        </div>
+      </Link>
+    </IntlProvider>
   );
-  return diffDays > DAYS_COUNT_FOR_NEW;
 }
 
 function getBedsDetails(beds) {
@@ -56,101 +101,12 @@ function getBedsDetails(beds) {
   return { bedText, bedIcons };
 }
 
-function Availability({ availableAt }) {
-  if ( availableAt === null ) {
-    return (
-      <div class={`${style.availability} ${style.unavailable}`}>
-        Non disponible
-      </div>
-    );
-  }
-  else if ( +availableAt > +Date.now() ) {
-    return (
-      <div class={`${style.availability} ${style.availableSoon}`}>
-        Dispo. le {availableAt.getDate()} {MONTHS[availableAt.getMonth()]}
-      </div>
-    );
-  }
-
-  return (
-    <div class={`${style.availability} ${style.available}`}>
-      Dispo. immédiate
-    </div>
-  );
-}
-
-export default class Room extends PureComponent {
-  @autobind
-  renderCarousel() {
-    return (
-      <Carousel lazy slide arrows className={style.roomCarousel}>
-        {_.map(this.props.room.galery, (url) => (
-          <div className={style.roomPic} style={{ backgroundImage: `url(${url})` }} />
-        ))}
-      </Carousel>
-    );
-  }
-
-  render() {
-    const {
-      lang,
-      room: {
-        availableAt,
-        basePrice,
-        beds,
-        name,
-        floorArea,
-        createdAt,
-        id,
-        roomCount,
-      },
-      isThumbnail,
-    } = this.props;
-
-    const newElement = isNew(createdAt) ?
-      null :
-      <div className={style.isNew}>NEW</div>;
-    const { bedIcons, bedText } = getBedsDetails(beds);
-    let mainClasses = [style.room];
-
-    if (isThumbnail) {
-      mainClasses.push(style['is-thumbnail']);
-    }
-
-    return (
-      <Link
-        className={mainClasses.join(' ')}
-        href={`/${lang}/room/${id}`}
-      >
-        {this.renderCarousel()}
-        <div className={style.roomAttributes}>
-          <h4 className={style.roomName}>
-            {name}
-          </h4>
-          <Availability availableAt={availableAt} />
-          {newElement}
-          <div className={style.price}>
-            {basePrice / 100}€/mois
-          </div>
-          <div className={style.roomAttributesIcons}>
-            <div className={`${style.roomAttributesIcon} ${style.chambersCount}`}>
-              {roomCount} {isThumbnail ? '' : 'chambres'}
-            </div>
-            <div className={`${style.roomAttributesIcon} ${style.roomsCount}`}>
-              {roomCount + 2} {isThumbnail ? '' : 'pièces'}
-            </div>
-            <div className={`${style.roomAttributesIcon} ${style.roomSize}`}>
-              {floorArea} m²
-            </div>
-            <div className={`${style.roomAttributesIcon} ${style.roomBedText}`}>
-              {bedIcons} {isThumbnail ? '' : bedText}
-            </div>
-          </div>
-        </div>
-      </Link>
-    );
-  }
-}
+const definition = { 'fr-FR': {
+  month: 'Mois',
+  bedroom: 'Chambre',
+  room: 'Pièce',
+} };
 
 // /!\ This component cannot used the state because it's used inside leaflet
 // and apparently these things are incompatible.
+export default Room;

@@ -1,12 +1,9 @@
-import { h }             from 'preact';
-import {
-  IntlProvider,
-  Text,
-}                        from 'preact-i18n';
-import featuresEn        from './features-en';
-import featuresFr        from './features-fr';
-import { Button }        from 'react-toolbox/lib/button';
-import Tooltip           from 'react-toolbox/lib/tooltip';
+import { IntlProvider, Text } from 'preact-i18n';
+import { Button }             from 'react-toolbox/lib/button';
+import Tooltip                from 'react-toolbox/lib/tooltip';
+import Utils                  from '~/utils';
+import featuresEn             from './features-en';
+import featuresFr             from './features-fr';
 import {
   sublist,
   valueCell,
@@ -19,13 +16,13 @@ import {
   colorBasic,
   colorComfort,
   colorPrivilege,
-}                        from './style.css';
+}                             from './style.css';
 
 const TooltipButton = Tooltip(Button);
 const features = Object.assign({}, featuresEn, featuresFr);
 const colorClasses = [colorBasic, colorComfort, colorPrivilege];
 
-export default function FeatureList({ lang, isPriceHidden }) {
+function FeatureList({ lang, isPriceHidden }) {
   const sublists = features[lang]
     .reduce((acc, curr) => (
       curr.length === 1 ?
@@ -66,7 +63,7 @@ function Sublist({ header, features }) {
             <td class={featureCell}>
               <span class={featureLabel}>
                 <TooltipButton
-                  label={`${label}`}
+                  label={label}
                   tooltip={`${label.toUpperCase()} — ${tooltip}`}
                   tooltipShowOnClick
                   theme={({ button })}
@@ -94,3 +91,5 @@ const definition = { 'fr-FR': {
   comfort: 'Confort',
   privilege: 'Privilège',
 } };
+
+export default Utils.connectLang(FeatureList);

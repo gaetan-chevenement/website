@@ -1,8 +1,9 @@
-import { Button }             from 'react-toolbox/lib/button/index';
 import { IntlProvider, Text } from 'preact-i18n';
+import { Button }             from 'react-toolbox/lib/button/index';
+import Utils                  from '~/utils';
 import style                  from './style.css';
 
-export default function Services({ lang }) {
+function Services({ lang }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <section>
@@ -70,7 +71,7 @@ const definition = {
       title: 'Meublé',
       subtitle: 'De A à Z',
     }, {
-      title: 'Equipé',
+      title: 'Équipé',
       subtitle: 'Du sol au plafond',
     }, {
       title: 'Tout inclus',
@@ -84,3 +85,5 @@ const definition = {
     }],
   },
 };
+
+export default Utils.connectLang(Services);

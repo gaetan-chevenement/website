@@ -1,19 +1,20 @@
+import { Component }          from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { IntlProvider }       from 'preact-i18n';
+import autobind               from 'autobind-decorator';
 import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 import { Button }             from 'react-toolbox/lib/button';
 import Portal                 from 'preact-portal';
 import Carousel               from '~/components/Carousel';
-
-import style from '~/containers/room/style.css';
-import { Component } from 'preact';
+import style                  from '~/containers/room/style.css';
 
 class Header extends Component {
+  @autobind
   handleScroll() {
     const $el = document.getElementById('bookBtn');
-    if ($el !== null) {
+    if ( $el !== null ) {
       const maxPos = $el.offsetTop + window.innerHeight;
       const showBookBtn = document.documentElement.scrollTop > maxPos;
       if (this.state.showBookBtn !== showBookBtn) {
@@ -22,52 +23,49 @@ class Header extends Component {
     }
   }
 
+  @autobind
+  toggleSlideshow() {
+    this.setState({ showSlideshow: !this.state.showSlideshow });
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       showBookBtn: false,
       showSlideshow: false,
     };
-    this._handleScroll = this.handleScroll.bind(this);
-    this._toggleSlideshow = () => this.setState({
-      showSlideshow: !this.state.showSlideshow,
-    });
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this._handleScroll);
+    window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this._handleScroll);
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
-  render() {
-    const { lang, pictures, roomName, roomId } = this.props;
-    const localStyle = {
-      backgroundImage: `url(${pictures[0].url})`,
-    };
+  render({ lang, pictures, roomName, roomId }) {
+    const localStyle = { backgroundImage: `url(${pictures[0].url})` };
     const btnState =  this.state.showBookBtn ? style.fixedHeaderShown : style.fixedHeaderHidden;
-
-    let portal = null;
-    if (this.state.showSlideshow) {
-      portal = (
-        <Portal into="body">
-          <div className={style.carouselOverlay} onClick={this._toggleSlideshow}>
-            <Carousel lazy slide arrows className="slideshow-full">
-              {pictures.map(({ url }) => <div className={style.slideshowImg} style={`background-image: url(${url})`} />)}
-            </Carousel>
-          </div>
-        </Portal>
-      );
-    }
 
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
-          {portal}
-          <div className={[style.fixedHeader, btnState].join(' ')}>
-            <Button raised primary href={`/${lang}/booking/${roomId}`} id="bookBtn" style="width: 100%">
+          {this.state.showSlideshow ? (
+            <Portal into="body">
+              <div className={style.carouselOverlay} onClick={this.toggleSlideshow}>
+                <Carousel lazy slide arrows className="slideshow-full">
+                  {pictures.map(({ url }) =>
+                    <div className={style.slideshowImg} style={`background-image: url(${url})`} />
+                  )}
+                </Carousel>
+              </div>
+            </Portal>
+          ) : ''}
+          <div className={`${style.fixedHeader} ${btnState}`}>
+            <Button href={`/${lang}/booking/${roomId}`}
+              raised primary id="bookBtn" style="width: 100%"
+            >
               Réserver ce logement
             </Button>
           </div>

@@ -26,8 +26,9 @@ class Room extends PureComponent {
   }
 
   componentWillMount() {
-    const { roomId } = this.props;
-    return this.loadData(roomId);
+    if ( !this.props.room ) {
+      return this.loadData(this.props.roomId);
+    }
   }
 
   componentWillReceiveProps({ roomId }) {
@@ -38,9 +39,9 @@ class Room extends PureComponent {
 
   render() {
     const {
-      roomId,
-      apartmentId,
       lang,
+      roomId,
+      room,
       isLoading,
     } = this.props;
 
@@ -55,8 +56,8 @@ class Room extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
-          <Header roomId={roomId} apartmentId={apartmentId} />
-          <RoomContent roomId={roomId} apartmentId={apartmentId} />
+          <Header roomId={roomId} apartmentId={room.ApartmentId} />
+          <RoomContent roomId={roomId} apartmentId={room.ApartmentId} />
         </div>
       </IntlProvider>
     );
@@ -77,9 +78,7 @@ function mapStateToProps({ route: { lang }, apartments, rooms }, { roomId }) {
   return {
     lang,
     roomId,
-    roomName: room.name,
-    coverPicture: room['cover picture'],
-    apartmentId: room.ApartmentId,
+    room,
   };
 }
 

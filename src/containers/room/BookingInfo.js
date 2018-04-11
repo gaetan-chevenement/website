@@ -1,11 +1,10 @@
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { IntlProvider }       from 'preact-i18n';
+import { IntlProvider, Text } from 'preact-i18n';
 // import { Link }               from 'preact-router/match';
 import { Button }             from 'react-toolbox/lib/button';
 import * as actions           from '~/actions';
-
-import style from './style.css';
+import style                  from './style.css';
 
 const BookingInfo = ({ lang, roomId, room }) => {
   const {
@@ -15,99 +14,107 @@ const BookingInfo = ({ lang, roomId, room }) => {
     depositPrice,
   } = room;
   const priceLineClasses = `grid-4 has-gutter ${style.priceLine}`;
+
   return (
     <IntlProvider definition={definition[lang]}>
       <section className={style.bookingInfo}>
-        <h3 className={style.subtitle}><span>Paiement mensuels</span></h3>
+        <h3 className={style.subtitle}>
+          <span><Text id="manual">Paiement mensuels</Text></span>
+        </h3>
         <div className={priceLineClasses}>
           <div className="one-half">
-            Loyer
+            <Text id="rent">Loyer</Text>
           </div>
           <div className="one-half text-right">
-            {currentPrice / 100}€/mois
+            {currentPrice / 100}€/<Text id="month">mois</Text>
           </div>
         </div>
         <div className={priceLineClasses}>
           <div className="one-half">
-            Charges
+            <Text id="serviceFees">Charges</Text>
           </div>
           <div className="one-half text-right">
-            {serviceFees / 100}€/mois
+            {serviceFees / 100}€/<Text id="month">mois</Text>
           </div>
         </div>
-        <div className={priceLineClasses + ' ' + style.cafHelp}>
+        <div className={`${priceLineClasses} ${style.cafHelp}`}>
           <div className="one-half">
-            Aide au logement (CAF)
+            <Text id="caf">Aide au logement (CAF)</Text>
           </div>
           <div className="one-half text-right">
-            - 90€/mois
+            -90€/<Text id="month">mois</Text>
           </div>
         </div>
         <div className={style.cafNotice}>
-          Ce logement est éligible aux APL. Le versement de cette aide n'est
-          pas systématique et son montant, aléatoire, dépend du loyer et de votre
-          situation personnelle. Contactez la CAF.
+          <Text id="cafInfo">
+            Ce logement est éligible aux APL. Le versement de cette aide n'est
+            pas systématique et son montant, aléatoire, dépend du loyer et de
+            votre situation personnelle. Contactez la CAF.
+          </Text>
         </div>
-
 
         <h3 className={style.subtitle}><span>Paiements fixes</span></h3>
         <div className={priceLineClasses}>
           <div className="one-half">
-            Dépôt de garantie
+            <Text id="deposit">Dépôt de garantie</Text>
           </div>
           <div className="one-half text-right">
             {depositPrice / 100}€
           </div>
         </div>
         <div className={style.priceLineDesc}>
-          Remboursé après votre séjour.
+          <Text id="depositInfo">Remboursé après votre séjour.</Text>
         </div>
         <div className={priceLineClasses}>
           <div className="one-half">
-            Pack Logement
+            <Text id="pack">Pack Logement</Text>
           </div>
           <div className="one-half text-right">
             -- €
           </div>
         </div>
         <div className={style.priceLineDesc}>
-          Basique, Confort ou Privilège, à choisir à la réservation.
+          <Text id="packInfo">
+            Basique, Confort ou Privilège, à choisir à la réservation
+          </Text>
         </div>
 
-        <h3 className={style.subtitle}><span>Inclus</span></h3>
+        <h3 className={style.subtitle}>
+          <span><Text id="included">Inclus</Text></span>
+        </h3>
 
         <ul className={style.bookingFeatures}>
           <li>
             <i className="icon-24 picto-inclus_wifi" />
-            <span>Wifi haut débit illimité</span>
+            <span><Text id="wifi">Wifi haut débit illimité</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_electricite" />
-            <span>Electricité</span>
+            <span><Text id="elec">Électricité</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_eau" />
-            <span>Eau</span>
+            <span><Text id="water">Eau</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_gaz" />
-            <span>Gaz</span>
+            <span><Text id="gaz">Gaz</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_assurance" />
-            <span>Assurance habitation</span>
+            <span><Text id="insurance">Assurance habitation</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_maintenance_technique" />
-            <span>Charges de copropriété</span>
+            <span><Text id="condo">Charges de copropriété</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_maintenance_technique" />
-            <span>Maintenance technique</span>
+            <span><Text id="maintenance">Maintenance technique</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_taxe_ordures" />
-            <span>Taxes sur les ordures</span>
+            <span><Text id="waste">Taxes sur les ordures</Text></span>
           </li>
         </ul>
 
@@ -120,7 +127,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
             id="bookBtn"
             style="width: 100%"
           >
-            Réserver ce logement
+            <Text id="booking">Réserver ce logement</Text>
           </Button>
         </p>
 
@@ -131,12 +138,12 @@ const BookingInfo = ({ lang, roomId, room }) => {
               disabled={availableAt === null}
               style="width: 100%"
             >
-              <span>Visiter</span>
+              <span><Text id="visit">Visiter</Text></span>
             </Button>
           </div>
           <div>
             <Button raised icon="question_answer" style="width: 100%">
-              <span>Demande d'info</span>
+              <span><Text id="enquire">Demande d'info</Text></span>
             </Button>
           </div>
         </div>
@@ -145,9 +152,11 @@ const BookingInfo = ({ lang, roomId, room }) => {
   );
 };
 
-const definition = { 'fr-FR': {} };
+const definition = { 'fr-FR': {
 
-function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
+} };
+
+function mapStateToProps({ route: { lang }, rooms }, { roomId }) {
   const room = rooms[roomId];
 
   return {

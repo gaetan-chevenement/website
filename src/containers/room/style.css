@@ -118,8 +118,9 @@
   align-items: center;
 }
 
-.rightHeader i {
-  margin-right: 5px;
+.rightHeader [class~="material-icons"] {
+  font-size: 32px;
+  vertical-align: -8px;
 }
 
 .mainColumns {
@@ -231,39 +232,6 @@
   color: black;
 }
 
-.shortcut {
-  border: 1px solid var(--color-greyish);
-  border-radius: 5px;
-  margin-left: 10px;
-  padding: 0 5px;
-  color: var(--color-greyish);
-  cursor: pointer;
-  font-size: var(--text-notice);
-  display: inline-block;
-}
-
-.shortcut a {
-  color: var(--color-greyish);
-  font-size: var(--text-notice);
-}
-
-.croppedCont {
-}
-
-.croppedContCont {
-  position: relative;
-}
-
-.croppedContOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 40%, var(--color-background) 90%);
-  pointer-events: none;
-}
-
 /* = BOOKING INFO = */
 
 .sameRoomCount {
@@ -356,7 +324,7 @@
 }
 
 .picturesCont {
-  background-color: grey;
+  background-color: lightgrey;
   background-size: 48px !important;
   background-position: center 10px;
   background-repeat: no-repeat;
@@ -394,7 +362,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0,0,0,0.7);
 }
+
+.carouselOverlay [class~="carousel-wrapper"] {
+  width: 100%;
+  max-width: 1240px;
+  height: calc(100vh - 40px);
+}
+
+.carouselOverlay [class~="carousel-arrows"],
+.carouselClose {
+  font-size: 32px;
+  color: white;
+}
+
+.carouselClose {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+}
+
 
 /* = DESCRIPTION = */
 
@@ -598,180 +587,7 @@
   }
 }
 
-/* = SERVICES = */
-
-.service {
-  clear: both;
-  padding-top: 20px;
-}
-
-.service img {
-  float: left;
-  height: 75px;
-  margin-right: 10px;
-}
-
-.service h5 {
-  padding-top: 2px;
-  font-size: var(--text-big);
-  font-weight: bold;
-}
-
-.service p {
-  font-size: 0.8rem;
-}
-
-.services {
-  margin: 20px;
-}
-
-/* = QUESTIONS = */
-
-.questions {
-  background-color: var(--color-blue-background);
-  color: white;
-  padding: 1px 0 0.9em 0;
-}
-
-.questions [class*="button"] {
-  margin-bottom: 10px;
-  min-width: 50%;
-  display: inline-block;
-}
-
-.questions h2 {
-  margin-top: 0.5em;
-  margin-bottom: 0.3em;
-}
-
-.questionsLeft {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.questionsRight {
-  padding-left: 30px;
-  display: flex;
-}
-
-.questionsPhone {
-  width: 50px;
-  height: 100%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center top;
-  margin-right: 10px;
-}
-
-.questionsSubtitle {
-  margin-bottom: 30px;
-}
-
-@media screen and (max-width: 1024px) {
-  .questionsLeft {
-    align-items: center;
-  }
-
-  .questionsRight {
-    margin-top: 10px;
-    text-align: center;
-  }
-
-  .questionsRight i {
-    display: none;
-  }
-}
-
-/* = GUIDE = */
-
-.downloadGuideBtn {
-  color: black;
-  border: 1px solid black;
-  border-radius: 5px;
-  width: 80%;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.8em;
-  text-transform: none;
-}
-
-.downloadGuideBtn i {
-  max-width: 32px;
-  min-width: 32px;
-  margin-left: 20px;
-  height: 10px;
-  -webkit-background-size: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.guide {
-  background-color: rgb(243, 244, 245);
-  padding: 0 15% 5px 15%;
-  margin-top: 200px;
-}
-
-.guideImg {
-  height: 300px;
-  width: 400px;
-  margin-left: 25px;
-  background-image: url('../../assets/rooms/guide_logement.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  margin-top: -100px;
-  position: relative;
-  top: 5px;
-}
-
-.guide h2 {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
-
-.guide ul {
-  padding-left: 0;
-}
-
-.guideBullet {
-  list-style-type: none;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  font-size: var(--text-small);
-}
-
-.guideBullet i {
-  display: inline-block;
-  width:  20px;
-  height: 20px;
-  -webkit-background-size: cover;
-  background-size: contain;
-  background-repeat: no-repeat;
-  margin-right: 10px;
-}
-
-@media screen and (max-width: 1024px) {
-  .guide {
-    padding: 10px 20px;
-    margin-top: 20px;
-  }
-
-  .guide ul {
-    margin-bottom: 0;
-  }
-
-  .guideImg {
-    display: none;
-  }
-
-  .guideBtn {
-    margin-top: 20px;
-  }
-}
-
+/* = BookingInfo = */
 
 .buttonsDivide {
   display: flex;

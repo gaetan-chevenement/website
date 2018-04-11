@@ -1,14 +1,15 @@
 // TODO: switch this back to esnext import once preact-cli is better integrated
 // with Jest
-import yup        from 'yup';
-import D          from 'date-fns';
-import memoize    from 'memoize-immutable';
-import reduce     from 'lodash/reduce';
-import filter     from 'lodash/filter';
-import capitalize from 'lodash/capitalize';
-import values     from 'lodash/values';
-import _const     from '~/const';
-import holidays   from './holidays.json';
+import { connect }  from 'react-redux';
+import yup          from 'yup';
+import D            from 'date-fns';
+import memoize      from 'memoize-immutable';
+import reduce       from 'lodash/reduce';
+import filter       from 'lodash/filter';
+import capitalize   from 'lodash/capitalize';
+import values       from 'lodash/values';
+import _const       from '~/const';
+import holidays     from './holidays.json';
 
 const _ = { reduce, filter, capitalize, values };
 const {
@@ -186,6 +187,13 @@ const pureUtils = {
       };
     });
   },
+  isNew(createdAt) {
+    let oneDay = 24 * 60 * 60 * 1000;
+    let diffDays = Math.round(
+      Math.abs((Date.now() - new Date(createdAt)) / oneDay),
+    );
+    return diffDays > 10;
+  },
 };
 
 const currYear = pureUtils.getCurrYear();
@@ -266,6 +274,10 @@ const Utils = {
         window.Raven.captureException(error);
         throw error;
       });
+  },
+
+  connectLang(component) {
+    return connect(({ route: { lang } }) => ({ lang }))(component);
   },
 };
 

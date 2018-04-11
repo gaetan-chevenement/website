@@ -21,12 +21,12 @@ export default Object.assign({}, common, {
     roomsCount: 300,
     image: '/assets/home/cities/lyon-imageoptim.jpg',
   }, {
-    name: 'Lyon 3e 6e 7e 8e',
-  }, {
-    name: 'Lyon 1er 2e 4e',
-  }, {
-    name: 'Lyon 5e 9e',
-  }, {
+  //   name: 'Lyon 3e 6e 7e 8e',
+  // }, {
+  //   name: 'Lyon 1er 2e 4e',
+  // }, {
+  //   name: 'Lyon 5e 9e',
+  // }, {
     name: 'Montpellier',
     roomsCount: 120,
     image: '/assets/home/cities/montpellier-imageoptim.jpg',

@@ -42,7 +42,7 @@ class Payment extends PureComponent {
       <IntlProvider definition={definition[lang]}>
         <div class="content">
           <h1>
-            <Text id="title">Secure payment for order</Text><br />
+            <Text id="title">Secured payment for order</Text><br />
             <em>{label}</em>
           </h1>
         </div>
@@ -70,7 +70,7 @@ class Payment extends PureComponent {
     if ( order.error ) {
       return (
         <LoadingError
-          lang={lang}
+
           label={orderId}
           error={order.error}
         />
@@ -78,6 +78,7 @@ class Payment extends PureComponent {
     }
 
     const { isValidated, errors } = payment;
+    const amount = order.balance / -100;
 
     return (
       <IntlProvider definition={definition[lang]}>
@@ -85,7 +86,7 @@ class Payment extends PureComponent {
           {this.renderTitle(lang, order.label)}
 
           <section>
-            <OrderDetails order={order} lang={lang} />
+            <OrderDetails order={order} />
           </section>
           <section>
             { !isValidated && !errors.payment && order.balance !== 0 ?
@@ -106,8 +107,8 @@ class Payment extends PureComponent {
                     disabled={!payment.cardNumber || !payment.cvv || !payment.expiryMonth
                     || !payment.expiryYear || !payment.holderName}
                     label={(
-                      <Text id="payment.button" fields={{ amount: order.balance / -100 }}>
-                        Pay AMOUNT€ Now
+                      <Text id="payment.button" fields={{ amount }}>
+                        {`Pay ${amount}€`}
                       </Text>
                     )}
                     icon="payment"
@@ -123,18 +124,13 @@ class Payment extends PureComponent {
   }
 }
 
-const definition = {
-  'fr-FR': {
-    title: 'Paiement sécurisé pour la facture de',
-    payment: {
-      title: 'Le Paiement peut s\'effectuer avec une carte Mastercard ou Visa.',
-      button: 'Payer {{amount}}€',
-    },
+const definition = { 'fr-FR': {
+  title: 'Paiement sécurisé pour la facture de',
+  payment: {
+    title: 'Le paiement peut s\'effectuer avec une Mastercard ou une Visa.',
+    button: 'Payer {{amount}}€',
   },
-  'en-US': {
-    payment: { button: 'Pay {{amount}}€' },
-  },
-};
+} };
 
 function mapStateToProps({ route: { lang, returnUrl }, orders, payment }, { orderId }) {
   const order = orders[orderId];

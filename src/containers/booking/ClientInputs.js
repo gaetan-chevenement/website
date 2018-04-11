@@ -17,13 +17,7 @@ class ClientInputs extends PureComponent {
     );
   }
 
-  render() {
-    const {
-      lang,
-      booking: { errors },
-      booking,
-    } = this.props;
-
+  render({ lang, booking: { errors }, booking }) {
     return (
       <IntlProvider definition={definition[lang]}>
         <div>

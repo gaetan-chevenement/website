@@ -1,11 +1,13 @@
-import { IntlProvider, Text, Localizer } from 'preact-i18n';
+import { IntlProvider, Text, Localizer }  from 'preact-i18n';
+import Utils                              from '~/utils';
 
-export default function Heading({ lang, room, type }) {
+function Heading({ lang, room, type }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <h1 class="grid has-gutter-xl">
         <div class="two-thirds">
-          <Text id="title" fields={{ type }}>{type} for room</Text><br />
+          {definition[lang][type]}&nbsp;
+          <Text id="forRoom">for</Text><br />
           <em>{room.name}</em>
         </div>
         <div class="one-third">
@@ -21,7 +23,19 @@ export default function Heading({ lang, room, type }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  title: '{type} de la chambre',
-  alt: 'Photo de couverture de la chambre',
-} };
+const definition = {
+  'en-US': {
+    details: 'Booking details',
+    summary: 'Booking summary',
+    confirmed: 'Book confirmation',
+  },
+  'fr-FR': {
+    forRoom: 'pour',
+    details: 'Détails de la réservation',
+    summary: 'Récapitulatif de la réservation',
+    confirmed: 'Confirmation de la réservation',
+    alt: 'Photo de couverture de la chambre',
+  },
+};
+
+export default Utils.connectLang(Heading);

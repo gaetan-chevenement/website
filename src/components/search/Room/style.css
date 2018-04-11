@@ -55,24 +55,22 @@
   font-weight: bolder;
   font-size: 12px;
   padding: 3px;
-  padding-left: 25px;
-  background: no-repeat 5px center;
-  background-size: 14px 14px;
+  padding-left: 10px;
 }
 
-.unavailable {
+.availability [class~="material-icons"] {
+  font-size: 15px;
+  vertical-align: -3px;
+}
+
+.availability[class~="unavailable"] {
   background-color: rgb(237, 28, 35);
-  background-image: url('/assets/search/Picto bandeau rouge.png');
 }
-
-.available {
-  background-color: rgb(35, 176, 76);
-  background-image: url('/assets/search/Picto bandeau vert.png');
-}
-
-.availableSoon {
+.availability[class~="availableFrom"] {
   background-color: rgb(255, 124, 19);
-  background-image: url('/assets/search/Picto bandeau orange.png');
+}
+.availability[class~="availableNow"] {
+  background-color: rgb(35, 176, 76);
 }
 
 .price {
@@ -125,7 +123,6 @@
 
 .roomBedIcon {
   position: relative;
-  top: 5px;
   width: 18px;
   height: 18px;
   margin-right: 5px;

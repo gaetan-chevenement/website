@@ -39,5 +39,7 @@ module.exports = {
     'react/jsx-indent-props': ['error', 2],
 
     'no-console': ['warn'],
+
+    eqeqeq: ["error", "always", {"null": "ignore"}],
   },
 };

@@ -1,4 +1,3 @@
-import { h }                  from 'preact';
 import { PureComponent }      from 'react';
 import {
   Map,
@@ -43,8 +42,7 @@ class SingleMap extends PureComponent {
     }
   }
 
-  render() {
-    const { apartment } = this.props;
+  render({ apartment }) {
     const latLng = Utils.getApartmentLatLng(apartment);
 
     return (

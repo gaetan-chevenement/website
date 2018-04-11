@@ -1,4 +1,5 @@
-import { Component }          from 'react';
+import { PureComponent }      from 'react';
+import autobind               from 'autobind-decorator';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { IntlProvider }       from 'preact-i18n';
@@ -20,30 +21,26 @@ const Picture = ({ picture, onClick }) => {
   );
 };
 
-class Pictures extends Component {
+class Pictures extends PureComponent {
+  @autobind
+  handleClick() {
+    this.setState({ showSlideshow: !this.state.showSlideshow });
+  }
 
   constructor() {
     super();
     this.state = {
       showSlideshow: false,
     };
-    this.__onContClicked = () => this.setState({
-      showSlideshow: !this.state.showSlideshow,
-    });
   }
 
-  render() {
-    const {
-      lang,
-      pictures,
-    } = this.props;
-
+  render({ lang, pictures }) {
     let cont = null, portal = null;
 
     if (pictures.length > 5) {
       cont = (
-        <div className={[style.picturesCont, 'picto-photocamera_64px', 'one-sixth'].join(' ')}
-          onClick={this.__onContClicked}
+        <div className={`${style.picturesCont} picto-photocamera_64px one-sixth`}
+          onClick={this.handleClick}
         >
           + {pictures.length - 5}
         </div>
@@ -53,8 +50,9 @@ class Pictures extends Component {
     if (this.state.showSlideshow) {
       portal = (
         <Portal into="body">
-          <div className={style.carouselOverlay} onClick={this.__onContClicked}>
-            <Carousel lazy slide arrows className={style.coverPicture}>
+          <div className={style.carouselOverlay} onClick={this.handleClick}>
+            <div className={style.carouselClose}>🗙</div>
+            <Carousel lazy slide arrows>
               {pictures.map(({ url }) => <div className={style.slideshowImg} style={`background-image: url(${url})`} />)}
             </Carousel>
           </div>
@@ -64,9 +62,9 @@ class Pictures extends Component {
 
     return (
       <IntlProvider definition={definition[lang]}>
-        <section className={[style.pictures, 'grid-12', 'has-gutter'].join(' ')}>
+        <section className={`${style.pictures} grid-12 has-gutter`}>
           {pictures.slice(0, 5).map((picture) => (
-            <Picture picture={picture} onClick={this.__onContClicked} />
+            <Picture picture={picture} onClick={this.handleClick} />
           ))}
           {cont}
           {portal}
