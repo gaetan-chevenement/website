@@ -12,7 +12,7 @@ function Questions({ lang }) {
             <Text id="title">Any question?</Text>
           </h2>
           <div className={`text-center ${style.questionsSubtitle}`}>
-            <Text id="subtitle">Our team will be pleased to help you ! </Text>
+            <Text id="subtitle">Our team will be pleased to help you!</Text>
           </div>
           <div className="grid-2">
             <div className={`one-half ${style.questionsLeft}`}>
