@@ -47,7 +47,7 @@ class Renting extends PureComponent {
       <IntlProvider definition={definition[lang]}>
         <div class="content">
           <h1>
-            <Text id="title">Complete your booking for room</Text><br />
+            <Text id="title">Complete your booking</Text><br />
             <em>{roomName}</em>
           </h1>
 
@@ -94,6 +94,7 @@ class Renting extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
+  title: 'Compléter votre réservation', 
 } };
 
 function mapStateToProps({ route: { lang }, rentings, orders, rooms }, { rentingId }) {
