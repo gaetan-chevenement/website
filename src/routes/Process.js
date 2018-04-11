@@ -43,7 +43,7 @@ export default function Services({ lang }) {
 }
 
 const definition = { 'fr-FR': {
-  steps: 'Réservez votre appartement en moins d'une minute',
+  steps: 'Réservez votre appartement en moins d\'une minute',
   choose: 'Choisissez votre pack logement',
   subtitle: 'Différentes gammes de services pour votre appartement, tout au long du séjour, selon le pack choisi',
   comparison: 'Comparaison détaillée des différents packs',
