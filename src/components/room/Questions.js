@@ -9,18 +9,18 @@ function Questions({ lang }) {
       <div className={style.questions}>
         <div className="content">
           <h2 className="text-center">
-            <Text id="title">?</Text>
+            <Text id="title">Any question</Text>
           </h2>
           <div className={`text-center ${style.questionsSubtitle}`}>
-            <Text id="subtitle">?</Text>
+            <Text id="subtitle">Our team will be pleased to help you ! </Text>
           </div>
           <div className="grid-2">
             <div className={`one-half ${style.questionsLeft}`}>
               <Button raised primary icon="question_answer">
-                <Text id="question">?</Text>
+                <Text id="question">Ask for a question</Text>
               </Button>
               <Button raised primary icon="local_see">
-                <Text id="visit">?</Text>
+                <Text id="visit">Ask for a visit</Text>
               </Button>
             </div>
             <div className={`one-half ${style.questionsRight}`}>
@@ -30,7 +30,7 @@ function Questions({ lang }) {
                   <Text id="phone">+33 972 323 102</Text>
                 </Button>
                 <div className={style.questionsCoords}>
-                  <Text id="opening">?</Text>
+                  <Text id="Monday to Friday from 9am to 6pm">?</Text>
                 </div>
               </div>
             </div>
