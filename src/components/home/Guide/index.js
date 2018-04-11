@@ -31,7 +31,7 @@ const definition = { 'fr-FR': {
   title: 'Guide logement gratuit',
   text: [
     'Où rechercher un logement ?',
-    'Quels dossiers fournir pour un étudiant ?',
+    'Quel dossier fournir pour un étudiant ?',
     'Quels sont les frais à prévoir pour une location ?',
   ],
   download: 'Téléchargez votre guide logement gratuit',
