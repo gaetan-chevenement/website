@@ -9,7 +9,7 @@ function Questions({ lang }) {
       <div className={style.questions}>
         <div className="content">
           <h2 className="text-center">
-            <Text id="title">Any question</Text>
+            <Text id="title">Any question?</Text>
           </h2>
           <div className={`text-center ${style.questionsSubtitle}`}>
             <Text id="subtitle">Our team will be pleased to help you ! </Text>
@@ -30,7 +30,7 @@ function Questions({ lang }) {
                   <Text id="phone">+33 972 323 102</Text>
                 </Button>
                 <div className={style.questionsCoords}>
-                  <Text id="Monday to Friday from 9am to 6pm">?</Text>
+                  <Text id="opening">Monday to Friday from 9am to 6pm</Text>
                 </div>
               </div>
             </div>
