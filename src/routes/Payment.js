@@ -70,7 +70,7 @@ class Payment extends PureComponent {
     if ( order.error ) {
       return (
         <LoadingError
-         
+
           label={orderId}
           error={order.error}
         />
@@ -78,6 +78,7 @@ class Payment extends PureComponent {
     }
 
     const { isValidated, errors } = payment;
+    const amount = order.balance / -100;
 
     return (
       <IntlProvider definition={definition[lang]}>
@@ -106,7 +107,9 @@ class Payment extends PureComponent {
                     disabled={!payment.cardNumber || !payment.cvv || !payment.expiryMonth
                     || !payment.expiryYear || !payment.holderName}
                     label={(
-                      <Text id="payment.button" fields={{ amount: order.balance / -100 }} />
+                      <Text id="payment.button" fields={{ amount }}>
+                        {`'Pay ${amount}€'`}
+                      </Text>
                     )}
                     icon="payment"
                     onClick={this.handleSubmitPayment}
@@ -121,18 +124,13 @@ class Payment extends PureComponent {
   }
 }
 
-const definition = {
-  'en-US': {
-    payment: { button: 'Pay {{amount}}€' },
+const definition = { 'fr-FR': {
+  title: 'Paiement sécurisé pour la facture de',
+  payment: {
+    title: 'Le Paiement peut s\'effectuer avec une carte Mastercard ou Visa.',
+    button: 'Payer {{amount}}€',
   },
-  'fr-FR': {
-    title: 'Paiement sécurisé pour la facture de',
-    payment: {
-      title: 'Le Paiement peut s\'effectuer avec une carte Mastercard ou Visa.',
-      button: 'Payer {{amount}}€',
-    },
-  },
-};
+} };
 
 function mapStateToProps({ route: { lang, returnUrl }, orders, payment }, { orderId }) {
   const order = orders[orderId];

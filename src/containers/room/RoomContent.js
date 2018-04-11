@@ -74,7 +74,7 @@ function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount })
               <BookingInfo roomId={roomId} apartmentId={apartmentId} />
               <div className={style.sameRoomCount}>
                 <Text id="viewsCount" fields={{ viewsCount }}>
-                  {viewsCount} visitors viewed this room this week.
+                  {`${viewsCount} visitors viewed this room this week.`}
                 </Text>
               </div>
             </div>

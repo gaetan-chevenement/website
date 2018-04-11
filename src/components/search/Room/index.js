@@ -62,7 +62,7 @@ function Room() {
           { /* NEW should not be translated */ }
           {!Utils.isNew(createdAt) ? <div className={style.isNew}>NEW</div> : ''}
           <div className={style.price}>
-            {_currentPrice / 100}€/<Text id="month">month</Text>.
+            {_currentPrice / 100}€/<Text id="month">month</Text>
           </div>
           <div className={style.roomAttributesIcons}>
             <div className={`${style.roomAttributesIcon} ${style.chambersCount}`}>

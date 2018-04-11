@@ -9,7 +9,7 @@ function SameSearchCount({ lang, count }) {
         <i class="material-icons">timer</i>
         &nbsp;
         <Text id="count" fields={{ count }}>
-          {count} visitors made the same search this week.
+          {`${count} visitors made the same search this week.`}
         </Text>
       </p>
     </IntlProvider>

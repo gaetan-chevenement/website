@@ -16,7 +16,7 @@ function Availability({ lang, availableAt, classes }) {
       <IntlProvider definition={definition[lang]}>
         <div class={`${classes.common} ${classes.availableFrom}`}>
           <Text id="availableFrom" fields={{ date: availableAt.toLocaleDateString() }}>
-            Available from {availableAt.toLocaleDateString()}
+            {`Available from ${availableAt.toLocaleDateString()}`}
           </Text>
         </div>
       </IntlProvider>
@@ -33,7 +33,7 @@ function Availability({ lang, availableAt, classes }) {
 }
 
 const definition = { 'fr-FR': {
-
+  availableFrom: 'Dispo. le {{date}}',
 } };
 
 export default Utils.connectLang(Availability);
