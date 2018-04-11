@@ -35,52 +35,52 @@ function Testimony({ title, comment, author, i }) {
 const definition = {
   'en-US': [{
     title: 'Perfect customer service',
-    comment: [
-      'The team was very helpful and enjoyable throughout my stay.',
-      'My installation was quick and easy.',
-      'The maintenance of the house was impeccable. Thanks :)',
-    ].join(' '),
+    comment: `
+      The team was very helpful and enjoyable throughout my stay.
+      My installation was quick and easy.
+      The maintenance of the house was impeccable. Thanks :)
+    `,
     author: 'Anna, 22 years old, Australian',
   }, {
     title: 'Appartement très confortable',
-    comment: [
-      'I really enjoyed discovering the city with my roommates and',
-      'concentrating on my studies: everything is already ready in the',
-      'accommodation, there is nothing more to take care of.',
-    ].join(' '),
+    comment: `
+      I really enjoyed discovering the city with my roommates and
+      concentrating on my studies: everything is already ready in the
+      accommodation, there is nothing more to take care of.
+    `,
     author: 'Max, 25 years old, German',
   }, {
     title: 'Super simple',
-    comment: [
-      'The reservation is super simple, and I loved having international',
-      'roommates. I have already tested the service in 3 cities for 2 years',
-      'for internships and semesters.',
-    ].join(' '),
+    comment: `
+      The reservation is super simple, and I loved having international
+      roommates. I have already tested the service in 3 cities for 2 years
+      for internships and semesters.
+    `,
     author: 'Emilie, 23 years old, French',
   }],
   'fr-FR': [{
     title: 'Service parfait',
-    comment: [
-      'L\'équipe a été très utile et agréable pendant tout mon séjour. Mon',
-      'installation a été facile et rapide. L\'entretien du logement était',
-      'impeccable. Merci :)',
-    ].join(' '),
+    comment: `
+      L'équipe a été très utile et agréable pendant tout mon séjour. Mon
+      installation a été facile et rapide. L'entretien du logement était
+      impeccable. Merci :)
+    `,
     author: 'Anna, 22 ans, Australienne',
   }, {
     title: 'Appartement très confortable',
-    comment: [
-      'J\'ai beaucoup apprécié de découvrir la ville avec mes colocs et me',
-      'concentrer sur mes études : tout est déjà prêt dans le logement, il',
-      'n\'y a plus rien à s\'occuper.',
-    ].join(' '),
+    comment: `
+      J'ai beaucoup apprécié de découvrir la ville avec mes colocs et me
+      concentrer sur mes études : tout est déjà prêt dans le logement, il
+      n'y a plus rien à s'occuper.
+    `,
     author: 'Max, 25 ans, Allemand',
   }, {
     title: 'Super simple',
-    comment: [
-      'La réservation est super simple, et j\'ai adoré avoir des colocataires',
-      'internationaux. J\'ai déjà testé le service dans 3 villes depuis 2 ans',
-      'pour des stages et semestres.',
-    ].join(' '),
+    comment: `
+      La réservation est super simple, et j'ai adoré avoir des colocataires
+      internationaux. J'ai déjà testé le service dans 3 villes depuis 2 ans
+      pour des stages et semestres.
+    `,
     author: 'Emilie, 23 ans, Française',
   }],
 };
