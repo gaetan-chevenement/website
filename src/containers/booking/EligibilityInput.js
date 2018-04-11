@@ -29,7 +29,7 @@ class EligibilityInputs extends PureComponent {
         <div>
           <p>
             <Text id="eligible.test">
-              Before booking, you need to ensure you are eligibile for an
+              Before booking, you need to ensure you are eligibile for
               accommodation with Chez Nestor:&nbsp;
             </Text>
             <Button raised
