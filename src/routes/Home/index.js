@@ -56,8 +56,10 @@ export default function Home({ lang }) {
 const definition = { 'fr-FR': {
   search: {
     title: 'Votre colocation prête à vivre',
-    subtitle: 'Trouvez aujourd'\'hui votre colocation meublée, équipée,
-                tout inclus, en plein centre.',
+    subtitle: `
+      Trouvez aujourd'hui votre colocation meublée, équipée,
+      tout inclus, en plein centre.
+    `,
   },
   cities: 'Découvrez les villes Chez Nestor'
   services: 'Une nouvelle expérience de la colocation'
