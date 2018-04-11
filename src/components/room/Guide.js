@@ -10,33 +10,33 @@ function Guide({ lang }) {
         <div className="grid-2">
           <div className="one-half">
             <h2>
-              <Text id="guide">Guide logement gratuit</Text>
+              <Text id="guide">Free guide accommodation</Text>
             </h2>
             <div className="grid-2">
               <ul className="one-half">
                 <li className={style.guideBullet}>
                   <i className="picto-picto_guide_logement" />
-                  <Text id="where">Où chercher son logement</Text>
+                  <Text id="where">Find its accommodation</Text>
                 </li>
                 <li className={style.guideBullet}>
                   <i className="picto-picto_guide_logement" />
-                  <Text id="agency">Agences, résidences...</Text>
+                  <Text id="agency">Agencies, residences...</Text>
                 </li>
               </ul>
               <ul className="one-half">
                 <li className={style.guideBullet}>
                   <i className="picto-picto_guide_logement" />
-                  <Text id="traps">Les pièges à éviter</Text>
+                  <Text id="traps">Traps to avoid</Text>
                 </li>
                 <li className={style.guideBullet}>
                   <i className="picto-picto_guide_logement" />
-                  <Text id="fees">Les frais à prévoir</Text>
+                  <Text id="fees">Costs to plan</Text>
                 </li>
               </ul>
             </div>
             <div>
               <Button raised icon="file_download" className={style.guideBtn}>
-                <Text id="download">Obtenir le guide logement</Text>
+                <Text id="download">Get the accommodation guide</Text>
               </Button>
             </div>
           </div>
@@ -50,12 +50,12 @@ function Guide({ lang }) {
 }
 
 const definition = { 'fr-FR': {
-  guide: '',
-  where: '',
-  agency: '',
-  traps: '',
-  fees: '',
-  download: '',
+  guide: 'Guide logement gratuit',
+  where: 'Find my accommodation',
+  agency: 'Agences, résidences...',
+  traps: 'Les pièges à éviter',
+  fees: 'Les frais à prévoir',
+  download: 'Obtenir le guide logement',
 } };
 
 export default Utils.connectLang(Guide);
