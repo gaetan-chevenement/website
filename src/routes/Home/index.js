@@ -14,12 +14,12 @@ export default function Home({ lang }) {
         <Slideshow>
           <div className={style.searchEngine}>
             <h1>
-              <Text id="search.title">Votre colocation prête à vivre</Text>
+              <Text id="search.title">Your ready-to-live-in flatshares</Text>
             </h1>
             <h3>
               <Text id="search.subtitle">
-                Trouvez aujourd'hui votre colocation meublée, équipée,
-                tout inclus, en plein centre.
+                Find today your furnished, fully equipped, all-inclusive flatshare,
+                in the heart of the city-centre.
               </Text>
             </h3>
             <SearchForm />
@@ -27,20 +27,20 @@ export default function Home({ lang }) {
         </Slideshow>
         <div class="content">
           <h2 class="text-center">
-            <Text id="cities">Découvrez les villes Chez Nestor</Text>
+            <Text id="cities">Discover the cities with Chez Nestor</Text>
           </h2>
           <Cities />
         </div>
         <div>
           <h2 class="text-center">
-            <Text id="services">Une nouvelle expérience de la colocation</Text>
+            <Text id="services">A new way of flatsharing</Text>
           </h2>
           <Services />
         </div>
         <div style="background: #E1E1E1; padding: 1px 0;">
           <div class="content">
             <h2 class="text-center">
-              <Text id="testimonies">Nos colocataires nous recommandent</Text>
+              <Text id="testimonies">Our housemates suggest you</Text>
             </h2>
             <Testimonies />
           </div>
@@ -55,7 +55,13 @@ export default function Home({ lang }) {
 
 const definition = { 'fr-FR': {
   search: {
-    title: '',
-    subtitle: '',
+    title: 'Votre colocation prête à vivre',
+    subtitle: `
+      Trouvez aujourd'hui votre colocation meublée, équipée,
+      tout inclus, en plein centre.
+    `,
   },
+  cities: 'Découvrez les villes Chez Nestor'
+  services: 'Une nouvelle expérience de la colocation'
+  testimonies: 'Nos colocataires nous recommandent',
 } };
