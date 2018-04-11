@@ -34,8 +34,8 @@ function Availability({ lang, availableAt, classes }) {
 
 const definition = { 'fr-FR': {
   availableFrom: 'Dispo. le {{date}}',
-unavailable: 'Plus disponible',
-availableNow: 'Disponible immédiatement',
+  unavailable: 'Plus disponible',
+  availableNow: 'Disponible immédiatement',
 } };
 
 export default Utils.connectLang(Availability);
