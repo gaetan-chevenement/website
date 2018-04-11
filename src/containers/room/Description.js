@@ -38,7 +38,7 @@ function Description({ lang, room, apartment }) {
               {_.capitalize(apartment.addressCountry)}
             </span>
             <div className={style.shortcut}>
-              <a href="#map"><Text id="seeMap">Voir le plan</Text></a>
+              <a href="#map"><Text id="seeMap">See the map</Text></a>
             </div>
           </li>
         </ul>
@@ -86,6 +86,7 @@ const definition = { 'fr-FR': {
   floor: 'étage',
   elevator: 'ascenseur',
   room: 'chambre',
+  seeMap: 'Voir la carte',
 } };
 
 const bedDetails = {
