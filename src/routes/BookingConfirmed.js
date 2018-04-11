@@ -72,7 +72,6 @@ class BookingStep3 extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
-  title: 'Réservation confirmée pour la chambre',
   instructions: `
     Vous allez recevoir un email de confirmation avec de plus amples instructions.
     La première étape consiste à fournir vos données personnelles afin que nous
