@@ -9,7 +9,7 @@ function LoadingError({ lang, label, error }) {
     <IntlProvider definition={definition[lang]}>
       <div class="content">
         <h1>
-          <Text>An error accured while loading</Text><br />
+          <Text id="error">An error just occured while loading</Text><br />
           {label}
         </h1>
 
@@ -37,6 +37,10 @@ function LoadingError({ lang, label, error }) {
 }
 
 const definition = { 'fr-FR': {
+  error: 'Une erreur s\'est produite pendant le chargement',
+  try: 'Essayez de',
+  link: 'Recharger la page',
+  contact: 'Si l\'erreur persiste, contactez le support',
 } };
 
 export default Utils.connectLang(LoadingError);
