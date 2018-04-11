@@ -127,7 +127,7 @@ class Payment extends PureComponent {
 const definition = { 'fr-FR': {
   title: 'Paiement sécurisé pour la facture de',
   payment: {
-    title: 'Le Paiement peut s\'effectuer avec une Mastercard ou une Visa.',
+    title: 'Le paiement peut s\'effectuer avec une Mastercard ou une Visa.',
     button: 'Payer {{amount}}€',
   },
 } };
