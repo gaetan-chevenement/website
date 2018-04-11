@@ -81,7 +81,7 @@ const definition = { 'fr-FR': {
   content: `
     Découvrez et comparez notre sélection de {{count}} chambres en
     colocation à {{city}}. Tous nos logements à {{city}} sont
-    entièrement meublés, équipé, tout inclus et en centre ville.
+    entièrement meublés, équipés, tout inclus et en centre ville.
     Réservez en ligne ou visitez nos appartements et apportez
     juste votre valise : pour 1 mois, 1 semestre, 1 an...
     Louer une colocation à {{city}} n'a jamais été aussi simple avec
