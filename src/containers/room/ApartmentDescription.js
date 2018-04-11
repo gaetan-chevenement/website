@@ -30,9 +30,9 @@ function ApartmentDescription({ lang, isLoading, apartment, district }) {
             <img src={apartment.floorPlan} alt="floor plan" />
             <div className={style.planNotice}>
               <Text id="floorPlanInfo">
-                La surface au sol de chaque chambre inclut ses placards,
-                balcons, loggias, salle de bain, WC, espaces sous pentes…
-                avec accès privatif
+                The surface of the floor of each room includes closets, 
+                balconies, loggias, bathroom, WC, attic areas… 
+                with private access
               </Text>
             </div>
           </section>
@@ -76,6 +76,11 @@ function ApartmentDescription({ lang, isLoading, apartment, district }) {
 const definition = { 'fr-FR': {
   nearbySchool: 'Ecole(s) à proximité',
   floorPlan: 'Plan du logement',
+  floorPlanInfo: `
+    La surface au sol de chaque chambre inclut ses placards
+    balcons, loggias, salle de bain, WC, espaces sous pentes…
+    avec accès privatif
+  `,
   district: 'Quartier',
 } };
 
