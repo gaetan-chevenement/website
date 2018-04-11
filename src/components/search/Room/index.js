@@ -107,8 +107,8 @@ function getBedsDetails(beds) {
 
 const definition = { 'fr-FR': {
   month: 'Mois',
-  bedroom : 'Chambre',
-  room : 'Pièce',
+  bedroom: 'Chambre',
+  room: 'Pièce',
 } };
 
 // /!\ This component cannot used the state because it's used inside leaflet
