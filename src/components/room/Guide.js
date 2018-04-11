@@ -10,13 +10,13 @@ function Guide({ lang }) {
         <div className="grid-2">
           <div className="one-half">
             <h2>
-              <Text id="guide">Free guide accommodation</Text>
+              <Text id="guide">Free accommodation guide</Text>
             </h2>
             <div className="grid-2">
               <ul className="one-half">
                 <li className={style.guideBullet}>
                   <i className="picto-picto_guide_logement" />
-                  <Text id="where">Find its accommodation</Text>
+                  <Text id="where">Find your accommodation</Text>
                 </li>
                 <li className={style.guideBullet}>
                   <i className="picto-picto_guide_logement" />
@@ -51,8 +51,8 @@ function Guide({ lang }) {
 
 const definition = { 'fr-FR': {
   guide: 'Guide logement gratuit',
-  where: 'Find my accommodation',
-  agency: 'Agences, résidences...',
+  where: 'Trouver son logement',
+  agency: 'Agences, résidences…',
   traps: 'Les pièges à éviter',
   fees: 'Les frais à prévoir',
   download: 'Obtenir le guide logement',
