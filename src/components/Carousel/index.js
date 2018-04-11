@@ -1,5 +1,4 @@
 import React, { PureComponent }   from 'react';
-import { h }                      from 'preact';
 import autobind                   from 'autobind-decorator';
 
 /* A simple and dependency free carousel component

@@ -1,9 +1,10 @@
 import { IntlProvider, Text } from 'preact-i18n';
+import Utils                  from '~/utils';
 import _const                 from '~/const';
 
 const { SALES_EMAIL } = _const;
 
-export default function LoadingError({ lang, label, error }) {
+function LoadingError({ lang, label, error }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <div class="content">
@@ -13,9 +14,14 @@ export default function LoadingError({ lang, label, error }) {
         </h1>
 
         <section>
-          <p>You should try to <a href="javascript:location.reload();">reload the page</a></p>
           <p>
-            If the error persists, please contact support:
+            <Text id="try">You should try to</Text>
+            <a href="javascript:location.reload();">
+              <Text id="link">reload the page</Text>
+            </a>
+          </p>
+          <p>
+            <Text id="contact">If the error persists, please contact support:</Text>
             <a href={`mailto:${SALES_EMAIL}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -32,3 +38,5 @@ export default function LoadingError({ lang, label, error }) {
 
 const definition = { 'fr-FR': {
 } };
+
+export default Utils.connectLang(LoadingError);

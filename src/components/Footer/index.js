@@ -1,5 +1,5 @@
-import { h }                  from 'preact';
 import { IntlProvider, Text } from 'preact-i18n';
+import Utils                  from '~/utils';
 import _const                 from '~/const';
 import {
   footer,
@@ -8,7 +8,7 @@ import {
 
 const { SALES_EMAIL } = _const;
 
-export default function Footer({ lang }) {
+function Footer({ lang }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <footer class={footer}>
@@ -102,3 +102,5 @@ const definition = { 'fr-FR': {
   career: 'Travailler Chez Nestor',
   terms: 'CGV et mentions légales',
 } };
+
+export default Utils.connectLang(Footer);

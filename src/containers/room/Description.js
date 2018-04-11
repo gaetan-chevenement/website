@@ -1,7 +1,6 @@
-import { PureComponent }      from 'react';
+import { IntlProvider, Text } from 'preact-i18n';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { IntlProvider, Text } from 'preact-i18n';
 import capitalize             from 'lodash/capitalize';
 import CroppedContainer       from '~/components/room/CroppedContainer';
 import * as actions           from '~/actions';
@@ -10,77 +9,75 @@ import style                  from './style.css';
 
 const _ = { capitalize };
 
-class Description extends PureComponent {
-  renderBedDetail() {
-    const { room, lang } = this.props;
+function Description({ lang, room, apartment }) {
+  return (
+    <IntlProvider definition={definition[lang]}>
+      <section>
+        <h3 className={style.heading}>
+          <Text id="title">Description</Text>
+        </h3>
+        <ul className={'grid-4 has-gutter ' + style.descriptionItems}>
+          <li>
+            <i className="icon-24 picto-description_surface" />
+            <span>
+              {apartment.floorArea}m²
+              (<Text id="apartment">apartment</Text>)
+            </span>
+          </li>
+          <ElevatorDetail apartment={apartment} />
+          <BedDetail room={room} lang={lang} />
+          <li>
+            <i className="icon-24 picto-description_surface" />
+            <span>{room.floorArea}m² (<Text id="room">room</Text>)</span>
+          </li>
+          <li class="two-thirds">
+            <i className="icon-24 picto-picto_adresse" />
+            <span>
+              {apartment.addressStreet} {apartment.addressZip}
+              {_.capitalize(apartment.addressCity)},
+              {_.capitalize(apartment.addressCountry)}
+            </span>
+            <div className={style.shortcut}>
+              <a href="#map"><Text id="seeMap">Voir le plan</Text></a>
+            </div>
+          </li>
+        </ul>
 
-    return (
-      <li>
-        <i className={`icon-24 ${bedDetails[room.beds].css}`} />
-        <span>{bedDetails[room.beds][lang]}
-        </span>
-      </li>
-    );
-  }
+        <CroppedContainer height={40}>
+          {room[`description${_.capitalize(lang.split('-')[0])}`]}
+          <br />
+          {apartment[`description${_.capitalize(lang.split('-')[0])}`]}
+        </CroppedContainer>
+      </section>
+    </IntlProvider>
+  );
+}
 
-  renderElevatorDetail() {
-    const { apartment, lang } = this.props;
+function BedDetail({ lang, room }) {
+  return (
+    <li>
+      <i className={`icon-24 ${bedDetails[room.beds].css}`} />
+      <span>{bedDetails[room.beds][lang]}
+      </span>
+    </li>
+  );
+}
 
-    return (
-      <li>
-        <i className="icon-24 picto-elevator" />
-        <span>
-          {apartment.floor}{' '}
-          <Text id="floor">floor</Text>{' '}
-          {elevatorDetail[apartment.elevator ? 'with' : 'without'][lang]}{' '}
-          <Text id="elevator">elevator</Text>
-        </span>
-      </li>
-    );
-  }
-
-
-  render() {
-    const {
-      lang,
-      room,
-      apartment,
-    } = this.props;
-
-    const fullAddress = <span>{apartment.addressStreet} {apartment.addressZip} {_.capitalize(apartment.addressCity)}, {_.capitalize(apartment.addressCountry)}</span>;
-    return (
-      <IntlProvider definition={definition[lang]}>
-        <section>
-          <h3 className={style.heading}><Text id="title">Description</Text></h3>
-          <ul className={'grid-4 has-gutter ' + style.descriptionItems}>
-            <li>
-              <i className="icon-24 picto-description_surface" />
-              <span>{apartment.floorArea}m² (<Text id="apartment">apartment</Text>)</span>
-            </li>
-            {this.renderElevatorDetail()}
-            {this.renderBedDetail()}
-            <li>
-              <i className="icon-24 picto-description_surface" />
-              <span>{room.floorArea}m² (<Text id="room">room</Text>)</span>
-            </li>
-            <li class="two-thirds">
-              <i className="icon-24 picto-picto_adresse" />
-              <span>{fullAddress}</span>
-              <div className={style.shortcut}>
-                <a href="#map">Voir le plan</a>
-              </div>
-            </li>
-          </ul>
-
-          <CroppedContainer height={40}>
-            {room[`description${_.capitalize(lang.split('-')[0])}`]}
-            <br />
-            {apartment[`description${_.capitalize(lang.split('-')[0])}`]}
-          </CroppedContainer>
-        </section>
-      </IntlProvider>
-    );
-  }
+function ElevatorDetail({ apartment }) {
+  return (
+    <li>
+      <i className="icon-24 picto-elevator" />
+      <span>
+        {apartment.floor}{' '}
+        <Text id="floor">floor</Text>{' '}
+        {apartment.elevator ?
+          <Text id="with">with</Text> :
+          <Text id="without">without</Text>
+        }
+        <Text id="elevator">elevator</Text>
+      </span>
+    </li>
+  );
 }
 
 const definition = { 'fr-FR': {
@@ -98,11 +95,6 @@ const bedDetails = {
   'double+sofa': { 'fr-FR': '1 lit double et un canapé-lit', 'en-US': '1 double bed and a sofa bed', css: 'picto-equipement_chambre_lit_double' },
   'simple+sofa': { 'fr-FR': '1 lit simple et un canapé-lit', 'en-US': '1 simple bed and a sofa bed', css: 'picto-equipement_chambre_lit_double'  },
   'simple+simple': { 'fr-FR': '2 lits simple', 'en-US': '2 simple beds', css: 'picto-equipement_chambre_lit_double' },
-};
-
-const elevatorDetail = {
-  with: { 'fr-FR': 'avec', 'en-US': 'with' },
-  without: { 'fr-FR': 'sans', 'en-US': 'without' },
 };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {

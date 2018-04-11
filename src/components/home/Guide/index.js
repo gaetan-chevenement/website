@@ -1,8 +1,9 @@
 import { IntlProvider, Text } from 'preact-i18n';
-import { Button } from 'react-toolbox/lib/button/index';
-import style from './style.css';
+import { Button }             from 'react-toolbox/lib/button/index';
+import Utils                  from '~/utils';
+import style                  from './style.css';
 
-export default function Guide({ lang }) {
+function Guide({ lang }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <section className={style.guide}>
@@ -35,3 +36,5 @@ const definition = { 'fr-FR': {
   ],
   download: 'Téléchargez votre guide logement offert',
 } };
+
+export default Utils.connectLang(Guide);

@@ -36,7 +36,7 @@ class CardForm extends PureComponent {
     );
   }
 
-  render() {
+  render(args) {
     const {
       lang,
       orderId,
@@ -46,7 +46,7 @@ class CardForm extends PureComponent {
       receiptNumber,
       payment,
       currYear,
-    } = this.props;
+    } = args;
 
     if ( payment.isValidated || orderBalance >= 0 || /orderPaid/.test(errors.payment) ) {
       return (
@@ -69,65 +69,10 @@ class CardForm extends PureComponent {
     }
 
     if ( errors.payment || orderStatus === 'cancelled' ) {
-      let errorMessage;
-      let canRetry;
-
-      if ( orderStatus === 'cancelled' || /orderCancelled/.test(errors.payment) ) {
-        errorMessage =
-          <Text id="errors.orderCancelled">This order has been cancelled.</Text>;
-      }
-      else if ( /roomUnavailable/.test(errors.payment) ) {
-        errorMessage =
-          <Text id="errors.roomUnavailable">This room is no longer available.</Text>;
-      }
-      else if ( /balanceMismatch/.test(errors.payment) ) {
-        errorMessage = (
-          <Text id="errors.balanceMismatch">
-            The price of this order has been updated.
-            Please check the updated price and try again.
-          </Text>
-        );
-        canRetry = true;
-      }
-      else if ( /(doNotHonor|unauthorized|tooManyAttempts|amountLimit)/.test(errors.payment) ) {
-        errorMessage = (
-          <span>
-            <Text id="errors.doNotHonor">The payment has been declined by your bank.</Text><br />
-            <i>code: {errors.payment}</i>
-          </span>
-        );
-        canRetry = true;
-      }
-      else {
-        errorMessage = (
-          <span>
-            <Text id="errors.unexpected">An unexpected error has occured.</Text><br />
-            <i>code: {errors.payment}</i>
-          </span>
-        );
-        canRetry = true;
-      }
-
       return (
         <IntlProvider definition={definition[lang]}>
           <section>
-            <div class="handleError">
-              <h4>{errorMessage}</h4><br />
-              { !canRetry ? '' : (
-                <span>
-                  <Button raised primary
-                    label={<Text id="errors.retry">Retry</Text>}
-                    onClick={this.handleRetry}
-                  />
-                  {' '}
-                  <Button raised primary
-                    label={<Text id="errors.support">Contact Support</Text>}
-                    href={`mailto:${SUPPORT_EMAIL}`}
-                    target="_blank"
-                  />
-                </span>
-              )}
-            </div>
+            <Error paymentError={errors.payment} orderStatus={orderStatus} />
           </section>
         </IntlProvider>
       );
@@ -135,50 +80,109 @@ class CardForm extends PureComponent {
 
     return (
       <IntlProvider definition={definition[lang]}>
-        <div>
-          <section>
-            <Input type="number"
-              label={<Text id="card.number">Card Number</Text>}
-              name="cardNumber"
-              value={payment.cardNumber}
+        <section>
+          <Input type="number"
+            label={<Text id="card.number">Card Number</Text>}
+            name="cardNumber"
+            value={payment.cardNumber}
+            onChange={this.handleChange}
+            error={errors.cardNumber}
+          />
+          <Input type="text"
+            label={<Text id="card.holder">Holder Name</Text>}
+            name="holderName"
+            value={payment.holderName}
+            onChange={this.handleChange}
+            error={errors.holderName}
+          />
+          <p class="grid-3-large-1 has-gutter">
+            <Input type="number" min="1" max="12" step="1" maxLength="2"
+              label={<Text id="card.expiry.month">Expiry Month</Text>}
+              name="expiryMonth"
+              value={payment.expiryMonth}
               onChange={this.handleChange}
-              error={errors.cardNumber}
+              error={errors.expiryMonth}
             />
-            <Input type="text"
-              label={<Text id="card.holder">Holder Name</Text>}
-              name="holderName"
-              value={payment.holderName}
+            <Input type="number" min={currYear} max={currYear + 10} step="1" maxLength="2"
+              label={<Text id="card.expiry.year">Expiry Year</Text>}
+              name="expiryYear"
+              value={payment.expiryYear}
               onChange={this.handleChange}
-              error={errors.holderName}
+              error={errors.expiryYear}
             />
-            <p class="grid-3-large-1 has-gutter">
-              <Input type="number" min="1" max="12" step="1" maxLength="2"
-                label={<Text id="card.expiry.month">Expiry Month</Text>}
-                name="expiryMonth"
-                value={payment.expiryMonth}
-                onChange={this.handleChange}
-                error={errors.expiryMonth}
-              />
-              <Input type="number" min={currYear} max={currYear + 10} step="1" maxLength="2"
-                label={<Text id="card.expiry.year">Expiry Year</Text>}
-                name="expiryYear"
-                value={payment.expiryYear}
-                onChange={this.handleChange}
-                error={errors.expiryYear}
-              />
-              <Input type="number" min="0" max="999" step="1" maxLength="3"
-                label={<Text id="card.cvv">CVV</Text>}
-                name="cvv"
-                value={payment.cvv}
-                onChange={this.handleChange}
-                error={errors.cvv}
-              />
-            </p>
-          </section>
-        </div>
+            <Input type="number" min="0" max="999" step="1" maxLength="3"
+              label={<Text id="card.cvv">CVV</Text>}
+              name="cvv"
+              value={payment.cvv}
+              onChange={this.handleChange}
+              error={errors.cvv}
+            />
+          </p>
+        </section>
       </IntlProvider>
     );
   }
+}
+
+function Error({ orderStatus, paymentError }) {
+  let errorMessage;
+  let canRetry;
+
+  if ( orderStatus === 'cancelled' || /orderCancelled/.test(paymentError) ) {
+    errorMessage =
+      <Text id="errors.orderCancelled">This order has been cancelled.</Text>;
+  }
+  else if ( /roomUnavailable/.test(paymentError) ) {
+    errorMessage =
+      <Text id="errors.roomUnavailable">This room is no longer available.</Text>;
+  }
+  else if ( /balanceMismatch/.test(paymentError) ) {
+    errorMessage = (
+      <Text id="errors.balanceMismatch">
+        The price of this order has been updated.
+        Please check the updated price and try again.
+      </Text>
+    );
+    canRetry = true;
+  }
+  else if ( /(doNotHonor|unauthorized|tooManyAttempts|amountLimit)/.test(paymentError) ) {
+    errorMessage = (
+      <span>
+        <Text id="errors.doNotHonor">The payment has been declined by your bank.</Text><br />
+        <i>code: {paymentError}</i>
+      </span>
+    );
+    canRetry = true;
+  }
+  else {
+    errorMessage = (
+      <span>
+        <Text id="errors.unexpected">An unexpected error has occured.</Text><br />
+        <i>code: {paymentError}</i>
+      </span>
+    );
+    canRetry = true;
+  }
+
+  return (
+    <div class="handleError">
+      <h4>{errorMessage}</h4><br />
+      { !canRetry ? '' : (
+        <span>
+          <Button raised primary
+            label={<Text id="errors.retry">Retry</Text>}
+            onClick={this.handleRetry}
+          />
+          {' '}
+          <Button raised primary
+            label={<Text id="errors.support">Contact Support</Text>}
+            href={`mailto:${SUPPORT_EMAIL}`}
+            target="_blank"
+          />
+        </span>
+      )}
+    </div>
+  );
 }
 
 function InvoiceButton({ lang, orderId, receiptNumber }) {

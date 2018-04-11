@@ -32,7 +32,7 @@ class Summary extends PureComponent {
   }
 
   // Note: `user` comes from the URL, courtesy of our router
-  render() {
+  render(args) {
     const {
       lang,
       room,
@@ -48,7 +48,7 @@ class Summary extends PureComponent {
       totalRent,
       proratedRent,
       firstMonths,
-    } = this.props;
+    } = args;
     const homeCheckinFee = HOME_CHECKIN_FEES[packLevel];
     const specialCheckinFee = SPECIAL_CHECKIN_FEES[packLevel];
     const free = (<Text id="free">Free</Text>);

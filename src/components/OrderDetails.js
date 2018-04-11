@@ -1,6 +1,7 @@
 import { IntlProvider, Text } from 'preact-i18n';
+import Utils                  from '~/utils';
 
-export default function OrderDetails({ lang, order }) {
+function OrderDetails({ lang, order }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <div>
@@ -14,7 +15,7 @@ export default function OrderDetails({ lang, order }) {
             </tr>
           </thead>
           <tbody>
-            { ( order.OrderItems || [] ).map(renderOrderItem) }
+            { ( order.OrderItems || [] ).map(OrderItem) }
           </tbody>
           <tfoot>
             <tr>
@@ -44,7 +45,7 @@ export default function OrderDetails({ lang, order }) {
   );
 }
 
-function renderOrderItem({ label, unitPrice, quantity }) {
+function OrderItem({ label, unitPrice, quantity }) {
   return (
     <tr>
       <td>{label}</td>
@@ -63,3 +64,5 @@ const definition = { 'fr-FR': {
   paid: 'Payé à ce jour',
   balance: 'Montant dû',
 } };
+
+export default Utils.connectLang(OrderDetails);

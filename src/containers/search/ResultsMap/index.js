@@ -1,4 +1,3 @@
-import { h }                  from 'preact';
 import { PureComponent }      from 'react';
 import { connect }            from 'react-redux';
 import {
@@ -54,42 +53,15 @@ const tileLayerUrl =
 class ResultsMap extends PureComponent {
   componentDidUpdate() {
     // Force l'actualisation de la carte si les propriétés sont mises à jour
-    if (this._map) {
+    if ( this._map ) {
       this._map.leafletElement.invalidateSize();
     }
   }
 
-  renderMarkers() {
-    const { lang, highlightedRoomId, arrRooms } = this.props;
-
-    return arrRooms.map((room) => (
-      <Marker
-        position={room.latLng}
-        icon={
-          highlightedRoomId !== null && room.id === highlightedRoomId
-            ? HIGHLIGHT_ICON
-            : DEFAULT_ICON
-        }
-      >
-        <Popup>
-          <Room lang={lang} room={room} isThumbnail />
-        </Popup>
-      </Marker>
-    ));
-  }
-
-  render() {
-    const { arrRooms } = this.props;
-    let bounds;
-
-    if (arrRooms.length === 0) {
-      bounds = DEFAULT_BBOX;
-    }
-    else {
-      bounds = new L.LatLngBounds(
-        arrRooms.map(({ latLng }) => (latLng))
-      ).pad(0.2);
-    }
+  render({ lang, highlightedRoomId, arrRooms }) {
+    const bounds = arrRooms.length > 0 ?
+      new L.LatLngBounds( arrRooms.map(({ latLng }) => (latLng)) ).pad(0.2) :
+      DEFAULT_BBOX;
 
     return (
       <Map
@@ -123,11 +95,27 @@ class ResultsMap extends PureComponent {
           wrapperOptions={{ enableDefaultStyle: false }}
           options={MARKER_GROUP_OPTIONS}
         >
-          {this.renderMarkers()}
+          {arrRooms.map((room) => (
+            <MarkerWrapper
+              lang={lang}
+              room={room}
+              icon={room.id === highlightedRoomId ? HIGHLIGHT_ICON : DEFAULT_ICON}
+            />
+          ))}
         </MarkerClusterGroup>
       </Map>
     );
   }
+}
+
+function MarkerWrapper({ lang, room, icon }) {
+  return (
+    <Marker position={room.latLng} icon={icon}>
+      <Popup>
+        <Room lang={lang} room={room} isThumbnail />
+      </Popup>
+    </Marker>
+  );
 }
 
 const mapStateToProps = (state, { hightlightedRoomId }) => {

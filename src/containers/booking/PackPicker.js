@@ -7,18 +7,11 @@ import * as actions           from '~/actions';
 
 class PackPicker extends PureComponent {
   @autobind
-  handlePackChange(event) {
-    this.props.actions.updateBooking({ [event.target.name]: event.target.value });
+  handlePackChange({ target: { name, value } }) {
+    this.props.actions.updateBooking({ [name]: value });
   }
 
-  render() {
-    const {
-      lang,
-      pack,
-      minPack,
-      city,
-    } = this.props;
-
+  render({ lang, pack, minPack, city }) {
     return (
       <PackList
         {...{

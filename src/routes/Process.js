@@ -25,11 +25,11 @@ export default function Services({ lang }) {
         <p>
           <Text id="subtitle">All the different services throughout your stay depending on which Housing Pack you choose.</Text>
         </p>
-        <PackList lang={lang} pack="comfort" isPriceHidden />
+        <PackList pack="comfort" isPriceHidden />
         <h1>
           <Text id="comparison">Detailed comparison of the Housing Packs</Text>
         </h1>
-        <FeatureList lang={lang} />
+        <FeatureList />
         <p>
           <b>Important</b> |
           <Text id="deposit">

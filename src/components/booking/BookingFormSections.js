@@ -1,10 +1,11 @@
 import { IntlProvider, Text } from 'preact-i18n';
+import Utils                  from '~/utils';
 import FeatureList						from '~/components/booking/FeatureList';
 import PackPicker							from '~/containers/booking/PackPicker';
 import ClientInputs			      from '~/containers/booking/ClientInputs';
 import EligibilityInput		   	from '~/containers/booking/EligibilityInput';
 
-export default function BookingFormSections({ lang }) {
+function BookingFormSections({ lang }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <div>
@@ -15,7 +16,7 @@ export default function BookingFormSections({ lang }) {
 
         <section>
           <h3><Text id="detail">Detailed comparison</Text></h3>
-          <FeatureList lang={lang} isPriceHidden />
+          <FeatureList isPriceHidden />
         </section>
 
         <section>
@@ -38,3 +39,5 @@ const definition = { 'fr-FR': {
   personal: 'Infos personnelles',
   eligibility: 'Eligibilité, modalités et Conditions',
 } };
+
+export default Utils.connectLang(BookingFormSections);

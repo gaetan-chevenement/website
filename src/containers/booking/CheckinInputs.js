@@ -26,14 +26,7 @@ class CheckinInputs extends PureComponent {
     this.handleChange(value, { target: { name: 'checkinDate' } });
   }
 
-  render() {
-    const {
-      lang,
-      bookingDate,
-      checkinDate,
-      checkinDateError,
-    } = this.props;
-
+  render({ lang, bookingDate, checkinDate, checkinDateError }) {
     return (
       <IntlProvider definition={definition[lang]}>
         <div>

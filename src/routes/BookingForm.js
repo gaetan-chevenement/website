@@ -81,7 +81,7 @@ class BookingForm extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="content">
-          <Heading room={room} type="Booking details" />
+          <Heading room={room} type="details" />
 
           { room.availableAt === null ?
             <p>
@@ -89,7 +89,7 @@ class BookingForm extends PureComponent {
                 Sorry, this room isn't available for booking.
               </Text>
             </p> :
-            <BookingFormSections lang={lang} />
+            <BookingFormSections />
           }
 
           <nav class="text-center">

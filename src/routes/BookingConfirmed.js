@@ -42,7 +42,7 @@ class BookingStep3 extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <div class="content">
-          <Heading room={room} type="Booking confirmed" />
+          <Heading room={room} type="confirmed" />
 
           <section>
             <p>

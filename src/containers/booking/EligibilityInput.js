@@ -23,25 +23,21 @@ class EligibilityInputs extends PureComponent {
     );
   }
 
-  render() {
-    const {
-      lang,
-      isEligible,
-      hasAcceptedTerms,
-    } = this.props;
-
+  render({ lang, isEligible, hasAcceptedTerms }) {
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
           <p>
-            <Text id="eligible.test">Before booking, you need to ensure you are eligibile for an
-            accommodation with Chez Nestor:&nbsp;</Text>
+            <Text id="eligible.test">
+              Before booking, you need to ensure you are eligibile for an
+              accommodation with Chez Nestor:&nbsp;
+            </Text>
             <Button raised
               icon="launch"
               href={ELIGIBILITY_FORM_URL}
               target="_blank"
             >
-              <Text id="eligibility">Test your eligibility</Text>
+              <Text id="eligible.link">Test your eligibility</Text>
             </Button>
           </p>
           <p>
@@ -52,8 +48,10 @@ class EligibilityInputs extends PureComponent {
               field={theme.eligible}
             >
               {' '}
-              <Text id="eligible.confirm">I confirm that I am eligible,
-              and that I am able to provide all the required documents</Text>
+              <Text id="eligible.confirm">
+                I confirm that I am eligible, and that I am able to provide
+                all the required documents
+              </Text>
             </Checkbox>
           </p>
           <p>
@@ -64,13 +62,15 @@ class EligibilityInputs extends PureComponent {
               field={theme.eligible}
             >
               {' '}
-              <Text id="terms.beforeLink">I confirm that I have read and accepted the </Text>
+              <Text id="terms.confirm">
+                I confirm that I have read and accepted the
+              </Text>
               <a
                 href="https://drive.google.com/file/d/0B8dLiyBmm3wJa1IwbWsxbk85LWs/view"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Text id="terms.afterLink">terms and conditions.</Text>
+                <Text id="terms.link">terms and conditions.</Text>
               </a>
             </Checkbox>
           </p>
@@ -81,10 +81,21 @@ class EligibilityInputs extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
-  ensure: 'Avant de réserver, vous devez vous assurer que vous êtes admissible à un logement Chez Nestor:',
-  eligibility: 'Testez votre éligibilité',
-  confirm: 'Je confirme que je suis admissible, que je peux fournir tous les documents requis, et que j\'ai lu et accepté les',
-  terms: 'termes et conditions.',
+  eligible: {
+    test: [
+      'Avant de réserver, vous devez vous assurer que vous êtes admissible à',
+      'un logement Chez Nestor:',
+    ].join(' '),
+    link: '',
+    confirm: [
+      'Je confirme que je suis admissible, que je peux fournir tous les',
+      'documents requis, et que j\'ai lu et accepté les',
+    ].join(' '),
+  },
+  terms: {
+    confirm: '',
+    link: 'termes et conditions.',
+  },
 } };
 
 function mapStateToProps({ route: { lang }, booking: { isEligible, hasAcceptedTerms } }) {
