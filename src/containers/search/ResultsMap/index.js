@@ -99,7 +99,7 @@ class ResultsMap extends PureComponent {
             arrRooms.map((room) => (
               <Marker position={room.latLng} icon={room.id === highlightedRoomId ? HIGHLIGHT_ICON : DEFAULT_ICON}>
                 <Popup>
-                  <Room lang={lang} room={room} isThumbnail />
+                  <Room {...{ lang, room }} isThumbnail />
                 </Popup>
               </Marker>
             ))

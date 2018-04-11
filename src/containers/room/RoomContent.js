@@ -69,7 +69,7 @@ function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount })
             </div>
             <div>
               <div className={style.rightHeader}>
-                <Availability availableAt={room.availableAt} classes={classes} />
+                <Availability {...{ lang, availableAt: room.availableAt, classes }} />
               </div>
               <BookingInfo roomId={roomId} apartmentId={apartmentId} />
               <div className={style.sameRoomCount}>

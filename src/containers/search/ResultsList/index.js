@@ -64,7 +64,7 @@ class ResultsList extends PureComponent {
           <div class="grid-3 has-gutter">
             {arrRooms.map((room) => (
               <Room
-                room={room}
+                {...{ lang, room }}
                 onMouseOver={handleMouseOver}
                 onMouseOut={handleMouseOut}
               />

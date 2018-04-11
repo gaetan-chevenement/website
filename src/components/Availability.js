@@ -1,5 +1,4 @@
 import { IntlProvider, Text } from 'preact-i18n';
-import Utils                  from '~/utils';
 
 function Availability({ lang, availableAt, classes }) {
   if ( availableAt === null ) {
@@ -36,4 +35,6 @@ const definition = { 'fr-FR': {
   availableFrom: 'Dispo. le {{date}}',
 } };
 
-export default Utils.connectLang(Availability);
+// /!\ This component cannot used the state because it's used inside leaflet
+// and apparently these things are incompatible.
+export default Availability;

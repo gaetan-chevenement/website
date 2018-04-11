@@ -58,7 +58,7 @@ function ApartmentDescription({ lang, isLoading, apartment, district }) {
               <CroppedContainer height={150}>
                 <h5><Text id="nearbySchool">Nearby School(s)</Text></h5>
                 <ul className={style.nearbySchools}>
-                  {district.nearbySchools
+                  {(district.nearbySchools || '')
                     .replace(/(^|\n)- /g, '\n')
                     .split('\n')
                     .map((school) => (<li>{school}</li>))
