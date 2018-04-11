@@ -43,16 +43,16 @@ function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount })
                     <a href="#description"><Text id="desc">Description</Text></a>
                   </li>
                   <li>
-                    <a href="#features"><Text id="features">Equipements</Text></a>
+                    <a href="#features"><Text id="features">Equipment</Text></a>
                   </li>
                   <li>
-                    <a href="#housemates"><Text id="housemates">Colocataires</Text></a>
+                    <a href="#housemates"><Text id="housemates">Housemates</Text></a>
                   </li>
                   <li>
-                    <a href="#map"><Text id="map">Plan</Text></a>
+                    <a href="#map"><Text id="map">Map</Text></a>
                   </li>
                   <li>
-                    <a href="#neighborhood"><Text id="neighborhood">Quartier</Text></a>
+                    <a href="#neighborhood"><Text id="neighborhood">Neighbourhood</Text></a>
                   </li>
                 </ul>
               </div>
@@ -69,12 +69,12 @@ function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount })
             </div>
             <div>
               <div className={style.rightHeader}>
-                <Availability availableAt={room.availableAt} classes={classes} />
+                <Availability {...{ lang, availableAt: room.availableAt, classes }} />
               </div>
               <BookingInfo roomId={roomId} apartmentId={apartmentId} />
               <div className={style.sameRoomCount}>
                 <Text id="viewsCount" fields={{ viewsCount }}>
-                  {viewsCount} visitors viewed this room this week.
+                  {`${viewsCount} visitors viewed this room this week.`}
                 </Text>
               </div>
             </div>
@@ -91,7 +91,14 @@ function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount })
 }
 
 const definition = { 'fr-FR': {
+  pics: 'Photos',
+  desc: 'Description',
+  features: 'Equipements', 
+  housemates: 'Colocataires',
+  map: 'Carte', 
+  neighborhood: 'Quartier',
   viewsCount: '{{viewsCount}} personnes ont consulté cette annonce cette semaine.',
+  
 } };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {

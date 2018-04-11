@@ -63,7 +63,7 @@ class Header extends Component {
               </div>
             </Portal>
           ) : ''}
-          <div className={[style.fixedHeader, btnState].join(' ')}>
+          <div className={`${style.fixedHeader} ${btnState}`}>
             <Button href={`/${lang}/booking/${roomId}`}
               raised primary id="bookBtn" style="width: 100%"
             >

@@ -59,7 +59,7 @@ class Pictures extends Component {
 
     return (
       <IntlProvider definition={definition[lang]}>
-        <section className={[style.pictures, 'grid-12', 'has-gutter'].join(' ')}>
+        <section className={`${style.pictures} grid-12 has-gutter`}>
           {pictures.slice(0, 5).map((picture) => (
             <Picture picture={picture} onClick={this.__onContClicked} />
           ))}

@@ -139,15 +139,15 @@ class Summary extends PureComponent {
               </p>
               <p>{this.renderDetails([
                 <span>
-                  <Text id="rent.month" fields={{ month: firstMonths[0] }}>{firstMonths[0]}. rent:</Text>
+                  <Text id="rent.month" fields={{ month: firstMonths[0] }}>{`${firstMonths[0]}. rent:`}</Text>
                 </span>,
                 <b>{proratedRent / 100}€*</b>,
                 <span>
-                  <Text id="rent.month" fields={{ month: firstMonths[1] }}>{firstMonths[1]}. rent:</Text>
+                  <Text id="rent.month" fields={{ month: firstMonths[1] }}>{`${firstMonths[0]}. rent:`}</Text>
                 </span>,
                 <b>{totalRent / 100}€*</b>,
                 <span>
-                  <Text id="rent.month" fields={{ month: firstMonths[2] }}>{firstMonths[2]}. rent:</Text>
+                  <Text id="rent.month" fields={{ month: firstMonths[2] }}>{`${firstMonths[0]}. rent:`}:</Text>
                 </span>,
                 <b>{totalRent / 100}€*</b>,
                 <i>etc.</i>,

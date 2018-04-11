@@ -29,7 +29,7 @@ class EligibilityInputs extends PureComponent {
         <div>
           <p>
             <Text id="eligible.test">
-              Before booking, you need to ensure you are eligibile for an
+              Before booking, you need to ensure you are eligibile for
               accommodation with Chez Nestor:&nbsp;
             </Text>
             <Button raised
@@ -82,15 +82,15 @@ class EligibilityInputs extends PureComponent {
 
 const definition = { 'fr-FR': {
   eligible: {
-    test: [
-      'Avant de réserver, vous devez vous assurer que vous êtes admissible à',
-      'un logement Chez Nestor:',
-    ].join(' '),
+    test: `
+      Avant de réserver, vous devez vous assurer que vous êtes admissible à
+      un logement Chez Nestor :
+    `,
     link: '',
-    confirm: [
-      'Je confirme que je suis admissible, que je peux fournir tous les',
-      'documents requis, et que j\'ai lu et accepté les',
-    ].join(' '),
+    confirm: `
+      Je confirme que je suis admissible, que je peux fournir tous les
+      documents requis, et que j'ai lu et accepté les
+    `,
   },
   terms: {
     confirm: '',

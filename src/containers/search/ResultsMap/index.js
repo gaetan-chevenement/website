@@ -95,27 +95,19 @@ class ResultsMap extends PureComponent {
           wrapperOptions={{ enableDefaultStyle: false }}
           options={MARKER_GROUP_OPTIONS}
         >
-          {arrRooms.map((room) => (
-            <MarkerWrapper
-              lang={lang}
-              room={room}
-              icon={room.id === highlightedRoomId ? HIGHLIGHT_ICON : DEFAULT_ICON}
-            />
-          ))}
+          { // Leaflet doesn't like it when we move Marker outside of this render
+            arrRooms.map((room) => (
+              <Marker position={room.latLng} icon={room.id === highlightedRoomId ? HIGHLIGHT_ICON : DEFAULT_ICON}>
+                <Popup>
+                  <Room {...{ lang, room }} isThumbnail />
+                </Popup>
+              </Marker>
+            ))
+          }
         </MarkerClusterGroup>
       </Map>
     );
   }
-}
-
-function MarkerWrapper({ lang, room, icon }) {
-  return (
-    <Marker position={room.latLng} icon={icon}>
-      <Popup>
-        <Room lang={lang} room={room} isThumbnail />
-      </Popup>
-    </Marker>
-  );
 }
 
 const mapStateToProps = (state, { hightlightedRoomId }) => {

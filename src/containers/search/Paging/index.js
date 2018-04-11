@@ -35,7 +35,7 @@ function Paging({ lang, count, city, page }) {
         </nav>
         <p>
           <Text id="paging" fields={{ startsAt, endsAt, count }}>
-            Chambres {startsAt} à {endsAt} sur {count}
+            {`Rooms ${startsAt} to ${endsAt} of ${count}`}
           </Text>
         </p>
       </div>
@@ -44,7 +44,7 @@ function Paging({ lang, count, city, page }) {
 }
 
 const definition = { 'fr-FR': {
-  paging: 'Rooms {{startsAt}} to {{endsAt}} of {{count}}',
+  paging: 'Chambres {{startsAt}} à {{endsAt}} sur {{count}}',
 } };
 
 const mapStateToProps = ({ route: { lang, city, page }, search: { count } }) => ({

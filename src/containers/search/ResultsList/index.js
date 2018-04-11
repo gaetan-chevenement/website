@@ -40,35 +40,36 @@ class ResultsList extends PureComponent {
 
     return (
       <IntlProvider definition={definition[lang]}>
-        {this.state.openMessage ? (
-          <div className={message}>
-            <h3>
-              <span class={`material-icons ${closeButton}`} onClick={this.closeMessage}>
-                🗙
-              </span>
-              <Text id="title" fields={{ city }}>Colocations à {city}</Text>
-            </h3>
-            <p>
-              <Text id="content" fileds={{ city, count }}>
-                Découvrez et comparez notre sélection de {count} chambres en
-                colocation à {city}. Tous nos logements à {city} sont
-                entièrement meublés, équipé, tout inclus et en centre ville.
-                Réservez en ligne ou visitez nos appartements et apportez
-                juste votre valise : pour 1 mois, 1 semestre, 1 an...
-                Louer une colocation à {city} n'a jamais été aussi simple avec
-                Chez Nestor !
-              </Text>
-            </p>
+        <div>
+          {this.state.openMessage ? (
+            <div className={message}>
+              <h3>
+                <span class={`material-icons ${closeButton}`} onClick={this.closeMessage}>
+                  🗙
+                </span>
+                <Text id="title" fields={{ city }}>{`Flat-share in ${city}`}</Text>
+              </h3>
+              <p>
+                <Text id="content" fields={{ city, count }}>{`
+                  Discover and compare our selection of ${count} shared rooms
+                  in ${city}. All our apartments in ${city} are fully
+                  furnished, equipped, all included and in the city center.
+                  Book online or visit our apartments and just bring your
+                  suitcase: for 1 month, 1 semester, 1 year… Renting a shared
+                  apartment in ${city} has never been easier with Chez Nestor!
+                `}</Text>
+              </p>
+            </div>
+          ) : ''}
+          <div class="grid-3 has-gutter">
+            {arrRooms.map((room) => (
+              <Room
+                {...{ lang, room }}
+                onMouseOver={handleMouseOver}
+                onMouseOut={handleMouseOut}
+              />
+            ))}
           </div>
-        ) : ''}
-        <div class="grid-3 has-gutter">
-          {arrRooms.map((room) => (
-            <Room
-              room={room}
-              onMouseOver={handleMouseOver}
-              onMouseOut={handleMouseOut}
-            />
-          ))}
         </div>
       </IntlProvider>
     );
@@ -76,12 +77,21 @@ class ResultsList extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
-
+  title: 'Colocations à {{city}}',
+  content: `
+    Découvrez et comparez notre sélection de {{count}} chambres en
+    colocation à {{city}}. Tous nos logements à {{city}} sont
+    entièrement meublés, équipés, tout inclus et en centre ville.
+    Réservez en ligne ou visitez nos appartements et apportez
+    juste votre valise : pour 1 mois, 1 semestre, 1 an...
+    Louer une colocation à {{city}} n'a jamais été aussi simple avec
+    Chez Nestor !
+  `,
 } };
 
-const mapStateToProps = ({ route: { lang }, rooms, apartments, search: { city } }) => ({
+const mapStateToProps = ({ route: { lang, city }, rooms, apartments }) => ({
   lang,
-  city,
+  city: city.replace(/ \d.*/, ''),
   arrRooms: _.orderBy(rooms, ['availableAt'])
     .filter((room) => typeof room === 'object')
     .map((room) => ({

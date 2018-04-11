@@ -71,7 +71,7 @@ class BookingForm extends PureComponent {
         <IntlProvider definition={definition[lang]}>
           <h1 class="content">
             <Text id="errors.room">
-              Sorry, there was an error preparing your booking for this room.
+              Sorry, an error occured while preparing your booking for this room.
             </Text>
           </h1>
         </IntlProvider>

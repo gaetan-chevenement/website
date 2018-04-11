@@ -2,6 +2,7 @@ import map                        from 'lodash/map';
 import { Link }                   from 'preact-router';
 import { IntlProvider, Text }     from 'preact-i18n';
 import Utils                      from '~/utils';
+import store                      from '~/stores';
 import Carousel                   from '~/components/Carousel';
 import Availability               from '~/components/Availability';
 import style                      from './style.css';
@@ -19,7 +20,7 @@ const bedNames = {
   multiple: '{n} couchages',
 };
 
-function Room() {
+function Room(args) {
   const {
     lang,
     room: {
@@ -34,7 +35,7 @@ function Room() {
       galery,
     },
     isThumbnail,
-  } = this.props;
+  } = args;
   const { bedIcons, bedText } = getBedsDetails(beds);
   const classes = {
     common: style.availability,
@@ -58,11 +59,11 @@ function Room() {
           <h4 className={style.roomName}>
             {name}
           </h4>
-          <Availability availableAt={availableAt} classes={classes} />
+          <Availability {...{ lang, availableAt, classes }} />
           { /* NEW should not be translated */ }
           {!Utils.isNew(createdAt) ? <div className={style.isNew}>NEW</div> : ''}
           <div className={style.price}>
-            {_currentPrice / 100}€/<Text id="month">month</Text>.
+            {_currentPrice / 100}€/{ isThumbnail ? 'm.' : <Text id="month">month</Text> }
           </div>
           <div className={style.roomAttributesIcons}>
             <div className={`${style.roomAttributesIcon} ${style.chambersCount}`}>
@@ -106,7 +107,9 @@ function getBedsDetails(beds) {
 }
 
 const definition = { 'fr-FR': {
-
+  month: 'Mois',
+  bedroom: 'Chambre',
+  room: 'Pièce',
 } };
 
 // /!\ This component cannot used the state because it's used inside leaflet

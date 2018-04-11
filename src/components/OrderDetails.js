@@ -29,7 +29,7 @@ function OrderDetails({ lang, order }) {
               </th>
               <th>
                 <p>Total</p>
-                <p><Text id="paid">Paid</Text></p>
+                <p><Text id="paid">Already paid</Text></p>
                 <p><Text id="balance">Balance</Text></p>
               </th>
               <th class="text-right">
