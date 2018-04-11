@@ -33,6 +33,8 @@ function Availability({ lang, availableAt, classes }) {
 
 const definition = { 'fr-FR': {
   availableFrom: 'Dispo. le {{date}}',
+  unavailable: 'Plus disponible',
+  availableNow: 'Disponible immédiatement',
 } };
 
 // /!\ This component cannot used the state because it's used inside leaflet
