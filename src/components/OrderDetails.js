@@ -29,8 +29,8 @@ function OrderDetails({ lang, order }) {
               </th>
               <th>
                 <p>Total</p>
-                <p><Text id="paid">Paid</Text></p>
-                <p><Text id="balance">Balance</Text></p>
+                <p><Text id="paid">Already Paid</Text></p>
+                <p><Text id="balance">Sum owed</Text></p>
               </th>
               <th class="text-right">
                 <p>{order.amount / 100}€</p>
