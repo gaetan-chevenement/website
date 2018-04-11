@@ -23,7 +23,7 @@ export default function Services({ lang }) {
           <Text id="choose">Choose your housing pack</Text>
         </h1>
         <p>
-          <Text id="subtitle">All the different services throughout your stay depending on which Housing Pack you choose.</Text>
+          <Text id="subtitle">All the different services throughout your stay depending on which Housing Pack you have chosen.</Text>
         </p>
         <PackList pack="comfort" isPriceHidden />
         <h1>
@@ -43,9 +43,9 @@ export default function Services({ lang }) {
 }
 
 const definition = { 'fr-FR': {
-  steps: 'Réservez votre appartement en une minute',
-  choose: 'choisissez votre pack logement',
-  subtitle: 'Différentes gammes de services pour votre appartement, tout au long du séjour',
+  steps: 'Réservez votre appartement en moins d'une minute',
+  choose: 'Choisissez votre pack logement',
+  subtitle: 'Différentes gammes de services pour votre appartement, tout au long du séjour, selon le pack choisi',
   comparison: 'Comparaison détaillée des différents packs',
   deposit: 'La caution et le pack logement sont deux montants différents. La caution est remboursable, pas le pack logement.',
 } };
