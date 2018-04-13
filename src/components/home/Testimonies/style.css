@@ -55,10 +55,9 @@
 .testimony h3 {
   font-size: 24px;
   margin-bottom: 20px;
+  max-width: 100%;
 }
 
-.testimony h3 i {
-  display: inline-block;
-  width: 1em;
+.testimony h3 b {
   color: #fac917;
 }

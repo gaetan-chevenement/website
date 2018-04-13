@@ -63,7 +63,7 @@ function Footer({ lang }) {
             <nav>
               <ul>
                 <li>
-                  <a href="http://career.chez-nestor.com/#section-32032">
+                  <a href="http://chez-nestor.com/a-propos">
                     <Text id="about">About Chez Nestor</Text>
                   </a>
                 </li>

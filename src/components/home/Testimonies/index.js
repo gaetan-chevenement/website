@@ -15,11 +15,7 @@ function Testimony({ title, comment, author, i }) {
       <img src={require(`../../../assets/home/testimony-${i+1}-imageoptim.jpg`)} />
       <h3>
         {title}{' '}
-        <i class="material-icons">star_rate</i>
-        <i class="material-icons">star_rate</i>
-        <i class="material-icons">star_rate</i>
-        <i class="material-icons">star_rate</i>
-        <i class="material-icons">star_rate</i>
+        <b>★&nbsp;★&nbsp;★&nbsp;★&nbsp;★</b>
       </h3>
 
       <p>
