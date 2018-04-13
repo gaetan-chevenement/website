@@ -71,7 +71,7 @@ class Header extends Component {
           </div>
           <section className={style.coverPicture} style={localStyle}>
             <div className={style.coverPictureRoomName}>{ roomName }</div>
-            <Button className={style.allPicsBtn} onClick={this._toggleSlideshow}>
+            <Button className={style.allPicsBtn} onClick={this.toggleSlideshow}>
               Voir toutes les photos
             </Button>
           </section>
