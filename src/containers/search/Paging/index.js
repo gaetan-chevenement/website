@@ -11,7 +11,7 @@ function Paging({ lang, count, city, page }) {
   const startsAt = 1 + (page - 1) * RESULTS_PER_PAGE;
   const endsAt = Math.min(page * RESULTS_PER_PAGE, count);
 
-  return (
+  return count > 0 && (
     <IntlProvider definition={definition[lang]}>
       <div className={style.paging}>
         <nav>
@@ -49,7 +49,7 @@ const definition = { 'fr-FR': {
 
 const mapStateToProps = ({ route: { lang, city, page }, search: { count } }) => ({
   lang,
-  count: count || 1,
+  count: count || 0,
   city,
   page: page || 1,
 });

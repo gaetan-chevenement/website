@@ -4,6 +4,7 @@ import autobind               from 'autobind-decorator';
 import { connect }            from 'react-redux';
 import orderBy                from 'lodash/orderBy';
 import Utils                  from '~/utils';
+import _const                 from '~/const';
 import Room                   from '~/components/search/Room';
 import {
   message,
@@ -11,6 +12,7 @@ import {
 }                             from './style.css';
 
 const _ = { orderBy };
+const { SALES_EMAIL } = _const;
 
 class ResultsList extends PureComponent {
   @autobind
@@ -41,7 +43,7 @@ class ResultsList extends PureComponent {
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
-          {this.state.openMessage ? (
+          { this.state.openMessage ? (
             <div className={message}>
               <h3>
                 <span class={`material-icons ${closeButton}`} onClick={this.closeMessage}>
@@ -61,15 +63,25 @@ class ResultsList extends PureComponent {
               </p>
             </div>
           ) : ''}
-          <div class="grid-3 has-gutter">
-            {arrRooms.map((room) => (
-              <Room
-                {...{ lang, room }}
-                onMouseOver={handleMouseOver}
-                onMouseOut={handleMouseOut}
-              />
-            ))}
-          </div>
+          { arrRooms.length ? (
+            <div class="grid-3 has-gutter">
+              { arrRooms.map((room) => (
+                <Room
+                  {...{ lang, room }}
+                  onMouseOver={handleMouseOver}
+                  onMouseOut={handleMouseOut}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-center" style="margin-top: 30px;">
+              <Text id="noMatch">
+                There are no rooms that match your search. Try broadening
+                your criteria or
+              </Text>{' '}
+              <a href={`mailto:${SALES_EMAIL}`}><Text id="contact">contact our team</Text></a>.
+            </p>
+          )}
         </div>
       </IntlProvider>
     );
@@ -87,6 +99,11 @@ const definition = { 'fr-FR': {
     Louer une colocation à {{city}} n'a jamais été aussi simple avec
     Chez Nestor !
   `,
+  noMatch: `
+    Il n'y a aucune chambre qui corresponde à votre recherche. Essayez
+    d'élargir vos critères ou
+  `,
+  contact: 'contactez notre équipe',
 } };
 
 const mapStateToProps = ({ route: { lang, city }, rooms, apartments }) => ({
