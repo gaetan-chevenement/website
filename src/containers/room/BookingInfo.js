@@ -26,7 +26,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
             <Text id="rent">Rent</Text>
           </div>
           <div className="one-half text-right">
-            {currentPrice / 100}€/<Text id="month">Month</Text>
+            {currentPrice / 100}€/<Text id="month">month</Text>
           </div>
         </div>
         <div className={priceLineClasses}>
@@ -34,7 +34,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
             <Text id="serviceFees">Service Fees</Text>
           </div>
           <div className="one-half text-right">
-            {serviceFees / 100}€/<Text id="month">Month</Text>
+            {serviceFees / 100}€/<Text id="month">month</Text>
           </div>
         </div>
         <div className={`${priceLineClasses} ${style.cafHelp}`}>
@@ -42,7 +42,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
             <Text id="caf">Rental assistance (CAF)</Text>
           </div>
           <div className="one-half text-right">
-            -90€/<Text id="month">Month</Text>
+            -90€/<Text id="month">month</Text>
           </div>
         </div>
         <div className={style.cafNotice}>
@@ -155,13 +155,14 @@ const BookingInfo = ({ lang, roomId, room }) => {
 const definition = { 'fr-FR': {
   mensuel: 'Paiement mensuels',
   rent: 'Loyer',
-  month: 'Mois',
+  month: 'mois',
   serviceFees: 'Charges',
   caf: 'Aide au logement (CAF)',
-  
-  cafInfo: 'Ce logement est éligible aux APL. Le versement de cette aide n'est
-            pas systématique et son montant, aléatoire, dépend du loyer et de
-            votre situation personnelle. Contactez la CAF.',
+  cafInfo: `
+    Ce logement est éligible aux APL. Le versement de cette aide n'est
+    pas systématique et son montant, aléatoire, dépend du loyer et de
+    votre situation personnelle. Contactez la CAF.
+  `,
   deposit: 'Dépôt de garantie',
   depositInfo: 'Remboursé après votre séjour.',
   pack: 'Pack Logement',
