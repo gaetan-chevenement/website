@@ -48,7 +48,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
         <div className={style.cafNotice}>
           <Text id="cafInfo">
             This apartment is eligible for Rental Assistance (CAF). This aid is not
-            systematic and its amount may change depending on the rent and 
+            systematic and its amount may change depending on the rent and
             your personal situation. Contact the CAF.
           </Text>
         </div>
@@ -167,19 +167,18 @@ const definition = { 'fr-FR': {
   depositInfo: 'Remboursé après votre séjour.',
   pack: 'Pack Logement',
   packInfo: 'Basique, Confort ou Privilège, à choisir à la réservation',
-  included: 'Inclus', 
+  included: 'Inclus',
   wifi: 'Wifi haut débit illimité',
   elec: 'Électricité',
-  water: 'Eau'
-  gaz: 'Gaz', 
+  water: 'Eau',
+  gaz: 'Gaz',
   insurance: 'Assurance Habitation',
   condo: 'Charges de copropriété',
   maintenance: 'Maintenance technique',
-  waste: 'Taxes sur les ordures', 
+  waste: 'Taxes sur les ordures',
   booking: 'Réserver ce logement',
-  visit: 'Visiter', 
-  enquire: 'Demande d'info', 
-  
+  visit: 'Visiter',
+  enquire: 'Demande d\'info',
 } };
 
 function mapStateToProps({ route: { lang }, rooms }, { roomId }) {
