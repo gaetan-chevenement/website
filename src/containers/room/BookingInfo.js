@@ -19,55 +19,55 @@ const BookingInfo = ({ lang, roomId, room }) => {
     <IntlProvider definition={definition[lang]}>
       <section className={style.bookingInfo}>
         <h3 className={style.subtitle}>
-          <span><Text id="manual">Paiement mensuels</Text></span>
+          <span><Text id="mensuel">Monthly Payments</Text></span>
         </h3>
         <div className={priceLineClasses}>
           <div className="one-half">
-            <Text id="rent">Loyer</Text>
+            <Text id="rent">Rent</Text>
           </div>
           <div className="one-half text-right">
-            {currentPrice / 100}€/<Text id="month">mois</Text>
+            {currentPrice / 100}€/<Text id="month">month</Text>
           </div>
         </div>
         <div className={priceLineClasses}>
           <div className="one-half">
-            <Text id="serviceFees">Charges</Text>
+            <Text id="serviceFees">Service Fees</Text>
           </div>
           <div className="one-half text-right">
-            {serviceFees / 100}€/<Text id="month">mois</Text>
+            {serviceFees / 100}€/<Text id="month">month</Text>
           </div>
         </div>
         <div className={`${priceLineClasses} ${style.cafHelp}`}>
           <div className="one-half">
-            <Text id="caf">Aide au logement (CAF)</Text>
+            <Text id="caf">Rental assistance (CAF)</Text>
           </div>
           <div className="one-half text-right">
-            -90€/<Text id="month">mois</Text>
+            -90€/<Text id="month">month</Text>
           </div>
         </div>
         <div className={style.cafNotice}>
           <Text id="cafInfo">
-            Ce logement est éligible aux APL. Le versement de cette aide n'est
-            pas systématique et son montant, aléatoire, dépend du loyer et de
-            votre situation personnelle. Contactez la CAF.
+            This apartment is eligible for Rental Assistance (CAF). This aid is not
+            systematic and its amount may change depending on the rent and 
+            your personal situation. Contact the CAF.
           </Text>
         </div>
 
         <h3 className={style.subtitle}><span>Paiements fixes</span></h3>
         <div className={priceLineClasses}>
           <div className="one-half">
-            <Text id="deposit">Dépôt de garantie</Text>
+            <Text id="deposit">Deposit</Text>
           </div>
           <div className="one-half text-right">
             {depositPrice / 100}€
           </div>
         </div>
         <div className={style.priceLineDesc}>
-          <Text id="depositInfo">Remboursé après votre séjour.</Text>
+          <Text id="depositInfo">Reimbursed after your stay.</Text>
         </div>
         <div className={priceLineClasses}>
           <div className="one-half">
-            <Text id="pack">Pack Logement</Text>
+            <Text id="pack">Housing Pack</Text>
           </div>
           <div className="one-half text-right">
             -- €
@@ -75,46 +75,46 @@ const BookingInfo = ({ lang, roomId, room }) => {
         </div>
         <div className={style.priceLineDesc}>
           <Text id="packInfo">
-            Basique, Confort ou Privilège, à choisir à la réservation
+            Basic, Comfort or Privilege. Pick one when booking.
           </Text>
         </div>
 
         <h3 className={style.subtitle}>
-          <span><Text id="included">Inclus</Text></span>
+          <span><Text id="included">Included</Text></span>
         </h3>
 
         <ul className={style.bookingFeatures}>
           <li>
             <i className="icon-24 picto-inclus_wifi" />
-            <span><Text id="wifi">Wifi haut débit illimité</Text></span>
+            <span><Text id="wifi">High-speed WiFi</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_electricite" />
-            <span><Text id="elec">Électricité</Text></span>
+            <span><Text id="elec">Electricity</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_eau" />
-            <span><Text id="water">Eau</Text></span>
+            <span><Text id="water">Water</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_gaz" />
-            <span><Text id="gaz">Gaz</Text></span>
+            <span><Text id="gaz">Gas</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_assurance" />
-            <span><Text id="insurance">Assurance habitation</Text></span>
+            <span><Text id="insurance">Home insurance</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_maintenance_technique" />
-            <span><Text id="condo">Charges de copropriété</Text></span>
+            <span><Text id="condo">Co-property charges</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_maintenance_technique" />
-            <span><Text id="maintenance">Maintenance technique</Text></span>
+            <span><Text id="maintenance">Technical Maintenance</Text></span>
           </li>
           <li>
             <i className="icon-24 picto-inclus_taxe_ordures" />
-            <span><Text id="waste">Taxes sur les ordures</Text></span>
+            <span><Text id="waste">Household Waste Taxes</Text></span>
           </li>
         </ul>
 
@@ -127,7 +127,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
             id="bookBtn"
             style="width: 100%"
           >
-            <Text id="booking">Réserver ce logement</Text>
+            <Text id="booking">Book this accommodation</Text>
           </Button>
         </p>
 
@@ -138,12 +138,12 @@ const BookingInfo = ({ lang, roomId, room }) => {
               disabled={availableAt === null}
               style="width: 100%"
             >
-              <span><Text id="visit">Visiter</Text></span>
+              <span><Text id="visit">Visit</Text></span>
             </Button>
           </div>
           <div>
             <Button raised icon="question_answer" style="width: 100%">
-              <span><Text id="enquire">Demande d'info</Text></span>
+              <span><Text id="enquire">Info Request</Text></span>
             </Button>
           </div>
         </div>
@@ -153,7 +153,33 @@ const BookingInfo = ({ lang, roomId, room }) => {
 };
 
 const definition = { 'fr-FR': {
-
+  mensuel: 'Paiement mensuels',
+  rent: 'Loyer',
+  month: 'mois',
+  serviceFees: 'Charges',
+  caf: 'Aide au logement (CAF)',
+  cafInfo: `
+    Ce logement est éligible aux APL. Le versement de cette aide n'est
+    pas systématique et son montant, aléatoire, dépend du loyer et de
+    votre situation personnelle. Contactez la CAF.
+  `,
+  deposit: 'Dépôt de garantie',
+  depositInfo: 'Remboursé après votre séjour.',
+  pack: 'Pack Logement',
+  packInfo: 'Basique, Confort ou Privilège, à choisir à la réservation',
+  included: 'Inclus', 
+  wifi: 'Wifi haut débit illimité',
+  elec: 'Électricité',
+  water: 'Eau'
+  gaz: 'Gaz', 
+  insurance: 'Assurance Habitation',
+  condo: 'Charges de copropriété',
+  maintenance: 'Maintenance technique',
+  waste: 'Taxes sur les ordures', 
+  booking: 'Réserver ce logement',
+  visit: 'Visiter', 
+  enquire: 'Demande d'info', 
+  
 } };
 
 function mapStateToProps({ route: { lang }, rooms }, { roomId }) {
