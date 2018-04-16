@@ -90,11 +90,11 @@ const services = [{
   image: 'building.png',
   'en-US': {
     title: 'Building',
-    content: 'Elevator, lighting and cleaning of your building... It's all included!.',
+    content: 'Elevator, lighting and cleaning of your building… it\'s all included!.',
   },
   'fr-FR': {
     title: 'Copro.',
-    content: 'Ascenseur, lumière, ménage de l\'immeuble... C'est tout inclus !.',
+    content: 'Ascenseur, lumière, ménage de l\'immeuble… tout est inclus !.',
   },
 }, {
   image: 'tax.png',
@@ -104,7 +104,7 @@ const services = [{
   },
   'fr-FR': {
     title: 'Taxe',
-    content: 'La taxe sur les ordures ménagères ? On s'en occupe aussi !',
+    content: 'La taxe sur les ordures ménagères ? On s\'en occupe aussi !',
   },
 }, {
   image: 'insurance.png',
