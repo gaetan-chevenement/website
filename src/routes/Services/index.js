@@ -49,12 +49,12 @@ const services = [{
 }, {
   image: 'electricity.png',
   'en-US': {
-    title: 'Électricity',
+    title: 'Electricity',
     content: 'Why wait in the dark for two weeks? Arrive and get plugged in - it\'s all ready!',
   },
   'fr-FR': {
     title: 'Électricité',
-    content: 'Pour attendre 15 jours dans le noir le passage d\'EDF ? Entrez, branchez, c\'est prêt !',
+    content: 'Pourquoi attendre 15 jours dans le noir le passage d\'EDF ? Entrez, branchez, c\'est prêt !',
   },
 }, {
   image: 'water.png',
@@ -90,11 +90,11 @@ const services = [{
   image: 'building.png',
   'en-US': {
     title: 'Building',
-    content: 'Elevator, lighting and cleaning of your building... We pay for you.',
+    content: 'Elevator, lighting and cleaning of your building... It's all included!.',
   },
   'fr-FR': {
     title: 'Copro.',
-    content: 'Ascenseur, lumière, ménage de l\'immeuble... Nous payons pour vous.',
+    content: 'Ascenseur, lumière, ménage de l\'immeuble... C'est tout inclus !.',
   },
 }, {
   image: 'tax.png',
@@ -104,13 +104,13 @@ const services = [{
   },
   'fr-FR': {
     title: 'Taxe',
-    content: 'La taxe sur les ordures ménagères ? C\'est pour nous aussi !',
+    content: 'La taxe sur les ordures ménagères ? On s'en occupe aussi !',
   },
 }, {
   image: 'insurance.png',
   'en-US': {
     title: 'Insurance',
-    content: 'Comprehensive Home Insurance is included for the apartment',
+    content: 'Comprehensive Home Insurance is included for the apartment.',
   },
   'fr-FR': {
     title: 'Assurance',
@@ -120,11 +120,11 @@ const services = [{
   image: 'support.png',
   'en-US': {
     title: 'Support',
-    content: 'Our team is at your service all year round!',
+    content: 'Our team is at your service all stay round!',
   },
   'fr-FR': {
     title: 'Assistance',
-    content: 'Tout au long de l\'année, notre équipe est à votre service.',
+    content: 'Tout au long de votre séjour, notre équipe est à votre service.',
   },
 }, {
   image: 'subsidies.png',
