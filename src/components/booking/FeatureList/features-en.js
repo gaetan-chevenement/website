@@ -16,7 +16,7 @@ export default { 'en-US': [
                                                                   '49€', 1, 1],
   ['Check-in self-service 24/7', 'Collect your keys from the key safe at our agency',
                                                                       1, 1, 1],
-  ['Check-in at home, opening hours', 'Monday to Friday, 9am to 6pm (except bank holidays)',
+  ['Check-in at home, opening hours', 'Monday to Friday, 9am to 6pm (except bank holidays and weekends)',
                                                                   '79€', 1, 1],
   ['Check-in at home24/7', 'Evenings, nights, weekends, bank holidays',
                                                              '149€', '79€', 1],
@@ -61,9 +61,12 @@ export default { 'en-US': [
   Utils.getDepositLine('lyon'),
   Utils.getDepositLine('montpellier'),
   Utils.getDepositLine('lille'),
+  Utils.getDepositLine('toulouse'),
+
   ['Housing pack'],
   Utils.getPackLine('paris'),
   Utils.getPackLine('lyon'),
   Utils.getPackLine('montpellier'),
   Utils.getPackLine('lille'),
+  Utils.getDepositLine('toulouse'),
 ] };
