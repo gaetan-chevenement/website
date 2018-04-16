@@ -23,7 +23,7 @@ export default function Services({ lang }) {
           <Text id="choose">Choose your housing pack</Text>
         </h1>
         <p>
-          <Text id="subtitle">All the different services throughout your stay depending on which Housing Pack you have chosen.</Text>
+          <Text id="subtitle">All the different services throughout your stay depending on which Housing Pack you have chosen:</Text>
         </p>
         <PackList pack="comfort" isPriceHidden />
         <h1>
