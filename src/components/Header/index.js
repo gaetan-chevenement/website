@@ -22,7 +22,7 @@ class Header extends Component {
     this.state = { isDrawerActive: false };
   }
 
-  render({ lang }) {
+  render({ lang, path }) {
     return (
       <IntlProvider definition={definition[lang]}>
         <header class={style.header}>
@@ -34,14 +34,14 @@ class Header extends Component {
               flat
               theme={style}
             >
-              <AppNavigation className="hide-sm-down" type="horizontal" lang={lang} />
+              <AppNavigation className="hide-sm-down" type="horizontal" {...{ lang, path }} />
             </AppBar>
           </div>
           <Drawer type="right"
             active={this.state.isDrawerActive}
             onOverlayClick={this.handleToggle}
           >
-            <AppNavigation type="vertical" lang={lang} />
+            <AppNavigation type="vertical" {...{ lang, path }} />
           </Drawer>
         </header>
       </IntlProvider>
@@ -61,21 +61,27 @@ function AppBarTitle({ lang }) {
   );
 }
 
-function AppNavigation({ type, lang, className }) {
+function AppNavigation({ lang, path, type, className }) {
   return (
-    <IntlProvider definition={definition[lang]}>
-      <Navigation className={className} type={type} theme={style}>
-        <NavLink href={`/${lang}/services`} theme={style}>
-          <Text id="included">Included services</Text>
-        </NavLink>
-        <NavLink href={`/${lang}/booking-process`} theme={style}>
-          <Text id="booking">Booking</Text>
-        </NavLink>
-        <NavLink href="http://chez-nestor.com/contact-en" target="_blank" theme={style}>
-          Contact
-        </NavLink>
-      </Navigation>
-    </IntlProvider>
+    <Navigation className={className} type={type} theme={style}>
+      <NavLink href={`/${lang}/services`} theme={style}>
+        <Text id="included">Included services</Text>
+      </NavLink>
+      <NavLink href={`/${lang}/booking-process`} theme={style}>
+        <Text id="booking">Booking</Text>
+      </NavLink>
+      <NavLink href="http://chez-nestor.com/contact-en" target="_blank" theme={style}>
+        Contact
+      </NavLink>
+      {['en-US', 'fr-FR']
+        .filter((val) => lang !== val)
+        .map((val) => (
+          <NavLink href={path.replace(/^\/[^/]{0,5}/, `/${val}`)} theme={style}>
+            {val.split('-')[0].toUpperCase()}
+          </NavLink>
+        ))
+      }
+    </Navigation>
   );
 }
 

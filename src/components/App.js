@@ -77,7 +77,7 @@ export default class App extends Component {
             { // No header on invoices
               ({ matches, path, url }) =>
                 rInvoice.test(path) ?
-                  '' : <Header lang={this.state.lang} />
+                  '' : <Header {...{ path }} />
             }
           </Match>
           <Router onChange={this.handleRoute}>
@@ -96,7 +96,7 @@ export default class App extends Component {
             { // No footer on invoice, home
               ({ matches, path, url }) =>
                 [rInvoice, rSearch].some((regex) => regex.test(path)) ?
-                  '' : <Footer lang={this.state.lang} />
+                  '' : <Footer />
             }
           </Match>
         </div>
