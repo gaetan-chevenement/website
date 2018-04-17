@@ -45,7 +45,7 @@ export default function Services({ lang }) {
 const definition = { 'fr-FR': {
   steps: 'Réservez votre appartement en moins d\'une minute',
   choose: 'Choisissez votre pack logement',
-  subtitle: 'Différentes gammes de services pour votre appartement, tout au long du séjour, selon le pack choisi',
+  subtitle: 'Différentes gammes de services pour votre appartement, tout au long du séjour, selon le pack choisi :',
   comparison: 'Comparaison détaillée des différents packs',
   deposit: 'La caution et le pack logement sont deux montants différents. La caution est remboursable, pas le pack logement.',
 } };
@@ -54,7 +54,7 @@ const steps = [{
   image: 'step-one.png',
   'en-US': {
     title: 'Find',
-    content: 'Your ideal apartment from hundreds of flat shares and studios',
+    content: 'Your ideal apartment from hundreds of flat shares and studios.',
   },
   'fr-FR': {
     title: 'Trouvez',
@@ -64,21 +64,21 @@ const steps = [{
   image: 'step-two.png',
   'en-US': {
     title: 'Choose',
-    content: 'Your Housing Pack from the list below. Payment allows us to complete your booking',
+    content: 'Your Housing Pack from the list below. All our services are included inside and the payment allows us to complete your booking.',
   },
   'fr-FR': {
     title: 'Choisissez',
-    content: 'Votre Pack Logement parmi la liste ci-dessous. Son paiement finalise votre réservation',
+    content: 'Votre Pack Logement parmi la liste ci-dessous. Nos services sont inclus dedans et son paiement finalise votre réservation.',
   },
 }, {
   image: 'step-three.png',
   'en-US': {
     title: 'Arrive',
-    content: 'In your new city with your baggage and pick up your keys',
+    content: 'In your new city with your baggage and pick up your keys.',
   },
   'fr-FR': {
     title: 'Venez',
-    content: 'Dans votre nouvelle ville avec vos bagages pour récupérer vos clés',
+    content: 'Dans votre nouvelle ville avec vos bagages pour récupérer vos clefs.',
   },
 }, {
   image: 'step-four.png',
@@ -88,6 +88,6 @@ const steps = [{
   },
   'fr-FR': {
     title: 'Emmenagez',
-    content: 'Dans votre nouvel appartement et profitez de nos services tout au long de votre séjour',
+    content: 'Dans votre nouvel appartement et profitez de nos services tout au long de votre séjour.',
   },
 }];
