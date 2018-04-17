@@ -16,7 +16,7 @@ export default { 'en-US': [
                                                                   '49€', 1, 1],
   ['Check-in self-service 24/7', 'Collect your keys from the key safe at our agency',
                                                                       1, 1, 1],
-  ['Check-in at home, opening hours', 'Monday to Friday, 9am to 6pm (except bank holidays and weekends)',
+  ['Check-in at home, opening hours', 'Monday to Friday, 9am to 6pm (except bank holidays)',
                                                                   '79€', 1, 1],
   ['Check-in at home24/7', 'Evenings, nights, weekends, bank holidays',
                                                              '149€', '79€', 1],
