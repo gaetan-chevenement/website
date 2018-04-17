@@ -237,7 +237,7 @@ const definition = {
         '(à payer une seule fois quand vous réservez).',
       ],
       basic: 'basique',
-      confort: 'comfort',
+      confort: 'confort',
       privilege: 'privilège',
       description: `
         * Tant que votre pack logement n'est pas payé, la chambre reste
@@ -299,9 +299,9 @@ const definition = {
     personal: {
       tile: 'Détails personnels',
     },
-    amount: 'Montant:',
+    amount: 'Montant :',
     dueDate: {
-      title: 'Échéance:',
+      title: 'Échéance :',
       now: 'Immédiatement',
       checkIn: '72h avant votre checkin',
       rent: `
