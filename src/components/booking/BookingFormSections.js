@@ -37,7 +37,7 @@ const definition = { 'fr-FR': {
   housingPack: 'Choisissez Votre Pack Logement',
   detail: 'Comparaison Détaillée',
   personal: 'Infos personnelles',
-  eligibility: 'Eligibilité, Modalités et Conditions générales',
+  eligibility: 'Éligibilité, Modalités et Conditions générales',
 } };
 
 export default Utils.connectLang(BookingFormSections);
