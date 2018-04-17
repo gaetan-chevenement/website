@@ -90,11 +90,11 @@ const services = [{
   image: 'building.png',
   'en-US': {
     title: 'Building',
-    content: 'Elevator, lighting and cleaning of your building… it\'s all included!.',
+    content: 'Elevator, lighting and cleaning of your building… it\'s all included!',
   },
   'fr-FR': {
     title: 'Copro.',
-    content: 'Ascenseur, lumière, ménage de l\'immeuble… tout est inclus !.',
+    content: 'Ascenseur, lumière, ménage de l\'immeuble… tout est inclus !',
   },
 }, {
   image: 'tax.png',
