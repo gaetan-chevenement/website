@@ -61,9 +61,12 @@ export default { 'en-US': [
   Utils.getDepositLine('lyon'),
   Utils.getDepositLine('montpellier'),
   Utils.getDepositLine('lille'),
+  Utils.getDepositLine('toulouse'),
+
   ['Housing pack'],
   Utils.getPackLine('paris'),
   Utils.getPackLine('lyon'),
   Utils.getPackLine('montpellier'),
   Utils.getPackLine('lille'),
+  Utils.getDepositLine('toulouse'),
 ] };
