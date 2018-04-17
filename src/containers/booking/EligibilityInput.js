@@ -50,7 +50,7 @@ class EligibilityInputs extends PureComponent {
               {' '}
               <Text id="eligible.confirm">
                 I confirm that I am eligible, and that I am able to provide
-                all the required documents
+                all the required documents.
               </Text>
             </Checkbox>
           </p>
@@ -90,11 +90,11 @@ const definition = { 'fr-FR': {
     link: '',
     confirm: `
       Je confirme que je suis admissible, que je peux fournir tous les
-      documents requis, et que j'ai lu et accepté les
+      documents requis.
     `,
   },
   terms: {
-    confirm: '',
+    confirm: 'Je confirme que j\'ai lu et accepté les termes et conditions générales',
     link: 'termes et conditions.',
   },
 } };
