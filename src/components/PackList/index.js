@@ -118,9 +118,9 @@ const packs = {
     'fr-FR': {
       title: 'Confort',
       subtitle: 'Plus de facilité pour plus de confort et de sérénité ',
-      listHeader: 'Tous les services du pack Basique plus:',
+      listHeader: 'Tous les services du pack Basique plus :',
       listItems: [
-        'Draps, oreiller et housses de couette',
+        'Draps, oreillers et housses de couette',
         'Pack de nourriture',
         'Assistance clefs',
         'Assurance annulation - 1 mois',
@@ -143,7 +143,7 @@ const packs = {
     'fr-FR': {
       title: 'Privilège',
       subtitle: 'Services personnalisés pour un support client complet et attentif ',
-      listHeader: 'Tous les services du pack Confort plus:',
+      listHeader: 'Tous les services du pack Confort plus :',
       listItems: [
         'Chauffeur privé de l\'aéroport/gare',
         'Service de bagagerie',
