@@ -17,7 +17,7 @@ export default { 'fr-FR': [
                                                                   '49€', 1, 1],
   ['Check-in self-service 24/7', 'Récupérez vos clefs dans le distributeur à notre agence',
                                                                       1, 1, 1],
-  ['Checkin à domicile - heures d\'ouverture', 'Du lundi au vendredi, de 9h  18h (hors jours fériés et week-ends)',
+  ['Checkin à domicile - heures d\'ouverture', 'Du lundi au vendredi, de 9h  18h (hors jours fériés)',
                                                                   '79€', 1, 1],
   ['Checkin à domicile - 24/7', 'Soirées, nuits, week-ends et jours fériés inclus',
                                                              '149€', '79€', 1],
