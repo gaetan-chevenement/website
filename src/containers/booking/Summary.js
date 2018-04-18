@@ -297,11 +297,11 @@ const definition = {
       title: 'Détails du logement',
     },
     personal: {
-      tile: 'Détails personnels',
+      title: 'Détails personnels',
     },
-    amount: 'Montant:',
+    amount: 'Montant :',
     dueDate: {
-      title: 'Échéance:',
+      title: 'Échéance :',
       now: 'Immédiatement',
       checkIn: '72h avant votre checkin',
       rent: `
