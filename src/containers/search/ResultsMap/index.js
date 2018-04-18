@@ -1,4 +1,4 @@
-import { PureComponent }      from 'react';
+import { Component }          from 'react';
 import { connect }            from 'react-redux';
 import {
   Map,
@@ -15,6 +15,7 @@ import _const                 from '~/const';
 import Utils                  from '~/utils';
 
 import 'leaflet/dist/leaflet.css';
+import 'react-leaflet-markercluster/dist/styles.min.css';
 
 const _ = { filter, orderBy };
 const { MAPBOX_TOKEN } = _const;
@@ -29,30 +30,35 @@ const HIGHLIGHT_ICON = new L.Icon({
   iconSize: [45, 66],
 });
 
-const MARKER_GROUP_OPTIONS = {
-  iconCreateFunction(cluster) {
-    return L.divIcon({
-      className: 'map-rooms-cluster',
-      html: (`
-        <div data-count="${cluster.getChildCount()}">
-          <img src="${require('~/assets/search/map-marker-cluster.png')}" />
-        </div>
-      `),
-      iconSize: [45, 66],
-    });
-  },
-  // We only want to cluster at the street address level.
-  // that should do the trick
-  maxClusterRadius: 1,
-};
+// We only want to cluster at the street address level.
+// that should do the trick
+const maxClusterRadius = 1;
+
+function iconCreateFunction(cluster) {
+  return L.divIcon({
+    className: 'map-rooms-cluster',
+    html: (`
+      <div data-count="${cluster.getChildCount()}">
+        <img src="${require('~/assets/search/map-marker-cluster.png')}" />
+      </div>
+    `),
+    iconSize: [45, 66],
+  });
+}
 
 const DEFAULT_BBOX = [[51.089062, 9.55932], [41.33374, -5.1406]];
 const tileLayerUrl =
   `https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${MAPBOX_TOKEN}`;
 
-class ResultsMap extends PureComponent {
+class ResultsMap extends Component {
+  // MarkerClusterGroup is stupid and is only able to add markers to the map :-/
+  // It must be cleared before each re-render :-/
+  componentWillUpdate() {
+    this.markerClusterGroup && this.markerClusterGroup.leafletElement.clearLayers();
+  }
+
+  // invalidate the size of the map every time it has been re-rendered
   componentDidUpdate() {
-    // Force l'actualisation de la carte si les propriétés sont mises à jour
     if ( this._map ) {
       this._map.leafletElement.invalidateSize();
     }
@@ -74,7 +80,7 @@ class ResultsMap extends PureComponent {
         bounds={bounds}
         scrollWheelZoom={false}
         attributionControl={false}
-        maxZoom={15}
+        maxZoom={17}
         ref={map => (this._map = map)}
       >
         <TileLayer
@@ -91,13 +97,17 @@ class ResultsMap extends PureComponent {
               </a>
             </strong>`}
         />
-        <MarkerClusterGroup
-          wrapperOptions={{ enableDefaultStyle: false }}
-          options={MARKER_GROUP_OPTIONS}
+        <MarkerClusterGroup {...{ maxClusterRadius, iconCreateFunction }}
+          ref={(markerClusterGroup) => {
+            this.markerClusterGroup = markerClusterGroup;
+          }}
         >
           { // Leaflet doesn't like it when we move Marker outside of this render
             arrRooms.map((room) => (
-              <Marker position={room.latLng} icon={room.id === highlightedRoomId ? HIGHLIGHT_ICON : DEFAULT_ICON}>
+              <Marker
+                position={room.latLng}
+                icon={room.id === highlightedRoomId ? HIGHLIGHT_ICON : DEFAULT_ICON}
+              >
                 <Popup>
                   <Room {...{ lang, arrivalDate, room }} isThumbnail />
                 </Popup>

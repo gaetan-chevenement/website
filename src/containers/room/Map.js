@@ -56,7 +56,7 @@ class SingleMap extends PureComponent {
         center={latLng}
         scrollWheelZoom={false}
         attributionControl={false}
-        maxZoom={15}
+        maxZoom={17}
         className="single-map"
         zoom={12}
         ref={map => (this._map = map)}

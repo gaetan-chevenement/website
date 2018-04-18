@@ -68,5 +68,5 @@ export default { 'fr-FR': [
   Utils.getPackLine('lyon'),
   Utils.getPackLine('montpellier'),
   Utils.getPackLine('lille'),
-  Utils.getDepositLine('toulouse'),
+  Utils.getPackLine('toulouse'),
 ] };

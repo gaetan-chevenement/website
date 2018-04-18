@@ -1,4 +1,5 @@
 import { IntlProvider, Text } from 'preact-i18n';
+import Utils                  from '~/utils';
 import Slideshow              from '~/components/home/Slideshow';
 import Cities                 from '~/components/home/Cities';
 import Services               from '~/components/home/Services';
@@ -7,7 +8,7 @@ import Guide                  from '~/components/home/Guide';
 import SearchForm             from '~/components/SearchForm';
 import style                  from './style.css';
 
-export default function Home({ lang }) {
+function Home({ lang }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <div class="home">
@@ -65,3 +66,5 @@ const definition = { 'fr-FR': {
   services: 'Une nouvelle expérience de la colocation',
   testimonies: 'Nos colocataires nous recommandent',
 } };
+
+export default Utils.connectLang(Home);
