@@ -87,7 +87,7 @@ const definition = { 'fr-FR': {
       Avant de réserver, vous devez vous assurer que vous êtes admissible à
       un logement Chez Nestor :
     `,
-    link: '',
+    link: 'Testez votre éligibilité',
     confirm: `
       Je confirme que je suis admissible, que je peux fournir tous les
       documents requis.
