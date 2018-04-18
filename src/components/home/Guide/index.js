@@ -19,7 +19,7 @@ function Guide({ lang }) {
           target="_blank"
           theme={style}
         >
-          <Text id="downlod">Download your free housing guide</Text>
+          <Text id="download">Download your free housing guide</Text>
         </Button>
         <div style={{ clear: 'both' }} />
       </section>
