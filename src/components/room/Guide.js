@@ -1,7 +1,10 @@
 import { IntlProvider, Text } from 'preact-i18n';
 import { Button }             from 'react-toolbox/lib/button';
+import _const                 from '~/const';
 import Utils                  from '~/utils';
 import style                  from './style.css';
+
+const { HOUSING_GUIDE_URL } = _const;
 
 function Guide({ lang }) {
   return (
@@ -35,7 +38,11 @@ function Guide({ lang }) {
               </ul>
             </div>
             <div>
-              <Button raised icon="file_download" className={style.guideBtn}>
+              <Button href={HOUSING_GUIDE_URL}
+                raised
+                icon="file_download"
+                className={style.guideBtn}
+              >
                 <Text id="download">Get the accommodation guide</Text>
               </Button>
             </div>

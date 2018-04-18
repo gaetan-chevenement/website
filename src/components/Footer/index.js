@@ -21,7 +21,7 @@ function Footer({ lang }) {
               <ul>
                 <li>
                   <a href={`${lang}/services`}>
-                    <Text id="services">Included services</Text>
+                    <Text id="services">Included Services</Text>
                   </a>
                 </li>
                 <li>
@@ -95,7 +95,7 @@ function Footer({ lang }) {
 }
 
 const definition = { 'fr-FR': {
-  services: 'Services inclus',
+  services: 'Services Inclus',
   booking: 'Réserver',
   about: 'À propos de Chez Nestor',
   team: 'L\'équipe',

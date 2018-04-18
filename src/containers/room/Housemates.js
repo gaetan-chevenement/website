@@ -7,7 +7,7 @@ import * as actions           from '~/actions';
 import Utils                  from '~/utils';
 import style                  from '~/containers/room/style.css';
 
-function Housemates({ lang, housemates }) {
+function Housemates({ lang, housemates, roomId }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <section>
@@ -16,7 +16,7 @@ function Housemates({ lang, housemates }) {
         </h3>
         <div className={style.housemates}>
           {housemates.map((housemate, index) => (
-            <Housemate {...{ housemate, lang, index }} />
+            <Housemate {...{ lang, housemate, roomId, index }} />
           ))}
         </div>
       </section>
@@ -24,7 +24,7 @@ function Housemates({ lang, housemates }) {
   );
 }
 
-function Housemate({ lang, housemate, index }) {
+function Housemate({ lang, housemate, roomId, index }) {
   const pictoGender = housemate.gender === 'male' ? 'homme' : 'femme';
   const pictoClass = `picto-colocataire_${pictoGender}_${(index % 5) + 1}_256px`;
 
@@ -36,9 +36,13 @@ function Housemate({ lang, housemate, index }) {
       {('availableAt' in housemate) ? (
         <div>
           <div className={`${style.availableRoom} picto-colocataire_disponible_256px`} />
-          <Button raised primary href={`/${lang}/room/${housemate.roomId}`}>
-            <Text id="booking">Book</Text>
-          </Button>
+          { housemate.roomId !== roomId ? (
+            <Button raised primary href={`/${lang}/room/${housemate.roomId}`}>
+              <Text id="view">view</Text>
+            </Button>
+          ) : (
+            <Text id="available">Available</Text>
+          ) }
         </div>
       ) : (
         <div>
@@ -53,16 +57,17 @@ function Housemate({ lang, housemate, index }) {
 const definition = { 'fr-FR': {
   title: 'Colocataires',
   available: 'Disponible',
-  book: 'Résever',
+  view: 'voir',
   room: 'Chambre',
 } };
 
-function mapStateToProps({ route: { lang }, apartments, rooms }, { apartmentId }) {
+function mapStateToProps({ route: { lang, roomId }, apartments, rooms }, { apartmentId }) {
   const apartment = apartments[apartmentId];
   const housemates = Utils.parseHouseMates(apartment.housemates, lang);
 
   return {
     lang,
+    roomId,
     housemates,
   };
 }

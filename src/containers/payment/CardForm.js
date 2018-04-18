@@ -12,7 +12,7 @@ import Utils                  from '~/utils';
 
 const {
   API_BASE_URL,
-  SUPPORT_EMAIL,
+  SALES_EMAIL,
 } = _const;
 
 class CardForm extends PureComponent {
@@ -47,6 +47,8 @@ class CardForm extends PureComponent {
       payment,
       currYear,
     } = args;
+    const paymentError = errors.payment;
+    const handleRetry = this.handleRetry;
 
     if ( payment.isValidated || orderBalance >= 0 || /orderPaid/.test(errors.payment) ) {
       return (
@@ -72,7 +74,7 @@ class CardForm extends PureComponent {
       return (
         <IntlProvider definition={definition[lang]}>
           <section>
-            <Error paymentError={errors.payment} orderStatus={orderStatus} />
+            <Error {...{ paymentError, orderStatus, handleRetry }} />
           </section>
         </IntlProvider>
       );
@@ -145,6 +147,14 @@ function Error({ orderStatus, paymentError }) {
     );
     canRetry = true;
   }
+  else if ( /cardExpired/.test(paymentError) ) {
+    errorMessage = (
+      <Text id="errors.cardExpired">
+        This card appears to have expired.
+      </Text>
+    );
+    canRetry = true;
+  }
   else if ( /(doNotHonor|unauthorized|tooManyAttempts|amountLimit)/.test(paymentError) ) {
     errorMessage = (
       <span>
@@ -171,12 +181,12 @@ function Error({ orderStatus, paymentError }) {
         <span>
           <Button raised primary
             label={<Text id="errors.retry">Retry</Text>}
-            onClick={this.handleRetry}
+            onClick={this.props.handleRetry}
           />
           {' '}
           <Button raised primary
             label={<Text id="errors.support">Contact Support</Text>}
-            href={`mailto:${SUPPORT_EMAIL}`}
+            href={`mailto:${SALES_EMAIL}`}
             target="_blank"
           />
         </span>
@@ -223,7 +233,10 @@ const definition = { 'fr-FR': {
       Le prix de cette facture a été modifié.
       Merci de vérifier le nouveau prix et de retenter le paiement.
     `,
+    cardExpired: 'Cette carte semble avoir expiré.',
     unexpected: 'Une erreur inatendue est survenue.',
+    retry: 'Réessayer',
+    support: 'Contacter le support',
   },
   payment: {
     success: 'Votre paiement a bien été effectué.',

@@ -65,7 +65,7 @@ function AppNavigation({ lang, path, type, className }) {
   return (
     <Navigation className={className} type={type} theme={style}>
       <NavLink href={`/${lang}/services`} theme={style}>
-        <Text id="included">Included services</Text>
+        <Text id="included">Included Services</Text>
       </NavLink>
       <NavLink href={`/${lang}/booking-process`} theme={style}>
         <Text id="booking">Booking</Text>
@@ -86,7 +86,7 @@ function AppNavigation({ lang, path, type, className }) {
 }
 
 const definition = { 'fr-FR': {
-  included: 'Services inclus',
+  included: 'Services Inclus',
   booking: 'Réserver',
 } };
 

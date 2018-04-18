@@ -1,7 +1,10 @@
 import { IntlProvider, Text } from 'preact-i18n';
 import { Button }             from 'react-toolbox/lib/button/index';
+import _const                 from '~/const';
 import Utils                  from '~/utils';
 import style                  from './style.css';
+
+const { HOUSING_GUIDE_URL } = _const;
 
 function Guide({ lang }) {
   return (
@@ -15,7 +18,7 @@ function Guide({ lang }) {
         <p><Text id="text.1">Which files are required for a student?</Text></p>
         <p><Text id="text.2">What fees are expected for a leasing?</Text></p>
         <Button
-          href="http://forms.chez-nestor.com/cheznestor/HousingGuide"
+          href={HOUSING_GUIDE_URL}
           target="_blank"
           theme={style}
         >

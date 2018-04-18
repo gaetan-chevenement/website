@@ -237,7 +237,7 @@ const definition = {
         '(à payer une seule fois quand vous réservez).',
       ],
       basic: 'basique',
-      confort: 'confort',
+      comfort: 'confort',
       privilege: 'privilège',
       description: `
         * Tant que votre pack logement n'est pas payé, la chambre reste
