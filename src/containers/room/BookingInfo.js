@@ -75,7 +75,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
         </div>
         <div className={style.priceLineDesc}>
           <Text id="packInfo">
-            Basic, Comfort or Privilege. His payment finalizes your reservation.
+            Basic, Comfort or Privilege. Payment finalizes your reservation.
           </Text>
         </div>
 
