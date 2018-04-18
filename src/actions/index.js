@@ -4,6 +4,7 @@ import queryString              from 'query-string';
 import map                      from 'lodash/map';
 import pick                     from 'lodash/pick';
 import capitalize               from 'lodash/capitalize';
+import D                        from 'date-fns';
 import Utils                    from '~/utils';
 import _const                   from '~/const';
 
@@ -103,13 +104,14 @@ export const listOrders =
 export const listRooms =
   createActionAsync(
     'List Rooms',
-    ({ city, page }) => {
+    ({ city, date, page }) => {
       if ( city === undefined ) {
         return Promise.reject('Can only list Rooms by city for now');
       }
 
       const params = {
         zone: city.replace(/ (\d)er?/g, '$1,').replace(/,$/, '').toLowerCase(),
+        date: date != null ? D.subDays(date, 14).getTime() : date,
         'fields[Room]': 'name,Apartment,availableAt,_currentPrice,floorArea,galery',
         'fields[Apartment]': 'roomCount',
         'page[number]': page || 1,

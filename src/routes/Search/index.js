@@ -1,4 +1,5 @@
 import random                 from 'lodash/random';
+import Promise from 'bluebird';
 import { PureComponent }      from 'react';
 import autobind               from 'autobind-decorator';
 import { bindActionCreators } from 'redux';
@@ -55,12 +56,18 @@ export class Search extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.actions.listRooms({ city: this.props.city, page: this.props.page });
+    const { city, date, page } = this.props;
+
+    this.props.actions.listRooms({ city, date, page });
   }
 
-  componentWillReceiveProps({ city, page }) {
-    if ( city !== this.props.city || page !== this.props.page ) {
-      this.props.actions.listRooms({ city, page });
+  componentWillReceiveProps({ city, date, page }) {
+    if (
+      city !== this.props.city ||
+      date !== this.props.date ||
+      page !== this.props.page
+    ) {
+      this.props.actions.listRooms({ city, date, page });
       this.setState({
         sameSearchCounter: this.getUsersCount(),
       });
@@ -70,6 +77,7 @@ export class Search extends PureComponent {
   render() {
     const {
       city,
+      date,
       isLoading,
     } = this.props;
 
@@ -90,11 +98,7 @@ export class Search extends PureComponent {
         >
           <div className={leftPane}>
             <div className={searchEngineAndAlerts}>
-              <SearchForm mode="noSubmit"
-
-                city={city}
-                date={new Date()}
-              />
+              <SearchForm mode="noSubmit" {...{ city, date }} />
               { /* TODO: implement alerts: <CreateAlertButton /> */ }
             </div>
             { isLoading ? (
@@ -128,9 +132,10 @@ export class Search extends PureComponent {
   }
 }
 
-function mapStateToProps({ rooms }, { city }) {
+function mapStateToProps({ route: { date }, rooms }, { city }) {
   return {
     city,
+    date: date && Number(date),
     isLoading: rooms.isLoading,
   };
 }

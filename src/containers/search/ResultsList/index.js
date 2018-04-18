@@ -34,6 +34,7 @@ class ResultsList extends PureComponent {
     const {
       lang,
       city,
+      arrivalDate,
       arrRooms,
       handleMouseOver,
       handleMouseOut,
@@ -67,7 +68,7 @@ class ResultsList extends PureComponent {
             <div class="grid-3 has-gutter">
               { arrRooms.map((room) => (
                 <Room
-                  {...{ lang, room }}
+                  {...{ lang, arrivalDate, room }}
                   onMouseOver={handleMouseOver}
                   onMouseOut={handleMouseOut}
                 />
@@ -106,9 +107,10 @@ const definition = { 'fr-FR': {
   contact: 'contactez notre équipe',
 } };
 
-const mapStateToProps = ({ route: { lang, city }, rooms, apartments }) => ({
+const mapStateToProps = ({ route: { lang, city, date }, rooms, apartments }) => ({
   lang,
   city: city.replace(/ \d.*/, ''),
+  arrivalDate: date,
   arrRooms: _.orderBy(rooms, ['availableAt'])
     .filter((room) => typeof room === 'object')
     .map((room) => ({

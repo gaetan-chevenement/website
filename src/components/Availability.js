@@ -1,6 +1,6 @@
 import { IntlProvider, Text } from 'preact-i18n';
 
-function Availability({ lang, className, availableAt }) {
+function Availability({ lang, className, availableAt, arrivalDate }) {
   let icon = <span class="material-icons">check_circle</span>;
   let text = <Text id="availableNow">Available now</Text>;
   let _className = `${className} availableNow`;
@@ -11,13 +11,15 @@ function Availability({ lang, className, availableAt }) {
     _className = `${className} unavailable`;
   }
   else if ( +availableAt > +Date.now() ) {
-    icon = <span class="material-icons">warning</span>;
     text = (
       <Text id="availableFrom" fields={{ date: availableAt.toLocaleDateString() }}>
         {`Available from ${availableAt.toLocaleDateString()}`}
       </Text>
     );
-    _className = `${className} availableFrom`;
+    if ( arrivalDate != null && (+availableAt > +arrivalDate) ) {
+      icon = <span class="material-icons">warning</span>;
+      _className = `${className} availableFrom`;
+    }
   }
 
   return (

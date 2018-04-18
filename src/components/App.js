@@ -32,6 +32,7 @@ export default class App extends Component {
       minPack,
       returnUrl,
       city,
+      date,
       page,
       admin = false,
       rentingId,
@@ -40,9 +41,12 @@ export default class App extends Component {
 
     // route params are only relevant when they're defined, so we'll filter-out
     // all undefined values.
-    store.dispatch(updateRoute(Utils.filterOutUndef({
-      lang, minPack, city, page: +page, returnUrl, admin, rentingId, roomId,
-    })));
+    store.dispatch(updateRoute(Object.assign(
+      Utils.filterOutUndef({
+        lang, minPack, city, page: +page, returnUrl, admin, rentingId, roomId,
+      }),
+      { date } // needs to be reset when absent
+    )));
 
     this.setState({ lang });
 

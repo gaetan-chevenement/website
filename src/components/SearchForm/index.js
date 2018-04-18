@@ -18,11 +18,22 @@ const { SEARCHABLE_CITIES } = _const;
 
 class SearchForm extends PureComponent {
   @autobind
+  updateRoute() {
+    const { city, date } = this.state;
+    const dateParam = date != null ? `?date=${date.getTime()}` : '';
+
+    return route(`/${this.props.lang}/search/${city}${dateParam}`);
+  }
+
+  @autobind
   handleSubmit(e) {
     e.preventDefault();
 
     if (this.state.city != null) {
-      route(`/${this.props.lang}/search/${this.state.city}`);
+      this.updateRoute();
+    }
+    else {
+      this.setState({ error: true });
     }
   }
 
@@ -32,16 +43,18 @@ class SearchForm extends PureComponent {
     // See https://github.com/react-toolbox/react-toolbox/pull/1725
     e.preventDefault();
 
-    this.setState({ city: value });
-
-    if (this.props.mode === 'noSubmit') {
-      return route(`/${this.props.lang}/search/${value}`);
-    }
+    this.setState(
+      { city: value, error: false },
+      this.props.mode === 'noSubmit' && this.updateRoute
+    );
   }
 
   @autobind
   handleDateChange(value) {
-    this.setState({ date: value });
+    this.setState(
+      { date: value },
+      this.props.mode === 'noSubmit' && this.updateRoute
+    );
   }
 
   constructor(props) {
@@ -49,14 +62,9 @@ class SearchForm extends PureComponent {
 
     this.state = {
       city: props.city,
-      date: props.date,
+      date: props.date && new Date(Number(props.date)),
+      error: false,
     };
-  }
-
-  componentWillReceiveProps({ city }) {
-    if ( city !== this.props.city ) {
-      this.setState({ city });
-    }
   }
 
   render({ lang, mode }) {
@@ -67,12 +75,13 @@ class SearchForm extends PureComponent {
             <i class="material-icons">location_city</i>
             <Dropdown
               onChange={this.handleCityChange}
-              label={<Text id="city">City</Text>}
+              label={<Text id="city">City *</Text>}
               value={this.state.city}
               source={
                 SEARCHABLE_CITIES.map(({ name }) => ({ value: name, label: name }))
               }
               floating={false}
+              error={this.state.error}
             />
           </div>
           <div>
@@ -110,7 +119,7 @@ class SearchForm extends PureComponent {
 
 const definition = { 'fr-FR': {
   arrival: 'Date d\'arrivée',
-  city: 'Ville',
+  city: 'Ville *',
   submit: 'Rechercher',
 } };
 

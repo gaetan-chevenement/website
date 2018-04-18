@@ -22,6 +22,7 @@ const bedNames = {
 function Room(args) {
   const {
     lang,
+    arrivalDate,
     room: {
       availableAt,
       _currentPrice,
@@ -53,7 +54,7 @@ function Room(args) {
             {name}
           </h4>
           <Availability
-            {...{ lang, className: style.availability, availableAt }}
+            {...{ lang, arrivalDate, className: style.availability, availableAt }}
           />
           { /* NEW should not be translated */ }
           {!Utils.isNew(createdAt) ? <div className={style.isNew}>NEW</div> : ''}

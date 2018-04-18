@@ -58,7 +58,7 @@ class ResultsMap extends PureComponent {
     }
   }
 
-  render({ lang, highlightedRoomId, arrRooms }) {
+  render({ lang, arrivalDate, highlightedRoomId, arrRooms }) {
     const bounds = arrRooms.length > 0 ?
       new L.LatLngBounds( arrRooms.map(({ latLng }) => (latLng)) ).pad(0.2) :
       DEFAULT_BBOX;
@@ -99,7 +99,7 @@ class ResultsMap extends PureComponent {
             arrRooms.map((room) => (
               <Marker position={room.latLng} icon={room.id === highlightedRoomId ? HIGHLIGHT_ICON : DEFAULT_ICON}>
                 <Popup>
-                  <Room {...{ lang, room }} isThumbnail />
+                  <Room {...{ lang, arrivalDate, room }} isThumbnail />
                 </Popup>
               </Marker>
             ))
@@ -111,10 +111,11 @@ class ResultsMap extends PureComponent {
 }
 
 const mapStateToProps = (state, { hightlightedRoomId }) => {
-  const { route: { lang }, rooms, apartments } = state;
+  const { route: { lang, date }, rooms, apartments } = state;
 
   return {
     lang,
+    arrivalDate: date,
     arrRooms: _.orderBy(rooms, ['availableAt'])
       .filter((room) => typeof room === 'object')
       .map((room) => ({
