@@ -54,7 +54,7 @@ const definition = {
   }, {
     imgIndex: 6,
     title: 'Réservation rapide',
-    desc: 'Quelques clics : réerver n\'a jamais été aussi simple',
+    desc: 'Quelques clics : réserver n\'a jamais été aussi simple',
   }],
 };
 
