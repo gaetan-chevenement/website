@@ -105,7 +105,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
             <span><Text id="insurance">Home insurance</Text></span>
           </li>
           <li>
-            <i className="icon-24 picto-inclus_maintenance_technique" />
+            <i className="icon-24 picto-equipement_chambre_etage" />
             <span><Text id="condo">Co-property charges</Text></span>
           </li>
           <li>
