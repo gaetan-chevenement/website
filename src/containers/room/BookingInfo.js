@@ -75,7 +75,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
         </div>
         <div className={style.priceLineDesc}>
           <Text id="packInfo">
-            Basic, Comfort or Privilege. Pick one when booking.
+            Basic, Comfort or Privilege. Payment finalizes your reservation.
           </Text>
         </div>
 
@@ -153,7 +153,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
 };
 
 const definition = { 'fr-FR': {
-  mensuel: 'Paiement mensuels',
+  mensuel: 'Paiements mensuels',
   rent: 'Loyer',
   month: 'mois',
   serviceFees: 'Charges',
@@ -166,7 +166,7 @@ const definition = { 'fr-FR': {
   deposit: 'Dépôt de garantie',
   depositInfo: 'Remboursé après votre séjour.',
   pack: 'Pack Logement',
-  packInfo: 'Basique, Confort ou Privilège, à choisir à la réservation',
+  packInfo: 'Basique, Confort ou Privilège. Son paiement finalise votre réservation.',
   included: 'Inclus',
   wifi: 'Wifi haut débit illimité',
   elec: 'Électricité',
