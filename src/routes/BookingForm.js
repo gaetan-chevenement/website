@@ -126,7 +126,7 @@ function mapStateToProps({ route: { lang }, rooms, booking }, { roomId }) {
 
 const definition = { 'fr-FR': {
   errors: {
-    unavailable: 'Désolé, cette chambre n\'est plus dispobible.',
+    unavailable: 'Désolé, cette chambre n\'est plus disponible.',
     room: 'Désolé, une erreur est survenue lors de la préparation de votre réservation.',
   },
   button: 'Continuer',
