@@ -143,7 +143,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
           </div>
           <div>
             <Button raised icon="question_answer" style="width: 100%">
-              <span><Text id="enquire">Info Request</Text></span>
+              <span><Text id="enquire">Ask</Text></span>
             </Button>
           </div>
         </div>
@@ -178,7 +178,7 @@ const definition = { 'fr-FR': {
   waste: 'Taxes sur les ordures',
   booking: 'Réserver ce logement',
   visit: 'Visiter',
-  enquire: 'Demande d\'info',
+  enquire: 'Demander',
 } };
 
 function mapStateToProps({ route: { lang }, rooms }, { roomId }) {
