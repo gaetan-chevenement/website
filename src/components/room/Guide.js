@@ -57,12 +57,12 @@ function Guide({ lang }) {
 }
 
 const definition = { 'fr-FR': {
-  guide: 'Guide logement gratuit',
-  where: 'Trouver son logement',
+  guide: 'Mon Guide logement offert',
+  where: 'Où chercher son logement',
   agency: 'Agences, résidences…',
   traps: 'Les pièges à éviter',
   fees: 'Les frais à prévoir',
-  download: 'Obtenir le guide logement',
+  download: 'Je télécharge mon Guide Logement',
 } };
 
 export default Utils.connectLang(Guide);
