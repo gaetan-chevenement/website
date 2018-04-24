@@ -246,6 +246,10 @@
     background-image: url(../assets/rooms/equipement_chambre_bureau_64px.png);
 }
 
+.picto-equipement_chambre_bureau_et_chaise {
+    background-image: url(../assets/rooms/equipement_chambre_bureau_et_chaise.png);
+}
+
 .picto-equipement_chambre_canape_ou_canapelit {
     background-image: url(../assets/rooms/equipement_chambre_canape_ou_canapelit.png);
 }
@@ -256,6 +260,10 @@
 
 .picto-equipement_chambre_canape_ou_canapelit_64px {
     background-image: url(../assets/rooms/equipement_chambre_canape_ou_canapelit_64px.png);
+}
+
+.picto-equipement_chambre_chauffage {
+    background-image: url(../assets/rooms/equipement_chambre_chauffage.png);
 }
 
 .picto-equipement_chambre_cintres {
@@ -304,6 +312,10 @@
 
 .picto-equipement_chambre_etage_64px {
     background-image: url(../assets/rooms/equipement_chambre_etage_64px.png);
+}
+
+.picto-equipement_chambre_fauteuil {
+    background-image: url(../assets/rooms/equipement_chambre_fauteuil.png);
 }
 
 .picto-equipement_chambre_fermeture {
@@ -522,6 +534,10 @@
     background-image: url(../assets/rooms/equipement_cuisine_casseroles_64px.png);
 }
 
+.picto-equipement_cuisine_ciseaux {
+    background-image: url(../assets/rooms/equipement_cuisine_ciseaux.png);
+}
+
 .picto-equipement_cuisine_couverts {
     background-image: url(../assets/rooms/equipement_cuisine_couverts.png);
 }
@@ -606,6 +622,18 @@
     background-image: url(../assets/rooms/equipement_cuisine_mugs_64px.png);
 }
 
+.picto-equipement_cuisine_passoire {
+    background-image: url(../assets/rooms/equipement_cuisine_passoire.png);
+}
+
+.picto-equipement_cuisine_planches_a_decouper {
+    background-image: url(../assets/rooms/equipement_cuisine_planches_a_decouper.png);
+}
+
+.picto-equipement_cuisine_plaques {
+    background-image: url(../assets/rooms/equipement_cuisine_plaques.png);
+}
+
 .picto-equipement_cuisine_poeles {
     background-image: url(../assets/rooms/equipement_cuisine_poeles.png);
 }
@@ -616,6 +644,10 @@
 
 .picto-equipement_cuisine_poeles_64px {
     background-image: url(../assets/rooms/equipement_cuisine_poeles_64px.png);
+}
+
+.picto-equipement_cuisine_saladier {
+    background-image: url(../assets/rooms/equipement_cuisine_saladier.png);
 }
 
 .picto-equipement_cuisine_tirebouchon {
@@ -678,16 +710,12 @@
     background-image: url(../assets/rooms/equipement_general_fer_a_repasser_64px.png);
 }
 
+.picto-equipement_general_balaibrosse {
+    background-image: url(../assets/rooms/equipement_general_balaibrosse.png);
+}
+
 .picto-equipement_general_kit_menage {
     background-image: url(../assets/rooms/equipement_general_kit_menage.png);
-}
-
-.picto-equipement_general_kit_menage_16px {
-    background-image: url(../assets/rooms/equipement_general_kit_menage_16px.png);
-}
-
-.picto-equipement_general_kit_menage_64px {
-    background-image: url(../assets/rooms/equipement_general_kit_menage_64px.png);
 }
 
 .picto-equipement_general_lavelinge {
@@ -726,6 +754,10 @@
     background-image: url(../assets/rooms/equipement_general_tancarville_64px.png);
 }
 
+.picto-equipement_salle_de_bain_baignoire {
+    background-image: url(../assets/rooms/equipement_salle_de_bain_baignoire.png);
+}
+
 .picto-equipement_salle_de_bain_douche {
     background-image: url(../assets/rooms/equipement_salle_de_bain_douche.png);
 }
@@ -736,6 +768,10 @@
 
 .picto-equipement_salle_de_bain_douche_64px {
     background-image: url(../assets/rooms/equipement_salle_de_bain_douche_64px.png);
+}
+
+.picto-equipement_salle_de_bain_lavabo {
+    background-image: url(../assets/rooms/equipement_salle_de_bain_lavabo.png);
 }
 
 .picto-equipement_salle_de_bain_miroir {
