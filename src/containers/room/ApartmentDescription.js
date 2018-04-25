@@ -10,7 +10,7 @@ import style                  from './style.css';
 
 const _ = { capitalize };
 
-function ApartmentDescription({ lang, isLoading, apartment, district }) {
+function ApartmentDescription({ lang, isLoading, apartment, district, floorPlan }) {
   if ( isLoading ) {
     return (
       <div class="content text-center">
@@ -22,18 +22,22 @@ function ApartmentDescription({ lang, isLoading, apartment, district }) {
   return (
     <IntlProvider definition={definition[lang]}>
       <section>
-        {apartment.floorPlan !== undefined ? (
+        {floorPlan ? (
           <section>
             <h3 className={style.heading}>
               <Text id="floorPlan">Floor Plan</Text>
             </h3>
-            <img src={apartment.floorPlan} alt="floor plan" />
-            <div className={style.planNotice}>
-              <Text id="floorPlanInfo">
-                The surface of the floor of each room includes closets,
-                balconies, loggias, bathroom, WC, attic areas…
-                with private access
-              </Text>
+            <div className="grid-3 has-gutter">
+              <div className="two-thirds">
+                <img src={floorPlan.url} alt="floor plan" />
+              </div>
+              <div className={style.planNotice}>
+                <Text id="floorPlanInfo">
+                  The surface of the floor of each room includes closets,
+                  balconies, loggias, bathroom, WC, attic areas…
+                  with private access
+                </Text>
+              </div>
             </div>
           </section>
         ) : ''}
@@ -122,6 +126,8 @@ const definition = { 'fr-FR': {
 function mapStateToProps({ route: { lang, roomId }, rooms, apartments, districts }) {
   const apartment = apartments[rooms[roomId].ApartmentId];
   const district = apartment && districts[apartment._DistrictId];
+  const floorPlan = apartment &&
+    Utils.getPictures(apartment).find(({ alt }) => alt === 'floorplan');
 
   if ( !apartment || apartment.isLoading || !district || district.isLoading ) {
     return { isLoading: true };
@@ -133,6 +139,7 @@ function mapStateToProps({ route: { lang, roomId }, rooms, apartments, districts
     district,
     apartmentFeatures: Utils.getFeatures(apartment),
     districtFeatures: Utils.getFeatures(district),
+    floorPlan,
   };
 }
 

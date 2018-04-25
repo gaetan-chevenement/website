@@ -62,6 +62,7 @@
   width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
   margin-bottom: 0;
   position: relative;
 }
@@ -375,6 +376,7 @@
 .carouselClose {
   font-size: 32px;
   color: white;
+  text-shadow: 2px 1px 2px #888;
 }
 
 .carouselClose {
@@ -382,6 +384,7 @@
   top: 10px;
   right: 20px;
   cursor: pointer;
+  z-index: 10;
 }
 
 
@@ -466,8 +469,6 @@
 
 .planNotice {
   color: var(--color-greyish);
-  text-align: center;
-  margin-top: 30px;
   font-size: var(--text-small);
 }
 

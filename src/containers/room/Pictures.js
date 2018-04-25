@@ -53,7 +53,9 @@ class Pictures extends PureComponent {
           <div className={style.carouselOverlay} onClick={this.handleClick}>
             <div className={style.carouselClose}>🗙</div>
             <Carousel lazy slide arrows>
-              {pictures.map(({ url }) => <div className={style.slideshowImg} style={`background-image: url(${url})`} />)}
+              {pictures.map(({ url }) => (
+                <div class={style.slideshowImg} style={`background-image: url(${url})`} />
+              ))}
             </Carousel>
           </div>
         </Portal>
@@ -81,7 +83,9 @@ const definition = { 'fr-FR': {
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
   const room = rooms[roomId];
   const apartment = apartments[apartmentId];
-  const pictures = [].concat(Utils.getPictures(room), Utils.getPictures(apartment));
+  const pictures = []
+    .concat(Utils.getPictures(room), Utils.getPictures(apartment))
+    .filter(({ alt }) => alt !== 'floorplan');
 
   return {
     lang,

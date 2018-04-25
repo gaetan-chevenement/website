@@ -11,9 +11,10 @@ function Availability({ lang, className, availableAt, arrivalDate }) {
     _className = `${className} unavailable`;
   }
   else if ( +availableAt > +Date.now() ) {
+    let date = availableAt.toLocaleDateString().replace(/\/\d{4}/, '');
     text = (
-      <Text id="availableFrom" fields={{ date: availableAt.toLocaleDateString() }}>
-        {`Available from ${availableAt.toLocaleDateString()}`}
+      <Text id="availableFrom" fields={{ date }}>
+        {`Available from ${date}`}
       </Text>
     );
     if ( arrivalDate != null && (+availableAt > +arrivalDate) ) {
@@ -35,7 +36,7 @@ function Availability({ lang, className, availableAt, arrivalDate }) {
 const definition = { 'fr-FR': {
   availableFrom: 'Dispo. le {{date}}',
   unavailable: 'Plus disponible',
-  availableNow: 'Disponible immédiatement',
+  availableNow: 'Dispo. immédiatement',
 } };
 
 // /!\ This component cannot used the state because it's used inside leaflet

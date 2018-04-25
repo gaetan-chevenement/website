@@ -1,6 +1,10 @@
 import map                        from 'lodash/map';
 import { Link }                   from 'preact-router';
-import { IntlProvider, Text }     from 'preact-i18n';
+import {
+  IntlProvider,
+  Text,
+  Localizer,
+}                                 from 'preact-i18n';
 import Utils                      from '~/utils';
 import Carousel                   from '~/components/Carousel';
 import Availability               from '~/components/Availability';
@@ -11,12 +15,6 @@ const pictos = {
   double: require('../../../assets/search/Picto description 4a.png'),
   simple: require('../../../assets/search/Picto description 4b.png'),
   sofa: require('../../../assets/search/Picto description 4c.png'),
-};
-const bedNames = {
-  double: 'Double couchage',
-  simple: 'Lit simple',
-  sofa: 'Canapé lit',
-  multiple: '{n} couchages',
 };
 
 function Room(args) {
@@ -59,21 +57,35 @@ function Room(args) {
           { /* NEW should not be translated */ }
           {!Utils.isNew(createdAt) ? <div className={style.isNew}>NEW</div> : ''}
           <div className={style.price}>
-            {_currentPrice / 100}€/{ isThumbnail ? 'm.' : <Text id="month">month</Text> }
+            {_currentPrice / 100}€ /m.
           </div>
           <div className={style.roomAttributesIcons}>
-            <div className={`${style.roomAttributesIcon} ${style.chambersCount}`}>
-              {roomCount} {!isThumbnail ? <Text id="bedroom">Bedrooms</Text> : ''}
-            </div>
-            <div className={`${style.roomAttributesIcon} ${style.roomsCount}`}>
-              {roomCount + 2} {!isThumbnail ? <Text id="room">Rooms</Text> : ''}
-            </div>
-            <div className={`${style.roomAttributesIcon} ${style.roomSize}`}>
-              {floorArea} m²
-            </div>
-            <div className={`${style.roomAttributesIcon} ${style.roomBedText}`}>
-              {bedIcons} {!isThumbnail ? bedText : ''}
-            </div>
+            <Localizer>
+              <abbr className={`${style.roomAttributesIcon} ${style.chambersCount}`}
+                title={<Text id="bedrooms">Bedrooms</Text>}
+              >
+                {roomCount}
+              </abbr>
+            </Localizer>
+            <Localizer>
+              <abbr className={`${style.roomAttributesIcon} ${style.roomsCount}`}
+                title={<Text id="rooms">Rooms</Text>}
+              >
+                {roomCount + 2}
+              </abbr>
+            </Localizer>
+            <Localizer>
+              <span className={`${style.roomAttributesIcon} ${style.roomSize}`}>
+                {floorArea} m²
+              </span>
+            </Localizer>
+            <Localizer>
+              <abbr className={`${style.roomAttributesIcon} ${style.roomBedText}`}
+                title={bedText}
+              >
+                {bedIcons}
+              </abbr>
+            </Localizer>
           </div>
         </div>
       </Link>
@@ -90,23 +102,36 @@ function getBedsDetails(beds) {
     bedIcons = bedsList.map((b) => (
       <img className={style.roomBedIcon} src={pictos[b]} />
     ));
-    bedText = (
-      <span>
-        {bedsList.length > 1 ?
-          bedNames.multiple.replace('{n}', bedsList.length):
-          bedNames[bedsList[0]]}
-      </span>
+    bedText = bedsList.length > 1 ? (
+      <Text id="beds.multiple" fields={{ count: bedsList.length }} />
+    ) : (
+      <Text id={`beds.${bedsList[0]}`} />
     );
   }
 
   return { bedText, bedIcons };
 }
 
-const definition = { 'fr-FR': {
-  month: 'Mois',
-  bedroom: 'Chambres',
-  room: 'Pièces',
-} };
+const definition = {
+  'fr-FR': {
+    bedrooms: 'Chambres',
+    rooms: 'Pièces',
+    beds: {
+      double: 'Lit double',
+      simple: 'Lit simple',
+      sofa: 'Canapé lit',
+      multiple: '{{count}} couchages',
+    },
+  },
+  'en-US': {
+    beds: {
+      double: 'Double bedding',
+      simple: 'Single bed',
+      sofa: 'Sofa',
+      multiple: '{{count}} beddings',
+    },
+  },
+};
 
 // /!\ This component cannot used the state because it's used inside leaflet
 // and apparently these things are incompatible.
