@@ -1,5 +1,4 @@
 import random                 from 'lodash/random';
-import Promise from 'bluebird';
 import { PureComponent }      from 'react';
 import autobind               from 'autobind-decorator';
 import { bindActionCreators } from 'redux';
@@ -7,10 +6,10 @@ import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import SameSearchCount        from '~/components/search/SameSearchCount';
 import SearchForm             from '~/components/SearchForm';
+import CreateAlertButton      from '~/components/CreateAlertButton';
 import ResultsList            from '~/containers/search/ResultsList';
 import ResultsMap             from '~/containers/search/ResultsMap';
 import Paging                 from '~/containers/search/Paging';
-// import { CreateAlertButton }  from '~/components/CreateAlertButton';
 import * as actions           from '~/actions';
 import {
   mapPane,
@@ -99,7 +98,7 @@ export class Search extends PureComponent {
           <div className={leftPane}>
             <div className={searchEngineAndAlerts}>
               <SearchForm mode="noSubmit" {...{ city, date }} />
-              { /* TODO: implement alerts: <CreateAlertButton /> */ }
+              <CreateAlertButton />
             </div>
             { isLoading ? (
               <div class="text-center">
