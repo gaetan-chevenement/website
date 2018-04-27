@@ -54,7 +54,9 @@ const BookingInfo = ({ lang, roomId, room }) => {
           </Text>
         </div>
 
-        <h3 className={style.subtitle}><span>Paiements fixes</span></h3>
+        <h3 className={style.subtitle}>
+          <span><Text id="oneTime">One time payments</Text></span>
+        </h3>
         <div className={priceLineClasses}>
           <div className="one-half">
             <Text id="deposit">Deposit</Text>
@@ -159,6 +161,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
 };
 
 const definition = { 'fr-FR': {
+  oneTime: 'Paiements ponctuels',
   mensuel: 'Paiements mensuels',
   rent: 'Loyer',
   month: 'mois',
