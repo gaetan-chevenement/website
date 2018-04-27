@@ -49,11 +49,11 @@ const definition = {
       title: 'Furnished',
       subtitle: 'From A to Z',
     }, {
-      title: 'Fully equiped',
-      subtitle: 'From floor to ceiling',
+      title: 'Fully equipped',
+      subtitle: 'From top to bottom',
     }, {
       title: 'All inclusive',
-      subtitle: 'Insurance, water, gaz…',
+      subtitle: 'Insurance, water, gas…',
     }, {
       title: 'Wifi',
       subtitle: 'High bandwidth',

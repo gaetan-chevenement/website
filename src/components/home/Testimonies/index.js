@@ -32,8 +32,8 @@ const definition = {
   'en-US': [{
     title: 'Perfect customer service',
     comment: `
-      The team was very helpful and enjoyable throughout my stay.
-      My installation was quick and easy.
+      The team was very helpful and friendly throughout my stay.
+      I settled in quickly and easily.
       The maintenance of the house was impeccable. Thanks :)
     `,
     author: 'Anna, 22 years old, Australian',

@@ -64,7 +64,7 @@ const steps = [{
   image: 'step-two.png',
   'en-US': {
     title: 'Choose',
-    content: 'Your Housing Pack from the list below. All our services are included inside and the payment allows us to complete your booking.',
+    content: 'Your Housing Pack from the list below. All our services are included in the pack and the payment allows us to complete your booking.',
   },
   'fr-FR': {
     title: 'Choisissez',

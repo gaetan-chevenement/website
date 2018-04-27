@@ -131,7 +131,7 @@ const packs = {
       subtitle: 'An easier move in for more comfort and serenity',
       listHeader: 'All Basic services plus:',
       listItems: [
-        'Sheets, pillow & duvet cases',
+        'Sheets, pillow & duvet covers',
         'Food pack',
         'Keys assistance',
         'Cancellation insurance - 1 month',

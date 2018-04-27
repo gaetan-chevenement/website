@@ -118,7 +118,7 @@ const services = [{
   image: 'support.png',
   'en-US': {
     title: 'Support',
-    content: 'Our team is at your service all stay round!',
+    content: 'Our team is at your service throughout your stay!',
   },
   'fr-FR': {
     title: 'Assistance',

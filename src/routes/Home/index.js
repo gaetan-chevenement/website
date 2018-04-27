@@ -19,8 +19,8 @@ function Home({ lang }) {
             </h1>
             <h3>
               <Text id="search.subtitle">
-                Find today your furnished, fully equipped, all-inclusive flatshare,
-                in the heart of the city-centre.
+                Find your furnished, fully equipped, all-inclusive flatshare,
+                in the heart of the city-centre today.
               </Text>
             </h3>
             <SearchForm />
