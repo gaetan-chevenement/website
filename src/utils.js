@@ -194,6 +194,20 @@ const pureUtils = {
     );
     return diffDays > 10;
   },
+  getEnquireHandler() {
+    return () => window.$crisp.push(['do', 'chat:open']);
+  },
+  getVisitHandler(lang) {
+    const definition = {
+      'fr-FR': 'Je souhaite visiter cette chambre',
+      'en-US': 'I wish to visit this room',
+    };
+
+    return () => {
+      window.$crisp.push(['do', 'chat:open']);
+      window.$crisp.push(['do', 'message:send', ['text', definition[lang]]]);
+    };
+  },
 };
 
 const currYear = pureUtils.getCurrYear();

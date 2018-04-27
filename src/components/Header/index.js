@@ -70,9 +70,9 @@ function AppNavigation({ lang, path, type, className }) {
       <NavLink href={`/${lang}/booking-process`} theme={style}>
         <Text id="booking">Booking</Text>
       </NavLink>
-      <NavLink href="http://chez-nestor.com/contact-en" target="_blank" theme={style}>
+      <a onClick={handleClickContact} theme={style}>
         Contact
-      </NavLink>
+      </a>
       {['en-US', 'fr-FR']
         .filter((val) => lang !== val)
         .map((val) => (
@@ -83,6 +83,10 @@ function AppNavigation({ lang, path, type, className }) {
       }
     </Navigation>
   );
+}
+
+function handleClickContact() {
+  window.$crisp.push(['do', 'chat:open']);
 }
 
 const definition = { 'fr-FR': {

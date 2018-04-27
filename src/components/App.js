@@ -8,6 +8,8 @@ import autobind         from 'autobind-decorator';
 import configureStore   from '~/stores';
 import Services         from 'async!../routes/Services';
 import Process          from 'async!../routes/Process';
+import About            from 'async!../routes/About';
+import Contact          from 'async!../routes/Contact';
 import Room             from '~/routes/Room';
 import Home             from '~/routes/Home';
 import Search           from '~/routes/Search';
@@ -92,9 +94,11 @@ export default class App extends Component {
             <BookingConfirmed path="/:lang/welcome/:rentingId" />
             <Invoice path="/:lang/invoice/:orderId" />
             <Payment path="/:lang/payment/:orderId" />
+            <Room path="/:lang/room/:roomId" />
             <Services path="/:lang/services" />
             <Process path="/:lang/booking-process" />
-            <Room path="/:lang/room/:roomId" />
+            <About path="/:lang/about" />
+            <Contact path="/:lang/contact" />
           </Router>
           <Match path="/">
             { // No footer on invoice, home

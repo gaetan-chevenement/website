@@ -25,16 +25,19 @@ body {
   overflow-x: hidden;
 }
 
-header + * {
+header + div {
   margin-top: var(--header-height);
+  min-height: 100vh;
 }
 header + .content {
   margin-top: calc(var(--header-height) + 20px);
 }
+header + footer {
+  margin-top: 100vh !important;
+}
 
 .content {
   padding: 0 10px;
-  min-height: 100%;
   width: 100%;
   max-width: 1024px;
   margin-left: auto;

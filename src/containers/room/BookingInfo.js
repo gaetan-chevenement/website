@@ -3,6 +3,7 @@ import { connect }            from 'react-redux';
 import { IntlProvider, Text } from 'preact-i18n';
 // import { Link }               from 'preact-router/match';
 import { Button }             from 'react-toolbox/lib/button';
+import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 import style                  from './style.css';
 
@@ -133,17 +134,22 @@ const BookingInfo = ({ lang, roomId, room }) => {
 
         <div className={style.buttonsDivide}>
           <div>
-            <Button icon="local_see"
+            <Button onClick={Utils.getVisitHandler(lang)}
+              icon="local_see"
               raised
               disabled={availableAt === null}
               style="width: 100%"
             >
-              <span><Text id="visit">Visit</Text></span>
+              <Text id="visit">Visit</Text>
             </Button>
           </div>
           <div>
-            <Button raised icon="question_answer" style="width: 100%">
-              <span><Text id="enquire">Enquire</Text></span>
+            <Button onClick={Utils.getEnquireHandler(lang)}
+              raised
+              icon="question_answer"
+              style="width: 100%"
+            >
+              <Text id="enquire">Enquire</Text>
             </Button>
           </div>
         </div>

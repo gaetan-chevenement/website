@@ -39,8 +39,10 @@
 
 }
 
-.horizontal > [data-react-toolbox="link"] {
+.horizontal > [data-react-toolbox="link"],
+.horizontal > a {
   color: #DDD;
   opacity: 1;
   margin: 0 10px;
+  cursor: pointer;
 }

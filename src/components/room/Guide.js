@@ -38,7 +38,7 @@ function Guide({ lang }) {
               </ul>
             </div>
             <div>
-              <Button href={HOUSING_GUIDE_URL}
+              <Button href={HOUSING_GUIDE_URL} target="_blank"
                 raised
                 icon="file_download"
                 className={style.guideBtn}

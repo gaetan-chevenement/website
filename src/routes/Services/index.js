@@ -1,5 +1,4 @@
 import { IntlProvider, Text } from 'preact-i18n';
-import Footer                 from '~/components/Footer';
 import Card                   from '~/components/Card';
 
 export default function Services({ lang }) {
@@ -26,7 +25,6 @@ export default function Services({ lang }) {
           ))}
         </div>
       </div>
-      <Footer />
     </IntlProvider>
   );
 }

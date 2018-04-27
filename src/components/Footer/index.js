@@ -20,13 +20,18 @@ function Footer({ lang }) {
             <nav>
               <ul>
                 <li>
-                  <a href={`${lang}/services`}>
+                  <a href={`/${lang}/services`}>
                     <Text id="services">Included Services</Text>
                   </a>
                 </li>
                 <li>
-                  <a href={`${lang}/booking`}>
+                  <a href={`/${lang}/booking`}>
                     <Text id="booking">Booking</Text>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://drive.google.com/file/d/0B8dLiyBmm3wJa1IwbWsxbk85LWs/view">
+                    <Text id="terms">Terms and Conditions [fr]</Text>
                   </a>
                 </li>
               </ul>
@@ -53,8 +58,10 @@ function Footer({ lang }) {
                     </svg>
                   </a>
                   &nbsp;&nbsp;&nbsp;
-                  <a href={`mailto:${SALES_EMAIL}`}>
-                    {SALES_EMAIL}
+                </li>
+                <li>
+                  <a href={`/${lang}/contact`}>
+                    Contact
                   </a>
                 </li>
               </ul>
@@ -63,7 +70,7 @@ function Footer({ lang }) {
             <nav>
               <ul>
                 <li>
-                  <a href="http://chez-nestor.com/a-propos">
+                  <a href={`/${lang}/about`}>
                     <Text id="about">About Chez Nestor</Text>
                   </a>
                 </li>
@@ -75,11 +82,6 @@ function Footer({ lang }) {
                 <li>
                   <a href="http://career.chez-nestor.com/">
                     <Text id="career">Jobs</Text>
-                  </a>
-                </li>
-                <li>
-                  <a href="https://drive.google.com/file/d/0B8dLiyBmm3wJa1IwbWsxbk85LWs/view">
-                    <Text id="terms">Terms and Conditions [fr]</Text>
                   </a>
                 </li>
               </ul>
