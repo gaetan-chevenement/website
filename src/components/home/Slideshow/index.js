@@ -8,7 +8,7 @@ import {
 export default function Slideshow({ children }) {
   return (
     <div>
-      <Carousel lazy autoplay autoplayInterval={7000} fade className={carousel}>
+      <Carousel lazy autoplay autoplayInterval={4000} fade className={carousel}>
         {Array.from(Array(7)).map((val, i) => (
           <div
             class={image}
