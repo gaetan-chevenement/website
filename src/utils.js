@@ -8,6 +8,7 @@ import reduce       from 'lodash/reduce';
 import filter       from 'lodash/filter';
 import capitalize   from 'lodash/capitalize';
 import values       from 'lodash/values';
+import Raven        from 'raven-js';
 import _const       from '~/const';
 import holidays     from './holidays.json';
 
@@ -276,7 +277,7 @@ const Utils = {
             .then((message) => {
               const error = new Error(message);
 
-              window.Raven.captureException(error);
+              Raven.captureException(error);
               throw error;
             });
           /* eslint-enable promise/no-nesting */
@@ -285,7 +286,7 @@ const Utils = {
         return response.json();
       })
       .catch((error) => {
-        window.Raven.captureException(error);
+        Raven.captureException(error);
         throw error;
       });
   },

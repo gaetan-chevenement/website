@@ -63,7 +63,7 @@ class Summary extends PureComponent {
                 <Text id="housingPack.subtitle.0">You have selected a </Text>
                 <b><Text id={`housingPack.${packLevel}`}>{packLevel}</Text> </b>
                 <Text id="housingPack.subtitle.1">housing-pack </Text>
-                <Text id="housingPack.subtitle.2">(to pay only once when your reserve).</Text>
+                <Text id="housingPack.subtitle.2">(to pay only once when you reserve).</Text>
               </p>
               <p>{this.renderDetails([
                 <Text id="amount">Amount:</Text>,
