@@ -8,7 +8,7 @@ import autobind                   from 'autobind-decorator';
 class Carousel extends PureComponent {
   @autobind
   goto(index) {
-    const { length } = this.props.children;
+    const { length } = this.props.children || [];
 
     if ( ( index + length ) % length === this.state.currIndex ) {
       return;
