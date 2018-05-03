@@ -130,11 +130,11 @@
 }
 
 .mainColumns > div:first-child {
-  flex: 0 0 63%;
+  flex: 0 0 66%;
 }
 
 .mainColumns > div:last-child {
-  flex: 0 0 35%;
+  flex: 0 0 32%;
 }
 
 @media screen and (max-width: 1024px) {

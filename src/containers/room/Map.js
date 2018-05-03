@@ -11,12 +11,10 @@ import Utils                  from '~/utils';
 import 'leaflet/dist/leaflet.css';
 
 const { MAPBOX_TOKEN } = _const;
-
 const HIGHLIGHT_ICON = new L.Icon({
   iconUrl: require('~/assets/search/map-marker-highlight.png'),
   iconSize: [45, 66],
 });
-
 const tileLayerUrl =
   `https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${MAPBOX_TOKEN}`;
 
@@ -55,7 +53,6 @@ class SingleMap extends PureComponent {
         }}
         center={latLng}
         scrollWheelZoom={false}
-        attributionControl={false}
         maxZoom={17}
         className="single-map"
         zoom={12}

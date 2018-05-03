@@ -79,7 +79,6 @@ class ResultsMap extends Component {
         }}
         bounds={bounds}
         scrollWheelZoom={false}
-        attributionControl={false}
         maxZoom={17}
         ref={map => (this._map = map)}
       >
