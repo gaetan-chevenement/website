@@ -92,6 +92,7 @@ class SearchForm extends PureComponent {
               floating={false}
               value={this.state.date}
               onChange={this.handleDateChange}
+              autoOk
             />
           </div>
           {this.props.mode === 'noSubmit' ?
