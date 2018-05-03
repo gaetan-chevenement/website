@@ -18,29 +18,23 @@ export default Object.assign({}, common, {
 
   SEARCHABLE_CITIES: [{
     name: 'Lyon',
-    roomsCount: 300,
+    roomsCount: 319,
     image: '/assets/home/cities/lyon-imageoptim.jpg',
   }, {
-  //   name: 'Lyon 3e 6e 7e 8e',
-  // }, {
-  //   name: 'Lyon 1er 2e 4e',
-  // }, {
-  //   name: 'Lyon 5e 9e',
-  // }, {
     name: 'Montpellier',
-    roomsCount: 120,
+    roomsCount: 137,
     image: '/assets/home/cities/montpellier-imageoptim.jpg',
   }, {
     name: 'Paris',
-    roomsCount: 70,
+    roomsCount: 92,
     image: '/assets/home/cities/paris-imageoptim.jpg',
   }, {
     name: 'Lille',
-    roomsCount: 20,
+    roomsCount: 55,
     image: '/assets/home/cities/lille-imageoptim.jpg',
   }, {
     name: 'Toulouse',
-    roomsCount: 20,
+    roomsCount: 52,
     image: '/assets/home/cities/toulouse-imageoptim.jpg',
   }],
 });
