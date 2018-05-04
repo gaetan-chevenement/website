@@ -55,8 +55,6 @@ export default { 'fr-FR': [
                                                                  '129€', 1, 1],
   ['Remboursement de caution', 'Délai maximum (sauf dégats dans l\'appartment)',
                                            '60 jours', '40 jours', '20 jours'],
-  ['Caution non encaissée', '(Chèque français uniquement)',
-                                           '29€/mois', '29€/mois', '29€/mois'],
   ['Caution (remboursée en fin de séjour)'],
   Utils.getDepositLine('paris'),
   Utils.getDepositLine('lyon'),

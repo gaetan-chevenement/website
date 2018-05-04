@@ -54,8 +54,6 @@ export default { 'en-US': [
                                                                  '129€', 1, 1],
   ['Deposit refund', 'Maximum delay (except in case of damages)',
                                               '60 days', '40 days', '20 days'],
-  ['Non-cashed deposit option', '(only for French cheque)',
-                                        '29€/month', '29€/month', '29€/month'],
   ['Deposit (refunded at the end of your stay)'],
   Utils.getDepositLine('paris'),
   Utils.getDepositLine('lyon'),
