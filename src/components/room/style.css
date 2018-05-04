@@ -167,6 +167,7 @@
 
 .service h5 {
   padding-top: 2px;
+  font-family: 'Open Sans Condensed', sans-serif;
   font-size: var(--text-big);
   font-weight: bold;
 }

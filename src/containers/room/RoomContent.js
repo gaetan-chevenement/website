@@ -33,26 +33,17 @@ function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount })
               <div className={style.links}>
                 <ul>
                   <li>
-                    <a href="#pictures"><Text id="pics">Photos</Text></a>
-                  </li>
-                  <li>
-                    <a href="#description"><Text id="desc">Description</Text></a>
-                  </li>
-                  <li>
-                    <a href="#features"><Text id="features">Equipment</Text></a>
+                    <a href="#overview"><Text id="overview">Overview</Text></a>
                   </li>
                   <li>
                     <a href="#housemates"><Text id="housemates">Housemates</Text></a>
                   </li>
                   <li>
-                    <a href="#map"><Text id="map">Map</Text></a>
-                  </li>
-                  <li>
-                    <a href="#neighborhood"><Text id="neighborhood">Neighbourhood</Text></a>
+                    <a href="#location"><Text id="location">Location</Text></a>
                   </li>
                 </ul>
               </div>
-              <a id="pictures" className={style.roomAnchor} />
+              <a id="overview" className={style.roomAnchor} />
               <Pictures roomId={roomId} apartmentId={apartmentId} />
               <a id="description" className={style.roomAnchor} />
               <Description roomId={roomId} apartmentId={apartmentId} />
@@ -60,7 +51,7 @@ function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount })
               <Features roomId={roomId} apartmentId={apartmentId} />
               <a id="housemates" className={style.roomAnchor} />
               <Housemates apartmentId={apartmentId} />
-              <a id="neighborhood" className={style.roomAnchor} />
+              <a id="location" className={style.roomAnchor} />
               <ApartmentDescription />
             </div>
             <div>
@@ -89,14 +80,10 @@ function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount })
 }
 
 const definition = { 'fr-FR': {
-  pics: 'Photos',
-  desc: 'Description',
-  features: 'Équipements',
+  overview: 'Aperçu',
   housemates: 'Colocataires',
-  map: 'Carte',
-  neighborhood: 'Quartier',
+  location: 'Localisation',
   viewsCount: '{{viewsCount}} personnes ont consulté cette annonce cette semaine.',
-
 } };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {

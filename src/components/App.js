@@ -53,13 +53,13 @@ export default class App extends Component {
     this.setState({ lang });
 
     // Use setTimeout to make sure this runs after React Router's own listener
-    setTimeout(() => {
+    typeof window === 'object' && setTimeout(() => {
       // Keep default behavior of restoring scroll position when user:
       // - clicked back button
       // - clicked on a link that programmatically calls `history.goBack()`
       // - manually changed the URL in the address bar (here we might want
       // to scroll to top, but we can't differentiate it from the others)
-      if (location.action === 'POP') {
+      if ( location.action === 'POP' ) {
         return;
       }
       // In all other cases, scroll to top
@@ -70,9 +70,11 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      lang: /^fr-/.test(window.navigator.language) ? 'fr-FR' : 'en-US',
-    };
+    // We used to set the initial lang based on navigator.language, but we no
+    // longer use that as root url shoud never be reached by visitors:
+    // they are redirected by Cloudflare based on their user-agent
+    // Only developers can reach root, and they'll see english version.
+    this.state = { lang: 'en-US' };
   }
 
   render() {

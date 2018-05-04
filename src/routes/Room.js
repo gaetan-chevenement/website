@@ -18,7 +18,8 @@ class Room extends PureComponent {
     } } = await actions.getRoom(roomId);
     const districtId = apartmentData.attributes._DistrictId;
 
-    if ( roomData.id !== roomId ) {
+    // This trick was used to allow linking from WordPress to the new website
+    if ( roomData.id !== roomId && typeof window !== 'undefined' ) {
       return route(window.location.pathname.replace(/[\w-]+$/, roomData.id));
     }
 

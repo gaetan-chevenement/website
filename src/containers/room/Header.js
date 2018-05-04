@@ -13,6 +13,7 @@ import style                  from '~/containers/room/style.css';
 class Header extends Component {
   @autobind
   handleScroll() {
+    // This function will never get called server-side
     const $el = document.getElementById('bookBtn');
     if ( $el !== null ) {
       const maxPos = $el.offsetTop + window.innerHeight;
@@ -37,16 +38,22 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
+    typeof window !== 'undefined' &&
+      window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
+    typeof window !== 'undefined' &&
+      window.removeEventListener('scroll', this.handleScroll);
   }
 
   render({ lang, pictures, roomName, roomId }) {
-    const localStyle = { backgroundImage: `url(${pictures[0].url})` };
-    const btnState =  this.state.showBookBtn ? style.fixedHeaderShown : style.fixedHeaderHidden;
+    const localStyle = pictures.length ?
+      { backgroundImage: `url(${pictures[0].url})` } :
+      {};
+    const btnState =  this.state.showBookBtn ?
+      style.fixedHeaderShown :
+      style.fixedHeaderHidden;
 
     return (
       <IntlProvider definition={definition[lang]}>
