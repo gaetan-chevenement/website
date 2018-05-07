@@ -111,7 +111,8 @@ export const listRooms =
 
       const params = {
         zone: city.replace(/ (\d)er?/g, '$1,').replace(/,$/, '').toLowerCase(),
-        date: date != null ? D.subDays(date, 14).getTime() : date,
+        // If an arrival date is specified, return rooms available up to 30 days before
+        date: date != null ? D.subDays(date, 30).getTime() : date,
         'fields[Room]': 'name,Apartment,availableAt,_currentPrice,floorArea,galery',
         'fields[Apartment]': 'roomCount',
         'page[number]': page || 1,
