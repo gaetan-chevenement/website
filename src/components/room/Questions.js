@@ -23,7 +23,7 @@ function Questions({ lang }) {
                 <Text id="question">Ask a question</Text>
               </Button>
               <Button raised primary icon="local_see"
-                onClick={Utils.getVisitHandler(lang)}
+                onClick={Utils.getEnquireHandler(lang)}
               >
                 <Text id="visit">Ask for a visit</Text>
               </Button>

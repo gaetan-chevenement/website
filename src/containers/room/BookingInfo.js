@@ -136,7 +136,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
 
         <div className={style.buttonsDivide}>
           <div>
-            <Button onClick={Utils.getVisitHandler(lang)}
+            <Button onClick={Utils.getEnquireHandler(lang)}
               icon="local_see"
               raised
               disabled={availableAt === null}
