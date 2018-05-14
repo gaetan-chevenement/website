@@ -1,7 +1,7 @@
 import { Component }          from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { IntlProvider }       from 'preact-i18n';
+import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import Utils                  from '~/utils';
 import * as actions           from '~/actions';
@@ -73,13 +73,13 @@ class Header extends Component {
             <Button href={`/${lang}/booking/${roomId}`}
               raised primary id="bookBtn" style="width: 100%"
             >
-              Réserver ce logement
+              <Text id="book">Réserver ce logement</Text>
             </Button>
           </div>
           <section className={style.coverPicture} style={localStyle}>
             <div className={style.coverPictureRoomName}>{ roomName }</div>
             <Button className={style.allPicsBtn} onClick={this.toggleSlideshow}>
-              Voir toutes les photos
+              <Text id="galery">Voir toutes les photos</Text>
             </Button>
           </section>
         </div>
@@ -90,6 +90,8 @@ class Header extends Component {
 
 const definition = { 'fr-FR': {
   title: 'Photos',
+  book: 'Book this accomodation',
+  galery: 'See all pictures',
 } };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
