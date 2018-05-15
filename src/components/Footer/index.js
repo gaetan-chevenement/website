@@ -75,12 +75,12 @@ function Footer({ lang }) {
                   </a>
                 </li>
                 <li>
-                  <a href="http://career.chez-nestor.com/#section-32032">
-                    <Text id="team">The team</Text>
+                  <a href="https://blog.chez-nestor.com/">
+                    <Text id="team">Blog</Text>
                   </a>
                 </li>
                 <li>
-                  <a href="http://career.chez-nestor.com/">
+                  <a href="https://career.chez-nestor.com/">
                     <Text id="career">Jobs</Text>
                   </a>
                 </li>
