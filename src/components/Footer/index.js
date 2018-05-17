@@ -76,7 +76,7 @@ function Footer({ lang }) {
                 </li>
                 <li>
                   <a href="https://blog.chez-nestor.com/">
-                    <Text id="team">Blog</Text>
+                    <Text id="blog">Blog</Text>
                   </a>
                 </li>
                 <li>
@@ -100,7 +100,7 @@ const definition = { 'fr-FR': {
   services: 'Services Inclus',
   booking: 'Réserver',
   about: 'À propos de Chez Nestor',
-  team: 'L\'équipe',
+  // blog: 'Blog', // no translation needed
   career: 'Travailler Chez Nestor',
   terms: 'CGV et mentions légales',
 } };
