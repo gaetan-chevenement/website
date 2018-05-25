@@ -75,12 +75,12 @@ function Footer({ lang }) {
                   </a>
                 </li>
                 <li>
-                  <a href="https://blog.chez-nestor.com/">
+                  <a href="https://blog.chez-nestor.com/" target="_blank" rel="noopener noreferrer">
                     <Text id="blog">Blog</Text>
                   </a>
                 </li>
                 <li>
-                  <a href="https://career.chez-nestor.com/">
+                  <a href="https://career.chez-nestor.com/" target="_blank" rel="noopener noreferrer">
                     <Text id="career">Jobs</Text>
                   </a>
                 </li>
