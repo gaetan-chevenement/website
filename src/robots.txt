@@ -1,0 +1,7 @@
+User-agent: *
+disallow: /fr-FR/summary/
+disallow: /fr-FR/payment/
+disallow: /fr-FR/booking/
+disallow: /en-US/summary/
+disallow: /en-US/payment/
+disallow: /en-US/booking/
