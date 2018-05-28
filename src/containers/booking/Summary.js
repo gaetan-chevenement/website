@@ -326,7 +326,7 @@ function mapStateToProps(args) {
     lang,
     room,
     apartment,
-    packLevel: booking.pack || packOrder && Utils.getPackLevel(packOrder),
+    packLevel: packOrder && Utils.getPackLevel(packOrder) || booking.pack,
     packPrice: packOrder.amount,
     client,
     bookingDate,
