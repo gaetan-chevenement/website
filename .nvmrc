@@ -1,0 +1,2 @@
+8
+# Pin node to v8, as build seems to be broken with Node v10
