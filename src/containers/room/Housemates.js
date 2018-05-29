@@ -25,13 +25,13 @@ function Housemates({ lang, housemates, roomId }) {
 }
 
 function Housemate({ lang, housemate, roomId, index }) {
-  const pictoGender = housemate.gender === 'male' ? 'homme' : 'femme';
-  const pictoClass = `picto-colocataire_${pictoGender}_${(index % 5) + 1}_256px`;
+  const pictoClass =
+    `picto-colocataire_${housemate.gender || 'booked'}_${(index % 5) + 1}_256px`;
 
   return (
     <div className={style.housemate}>
       <div className={style.housemateTitle}>
-        <Text id="room">Room</Text>&nbsp;{index + 1}
+        <Text id="room">Room</Text>&nbsp;{housemate.roomNumber}
       </div>
       {('availableAt' in housemate) ? (
         <div>
@@ -47,7 +47,9 @@ function Housemate({ lang, housemate, roomId, index }) {
       ) : (
         <div>
           <div className={`${style.housemateIcon} ${pictoClass}`} />
-          <div>{housemate.description || housemate.firstName}</div>
+          <div>
+            { housemate.description || (<Text id="booked">Booked</Text>) }
+          </div>
         </div>
       )}
     </div>
@@ -57,6 +59,7 @@ function Housemate({ lang, housemate, roomId, index }) {
 const definition = { 'fr-FR': {
   title: 'Colocataires',
   available: 'Disponible',
+  booked: 'Réservé',
   view: 'voir',
   room: 'Chambre',
 } };

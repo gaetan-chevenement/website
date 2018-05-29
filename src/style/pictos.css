@@ -26,163 +26,183 @@
     background-image: url(../assets/rooms/colocataire_disponible_64px.png);
 }
 
-.picto-colocataire_femme_1 {
+.picto-colocataire_booked_1_256px {
+    background-image: url(../assets/rooms/colocataire_plane_256px.png);
+}
+
+.picto-colocataire_booked_2_256px {
+    background-image: url(../assets/rooms/colocataire_plane_256px.png);
+}
+
+.picto-colocataire_booked_3_256px {
+    background-image: url(../assets/rooms/colocataire_plane_256px.png);
+}
+
+.picto-colocataire_booked_4_256px {
+    background-image: url(../assets/rooms/colocataire_plane_256px.png);
+}
+
+.picto-colocataire_booked_5_256px {
+    background-image: url(../assets/rooms/colocataire_plane_256px.png);
+}
+
+.picto-colocataire_female_1 {
     background-image: url(../assets/rooms/colocataire_femme_1.png);
 }
 
-.picto-colocataire_femme_1_16px {
+.picto-colocataire_female_1_16px {
     background-image: url(../assets/rooms/colocataire_femme_1_16px.png);
 }
 
-.picto-colocataire_femme_1_256px {
+.picto-colocataire_female_1_256px {
     background-image: url(../assets/rooms/colocataire_femme_1_256px.png);
 }
 
-.picto-colocataire_femme_1_64px {
+.picto-colocataire_female_1_64px {
     background-image: url(../assets/rooms/colocataire_femme_1_64px.png);
 }
 
-.picto-colocataire_femme_2 {
+.picto-colocataire_female_2 {
     background-image: url(../assets/rooms/colocataire_femme_2.png);
 }
 
-.picto-colocataire_femme_2_16px {
+.picto-colocataire_female_2_16px {
     background-image: url(../assets/rooms/colocataire_femme_2_16px.png);
 }
 
-.picto-colocataire_femme_2_256px {
+.picto-colocataire_female_2_256px {
     background-image: url(../assets/rooms/colocataire_femme_2_256px.png);
 }
 
-.picto-colocataire_femme_2_64px {
+.picto-colocataire_female_2_64px {
     background-image: url(../assets/rooms/colocataire_femme_2_64px.png);
 }
 
-.picto-colocataire_femme_3 {
+.picto-colocataire_female_3 {
     background-image: url(../assets/rooms/colocataire_femme_3.png);
 }
 
-.picto-colocataire_femme_3_16px {
+.picto-colocataire_female_3_16px {
     background-image: url(../assets/rooms/colocataire_femme_3_16px.png);
 }
 
-.picto-colocataire_femme_3_256px {
+.picto-colocataire_female_3_256px {
     background-image: url(../assets/rooms/colocataire_femme_3_256px.png);
 }
 
-.picto-colocataire_femme_3_64px {
+.picto-colocataire_female_3_64px {
     background-image: url(../assets/rooms/colocataire_femme_3_64px.png);
 }
 
-.picto-colocataire_femme_4 {
+.picto-colocataire_female_4 {
     background-image: url(../assets/rooms/colocataire_femme_4.png);
 }
 
-.picto-colocataire_femme_4_16px {
+.picto-colocataire_female_4_16px {
     background-image: url(../assets/rooms/colocataire_femme_4_16px.png);
 }
 
-.picto-colocataire_femme_4_256px {
+.picto-colocataire_female_4_256px {
     background-image: url(../assets/rooms/colocataire_femme_4_256px.png);
 }
 
-.picto-colocataire_femme_4_64px {
+.picto-colocataire_female_4_64px {
     background-image: url(../assets/rooms/colocataire_femme_4_64px.png);
 }
 
-.picto-colocataire_femme_5 {
+.picto-colocataire_female_5 {
     background-image: url(../assets/rooms/colocataire_femme_5.png);
 }
 
-.picto-colocataire_femme_5_16px {
+.picto-colocataire_female_5_16px {
     background-image: url(../assets/rooms/colocataire_femme_5_16px.png);
 }
 
-.picto-colocataire_femme_5_256px {
+.picto-colocataire_female_5_256px {
     background-image: url(../assets/rooms/colocataire_femme_5_256px.png);
 }
 
-.picto-colocataire_femme_5_64px {
+.picto-colocataire_female_5_64px {
     background-image: url(../assets/rooms/colocataire_femme_5_64px.png);
 }
 
-.picto-colocataire_homme_1 {
+.picto-colocataire_male_1 {
     background-image: url(../assets/rooms/colocataire_homme_1.png);
 }
 
-.picto-colocataire_homme_1_16px {
+.picto-colocataire_male_1_16px {
     background-image: url(../assets/rooms/colocataire_homme_1_16px.png);
 }
 
-.picto-colocataire_homme_1_256px {
+.picto-colocataire_male_1_256px {
     background-image: url(../assets/rooms/colocataire_homme_1_256px.png);
 }
 
-.picto-colocataire_homme_1_64px {
+.picto-colocataire_male_1_64px {
     background-image: url(../assets/rooms/colocataire_homme_1_64px.png);
 }
 
-.picto-colocataire_homme_2 {
+.picto-colocataire_male_2 {
     background-image: url(../assets/rooms/colocataire_homme_2.png);
 }
 
-.picto-colocataire_homme_2_16px {
+.picto-colocataire_male_2_16px {
     background-image: url(../assets/rooms/colocataire_homme_2_16px.png);
 }
 
-.picto-colocataire_homme_2_256px {
+.picto-colocataire_male_2_256px {
     background-image: url(../assets/rooms/colocataire_homme_2_256px.png);
 }
 
-.picto-colocataire_homme_2_64px {
+.picto-colocataire_male_2_64px {
     background-image: url(../assets/rooms/colocataire_homme_2_64px.png);
 }
 
-.picto-colocataire_homme_3 {
+.picto-colocataire_male_3 {
     background-image: url(../assets/rooms/colocataire_homme_3.png);
 }
 
-.picto-colocataire_homme_3_16px {
+.picto-colocataire_male_3_16px {
     background-image: url(../assets/rooms/colocataire_homme_3_16px.png);
 }
 
-.picto-colocataire_homme_3_256px {
+.picto-colocataire_male_3_256px {
     background-image: url(../assets/rooms/colocataire_homme_3_256px.png);
 }
 
-.picto-colocataire_homme_3_64px {
+.picto-colocataire_male_3_64px {
     background-image: url(../assets/rooms/colocataire_homme_3_64px.png);
 }
 
-.picto-colocataire_homme_4 {
+.picto-colocataire_male_4 {
     background-image: url(../assets/rooms/colocataire_homme_4.png);
 }
 
-.picto-colocataire_homme_4_16px {
+.picto-colocataire_male_4_16px {
     background-image: url(../assets/rooms/colocataire_homme_4_16px.png);
 }
 
-.picto-colocataire_homme_4_256px {
+.picto-colocataire_male_4_256px {
     background-image: url(../assets/rooms/colocataire_homme_4_256px.png);
 }
 
-.picto-colocataire_homme_4_64px {
+.picto-colocataire_male_4_64px {
     background-image: url(../assets/rooms/colocataire_homme_4_64px.png);
 }
 
-.picto-colocataire_homme_5 {
+.picto-colocataire_male_5 {
     background-image: url(../assets/rooms/colocataire_homme_5.png);
 }
 
-.picto-colocataire_homme_5_16px {
+.picto-colocataire_male_5_16px {
     background-image: url(../assets/rooms/colocataire_homme_5_16px.png);
 }
 
-.picto-colocataire_homme_5_256px {
+.picto-colocataire_male_5_256px {
     background-image: url(../assets/rooms/colocataire_homme_5_256px.png);
 }
 
-.picto-colocataire_homme_5_64px {
+.picto-colocataire_male_5_64px {
     background-image: url(../assets/rooms/colocataire_homme_5_64px.png);
 }
 

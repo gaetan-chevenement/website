@@ -176,16 +176,15 @@ const pureUtils = {
   },
   parseHouseMates(housemates, lang) {
     return housemates.map((housemate) => {
-      const lines = housemate.split('\n');
+      const parsed = JSON.parse(housemate);
 
-      return lines.length > 2 ? {
-        firstName: lines[0],
-        gender: lines[1],
-        description: lang === 'en-US' ? lines[2] : lines[3],
-      } : {
-        roomId: lines[0],
-        availableAt: new Date(lines[1]),
-      };
+      if ( 'availableAt' in parsed ) {
+        parsed.availableAt = new Date(parsed.availableAt);
+      }
+
+      parsed.description = parsed[`description${lang === 'en-US' ? 'En' : 'Fr' }`];
+
+      return parsed;
     });
   },
   isNew(createdAt) {
