@@ -7,7 +7,7 @@
 	padding: 0;
 	background: var(--color-primary);
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-	z-index: 801; /* the credits of mapbox have a z-index of 800 and I don't want to risk changing it */
+	z-index: 1001; /* leaflet has z-index: 1000 and I won't risk changing it */
 }
 
 .header .wrapper {
