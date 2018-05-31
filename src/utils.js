@@ -174,7 +174,7 @@ const pureUtils = {
       return acc;
     }, {});
   },
-  parseHouseMates(housemates, lang) {
+  parseHouseMates(housemates = [], lang) {
     return housemates.map((housemate) => {
       const parsed = JSON.parse(housemate);
 
