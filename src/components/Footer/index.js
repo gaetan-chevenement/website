@@ -81,7 +81,7 @@ function Footer({ lang }) {
                 </li>
                 <li>
                   <a href="https://career.chez-nestor.com/" target="_blank" rel="noopener noreferrer">
-                    <Text id="career">Jobs</Text>
+                    <Text id="career">Work with us</Text>
                   </a>
                 </li>
               </ul>
