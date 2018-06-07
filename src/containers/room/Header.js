@@ -73,13 +73,13 @@ class Header extends Component {
             <Button href={`/${lang}/booking/${roomId}`}
               raised primary id="bookBtn" style="width: 100%"
             >
-              <Text id="book">Réserver ce logement</Text>
+              <Text id="book">Book this accomodation</Text>
             </Button>
           </div>
           <section className={style.coverPicture} style={localStyle}>
             <div className={style.coverPictureRoomName}>{ roomName }</div>
             <Button className={style.allPicsBtn} onClick={this.toggleSlideshow}>
-              <Text id="galery">Voir toutes les photos</Text>
+              <Text id="galery">See all pictures</Text>
             </Button>
           </section>
         </div>
@@ -89,9 +89,8 @@ class Header extends Component {
 }
 
 const definition = { 'fr-FR': {
-  title: 'Photos',
-  book: 'Book this accomodation',
-  galery: 'See all pictures',
+  book: 'Réserver ce logement',
+  galery: 'Voir toutes les photos',
 } };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
