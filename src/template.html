@@ -21,13 +21,6 @@
 				<% } %>
 			<% } %>
 		<% } %>
-	</head>
-	<body>
-		<%= htmlWebpackPlugin.options.ssr({
-			url: '/'
-		}) %>
-		<script defer src="<%= htmlWebpackPlugin.files.chunks['bundle'].entry %>"></script>
-		<script>window.fetch||document.write('<script src="<%= htmlWebpackPlugin.files.chunks["polyfills"].entry %>"><\/script>')</script>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:700|Material+Icons" media="none" onload="if(media!='all')media='all'" />
     <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="25c594c7-3fd4-4b61-b3d5-7416747ff5ac";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
     <!-- Google Tag Manager -->
@@ -53,5 +46,12 @@
     </script>
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=410162552777679&ev=PageView&noscript=1" /></noscript>
     <!-- End Facebook Pixel Code -->
+	</head>
+	<body>
+		<%= htmlWebpackPlugin.options.ssr({
+			url: '/'
+		}) %>
+		<script defer src="<%= htmlWebpackPlugin.files.chunks['bundle'].entry %>"></script>
+		<script>window.fetch||document.write('<script src="<%= htmlWebpackPlugin.files.chunks["polyfills"].entry %>"><\/script>')</script>
 	</body>
 </html>
