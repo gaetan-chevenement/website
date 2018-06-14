@@ -29,7 +29,6 @@
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-WCRQV25');</script>
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCRQV25" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager -->
     <!-- Facebook Pixel Code -->
     <script>
@@ -44,10 +43,11 @@
       fbq('init', '410162552777679');
       fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=410162552777679&ev=PageView&noscript=1" /></noscript>
     <!-- End Facebook Pixel Code -->
 	</head>
 	<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCRQV25" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=410162552777679&ev=PageView&noscript=1" /></noscript>
 		<%= htmlWebpackPlugin.options.ssr({
 			url: '/'
 		}) %>
