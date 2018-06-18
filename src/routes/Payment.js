@@ -14,11 +14,11 @@ import * as actions           from '~/actions';
 class Payment extends PureComponent {
   @autobind
   handleSubmitPayment() {
-    const { returnUrl, payment, actions, orderId } = this.props;
+    const { returnUrl, payment, updatedAt, actions, orderId } = this.props;
 
     return Promise.resolve()
       .then(() => actions.validatePayment(payment))
-      .then(() => actions.savePayment(payment))
+      .then(() => actions.savePayment(payment, updatedAt))
       .then(() => returnUrl ? route(returnUrl) : actions.getOrder(orderId))
       .catch(console.error);
   }
@@ -132,7 +132,7 @@ const definition = { 'fr-FR': {
   },
 } };
 
-function mapStateToProps({ route: { lang, returnUrl }, orders, payment }, { orderId }) {
+function mapStateToProps({ route: { lang, returnUrl, updatedAt }, orders, payment }, { orderId }) {
   const order = orders[orderId];
 
   if ( !order || order.isLoading ) {
@@ -145,6 +145,12 @@ function mapStateToProps({ route: { lang, returnUrl }, orders, payment }, { orde
     orderId,
     order,
     payment,
+    // We use the the last update date of the order to verify we're displaying
+    // up-to-date details of the order before it is paid.
+    // When paying for a housing pack, we use the update date of the first rent
+    // instead, since that is the most likely to have been updated without the
+    // user noticing
+    updatedAt: updatedAt || order.updatedAt,
   };
 }
 

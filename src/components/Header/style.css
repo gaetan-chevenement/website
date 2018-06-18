@@ -7,7 +7,7 @@
 	padding: 0;
 	background: var(--color-primary);
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-	z-index: 1001; /* leaflet has z-index: 1000 and I won't risk changing it */
+	z-index: 200;
 }
 
 .header .wrapper {

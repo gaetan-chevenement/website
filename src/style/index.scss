@@ -103,6 +103,12 @@ section {
   margin: 0 !important;
 }
 
+.leaflet-top,
+.leaflet-bottom,
+.leaflet-control {
+  z-index: 100 !important;
+}
+
 
 .single-map .leaflet-pane {
   z-index: 20;

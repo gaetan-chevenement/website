@@ -147,6 +147,16 @@ function Error({ orderStatus, paymentError }) {
     );
     canRetry = true;
   }
+  else if ( /detailsMismatch/.test(paymentError) ) {
+    errorMessage = (
+      <Text id="errors.detailsMismatch">
+        The details of this order have been updated.
+        Please refresh the page or go back to your updated booking summary
+        before trying again.
+      </Text>
+    );
+    canRetry = true;
+  }
   else if ( /cardExpired/.test(paymentError) ) {
     errorMessage = (
       <Text id="errors.cardExpired">
@@ -177,20 +187,20 @@ function Error({ orderStatus, paymentError }) {
   return (
     <div class="handleError">
       <h4>{errorMessage}</h4><br />
-      { !canRetry ? '' : (
-        <span>
+      <span>
+        { !canRetry ? '' : (
           <Button raised primary
             label={<Text id="errors.retry">Retry</Text>}
             onClick={this.props.handleRetry}
           />
-          {' '}
-          <Button raised primary
-            label={<Text id="errors.support">Contact Support</Text>}
-            href={`mailto:${SALES_EMAIL}`}
-            target="_blank"
-          />
-        </span>
-      )}
+        )}
+        {' '}
+        <Button raised primary
+          label={<Text id="errors.support">Contact Support</Text>}
+          href={`mailto:${SALES_EMAIL}`}
+          target="_blank"
+        />
+      </span>
     </div>
   );
 }
@@ -232,6 +242,12 @@ const definition = { 'fr-FR': {
     balanceMismatch: `
       Le prix de cette facture a été modifié.
       Merci de vérifier le nouveau prix et de retenter le paiement.
+    `,
+    detailsMismatch: `
+      Les détails de cette facture ont été modifiés.
+      Merci de rafraîchir la page ou de retourner à votre récapitulatif de
+      commande pour prendre connaissance de modifications avant de
+      retenter le paiement.
     `,
     cardExpired: 'Cette carte semble avoir expiré.',
     unexpected: 'Une erreur inatendue est survenue.',
