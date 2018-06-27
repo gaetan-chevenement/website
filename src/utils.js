@@ -83,7 +83,7 @@ const pureUtils = {
         order.OrderItems.some((item) => item.RentingId === rentingId)
       ))
       .reduce((orders, order) => {
-        if ( order.type === 'Deposit' ) {
+        if ( order.type === 'deposit' ) {
           orders.deposit = order;
         }
         else if ( order.OrderItems.some((item) => /-pack$/.test(item.ProductId)) ) {
