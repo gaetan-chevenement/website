@@ -61,19 +61,27 @@ export default class App extends Component {
 
     this.setState({ lang });
 
-    // Use setTimeout to make sure this runs after React Router's own listener
-    typeof window === 'object' && setTimeout(() => {
-      // Keep default behavior of restoring scroll position when user:
-      // - clicked back button
-      // - clicked on a link that programmatically calls `history.goBack()`
-      // - manually changed the URL in the address bar (here we might want
-      // to scroll to top, but we can't differentiate it from the others)
-      if ( location.action === 'POP' ) {
-        return;
-      }
-      // In all other cases, scroll to top
-      window.scrollTo(0, 0);
-    });
+    if ( typeof window === 'object' ) {
+      // Make sure GTM is aware of pageviews
+      window.dataLayer && window.dataLayer.push({
+        event: 'Pageview',
+        url: window.location.url,
+      });
+
+      // Use setTimeout to make sure this runs after React Router's own listener
+      setTimeout(() => {
+        // Keep default behavior of restoring scroll position when user:
+        // - clicked back button
+        // - clicked on a link that programmatically calls `history.goBack()`
+        // - manually changed the URL in the address bar (here we might want
+        // to scroll to top, but we can't differentiate it from the others)
+        if ( location.action === 'POP' ) {
+          return;
+        }
+        // In all other cases, scroll to top
+        window.scrollTo(0, 0);
+      });
+    }
   }
 
   constructor(props) {
