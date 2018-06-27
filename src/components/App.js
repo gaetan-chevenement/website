@@ -65,7 +65,7 @@ export default class App extends Component {
       // Make sure GTM is aware of pageviews
       window.dataLayer && window.dataLayer.push({
         event: 'Pageview',
-        url: window.location.url,
+        url: window.location.toString(),
       });
 
       // Use setTimeout to make sure this runs after React Router's own listener
