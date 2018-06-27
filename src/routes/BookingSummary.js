@@ -33,8 +33,7 @@ class BookingStep2 extends PureComponent {
       room,
       isLoading,
       packOrderId,
-      firstRentUpdatedAt,
-      rentingId,
+      renting,
     } = this.props;
 
     if ( isLoading ) {
@@ -46,8 +45,8 @@ class BookingStep2 extends PureComponent {
     }
 
     const paymentUrl = `/${lang}/payment/${packOrderId}`;
-    const returnUrl = `/${lang}/welcome/${rentingId}`;
-    const updatedAt = firstRentUpdatedAt;
+    const returnUrl = `/${lang}/welcome/${renting.id}`;
+    const rentingPrice = renting.price + renting.serviceFees;
 
     return (
       <IntlProvider definition={definition[lang]}>
@@ -68,7 +67,7 @@ class BookingStep2 extends PureComponent {
               <Button raised primary
                 label={<Text id="forward">Book the room</Text>}
                 icon="payment"
-                href={`${paymentUrl}?returnUrl=${returnUrl}&updatedAt=${updatedAt}`}
+                href={`${paymentUrl}?returnUrl=${returnUrl}&rentingPrice=${rentingPrice}`}
               />
             </section>
           </nav>
@@ -89,10 +88,7 @@ function mapStateToProps({ rentings, rooms, apartments, booking, orders }, { lan
   const room = renting && rooms[renting.RoomId];
   const apartment = room && apartments[room.ApartmentId];
   const bookingDate = room && Utils.getBookingDate(room);
-  const {
-    pack: packOrder,
-    rent: rentOrder,
-  } = Utils.classifyRentingOrders({ rentingId, orders });
+  const { pack: packOrder } = Utils.classifyRentingOrders({ rentingId, orders });
 
   if (
     !renting || renting.isLoading ||
@@ -110,7 +106,6 @@ function mapStateToProps({ rentings, rooms, apartments, booking, orders }, { lan
     room,
     bookingDate,
     packOrderId: packOrder && packOrder.id,
-    firstRentUpdatedAt: rentOrder && rentOrder.updatedAt,
   };
 }
 

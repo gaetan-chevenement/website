@@ -157,12 +157,12 @@ export const saveBooking =
 export const savePayment =
   createActionAsync(
     'save Payment and associated Order in the backoffice',
-    (payment, updatedAt) => {
+    (payment, rentingPrice) => {
       const pickKeys =
         'cardNumber,cvv,expiryMonth,expiryYear,holderName,orderId,balance'
           .split(',');
       const body =
-        Object.assign(updatedAt ? { updatedAt } : {}, _.pick(payment, pickKeys));
+        Object.assign(rentingPrice ? { rentingPrice } : {}, _.pick(payment, pickKeys));
 
       return Utils.fetchJson('/actions/public/create-payment', {
         method: 'post',

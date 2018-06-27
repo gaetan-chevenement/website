@@ -147,12 +147,11 @@ function Error({ orderStatus, paymentError }) {
     );
     canRetry = true;
   }
-  else if ( /detailsMismatch/.test(paymentError) ) {
+  else if ( /rentingPriceMismatch/.test(paymentError) ) {
     errorMessage = (
-      <Text id="errors.detailsMismatch">
-        The details of this order have been updated.
-        Please refresh the page or go back to your updated booking summary
-        before trying again.
+      <Text id="errors.rentingPriceMismatch">
+        The price of the renting associated with this order has been updated.
+        Please go back to your updated booking summary before trying again.
       </Text>
     );
     canRetry = true;
