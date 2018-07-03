@@ -12,18 +12,24 @@ class Room extends PureComponent {
   async loadData(roomId) {
     const { actions } = this.props;
 
-    const { response: {
-      data: [roomData],
-      included: [apartmentData],
-    } } = await actions.getRoom(roomId);
-    const districtId = apartmentData.attributes._DistrictId;
+    try {
+      const { response: {
+        data: [roomData],
+        included: [apartmentData],
+      } } = await actions.getRoom(roomId);
+      const districtId = apartmentData.attributes._DistrictId;
 
-    // This trick was used to allow linking from WordPress to the new website
-    if ( roomData.id !== roomId && typeof window !== 'undefined' ) {
-      return route(window.location.pathname.replace(/[\w-]+$/, roomData.id));
+      // This trick was used to allow linking from WordPress to the new website
+      if ( roomData.id !== roomId && typeof window !== 'undefined' ) {
+        return route(window.location.pathname.replace(/[\w-]+$/, roomData.id));
+      }
+
+      return actions.getDistrict(districtId);
+    }
+    catch (e) {
+      route(`/${this.props.lang}/404`);
     }
 
-    return actions.getDistrict(districtId);
   }
 
   componentWillMount() {

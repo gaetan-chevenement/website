@@ -25,6 +25,7 @@ import {
 import Utils            from '~/utils';
 import Header           from './Header';
 import Footer           from './Footer';
+import NotFound         from '../routes/NotFound';
 
 export default class App extends Component {
   // Store route parameters in the state when route changes
@@ -107,7 +108,9 @@ export default class App extends Component {
             }
           </Match>
           <Router onChange={this.handleRoute}>
-            <Home path="/:lang" default />
+            <Home path="/" />
+            <Home path="/en-US" />
+            <Home path="/fr-FR" />
             <Search path="/:lang/search/:city/:page?" />
             <BookingForm path="/:lang/booking/:roomId" />
             <BookingSummary path="/:lang/summary/:rentingId" />
@@ -119,6 +122,8 @@ export default class App extends Component {
             <Process path="/:lang/booking-process" />
             <About path="/:lang/about" />
             <Contact path="/:lang/contact" />
+            <NotFound path="/:lang/:path" />
+            <NotFound default />
           </Router>
           <Match path="/">
             { // No footer on invoice or search
