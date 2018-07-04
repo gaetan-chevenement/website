@@ -53,7 +53,7 @@ const definition = {
   },
   'en-US': {
     specialOffer: [
-      'Special offer on rooms available before 07/31',
+      'Special discount on rooms available before 07/31',
       '→ Contact us with the code SUMMER :)',
     ].join(' '),
   },
