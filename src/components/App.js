@@ -18,10 +18,12 @@ import BookingSummary   from '~/routes/BookingSummary';
 import BookingConfirmed from '~/routes/BookingConfirmed';
 import Payment          from '~/routes/Payment';
 import Invoice          from '~/routes/Invoice';
+
 import {
   updateRoute,
 }                       from '~/actions';
 import Utils            from '~/utils';
+import Banner           from '~/containers/SpecialOfferBanner';
 import Header           from './Header';
 import Footer           from './Footer';
 
@@ -101,7 +103,7 @@ export default class App extends Component {
           <Match path="/">
             { // No header on invoices
               ({ matches, path, url }) =>
-                rInvoice.test(path) ?
+                [rInvoice].some((regex) => regex.test(path)) ?
                   '' : <Header {...{ path }} />
             }
           </Match>
@@ -120,7 +122,14 @@ export default class App extends Component {
             <Contact path="/:lang/contact" />
           </Router>
           <Match path="/">
-            { // No footer on invoice, home
+            { // No banner on invoice
+              ({ matches, path, url }) =>
+                [rInvoice].some((regex) => regex.test(path)) ?
+                  '' : <Banner />
+            }
+          </Match>
+          <Match path="/">
+            { // No footer on invoice or search
               ({ matches, path, url }) =>
                 [rInvoice, rSearch].some((regex) => regex.test(path)) ?
                   '' : <Footer />
@@ -135,6 +144,9 @@ export default class App extends Component {
 const store = configureStore({
   route: {
     lang: 'en-US',
+  },
+  session: {
+    isSpecialOfferBannerActive: null,
   },
   booking: {
     minPack: 'basic',

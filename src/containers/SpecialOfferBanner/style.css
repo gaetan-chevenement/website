@@ -1,0 +1,5 @@
+.snackbar {
+  background-color: var(--color-primary);
+  text-align: center;
+  font-weight: bold;
+}

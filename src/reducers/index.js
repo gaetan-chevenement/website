@@ -25,6 +25,8 @@ import {
   getOrder,
   listOrders,
   getRenting,
+  hideSpecialOfferBanner,
+  showSpecialOfferBanner,
 }                           from '~/actions';
 
 const _ = { pickBy, forEach };
@@ -34,6 +36,16 @@ const routeReducer = createReducer({
   [updateRoute]: (state, payload) => ({
     ...state,
     ...payload,
+  }),
+}, {});
+const sessionReducer = createReducer({
+  [hideSpecialOfferBanner]: (state, payload) => ({
+    ...state,
+    isSpecialOfferBannerActive: false,
+  }),
+  [showSpecialOfferBanner]: (state, payload) => ({
+    ...state,
+    isSpecialOfferBannerActive: true,
   }),
 }, {});
 const searchReducer = createReducer({
@@ -153,6 +165,7 @@ const reducers = {
 
   /* generally modified by the router */
   route: avoidUselessMutations(routeReducer),
+  session: avoidUselessMutations(sessionReducer),
 
   /* generally modified by user-interactions */
   search: avoidUselessMutations(searchReducer),

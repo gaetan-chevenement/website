@@ -23,6 +23,8 @@ export const deleteApartmentFeature = createAction('delete feature from apartmen
 export const addApartmentPicture = createAction('add picture to apartment');
 export const deleteApartmentPicture = createAction('delete picture from apartment');
 export const updateApartmentPicture = createAction('update picture from apartment');
+export const showSpecialOfferBanner = createAction('show special offer banner');
+export const hideSpecialOfferBanner = createAction('hide special offer banner');
 
 export const {
   updateBooking,
