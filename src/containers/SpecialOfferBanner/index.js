@@ -31,7 +31,7 @@ class Banner extends Component {
     return (
       <IntlProvider definition={definition[lang]}>
         <Snackbar
-          action="🞪"
+          action="❌"
           active={isActive}
           label={<Text id="specialOffer" />}
           timeout={999999}
