@@ -98,7 +98,7 @@ const pureUtils = {
   },
   getFirstMonths(bookingDate) {
     return [0, 1, 2].map((offset) =>
-      D.format(D.addMonths(bookingDate, offset), 'MMM')
+      D.startOfMonth(D.addMonths(bookingDate, offset))
     );
   },
   getCurrYear(now = new Date()) {
@@ -208,6 +208,29 @@ const pureUtils = {
       window.$crisp.push(['do', 'message:send', ['text', definition[lang]]]);
     };
   },
+  formatDate(date, { lang, timeZone = 'Europe/Paris' } = {}) {
+    const formatted = new Intl.DateTimeFormat(lang, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      timeZone,
+    }).format(date);
+
+    return lang === 'en-US' ? formatted : formatted.split('-').reverse().join('/');
+  },
+  formatMonth(date, { lang, timeZone = 'Europe/Paris' } = {}) {
+    return new Intl.DateTimeFormat(lang, {
+      month: 'long',
+      timeZone,
+    }).format(date);
+  },
+  getWeekdays(lang) {
+    return [4,5,6,7,8,9,10].map((value) =>
+      new Intl.DateTimeFormat(lang, { weekday: 'long' })
+        .format(new Date(value * 24 * 60 * 60 * 1000))
+        .toUpperCase()
+    );
+  },
 };
 
 const currYear = pureUtils.getCurrYear();
@@ -220,8 +243,26 @@ const Utils = {
     lastName: yup.string().required().trim(),
     email: yup.string().email().required().trim(),
     isEligible: yup.boolean().required().test({
-      name: 'is-elibible',
+      name: 'is-eligible',
       message: 'You must verify your eligibility and agree to our terms of service',
+      test: Boolean,
+    }),
+  }),
+
+  summarySchema: yup.object().shape({
+    check0: yup.boolean().required().test({
+      name: 'check0',
+      message: 'You must agree to all conditions to book',
+      test: Boolean,
+    }),
+    check1: yup.boolean().required().test({
+      name: 'check1',
+      message: 'You must agree to all conditions to book',
+      test: Boolean,
+    }),
+    check2: yup.boolean().required().test({
+      name: 'check2',
+      message: 'You must agree to all conditions to book',
       test: Boolean,
     }),
   }),

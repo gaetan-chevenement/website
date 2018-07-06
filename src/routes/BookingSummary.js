@@ -1,6 +1,8 @@
 import { IntlProvider, Text } from 'preact-i18n';
+import { route }              from 'preact-router';
 import { PureComponent }      from 'react';
 import { connect }            from 'react-redux';
+import autobind               from 'autobind-decorator';
 import { bindActionCreators } from 'redux';
 import { Button }             from 'react-toolbox/lib/button';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
@@ -9,7 +11,25 @@ import * as actions           from '~/actions';
 import Summary                from '~/containers/booking/Summary';
 import Heading                from '~/components/booking/Heading';
 
-class BookingStep2 extends PureComponent {
+class BookingSummary extends PureComponent {
+  @autobind
+  async handleSubmit() {
+    const {
+      lang,
+      summary,
+      renting,
+      packOrderId,
+      actions,
+    } = this.props;
+    const paymentUrl = `/${lang}/payment/${packOrderId}`;
+    const returnUrl = `/${lang}/welcome/${renting.id}`;
+    const rentingPrice = renting.price + renting.serviceFees;
+
+    await actions.validateSummary(summary);
+
+    route(`${paymentUrl}?returnUrl=${returnUrl}&rentingPrice=${rentingPrice}`);
+  }
+
   componentDidMount() {
     const {
       actions,
@@ -30,10 +50,9 @@ class BookingStep2 extends PureComponent {
   render() {
     const {
       lang,
+      summary,
       room,
       isLoading,
-      packOrderId,
-      renting,
     } = this.props;
 
     if ( isLoading ) {
@@ -44,30 +63,31 @@ class BookingStep2 extends PureComponent {
       );
     }
 
-    const paymentUrl = `/${lang}/payment/${packOrderId}`;
-    const returnUrl = `/${lang}/welcome/${renting.id}`;
-    const rentingPrice = renting.price + renting.serviceFees;
-
     return (
       <IntlProvider definition={definition[lang]}>
 
         <div class="content">
           <Heading room={room} type="summary" />
 
-          <Summary />
-
-          <nav class="text-center">
-            <section style="margin-top: 2rem; text-align: center;">
+          <nav>
+            <section>
               <Button raised
                 label={<Text id="back">Back</Text>}
                 icon="arrow_backward"
                 href={`/${lang}/booking/${room.id}`}
               />
-              {' '}
+            </section>
+          </nav>
+
+          <Summary />
+
+          <nav>
+            <section style="margin-top: 2rem; text-align: center;">
               <Button raised primary
                 label={<Text id="forward">Book the room</Text>}
                 icon="payment"
-                href={`${paymentUrl}?returnUrl=${returnUrl}&rentingPrice=${rentingPrice}`}
+                onClick={this.handleSubmit}
+                disabled={!summary.check0 || !summary.check1 || !summary.check2}
               />
             </section>
           </nav>
@@ -83,7 +103,8 @@ const definition = { 'fr-FR': {
   forward: 'Réserver la chambre',
 } };
 
-function mapStateToProps({ rentings, rooms, apartments, booking, orders }, { lang, rentingId }) {
+function mapStateToProps(state, { lang, rentingId }) {
+  const { rentings, rooms, apartments, orders, summary } = state;
   const renting = rentings[rentingId];
   const room = renting && rooms[renting.RoomId];
   const apartment = room && apartments[room.ApartmentId];
@@ -101,6 +122,7 @@ function mapStateToProps({ rentings, rooms, apartments, booking, orders }, { lan
 
   return {
     lang,
+    summary,
     rentingId,
     renting,
     room,
@@ -113,4 +135,4 @@ function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookingStep2);
+export default connect(mapStateToProps, mapDispatchToProps)(BookingSummary);

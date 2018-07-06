@@ -7,7 +7,7 @@ function Heading({ lang, room, type }) {
       <h1 class="grid has-gutter-xl">
         <div class="two-thirds">
           {definition[lang][type]}&nbsp;
-          <Text id="forRoom">for</Text><br />
+          <Text id="forRoom" /><br />
           <em>{room.name}</em>
         </div>
         <div class="one-third">
@@ -25,12 +25,13 @@ function Heading({ lang, room, type }) {
 
 const definition = {
   'en-US': {
+    forRoom: 'of',
     details: 'Booking details',
     summary: 'Booking summary',
     confirmed: 'Book confirmation',
   },
   'fr-FR': {
-    forRoom: 'pour',
+    forRoom: 'de',
     details: 'Détails de la réservation',
     summary: 'Récapitulatif de la réservation',
     confirmed: 'Confirmation de la réservation',

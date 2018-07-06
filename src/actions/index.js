@@ -33,6 +33,12 @@ export const {
   validateBooking,
 } = createFormAction('Booking', Utils.bookingSchema);
 export const {
+  updateSummary,
+  setSummaryErrors,
+  deleteSummaryError,
+  validateSummary,
+} = createFormAction('Summary', Utils.summarySchema);
+export const {
   updatePayment,
   setPaymentErrors,
   deletePaymentError,

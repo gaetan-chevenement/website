@@ -2,7 +2,7 @@ import { PureComponent }      from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { batch }              from 'redux-act';
-import { IntlProvider, Text }       from 'preact-i18n';
+import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import { Button }             from 'react-toolbox/lib/button';
 import { Checkbox }           from 'react-toolbox/lib/checkbox';

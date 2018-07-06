@@ -12,6 +12,10 @@ import {
   setBookingErrors,
   deleteBookingError,
   validateBooking,
+  updateSummary,
+  setSummaryErrors,
+  deleteSummaryError,
+  validateSummary,
   saveBooking,
   updatePayment,
   setPaymentErrors,
@@ -79,6 +83,15 @@ const bookingReducer = createReducer({
     ...state,
     isSaving: false,
     errors: payload.errors,
+  }),
+}, { errors: noErrors });
+
+const summaryReducer = createReducer({
+  ...createFormReducer({
+    update: updateSummary,
+    setErrors: setSummaryErrors,
+    deleteError: deleteSummaryError,
+    validate: validateSummary,
   }),
 }, { errors: noErrors });
 
@@ -170,6 +183,7 @@ const reducers = {
   /* generally modified by user-interactions */
   search: avoidUselessMutations(searchReducer),
   booking: avoidUselessMutations(bookingReducer),
+  summary: avoidUselessMutations(summaryReducer),
   payment: avoidUselessMutations(paymentReducer),
 
   /* generally modified by interacting with our REST API */
