@@ -51,11 +51,6 @@ const tileLayerUrl =
   `https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${MAPBOX_TOKEN}`;
 
 class ResultsMap extends Component {
-  // MarkerClusterGroup is stupid and is only able to add markers to the map :-/
-  // It must be cleared before each re-render :-/
-  componentWillUpdate() {
-    this.markerClusterGroup && this.markerClusterGroup.leafletElement.clearLayers();
-  }
 
   // invalidate the size of the map every time it has been re-rendered
   componentDidUpdate() {
