@@ -10,6 +10,15 @@ import appbarTheme            from 'react-toolbox/components/app_bar/theme.css';
 import Utils                  from '~/utils';
 import style                  from './style';
 
+// https://stackoverflow.com/questions/20514596/document-documentelement-scrolltop-return-value-differs-in-chrome
+function getDocumentScrollTop() {
+  return window.scrollY
+    || window.pageYOffset
+    || document.body.scrollTop + (document.documentElement
+      && document.documentElement.scrollTop || 0);
+}
+
+
 class Header extends Component {
   @autobind
   handleToggle() {
@@ -19,14 +28,44 @@ class Header extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { isDrawerActive: false };
+    this.state = {
+      isDrawerActive: false,
+      scrollPx: getDocumentScrollTop()
+    };
+  }
+
+  @autobind
+  handleScroll() {
+    this.setState({
+      scrollPx: getDocumentScrollTop()
+    })
+  }
+
+  componentDidMount() {
+    typeof window !== 'undefined' && window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    typeof window !== 'undefined' && window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  isSearchPage() {
+    return /\/[^/]*\/search/.test(this.props.path);
+  }
+
+  isRoomPage() {
+    return /\/[^/]*\/room/.test(this.props.path);
   }
 
   render({ lang, path }) {
+    console.log(this.isSearchPage(), this.isRoomPage());
     return (
       <IntlProvider definition={definition[lang]}>
         <header class={style.header}>
           <div class={style.wrapper}>
+            { this.isSearchPage() ? <SearchPageAddon scrollPx={this.state.scrollPx} /> : null}
+            { this.isRoomPage() ? <RoomPageAddon scrollPx={this.state.scrollPx} /> : null}
+
             <AppBar
               title={<AppBarTitle lang={lang} />}
               rightIcon="menu"
@@ -83,6 +122,26 @@ function AppNavigation({ lang, path, type, className }) {
       }
     </Navigation>
   );
+}
+
+function SearchPageAddon({ scrollPx }) {
+  const $el = document.getElementById('city-select');
+  if ( $el !== null ) {
+    const show = $el.getBoundingClientRect().bottom < 0;
+    console.log('should show search header', show);
+  }
+
+  return null;
+}
+
+function RoomPageAddon({ scrollPx }) {
+  const $el = document.getElementById('room-anchors');
+  if ( $el !== null ) {
+    const showSearchHeader = $el.getBoundingClientRect().bottom < 0;
+    console.log('should show anchors header', showSearchHeader);
+  }
+
+  return null;
 }
 
 function handleClickContact() {
