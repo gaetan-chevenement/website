@@ -588,6 +588,27 @@
   }
 }
 
+.visitCont {
+  background-color: lightgrey;
+  text-indent: 0 !important;
+  color: white;
+  font-weight: bold;
+  position: relative;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visitCont a, .visitCont a:hover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: white;
+}
+
 /* = BookingInfo = */
 
 .buttonsDivide {
@@ -598,3 +619,4 @@
 .buttonsDivide > div {
   flex: 0 0 48%;
 }
+

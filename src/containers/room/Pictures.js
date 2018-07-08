@@ -23,26 +23,32 @@ const Picture = ({ picture, onClick }) => {
 
 class Pictures extends PureComponent {
   @autobind
-  handleClick() {
+  handleSlideshowClick() {
     this.setState({ showSlideshow: !this.state.showSlideshow });
+  }
+
+  @autobind
+  handleFloorplansSlideshowClick() {
+    this.setState({ showFloorplansSlideshow: !this.state.showFloorplansSlideshow });
   }
 
   constructor() {
     super();
     this.state = {
       showSlideshow: false,
+      showFloorplansSlideshow: false,
     };
   }
 
-  render({ lang, pictures }) {
-    let cont = null, portal = null;
+  render({ lang, pictures, visitUrl, floorplans }) {
+    let cont = null, portal = null, visit = null;
 
-    if (pictures.length > 5) {
+    if (pictures.length > 4) {
       cont = (
         <div className={`${style.picturesCont} picto-photocamera_64px one-sixth`}
-          onClick={this.handleClick}
+          onClick={this.handleSlideshowClick}
         >
-          + {pictures.length - 5}
+          + {pictures.length - 4}
         </div>
       );
     }
@@ -50,7 +56,7 @@ class Pictures extends PureComponent {
     if (this.state.showSlideshow) {
       portal = (
         <Portal into="body">
-          <div className={style.carouselOverlay} onClick={this.handleClick}>
+          <div className={style.carouselOverlay} onClick={this.handleSlideshowClick}>
             <div className={style.carouselClose}>🗙</div>
             <Carousel lazy slide arrows>
               {pictures.map(({ url }) => (
@@ -61,14 +67,48 @@ class Pictures extends PureComponent {
         </Portal>
       );
     }
+    else if (this.state.showFloorplansSlideshow) {
+      portal = (
+        <Portal into="body">
+          <div className={style.carouselOverlay} onClick={this.handleFloorplansSlideshowClick}>
+            <div className={style.carouselClose}>🗙</div>
+            <Carousel lazy slide arrows>
+              {floorplans.map(({ url }) => (
+                <div class={style.slideshowImg} style={`background-image: url(${url})`} />
+              ))}
+            </Carousel>
+          </div>
+        </Portal>
+      );
+    }
+
+    if (visitUrl != null) {
+      visit = (
+        <div className={`${style.visitCont} one-sixth`}>
+          <a href={visitUrl} target="_blank">
+            3d visit
+          </a>
+        </div>
+      );
+    }
+    else {
+      visit = (
+        <div className={`${style.visitCont} one-sixth`}
+          onClick={this.handleFloorplansSlideshowClick}
+        >
+          Floor plans
+        </div>
+      );
+    }
 
     return (
       <IntlProvider definition={definition[lang]}>
         <section className={`${style.pictures} grid-12 has-gutter`}>
-          {pictures.slice(0, 5).map((picture) => (
-            <Picture picture={picture} onClick={this.handleClick} />
+          {pictures.slice(0, 4).map((picture) => (
+            <Picture picture={picture} onClick={this.handleSlideshowClick} />
           ))}
           {cont}
+          {visit}
           {portal}
         </section>
       </IntlProvider>
@@ -87,7 +127,14 @@ function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apart
     .concat(Utils.getPictures(room), Utils.getPictures(apartment))
     .filter(({ alt }) => alt !== 'floorplan');
 
+  const visitUrl = apartment.visitUrl;
+  const floorplans = []
+    .concat(Utils.getPictures(room), Utils.getPictures(apartment))
+    .filter(({ alt }) => alt === 'floorplan');
+
   return {
+    visitUrl,
+    floorplans,
     lang,
     pictures,
   };
