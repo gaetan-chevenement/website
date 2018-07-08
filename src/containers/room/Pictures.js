@@ -2,7 +2,7 @@ import { PureComponent }      from 'react';
 import autobind               from 'autobind-decorator';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import { IntlProvider }       from 'preact-i18n';
+import {IntlProvider, Text} from 'preact-i18n';
 import Portal                 from 'preact-portal';
 import Utils                  from '~/utils';
 import * as actions           from '~/actions';
@@ -86,7 +86,7 @@ class Pictures extends PureComponent {
       visit = (
         <div className={`${style.visitCont} one-sixth`}>
           <a href={visitUrl} target="_blank">
-            3d visit
+            <Text id="threeD">3d visit</Text>
           </a>
         </div>
       );
@@ -96,7 +96,7 @@ class Pictures extends PureComponent {
         <div className={`${style.visitCont} one-sixth`}
           onClick={this.handleFloorplansSlideshowClick}
         >
-          Floor plans
+          <Text id="floorplans">Floor Plans</Text>
         </div>
       );
     }
@@ -117,7 +117,8 @@ class Pictures extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
-  title: 'Photos',
+    threeD: 'Visite 3D',
+    floorplans: 'Plans',
 } };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
