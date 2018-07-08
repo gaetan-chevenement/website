@@ -22,25 +22,6 @@ function ApartmentDescription({ lang, isLoading, apartment, district, floorPlan 
   return (
     <IntlProvider definition={definition[lang]}>
       <section>
-        {floorPlan ? (
-          <section>
-            <h3 className={style.heading}>
-              <Text id="floorPlan">Floor Plan</Text>
-            </h3>
-            <div className="grid-3 has-gutter">
-              <div className="two-thirds">
-                <img src={floorPlan.url} alt="floor plan" />
-              </div>
-              <div className={style.planNotice}>
-                <Text id="floorPlanInfo">
-                  The surface of the floor of each room includes closets,
-                  balconies, loggias, bathroom, WC, attic areas…
-                  with private access
-                </Text>
-              </div>
-            </div>
-          </section>
-        ) : ''}
         <section>
           <h3 className={style.heading}><Text id="district">District</Text></h3>
           <div className={`grid-10 has-gutter-l ${style.districtContent}`}>
