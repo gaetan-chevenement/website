@@ -58,7 +58,6 @@ class Header extends Component {
   }
 
   render({ lang, path }) {
-    console.log(this.isSearchPage(), this.isRoomPage());
     return (
       <IntlProvider definition={definition[lang]}>
         <header class={style.header}>
