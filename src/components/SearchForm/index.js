@@ -74,6 +74,7 @@ class SearchForm extends PureComponent {
           <div>
             <i class="material-icons">location_city</i>
             <Dropdown
+              id={"city-select"}
               onChange={this.handleCityChange}
               label={<Text id="city">City *</Text>}
               value={this.state.city}

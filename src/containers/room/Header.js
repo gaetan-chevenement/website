@@ -17,6 +17,7 @@ function getDocumentScrollTop() {
     || document.body.scrollTop + (document.documentElement
       && document.documentElement.scrollTop || 0);
 }
+
 class Header extends Component {
   @autobind
   handleScroll() {

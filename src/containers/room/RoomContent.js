@@ -30,7 +30,7 @@ function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount })
               <div className={[style.leftHeader]}>
                 {room.name}
               </div>
-              <div className={style.links}>
+              <div className={style.links} id="room-anchors">
                 <ul>
                   <li>
                     <a href="#overview"><Text id="overview">Overview</Text></a>
