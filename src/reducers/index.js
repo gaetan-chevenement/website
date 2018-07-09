@@ -24,6 +24,7 @@ import {
   savePayment,
   resetPayment,
   getRoom,
+  getPage,
   getDistrict,
   listRooms,
   getOrder,
@@ -146,6 +147,15 @@ const roomsReducer = createReducer({
   ...createListReducer(listRooms, 'room'),
 }, {});
 
+const pagesReducer = createReducer({
+  ...createGetReducer(getPage),
+  // getRoom returns { rooms, apartments } so it needs a special reducer
+  [getPage.ok]: (state, data) => ({
+    ...state,
+    [data.slug]: data,
+  }),
+}, {});
+
 const apartmentsReducer = createReducer({
   [getRoom.ok]: (state, { apartments }) => ({
     ...state,
@@ -193,6 +203,7 @@ const reducers = {
   rentings: rentingsReducer,
   orders: ordersReducer,
   client: clientReducer,
+  pages: pagesReducer
 };
 
 const memoizedIdentity = memoize((state) => ( state ), { cache: new NamedTupleMap() });

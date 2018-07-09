@@ -296,7 +296,8 @@ const Utils = {
     const timezone =
       window.Intl &&
       window.Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/London';
-    const url =
+    const url = _url.startsWith('http') ?
+      _url :
       `${API_BASE_URL}${_url}${/\?/.test(_url) ? '&' : '?'}timezone=${timezone}`;
 
     //options.credentials = 'include';
