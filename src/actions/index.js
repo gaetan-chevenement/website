@@ -47,6 +47,14 @@ export const getRoom =
     { ok: { payloadReducer: reduceRooms } }
   );
 
+export const getPage =
+  createActionAsync(
+    'get WP Page by slug',
+    (slug) => Utils.fetchJson(`https://blog.chez-nestor.com/wp-json/wp/v2/pages?slug=${slug}`)
+      .then(throwIfNotFound('Page', slug)),
+    { ok: { payloadReducer: ({ response }) => response[0] } }
+  );
+
 export const [
   getRenting,
   getDistrict,

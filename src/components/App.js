@@ -24,7 +24,8 @@ import {
 import Utils            from '~/utils';
 import Header           from './Header';
 import Footer           from './Footer';
-import NotFound         from '../routes/NotFound';
+import NotFound         from '~/routes/NotFound';
+import Page             from '~/routes/Page';
 
 export default class App extends Component {
   // Store route parameters in the state when route changes
@@ -119,6 +120,7 @@ export default class App extends Component {
             <Room path="/:lang/room/:roomId" />
             <Services path="/:lang/services" />
             <Process path="/:lang/booking-process" />
+            <Page path="/:lang/page/:slug" />
             <About path="/:lang/about" />
             <Contact path="/:lang/contact" />
             <NotFound path="/:lang/:path" />
