@@ -6,6 +6,18 @@ import { route }   from 'preact-router';
 
 
 class Page extends Component {
+
+  createMarkup() {
+    return {
+      __html: this.props.pages[this.getFullSlug()].content,
+    };
+  }
+
+  getFullSlug() {
+    const { lang, slug } = this.props;
+    return `${lang.toLowerCase()}-${slug.toLowerCase()}`;
+  }
+
   async loadData(fullSlug) {
     const { actions } = this.props;
 
@@ -16,19 +28,21 @@ class Page extends Component {
       console.error(e);
       route(`/${this.props.lang}/404`);
     }
-
   }
 
   componentDidMount () {
-    const { lang, slug } = this.props;
-    // FIXME A mettre en place plus tard
-    // this.loadData(`${lang}-${slug}`);
-    this.loadData(`${slug}`);
+    this.loadData(this.getFullSlug());
   }
 
   render () {
-    console.log(this.props);
-    return <div>test</div>;
+    const fullSlug = this.getFullSlug();
+    if (this.props.pages[fullSlug] === undefined || this.props.pages[fullSlug].isLoading) {
+      return <div>...</div>;
+    }
+    return (
+      <div className={"wp-content"} dangerouslySetInnerHTML={this.createMarkup()} />
+    );
+
   }
 }
 
