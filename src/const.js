@@ -13,6 +13,8 @@ export default Object.assign({}, common, {
 
   MAPBOX_TOKEN: `pk.eyJ1IjoiY2hlem5lc3RvciIsImEiOiJjajhtdzhkMGQxMXRqMndsZHRyaXo0ZXhsIn0.8nTAH6da3pvqHKYAARms5A`,
 
+  BLOG_URL: 'https://blog.chez-nestor.com',
+
   RESULTS_PER_PAGE: 12,
 
   SEARCHABLE_CITIES: [{

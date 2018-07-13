@@ -50,7 +50,7 @@ export const getRoom =
 export const getPage =
   createActionAsync(
     'get WP Page by slug',
-    (slug) => Utils.fetchJson(`https://blog.chez-nestor.com/wp-json/wp/v2/pages?slug=${slug}`)
+    (slug) => Utils.fetchJson(`${_const.BLOG_URL}/wp-json/wp/v2/pages?slug=${slug}`)
       .then(throwIfNotFound('Page', slug)),
     { ok: { payloadReducer: ({ response }) => response[0] } }
   );
