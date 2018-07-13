@@ -5,6 +5,8 @@ export default Object.assign({}, common, {
     switch (environment) {
     case 'production':
       return 'https://ucyldwzph9.execute-api.eu-west-1.amazonaws.com/production/forest';
+    case 'temp':
+      return '/api';
     default:
     case 'staging':
       return 'https://ucyldwzph9.execute-api.eu-west-1.amazonaws.com/staging/forest';
