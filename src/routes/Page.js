@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '~/actions';
 import { route }   from 'preact-router';
+import { ProgressBar } from 'react-toolbox';
 
 
 class Page extends Component {
@@ -37,10 +38,14 @@ class Page extends Component {
   render () {
     const fullSlug = this.getFullSlug();
     if (this.props.pages[fullSlug] === undefined || this.props.pages[fullSlug].isLoading) {
-      return <div>...</div>;
+      return (
+        <div class="content text-center">
+          <ProgressBar type="circular" mode="indeterminate" />
+        </div>
+      );
     }
     return (
-      <div className={"wp-content"} dangerouslySetInnerHTML={this.createMarkup()} />
+      <div className={'wp-content'} dangerouslySetInnerHTML={this.createMarkup()} />
     );
 
   }
