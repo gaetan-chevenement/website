@@ -1,2 +1,2 @@
-# Single Page App redirect for Netlify
+/api/* https://ucyldwzph9.execute-api.eu-west-1.amazonaws.com/staging/forest/:splat 200
 /*    /index.html   200
