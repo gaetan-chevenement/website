@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '~/actions';
 import { route }   from 'preact-router';
-import { ProgressBar } from 'react-toolbox';
+import { ProgressBar } from 'react-toolbox/lib/progress_bar';
 
 
 class Page extends Component {
