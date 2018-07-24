@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '~/actions';
 import { route }   from 'preact-router';
 import { ProgressBar } from 'react-toolbox/lib/progress_bar';
+import Helmet from 'preact-helmet';
 
 
 class Page extends Component {
@@ -50,8 +51,21 @@ class Page extends Component {
         </div>
       );
     }
+    const page = this.props.pages[fullSlug]
     return (
-      <div className={'wp-content'} dangerouslySetInnerHTML={this.createMarkup()} />
+      <div>
+        <Helmet
+          title={page.yoast_meta.yoast_wpseo_title}
+          meta={[
+            {
+              name: 'description',
+              content: page.yoast_meta.yoast_wpseo_metadesc,
+            }
+          ]}
+        />
+        <div className={'wp-content'} dangerouslySetInnerHTML={this.createMarkup()} />
+      </div>
+
     );
 
   }
