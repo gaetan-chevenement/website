@@ -40,4 +40,24 @@ export default Object.assign({}, common, {
     roomsCount: 52,
     image: '/assets/home/cities/toulouse-imageoptim.jpg',
   }],
+
+  APP_TITLE: {
+    'en-US': 'Chez Nestor, Your ready-to-live-in flatshares',
+    'fr-FR': 'Chez Nestor, spécialiste de la colocation meublée et équipée en centre-ville',
+  },
+
+  APP_DESCRIPTION: {
+    'en-US': 'English description',
+    'fr-FR': 'Chez Nestor est le leader de la colocation meublée en France. Présent dans de nombreuses villes, nous vous proposons des appartements refaits à neufs, équipés et meublés en plein centre-ville ! Découvrez et réservez votre chambre sur notre site !',
+  },
+
+  APP_HTML_LANG: {
+    'en-US': 'en',
+    'fr-FR': 'fr',
+  },
+
+  SEARCH_PAGE_TITLE_TEMPLATE: {
+    'en-US': 'Rooms in {city} on {date}',
+    'fr-FR': 'Chambres à {city} le {date}',
+  },
 });

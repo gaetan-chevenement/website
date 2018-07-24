@@ -70,7 +70,10 @@ function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount })
           </div>
         </div>
         <a id="map" className={style.roomAnchor} />
-        <SingleMap apartment={apartment} />
+        { typeof window !== 'object' ? null :
+          <SingleMap apartment={apartment} />
+        }
+
         <RoomServices />
         <Questions />
         <Guide />

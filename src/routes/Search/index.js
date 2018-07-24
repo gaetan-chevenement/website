@@ -11,6 +11,10 @@ import ResultsList            from '~/containers/search/ResultsList';
 import ResultsMap             from '~/containers/search/ResultsMap';
 import Paging                 from '~/containers/search/Paging';
 import * as actions           from '~/actions';
+import Helmet from 'preact-helmet';
+import _const                   from '~/const';
+const { SEARCH_PAGE_TITLE_TEMPLATE } = _const;
+
 import {
   mapPane,
   leftPane,
@@ -25,6 +29,12 @@ import {
 const _ = { random };
 
 export class Search extends PureComponent {
+  static async prefetch(city, dispatch) {
+    return Search.loadData(city, Date.now(), 1, {
+      listRooms: params => dispatch(actions.listRooms(params)),
+    });
+  }
+
   @autobind
   onRoomOver(room) {
     this.setState({ overRoom: room });
@@ -54,10 +64,16 @@ export class Search extends PureComponent {
     };
   }
 
-  componentDidMount() {
-    const { city, date, page } = this.props;
 
-    this.props.actions.listRooms({ city, date, page });
+  static async loadData(city, date, page, actions) {
+    return actions.listRooms({ city, date, page });
+  }
+
+  componentDidMount() {
+    if (!this.props.rooms) {
+      const { city, date, page } = this.props;
+      return Search.loadData(city, date, page, this.props.actions);
+    }
   }
 
   componentWillReceiveProps({ city, date, page }) {
@@ -78,18 +94,21 @@ export class Search extends PureComponent {
       city,
       date,
       isLoading,
+      lang,
     } = this.props;
 
     return (
       <div className={viewport}>
+        <Helmet
+          title={SEARCH_PAGE_TITLE_TEMPLATE[lang]}
+        />
         <div
           className={this.state.mobilePane !== 'map' ? mobileHide : mobileShow}
         >
           <div className={mapPane}>
-            <ResultsMap
-              highlightedRoomId={this.state.overRoom}
-              currentlyShowing={this.state.mobilePane}
-            />
+            {typeof window !== 'object' ? null :
+              (<ResultsMap highlightedRoomId={this.state.overRoom} currentlyShowing={this.state.mobilePane} />)}
+
           </div>
         </div>
         <div
@@ -131,11 +150,12 @@ export class Search extends PureComponent {
   }
 }
 
-function mapStateToProps({ route: { date }, rooms }, { city }) {
+function mapStateToProps({ route: { lang, date }, rooms }, { city }) {
   return {
     city,
     date: date && Number(date),
     isLoading: rooms.isLoading,
+    lang,
   };
 }
 

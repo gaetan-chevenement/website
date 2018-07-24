@@ -204,8 +204,10 @@ const pureUtils = {
     };
 
     return () => {
-      window.$crisp.push(['do', 'chat:open']);
-      window.$crisp.push(['do', 'message:send', ['text', definition[lang]]]);
+      if (typeof window === 'object') {
+        window.$crisp.push(['do', 'chat:open']);
+        window.$crisp.push(['do', 'message:send', ['text', definition[lang]]]);
+      }
     };
   },
 };
@@ -248,6 +250,7 @@ const Utils = {
   fetchJson(_url, _options) {
     const options = { ..._options };
     const timezone =
+      typeof window === 'object' &&
       window.Intl &&
       window.Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/London';
     const url = _url.startsWith('http') ?

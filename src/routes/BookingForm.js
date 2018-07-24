@@ -40,12 +40,15 @@ class BookingForm extends PureComponent {
 
     if ( !room ) {
       return actions.getRoom(roomId)
-        .then(({ response: { data: [roomData] } }) =>
+        .then(({ response: { data: [roomData] } }) => {
           // This trick was used to allow linking from WordPress to the new website
-          roomData.id !== roomId &&
-          route(window.location.pathname.replace(/[\w-]+$/, roomData.id)) &&
-          actions.updateBooking({ roomId: roomData.id })
-        );
+          if (typeof window !== 'object') {
+            return Promise.resolve();
+          }
+          return  roomData.id !== roomId &&
+            route(window.location.pathname.replace(/[\w-]+$/, roomData.id)) &&
+            actions.updateBooking({roomId: roomData.id})
+        });
     }
   }
 

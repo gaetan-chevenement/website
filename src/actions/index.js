@@ -23,6 +23,7 @@ export const deleteApartmentFeature = createAction('delete feature from apartmen
 export const addApartmentPicture = createAction('add picture to apartment');
 export const deleteApartmentPicture = createAction('delete picture from apartment');
 export const updateApartmentPicture = createAction('update picture from apartment');
+export const updateSSRStatus = createAction('trigger me once ssr async fetch is done');
 
 export const {
   updateBooking,

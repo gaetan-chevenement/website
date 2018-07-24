@@ -12,6 +12,9 @@ import style                  from './style';
 
 // https://stackoverflow.com/questions/20514596/document-documentelement-scrolltop-return-value-differs-in-chrome
 function getDocumentScrollTop() {
+  if (typeof window !== 'object') {
+    return 0;
+  }
   return window.scrollY
     || window.pageYOffset
     || document.body.scrollTop + (document.documentElement
@@ -144,7 +147,9 @@ function RoomPageAddon({ scrollPx }) {
 }
 
 function handleClickContact() {
-  window.$crisp.push(['do', 'chat:open']);
+  if (typeof window === 'object') {
+    window.$crisp.push(['do', 'chat:open']);
+  }
 }
 
 const definition = { 'fr-FR': {

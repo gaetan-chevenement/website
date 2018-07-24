@@ -74,7 +74,7 @@ class SearchForm extends PureComponent {
           <div>
             <i class="material-icons">location_city</i>
             <Dropdown
-              id={"city-select"}
+              id={'city-select'}
               onChange={this.handleCityChange}
               label={<Text id="city">City *</Text>}
               value={this.state.city}
@@ -87,14 +87,16 @@ class SearchForm extends PureComponent {
           </div>
           <div>
             <i class="material-icons">date_range</i>
-            <DatePicker
-              locale={lang.substring(0,2)}
-              label={<Text id="arrival">Arrival date</Text>}
-              floating={false}
-              value={this.state.date}
-              onChange={this.handleDateChange}
-              autoOk
-            />
+            { typeof window !== 'object' ? null : (
+              <DatePicker
+                locale={lang.substring(0,2)}
+                label={<Text id="arrival">Arrival date</Text>}
+                floating={false}
+                value={this.state.date}
+                onChange={this.handleDateChange}
+                autoOk
+              />
+            )}
           </div>
           {this.props.mode === 'noSubmit' ?
             { /*<div>
