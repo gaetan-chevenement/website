@@ -182,6 +182,19 @@ ul li a.scroll-spy-active {
   font-weight: bolder;
 }
 
+.carousel-curr:before {
+  position: relative;
+  display: inline-block;
+  content: attr(title);
+  top: 20px;
+  left: 20px;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+}
+
 /* WORDPRESS CSS INTEGRATION */
 
 img.alignleft {

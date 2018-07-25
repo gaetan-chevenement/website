@@ -616,6 +616,11 @@
   justify-content: center;
 }
 
+.visitContAlt {
+  background-color: var(--color-primary);
+  color: white;
+}
+
 .visitCont a, .visitCont a:hover {
   display: flex;
   align-items: center;
