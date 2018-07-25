@@ -60,7 +60,7 @@ class Pictures extends PureComponent {
             <div className={style.carouselClose}>🗙</div>
             <Carousel lazy slide arrows>
               {pictures.map(({ url }) => (
-                <div class={style.slideshowImg} style={`background-image: url(${url})`} />
+                <div class={style.slideshowImg} style={`background-image: url(${url})`} title="Mon image"/>
               ))}
             </Carousel>
           </div>
@@ -84,7 +84,7 @@ class Pictures extends PureComponent {
 
     if (visitUrl != null) {
       visit = (
-        <div className={`${style.visitCont} one-sixth`}>
+        <div className={`${style.visitCont} ${style.visitContAlt} one-sixth`}>
           <a href={visitUrl} target="_blank">
             <Text id="threeD">3d visit</Text>
           </a>
@@ -93,7 +93,7 @@ class Pictures extends PureComponent {
     }
     else {
       visit = (
-        <div className={`${style.visitCont} one-sixth`}
+        <div className={`${style.visitCont} ${style.visitContAlt}  one-sixth`}
           onClick={this.handleFloorplansSlideshowClick}
         >
           <Text id="floorplans">Floor Plans</Text>
