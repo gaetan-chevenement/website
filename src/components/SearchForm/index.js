@@ -6,13 +6,15 @@ import { Dropdown }           from 'react-toolbox/lib/dropdown';
 import { DatePicker }         from 'react-toolbox/lib/date_picker';
 // import { Input }              from 'react-toolbox/lib/input';
 import { Button }             from 'react-toolbox/lib/button';
-import Utils                  from '~/utils';
 import _const                 from '~/const';
 import {
   form,
   noSubmit,
   buttonContainer,
 }                             from './style.css';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actions from '~/actions';
 
 const { SEARCHABLE_CITIES } = _const;
 
@@ -45,7 +47,7 @@ class SearchForm extends PureComponent {
 
     this.setState(
       { city: value, error: false },
-      this.props.mode === 'noSubmit' && this.updateRoute
+      (this.props.mode === 'noSubmit' || this.props.mode === 'header')  && this.updateRoute
     );
   }
 
@@ -53,7 +55,7 @@ class SearchForm extends PureComponent {
   handleDateChange(value) {
     this.setState(
       { date: value },
-      this.props.mode === 'noSubmit' && this.updateRoute
+      (this.props.mode === 'noSubmit' || this.props.mode === 'header') && this.updateRoute
     );
   }
 
@@ -67,6 +69,16 @@ class SearchForm extends PureComponent {
     };
   }
 
+  componentWillReceiveProps({ city, date }) {
+    const newDate = date && new Date(Number(date));
+    if (city !== this.props.city || newDate !== this.props.date) {
+      this.setState({
+        city,
+        date: newDate,
+      });
+    }
+  }
+
   render({ lang, mode }) {
     return (
       <IntlProvider definition={definition[lang]}>
@@ -74,7 +86,7 @@ class SearchForm extends PureComponent {
           <div>
             <i class="material-icons">location_city</i>
             <Dropdown
-              id={"city-select"}
+              id={this.props.mode === 'header' ? null : 'city-select'}
               onChange={this.handleCityChange}
               label={<Text id="city">City *</Text>}
               value={this.state.city}
@@ -96,7 +108,7 @@ class SearchForm extends PureComponent {
               autoOk
             />
           </div>
-          {this.props.mode === 'noSubmit' ?
+          {this.props.mode === 'noSubmit' || this.props.mode === 'header' ?
             { /*<div>
               <i class="material-icons">attach_money</i>
               <Input
@@ -125,4 +137,17 @@ const definition = { 'fr-FR': {
   submit: 'Rechercher',
 } };
 
-export default Utils.connectLang(SearchForm);
+
+function mapStateToProps({ route: { date, lang, city } }) {
+  return {
+    lang,
+    city,
+    date: date && Number(date),
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);

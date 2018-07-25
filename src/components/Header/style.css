@@ -8,6 +8,8 @@
 	background: var(--color-primary);
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 	z-index: 200;
+  transition: opacity 300ms ease-in;
+
 }
 
 .header .wrapper {
@@ -28,7 +30,6 @@
 
 .appBar {
   height: var(--header-height);
-  overflow: hidden;
   color: white;
   background-color: var(--color-primary);
 }
@@ -45,4 +46,37 @@
   opacity: 1;
   margin: 0 10px;
   cursor: pointer;
+}
+
+.logoLite {
+  padding: 7px;
+  padding-left: 10px;
+}
+
+.wrapperLite  {
+  max-width: 1280px !important;
+}
+
+.headerLeftPart {
+  flex: 1;
+}
+
+.headerOptionalPart {
+  max-width: 600px;
+  min-width: 400px;
+}
+
+.headerOptionalPart > div {
+  opacity: 0;
+  transition: opacity 300ms ease-in;
+}
+
+
+.showAdditionalPart {
+  opacity: 1 !important;
+}
+
+.headerHidden {
+  opacity: 0;
+  pointer-events: none;
 }
