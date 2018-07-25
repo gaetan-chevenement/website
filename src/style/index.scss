@@ -176,3 +176,11 @@ section {
 ul li a.scroll-spy-active {
   font-weight: bolder;
 }
+
+/* WORDPRESS CSS INTEGRATION */
+
+img.alignleft {
+  display: inline;
+  float: left;
+  margin-right: 15px;
+}
