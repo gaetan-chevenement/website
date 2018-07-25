@@ -27,7 +27,9 @@ class Page extends Component {
     }
     catch (e) {
       console.error(e);
-      route(`/${this.props.lang}/404`);
+      if (!this.props.noRedirect) {
+        route(`/${this.props.lang}/404`);
+      }
     }
   }
 
@@ -44,8 +46,13 @@ class Page extends Component {
         </div>
       );
     }
+    const page = this.props.pages[this.getFullSlug()];
     return (
-      <div className={'wp-content'} dangerouslySetInnerHTML={this.createMarkup()} />
+      <div className={'wp-content'}>
+        <h1>{page.title.rendered}</h1>
+        <div dangerouslySetInnerHTML={this.createMarkup()} />
+      </div>
+
     );
 
   }
