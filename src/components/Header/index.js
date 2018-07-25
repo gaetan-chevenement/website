@@ -59,23 +59,29 @@ class Header extends Component {
   }
 
   renderLeftPart() {
-    const headerIsLite = this.isSearchPage() || this.isRoomPage();
+    const headerIsLite = this.isSearchPage();
     return (
       <div class={style.headerLeftPart}>
         <AppBarTitle lang={this.props.lang} isLite={headerIsLite} />
         <div class={style.headerOptionalPart}>
           { this.isSearchPage() ? <SearchPageAddon scrollPx={this.state.scrollPx} /> : null}
-          { this.isRoomPage() ? <RoomPageAddon scrollPx={this.state.scrollPx} /> : null}
         </div>
       </div>
     );
   }
 
   render({ lang, path }) {
+    let show = true;
+    if (this.isRoomPage()) {
+      const $el = document.getElementById('room-anchors');
+      if ( $el !== null ) {
+        show = $el.getBoundingClientRect().bottom > 0;
+      }
+    }
     return (
       <IntlProvider definition={definition[lang]}>
-        <header class={style.header}>
-          <div class={[style.wrapper, style.wrapperLite].join(' ')}>
+        <header class={[style.header, !show ? style.headerHidden : null].join( ' ')}>
+          <div class={[style.wrapper, this.isSearchPage() ? style.wrapperLite : null].join(' ')}>
 
 
             <AppBar
@@ -149,16 +155,6 @@ function SearchPageAddon({ scrollPx }) {
         <SearchForm  mode="header" />
       </div>
     );
-  }
-
-  return null;
-}
-
-function RoomPageAddon({ scrollPx }) {
-  const $el = document.getElementById('room-anchors');
-  if ( $el !== null ) {
-    const showSearchHeader = $el.getBoundingClientRect().bottom < 0;
-    console.log('should show anchors header', showSearchHeader);
   }
 
   return null;

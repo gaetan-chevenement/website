@@ -15,7 +15,7 @@ import Questions              from '~/components/room/Questions';
 import Guide                  from '~/components/room/Guide';
 import * as actions           from '~/actions';
 import style                  from './style.css';
-
+import { AnchorLink, AnchorElement }         from 'react-spy-scroll';
 const _ = { random };
 
 function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount }) {
@@ -33,26 +33,29 @@ function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount })
               <div className={style.links} id="room-anchors">
                 <ul>
                   <li>
-                    <a href="#overview"><Text id="overview">Overview</Text></a>
+                    <AnchorLink href="overview"><Text id="overview">Overview</Text></AnchorLink>
                   </li>
                   <li>
-                    <a href="#housemates"><Text id="housemates">Housemates</Text></a>
+                    <AnchorLink href="housemates"><Text id="housemates">Housemates</Text></AnchorLink>
                   </li>
                   <li>
-                    <a href="#location"><Text id="location">Location</Text></a>
+                    <AnchorLink href="location"><Text id="location">Location</Text></AnchorLink>
                   </li>
                 </ul>
               </div>
-              <a id="overview" className={style.roomAnchor} />
-              <Pictures roomId={roomId} apartmentId={apartmentId} />
-              <a id="description" className={style.roomAnchor} />
-              <Description roomId={roomId} apartmentId={apartmentId} />
-              <a id="features" className={style.roomAnchor} />
-              <Features roomId={roomId} apartmentId={apartmentId} />
-              <a id="housemates" className={style.roomAnchor} />
-              <Housemates apartmentId={apartmentId} />
-              <a id="location" className={style.roomAnchor} />
-              <ApartmentDescription />
+              <AnchorElement id="overview" className={style.roomAnchor}>
+                <div>
+                  <Pictures roomId={roomId} apartmentId={apartmentId} />
+                  <Description roomId={roomId} apartmentId={apartmentId} />
+                  <Features roomId={roomId} apartmentId={apartmentId} />
+                </div>
+              </AnchorElement>
+              <AnchorElement id="housemates" className={style.roomAnchor}>
+                <Housemates apartmentId={apartmentId} />
+              </AnchorElement>
+              <AnchorElement id="location" className={style.roomAnchor}>
+                <ApartmentDescription />
+              </AnchorElement>
             </div>
             <div>
               <div className={style.rightHeader}>

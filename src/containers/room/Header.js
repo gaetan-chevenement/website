@@ -9,6 +9,7 @@ import { Button }             from 'react-toolbox/lib/button';
 import Portal                 from 'preact-portal';
 import Carousel               from '~/components/Carousel';
 import style                  from '~/containers/room/style.css';
+import { AnchorLink }         from 'react-spy-scroll';
 
 // https://stackoverflow.com/questions/20514596/document-documentelement-scrolltop-return-value-differs-in-chrome
 function getDocumentScrollTop() {
@@ -66,6 +67,19 @@ class Header extends Component {
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
+          <div className={[style.links, style.fixedLinks].join(' ')}>
+            <ul>
+              <li>
+                <AnchorLink href="overview"><Text id="overview">Overview</Text></AnchorLink>
+              </li>
+              <li>
+                <AnchorLink href="housemates"><Text id="housemates">Housemates</Text></AnchorLink>
+              </li>
+              <li>
+                <AnchorLink href="location"><Text id="location">Location</Text></AnchorLink>
+              </li>
+            </ul>
+          </div>
           {this.state.showSlideshow ? (
             <Portal into="body">
               <div className={style.carouselOverlay} onClick={this.toggleSlideshow}>
