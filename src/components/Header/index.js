@@ -9,6 +9,7 @@ import { Drawer }             from 'react-toolbox/lib/drawer';
 import appbarTheme            from 'react-toolbox/components/app_bar/theme.css';
 import Utils                  from '~/utils';
 import style                  from './style';
+import SearchForm             from '../SearchForm';
 
 // https://stackoverflow.com/questions/20514596/document-documentelement-scrolltop-return-value-differs-in-chrome
 function getDocumentScrollTop() {
@@ -57,16 +58,28 @@ class Header extends Component {
     return /\/[^/]*\/room/.test(this.props.path);
   }
 
+  renderLeftPart() {
+    const headerIsLite = this.isSearchPage() || this.isRoomPage();
+    return (
+      <div class={style.headerLeftPart}>
+        <AppBarTitle lang={this.props.lang} isLite={headerIsLite} />
+        <div class={style.headerOptionalPart}>
+          { this.isSearchPage() ? <SearchPageAddon scrollPx={this.state.scrollPx} /> : null}
+          { this.isRoomPage() ? <RoomPageAddon scrollPx={this.state.scrollPx} /> : null}
+        </div>
+      </div>
+    );
+  }
+
   render({ lang, path }) {
     return (
       <IntlProvider definition={definition[lang]}>
         <header class={style.header}>
-          <div class={style.wrapper}>
-            { this.isSearchPage() ? <SearchPageAddon scrollPx={this.state.scrollPx} /> : null}
-            { this.isRoomPage() ? <RoomPageAddon scrollPx={this.state.scrollPx} /> : null}
+          <div class={[style.wrapper, style.wrapperLite].join(' ')}>
+
 
             <AppBar
-              title={<AppBarTitle lang={lang} />}
+              title={this.renderLeftPart()}
               rightIcon="menu"
               onRightIconClick={this.handleToggle}
               flat
@@ -87,12 +100,16 @@ class Header extends Component {
   }
 }
 
-function AppBarTitle({ lang }) {
+function AppBarTitle({ lang, isLite = false }) {
   return (
     <h1 class={appbarTheme.title} style={{ margin: '0 0 0 -44px' }}>
       <div>
         <Link href={`/${lang}`}>
-          <img src="/assets/logo370x130.png" alt="Chez Nestor" />
+          { isLite ?
+            <img src="/assets/logo.png" alt="Chez Nestor" className={style.logoLite}/>
+            : <img src="/assets/logo370x130.png" alt="Chez Nestor" />
+          }
+
         </Link>
       </div>
     </h1>
@@ -127,7 +144,11 @@ function SearchPageAddon({ scrollPx }) {
   const $el = document.getElementById('city-select');
   if ( $el !== null ) {
     const show = $el.getBoundingClientRect().bottom < 0;
-    console.log('should show search header', show);
+    return (
+      <div class={show ? style.showAdditionalPart : null}>
+        <SearchForm  mode="header" />
+      </div>
+    );
   }
 
   return null;

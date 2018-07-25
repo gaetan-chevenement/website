@@ -75,8 +75,6 @@ export class Search extends PureComponent {
 
   render() {
     const {
-      city,
-      date,
       isLoading,
     } = this.props;
 
@@ -97,7 +95,7 @@ export class Search extends PureComponent {
         >
           <div className={leftPane}>
             <div className={searchEngineAndAlerts}>
-              <SearchForm mode="noSubmit" {...{ city, date }} />
+              <SearchForm mode="noSubmit" />
               <CreateAlertButton />
             </div>
             { isLoading ? (
