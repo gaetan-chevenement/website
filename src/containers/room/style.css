@@ -209,10 +209,26 @@
   visibility: hidden;
 }
 
+.fixedLinks ul {
+  position: fixed;
+  background: var(--color-primary);
+  color: white;
+  top: -20px;
+  z-index: 199;
+  border: 0!important;
+  width: 100% !important;
+  padding: 10px 0 10px 20px!important;
+}
+
+.fixedLinks ul li a {
+  color: white !important;
+  font-size: 0.9rem !important;
+}
+
 .links ul {
   display: flex;
   margin-top: 20px;
-  padding: 0 0 5px;
+  padding: 0 0 5px 0;
   border-bottom: 1px solid black;
   flex-wrap: wrap;
 }
