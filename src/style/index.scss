@@ -182,7 +182,7 @@ ul li a.scroll-spy-active {
   font-weight: bolder;
 }
 
-.carousel-curr:before {
+.carousel-curr[title]:not([title=""]):before {
   position: relative;
   display: inline-block;
   content: attr(title);
