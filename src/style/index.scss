@@ -123,6 +123,11 @@ section {
   z-index: 21 !important;
 }
 
+.leaflet-marker-pane {
+  position: relative !important;
+  top: -27px !important;
+}
+
 .icon-24 {
   flex: 0 0 24px;
   width: 24px;
