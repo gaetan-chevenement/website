@@ -33,7 +33,7 @@ class Header extends Component {
       isDrawerActive: false,
       scrollPx: getDocumentScrollTop()
     };
-  }
+  } 
 
   @autobind
   handleScroll() {
@@ -43,10 +43,12 @@ class Header extends Component {
   }
 
   componentDidMount() {
+    typeof window !== 'undefined' && window.document.body.addEventListener('touchmove', this.handleScroll);
     typeof window !== 'undefined' && window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount() {
+    typeof window !== 'undefined' && window.document.body.removeEventListener('touchmove', this.handleScroll);
     typeof window !== 'undefined' && window.removeEventListener('scroll', this.handleScroll);
   }
 
@@ -59,7 +61,7 @@ class Header extends Component {
   }
 
   renderLeftPart() {
-    const headerIsLite = this.isSearchPage();
+    const headerIsLite = this.isSearchPage() || this.isRoomPage();
     return (
       <div class={style.headerLeftPart}>
         <AppBarTitle lang={this.props.lang} isLite={headerIsLite} />
