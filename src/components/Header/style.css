@@ -35,7 +35,7 @@
 }
 
 .appBar img {
-  height: var(--header-height);
+  height: calc(var(--header-height) - 4px);
   /* For come reason the image overflows the header without that correction */
 
 }
