@@ -18,7 +18,7 @@
 
 .mobileShow {
   @media screen and (max-width: 990px) {
-    z-index: 20000;
+    z-index: 199;
   }
 }
 
