@@ -23,7 +23,6 @@ import {
   updateRoute,
 }                       from '~/actions';
 import Utils            from '~/utils';
-import Banner           from '~/containers/SpecialOfferBanner';
 import Header           from './Header';
 import Footer           from './Footer';
 
@@ -121,13 +120,6 @@ export default class App extends Component {
             <About path="/:lang/about" />
             <Contact path="/:lang/contact" />
           </Router>
-          <Match path="/">
-            { // No banner on invoice
-              ({ matches, path, url }) =>
-                [rInvoice].some((regex) => regex.test(path)) ?
-                  '' : <Banner />
-            }
-          </Match>
           <Match path="/">
             { // No footer on invoice or search
               ({ matches, path, url }) =>
