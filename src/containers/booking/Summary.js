@@ -6,6 +6,7 @@ import { batch }              from 'redux-act';
 import autobind               from 'autobind-decorator';
 import capitalize             from 'lodash/capitalize';
 import { Checkbox }           from 'react-toolbox/lib/checkbox';
+import { Button }             from 'react-toolbox/lib/button';
 import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 import _const                 from '~/const';
@@ -13,7 +14,7 @@ import theme                  from './theme';
 
 const _ = { capitalize };
 const {
-  SALES_EMAIL,
+  ELIGIBILITY_FORM_URL,
   DEPOSIT_PRICES,
   HOME_CHECKIN_FEES,
   SPECIAL_CHECKIN_FEES,
@@ -69,7 +70,7 @@ class Summary extends PureComponent {
         saturday,
         sunday,
       ],
-      summary: { check0, check1, check2 },
+      summary: { check0, check1, check2, check3, check4 },
     } = args;
     const homeCheckinFee = HOME_CHECKIN_FEES[packLevel];
     const specialCheckinFee = SPECIAL_CHECKIN_FEES[packLevel];
@@ -285,15 +286,31 @@ class Summary extends PureComponent {
             </section>
 
             <section>
-              <h4><Text id="letsGo.title">Let's get started!</Text></h4>
+              <h4>6. <Text id="checkout.title">Planning your checkout</Text></h4>
               <p>
-                <Text id="letsGo.subtitle">
+                <Text id="checkout.subtitle">
                   No need for us to know now when you are planning to move out,
                   we are very flexible! Just keep in mind that you will need
                   to notify us at least 30 days before you move out.
                 </Text>
               </p>
+            </section>
 
+            <section>
+              <h4><Text id="letsGo.title">Let's get started!</Text></h4>
+              <p>
+                <Text id="letsGo.subtitle.0">
+                  Before booking, you need to ensure you are eligibile for
+                  accommodation with Chez Nestor:&nbsp;
+                </Text>
+                <Button raised
+                  icon="launch"
+                  href={ELIGIBILITY_FORM_URL}
+                  target="_blank"
+                >
+                  <Text id="letsGo.subtitle.1">Test your eligibility</Text>
+                </Button>
+              </p>
               <p>
                 <Checkbox
                   name="check0"
@@ -303,17 +320,9 @@ class Summary extends PureComponent {
                 >
                   {' '}
                   <Text id="letsGo.checks.0">
-                    Yes, I want my booking to come into effect immediately,
-                    processed administratively and that the room be officially
-                    blocked under my name. Thus, I expressly renounce my right
-                    to withdraw, so that the service begins before the end of
-                    the legal withdrawal period, in accordance with Article
-                    L121-21-8 of the
+                     I confirm that I am eligible, and that I am able to
+                     provide all the required documents.
                   </Text>
-                  { ' ' /* no need to translate the label of the link */ }
-                  <a href="https://www.legifrance.gouv.fr/affichCodeArticle.do?cidTexte=LEGITEXT000006069565&idArticle=LEGIARTI000028741428&dateTexte=&categorieLien=cid">
-                    Code de la Consommation
-                  </a>.
                 </Checkbox>
               </p>
 
@@ -326,11 +335,13 @@ class Summary extends PureComponent {
                 >
                   {' '}
                   <Text id="letsGo.checks.1">
-                    I have understood that my rent as well all future payments
-                    will start from the
+                    I want my booking to come into effect immediately,
+                    processed administratively and that the room be officially
+                    blocked under my name. Thus, I expressly renounce my right
+                    to withdraw, so that the service begins before the end of
+                    the legal withdrawal period, in accordance with Article
+                    L121-21-8 of the Code de la Consommation
                   </Text>
-                  {' '}
-                  { Utils.formatDate(bookingDate, { lang }) }.
                 </Checkbox>
               </p>
 
@@ -343,9 +354,46 @@ class Summary extends PureComponent {
                 >
                   {' '}
                   <Text id="letsGo.checks.2">
-                    I have read and agreed to the terms and conditions stated
-                    in the tenancy agreement.
+                    I have understood that my rent as well all future payments
+                    will start from the
                   </Text>
+                  {' '}
+                  { Utils.formatDate(bookingDate, { lang }) }.
+                </Checkbox>
+              </p>
+
+              <p>
+                <Checkbox
+                  name="check3"
+                  checked={check3}
+                  onChange={this.handleChange}
+                  theme={theme}
+                >
+                  {' '}
+                  <Text id="letsGo.checks.3">
+                    I have read and agreed to the terms and conditions stated
+                    in the&nbsp;
+                  </Text>
+                  <a href="https://drive.google.com/file/d/1J3CI5S-rudYMpc1dKz5cSjwb0zY2X4cy/view?usp=sharing">
+                    <Text id="letsGo.checks.4">tenancy agreement</Text>
+                  </a>.
+                </Checkbox>
+              </p>
+
+              <p>
+                <Checkbox
+                  name="check4"
+                  checked={check4}
+                  onChange={this.handleChange}
+                  theme={theme}
+                >
+                  {' '}
+                  <Text id="letsGo.checks.5">
+                    I confirm that I have read and accepted the&nbsp;
+                  </Text>
+                  <a href="https://drive.google.com/file/d/0B8dLiyBmm3wJa1IwbWsxbk85LWs/view">
+                    <Text id="letsGo.checks.6">general terms and conditions</Text>
+                  </a>.
                 </Checkbox>
               </p>
             </section>
@@ -457,24 +505,43 @@ const definition = {
       home: ['À domicile', 'du lundi au vendredi hors jours fériés de 9h à 18h'],
       special: 'À domicile 24/7',
     },
-    letsGo: {
-      title: 'C\'est parti !',
+    checkout: {
+      title: 'Planifier le checkout',
       subtitle: `
         Pas besoin de nous dire aujourd’hui quand vous partirez, vous êtes
          totalement flexible ! Gardez simplement en tête qu’il faudra nous
          donner votre date de départ au moins 30 jours à l’avance.
       `,
+    },
+    letsGo: {
+      title: 'C\'est parti !',
+      subtitle: [`
+        Avant de réserver, vous devez vous assurer que vous êtes admissible à
+        un logement Chez Nestor :
+      `,`
+        Tester mon éligibilité
+      `],
       checks: [`
-        Oui, je souhaite que ma réservation prenne effet immédiatement ,
+        Je confirme que je suis admissible, et que je peux fournir tous les
+        documents requis.
+      `,`
+        Je souhaite que ma réservation prenne effet immédiatement ,
         qu’elle soit traitée administrativement et que la chambre soit bloquée
         à mon nom. Ainsi, je renonce expressément à mon droit de rétractation,
         afin que la prestation débute avant la fin du délai légal de
-        rétractation, conformément à l'article L121-21-8 du
+        rétractation, conformément à l'article L121-21-8 du Code de la
+        Consommation.
       `, `
         J’ai bien compris que mes loyers et leur paiement commenceront à partir
         du
       `, `
-        J’ai lu et j’accepte les conditions de mon bail d’habitation.
+        J’ai lu et j’accepte les conditions de mon
+      `, `
+        bail d'habitation
+      `, `
+        J’ai lu et j’accepte les
+      `, `
+        conditions générales de vente
       `],
     },
   },

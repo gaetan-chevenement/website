@@ -87,7 +87,13 @@ class BookingSummary extends PureComponent {
                 label={<Text id="forward">Book the room</Text>}
                 icon="payment"
                 onClick={this.handleSubmit}
-                disabled={!summary.check0 || !summary.check1 || !summary.check2}
+                disabled={
+                  !summary.check0 ||
+                  !summary.check1 ||
+                  !summary.check2 ||
+                  !summary.check3 ||
+                  !summary.check4
+                }
               />
             </section>
           </nav>

@@ -242,11 +242,6 @@ const Utils = {
     firstName: yup.string().required().trim(),
     lastName: yup.string().required().trim(),
     email: yup.string().email().required().trim(),
-    isEligible: yup.boolean().required().test({
-      name: 'is-eligible',
-      message: 'You must verify your eligibility and agree to our terms of service',
-      test: Boolean,
-    }),
   }),
 
   summarySchema: yup.object().shape({
@@ -262,6 +257,16 @@ const Utils = {
     }),
     check2: yup.boolean().required().test({
       name: 'check2',
+      message: 'You must agree to all conditions to book',
+      test: Boolean,
+    }),
+    check3: yup.boolean().required().test({
+      name: 'check3',
+      message: 'You must agree to all conditions to book',
+      test: Boolean,
+    }),
+    check4: yup.boolean().required().test({
+      name: 'check4',
       message: 'You must agree to all conditions to book',
       test: Boolean,
     }),

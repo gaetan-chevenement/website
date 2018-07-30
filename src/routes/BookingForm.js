@@ -100,7 +100,6 @@ class BookingForm extends PureComponent {
                 label="Continue"
                 icon="forward"
                 onClick={this.handleSubmit}
-                disabled={!booking.isEligible || !booking.hasAcceptedTerms}
               />
             }
           </nav>

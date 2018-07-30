@@ -48,6 +48,8 @@ export default { 'fr-FR': [
   ['Agent dédié', 'Soutien personnalisé & privilégié',                0, 0, 1],
   ['Changement de logement', '1er changement de chambre dans la même ville',
                                                         '290€', '190€', '90€'],
+  ['Changement de logement à Paris', '1er changement de chambre dans la même ville',
+                                                       '390€', '290€', '190€'],
   ['Mon Départ'],
   ['Check-out à domicile', 'Notre équipe vous rejoint au domicile',   1, 1, 1],
   ['Check-out 24/7', 'Soirées, nuits, week-ends, jours fériés inclus', 0, 0, 1],
