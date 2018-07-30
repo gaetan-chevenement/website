@@ -84,6 +84,9 @@ const definition = {
       subtitle: 'Pour réserver',
     }],
   },
+  'es-ES': {
+    list: [],
+  },
 };
 
 export default Utils.connectLang(Services);

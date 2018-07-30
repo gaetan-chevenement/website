@@ -30,14 +30,19 @@ function Guide({ lang }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  title: 'Guide logement gratuit',
-  text: [
-    'Où rechercher un logement ?',
-    'Quel dossier fournir pour un étudiant ?',
-    'Quels sont les frais à prévoir pour une location ?',
-  ],
-  download: 'Téléchargez votre guide logement gratuit',
-} };
+const definition = {
+  'fr-FR': {
+    title: 'Guide logement gratuit',
+    text: [
+      'Où rechercher un logement ?',
+      'Quel dossier fournir pour un étudiant ?',
+      'Quels sont les frais à prévoir pour une location ?',
+    ],
+    download: 'Téléchargez votre guide logement gratuit',
+  },
+  'es-ES': {
+
+  },
+};
 
 export default Utils.connectLang(Guide);

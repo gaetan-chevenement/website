@@ -79,6 +79,9 @@ const definition = {
     `,
     author: 'Émilie, 23 ans, Française',
   }],
+  'es-ES': [
+
+  ]
 };
 
 export default Utils.connectLang(Testimonies);

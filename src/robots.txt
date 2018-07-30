@@ -5,3 +5,6 @@ disallow: /fr-FR/booking/
 disallow: /en-US/summary/
 disallow: /en-US/payment/
 disallow: /en-US/booking/
+disallow: /es-ES/summary/
+disallow: /es-ES/payment/
+disallow: /es-ES/booking/

@@ -201,6 +201,7 @@ const pureUtils = {
     const definition = {
       'fr-FR': 'Je souhaite visiter cette chambre',
       'en-US': 'I wish to visit this room',
+      'es-ES': 'Me gustaría visitar esta habitación',
     };
 
     return () => {

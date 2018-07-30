@@ -42,8 +42,13 @@ function City({ lang, name, roomsCount, image }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  bedrooms: 'Chambres',
-} };
+const definition = {
+  'fr-FR': {
+    bedrooms: 'Chambres',
+  },
+  'es-ES': {
+    bedrooms: 'alcobas',
+  },
+};
 
 export default Utils.connectLang(Cities);
