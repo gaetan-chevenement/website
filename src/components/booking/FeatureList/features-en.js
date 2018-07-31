@@ -44,7 +44,7 @@ export default { 'en-US': [
   ['Unlimited keys assistance', 'In case of loss or theft, loan a spare set of keys',
                                                                   '49€', 1, 1],
   ['Dedicated agent', 'Privileged personnalized support',             0, 0, 1],
-  ['Accommodation switch', '1st change of room in the same city',
+  ['Accommodation switch', '1st change of room in the same city (Paris excluded)',
                                                         '290€', '190€', '90€'],
   ['Accommodation switch in Paris', '1st change of room in Paris',
                                                        '390€', '290€', '190€'],
