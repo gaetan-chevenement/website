@@ -12,6 +12,11 @@ export default function Services({ lang }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  title: 'À propos',
-} };
+const definition = {
+  'fr-FR': {
+    title: 'À propos',
+  },
+  'es-ES': {
+    title: 'À proposito',
+  },
+};
