@@ -93,13 +93,23 @@ function Footer({ lang }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  services: 'Services Inclus',
-  booking: 'Réserver',
-  about: 'À propos de Chez Nestor',
-  // blog: 'Blog', // no translation needed
-  career: 'Travailler Chez Nestor',
-  terms: 'CGV et mentions légales',
-} };
+const definition = { 
+  'fr-FR': {
+    services: 'Services Inclus',
+    booking: 'Réserver',
+    about: 'À propos de Chez Nestor',
+    // blog: 'Blog', // no translation needed
+    career: 'Travailler Chez Nestor',
+    terms: 'CGV et mentions légales',
+  },
+  'es-ES': {
+    services: 'Servicios Incluidos',
+    booking: 'Reservar',
+    about: 'A propósito de Chez Nestor',
+    // blog: 'Blog', // no translation needed
+    career: 'Travailler Chez Nestor',
+    terms: 'CGV et mentions légales',
+  },
+};
 
 export default Utils.connectLang(Footer);
