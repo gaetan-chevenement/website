@@ -31,7 +31,7 @@ import Page             from '~/routes/Page';
 export default class App extends Component {
   // Store route parameters in the state when route changes
   @autobind
-  handleRoute(e) {
+  handleRoute(e = { current: {} }) {
     const {
       lang = this.state.lang,
       minPack,
@@ -124,8 +124,6 @@ export default class App extends Component {
             <Page path="/:lang/page/:slug" />
             <About path="/:lang/about" />
             <Contact path="/:lang/contact" />
-            <NotFound path="/:lang/:path" />
-            <NotFound default />
           </Router>
           <Match path="/">
             { // No footer on invoice or search

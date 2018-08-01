@@ -2,7 +2,7 @@ import { PureComponent }      from 'react';
 import autobind               from 'autobind-decorator';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-import {IntlProvider, Text} from 'preact-i18n';
+import { IntlProvider, Text } from 'preact-i18n';
 import Portal                 from 'preact-portal';
 import Utils                  from '~/utils';
 import * as actions           from '~/actions';
@@ -40,7 +40,7 @@ class Pictures extends PureComponent {
     };
   }
 
-  render({ lang, pictures, visitUrl, floorplans }) {
+  render({ lang, pictures, virtualVisitUrl, floorplans }) {
     let cont = null, portal = null, visit = null;
 
     if (pictures.length > 4) {
@@ -60,7 +60,7 @@ class Pictures extends PureComponent {
             <div className={style.carouselClose}>🗙</div>
             <Carousel lazy slide arrows>
               {pictures.map(({ url }) => (
-                <div class={style.slideshowImg} style={`background-image: url(${url})`} title="Mon image"/>
+                <div class={style.slideshowImg} style={`background-image: url(${url})`} title="Mon image" />
               ))}
             </Carousel>
           </div>
@@ -82,11 +82,11 @@ class Pictures extends PureComponent {
       );
     }
 
-    if (visitUrl != null) {
+    if (virtualVisitUrl != null) {
       visit = (
         <div className={`${style.visitCont} ${style.visitContAlt} one-sixth`}>
-          <a href={visitUrl} target="_blank">
-            <Text id="threeD">3d visit</Text>
+          <a href={virtualVisitUrl} target="_blank">
+            <Text id="virtualVisit">3D Visit</Text> 🗗
           </a>
         </div>
       );
@@ -117,8 +117,8 @@ class Pictures extends PureComponent {
 }
 
 const definition = { 'fr-FR': {
-    threeD: 'Visite 3D',
-    floorplans: 'Plans',
+  virtualVisit: 'Visite 3D',
+  floorplans: 'Plans',
 } };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
@@ -127,14 +127,13 @@ function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apart
   const pictures = []
     .concat(Utils.getPictures(room), Utils.getPictures(apartment))
     .filter(({ alt }) => alt !== 'floorplan');
-
-  const visitUrl = apartment.visitUrl;
   const floorplans = []
     .concat(Utils.getPictures(room), Utils.getPictures(apartment))
     .filter(({ alt }) => alt === 'floorplan');
+  const { virtualVisitUrl } = room;
 
   return {
-    visitUrl,
+    virtualVisitUrl,
     floorplans,
     lang,
     pictures,
