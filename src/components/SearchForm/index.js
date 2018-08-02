@@ -132,11 +132,18 @@ class SearchForm extends PureComponent {
   }
 }
 
-const definition = { 'fr-FR': {
+const definition = { 
+'fr-FR': {
   arrival: 'Date d\'arrivée',
   city: 'Ville *',
   submit: 'Rechercher',
-} };
+ },
+'es-ES': {
+  arrival: 'Fecha de llegada',
+  city: 'Ciudad *',
+  submit: 'Buscar',
+ },
+};
 
 
 function mapStateToProps({ route: { date, lang, city } }) {
