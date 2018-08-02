@@ -112,7 +112,19 @@ const packs = {
         'Unlimited maintenance & assistance',
       ],
     },
-  },
+    'es-ES': {
+      title: 'Básico',
+      subtitle: 'Todos los servicios esenciales para una estancia sin estrés en su apartamento',
+      listHeader: 'Los principales servicios incluyen',
+      listItems: [
+        'Contrato individual personalizado',
+        'Almohada y edredón',
+        'Activación de servicios',
+        'Mantenimiento y asistencia ilimitados',
+       ],
+    },
+ },
+};
   comfort: {
     stars: '★★',
     'fr-FR': {
@@ -137,7 +149,19 @@ const packs = {
         'Cancellation insurance - 1 month',
       ],
     },
-  },
+     'es-ES': {
+      title: 'Comfort',
+      subtitle: 'Una entrada más fácil para más comodidad y serenidad',
+      listHeader: 'Todos los servicios básicos más:',
+      listItems: [
+        'Sábanas, almohadas y fundas nórdicas',
+        'Paquete de comida',
+        'Ayuda con las teclas',
+        'Seguro de cancelación - 1 mes',
+       ],
+    },
+ },
+};
   privilege: {
     stars: '★★★',
     'fr-FR': {
@@ -157,9 +181,20 @@ const packs = {
       listHeader: 'All Comfort services plus:',
       listItems: [
         'Private driver from airport/train station',
-        'luggage service',
+        'Luggage service',
         'Dedicated agent',
         'Cancellation insurance - 7 days',
+      ],
+    },
+    'es-ES': {
+      title: 'Privilegio',
+      subtitle: 'Servicios personalizados para un soporte completo y cuidadoso',
+      listHeader: 'Todos los servicios Comfort plus:',
+      listItems: [
+        'Conductor privado desde el aeropuerto/estación de tren',
+        'Servicio de equipaje',
+        'Agente dedicado',
+        'Seguro de cancelación - 7 días',
       ],
     },
   },
@@ -167,6 +202,8 @@ const packs = {
 
 const definition = {
   'fr-FR': { select: 'Choisissez {{name}}' },
+ },
+  'es-ES': { select: 'Seleccione {{name}}' },
+ },
 };
-
 export default Utils.connectLang(PackList);
