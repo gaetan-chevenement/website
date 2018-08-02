@@ -354,8 +354,8 @@ class Summary extends PureComponent {
                 >
                   {' '}
                   <Text id="letsGo.checks.2">
-                    I have understood that my rent as well all future payments
-                    will start from the
+                    I have understood that my rent as well as all future
+                    payments will start from the
                   </Text>
                   {' '}
                   { Utils.formatDate(bookingDate, { lang }) }.
