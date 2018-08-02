@@ -166,9 +166,15 @@ function handleClickContact() {
   window.$crisp.push(['do', 'chat:open']);
 }
 
-const definition = { 'fr-FR': {
+const definition = {
+'fr-FR': {
   included: 'Services Inclus',
   booking: 'Réserver',
-} };
+ },
+'es-ES':{
+  included: 'Servicios Incluidos',
+  booking: 'Reservar',
+ },
+};
 
 export default Utils.connectLang(Header);
