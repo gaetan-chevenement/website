@@ -43,9 +43,14 @@ function Paging({ lang, count, city, page }) {
   );
 }
 
-const definition = { 'fr-FR': {
+const definition = {
+  'fr-FR': {
   paging: 'Chambres {{startsAt}} à {{endsAt}} sur {{count}}',
-} };
+  },
+  'fr-FR': {
+  paging: 'Habitaciones {{startsAt}} à {{endsAt}} sobre {{count}}',
+  },
+};
 
 const mapStateToProps = ({ route: { lang, city, page }, search: { count } }) => ({
   lang,
