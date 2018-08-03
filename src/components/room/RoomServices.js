@@ -56,6 +56,23 @@ const definition = {
     title: 'Réservation rapide',
     desc: 'Quelques clics : réserver n\'a jamais été aussi simple',
   }],
+  'es-ES': [{
+    imgIndex: 2,
+    title: '100% Amueblado',
+    desc: 'Nuestras viviendas están cuidadosamente amuebladas para ofrecer diseño y confort.',
+  }, {
+    imgIndex: 3,
+    title: 'Equipado de la A a la Z',
+    desc: 'Traiga su maleta, nosotros nos encargaremos del resto!',
+  }, {
+    imgIndex: 4,
+    title: 'Todo Incluido',
+    desc: 'Seguro, wifi, gasolina... Sin cargos ocultos',
+  }, {
+    imgIndex: 6,
+    title: 'Reservas rápidas',
+    desc: 'Un par de clics: reservar nunca ha sido tan fácil!',
+  }],
 };
 
 export default Utils.connectLang(RoomServices);
