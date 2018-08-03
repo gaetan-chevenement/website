@@ -160,7 +160,9 @@ const BookingInfo = ({ lang, roomId, room }) => {
   );
 };
 
-const definition = { 'fr-FR': {
+const definition = {
+
+ 'fr-FR': {
   oneTime: 'Paiements ponctuels',
   mensuel: 'Paiements mensuels',
   rent: 'Loyer',
@@ -188,7 +190,37 @@ const definition = { 'fr-FR': {
   booking: 'Réserver ce logement',
   visit: 'Visite',
   enquire: 'Renseignements',
-} };
+}, 
+ 'es-ES': {
+  oneTime: 'Pagos únicos',
+  mensuel: 'Pagos mensuales',
+  rent: 'Alquiler',
+  month: 'meses',
+  serviceFees: 'Gastos',
+  caf: 'Asistencia para la vivienda (CAF)',
+  cafInfo: `
+    Este alojamiento es elegible para el APL. El pago de esta ayuda se limita a
+    no sistemático y su importe, aleatorio, depende del alquiler y de la
+    su situación personal. Contacte con CAF.
+  `,
+  deposit: 'Depósito de seguridad',
+  depositInfo: 'Reembolsado después de su estancia.',
+  pack: 'Housing Pack',
+  packInfo: 'Básico, Confort o Privilegio. Su pago finaliza su reserva.',
+  included: 'Incluido',
+  wifi: 'Wifi de alta velocidad ilimitada',
+  elec: 'Electricidad',
+  water: 'Agua',
+  gaz: 'Gas',
+  insurance: 'Seguro del Hogar',
+  condo: 'Cargos de condominio',
+  maintenance: 'Mantenimiento técnico',
+  waste: 'Impuestos sobre la basura',
+  booking: 'Reservar este alojamiento',
+  visit: 'Visita',
+  enquire: 'Información',
+ }, 
+};
 
 function mapStateToProps({ route: { lang }, rooms }, { roomId }) {
   const room = rooms[roomId];
