@@ -50,6 +50,13 @@ const definition = {
   'en-US': {
     visitMsg: 'I wish to visit this room',
   },
+  'es-ES': {
+    title: '¿Una pregunta?',
+    subtitle: 'Nuestro equipo estará encantado de ayudarle!',
+    question: 'Haga una pregunta',
+    visit: 'Solicitar una visita',
+    visitMsg: 'Deseo visitar esta habitación',
+  },
 };
 
 export default Utils.connectLang(Questions);
