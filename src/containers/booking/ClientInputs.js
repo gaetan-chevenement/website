@@ -48,11 +48,18 @@ class ClientInputs extends PureComponent {
   }
 }
 
-const definition = { 'fr-FR': {
+const definition = {
+   'fr-FR': {
   firstName: 'Prénom',
   lastName: 'Nom de famille',
   email: 'Courriel',
-} };
+   }, 
+   'es-ES': {
+  firstName: 'Nombre ',
+  lastName: 'Apellido',
+  email: 'Correo electrónico',
+   }, 
+};
 
 function mapStateToProps({ route: { lang }, booking }) {
   return {
