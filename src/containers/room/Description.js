@@ -81,22 +81,33 @@ function ElevatorDetail({ lang, apartment }) {
   );
 }
 
-const definition = { 'fr-FR': {
+const definition = {
+
+'fr-FR': {
   title: 'Description',
   apartment: 'logement',
   groundFloor: 'rez-de-chaussée',
   floor: 'étage',
   elevator: 'ascenseur',
   room: 'chambre',
-} };
+ },
+'fr-FR': {
+  title: 'Descripción',
+  apartment: 'vivienda',
+  groundFloor: 'planta baja',
+  floor: 'planta',
+  elevator: 'ascensor',
+  room: 'habitación ',
+ },
+};
 
 const bedDetails = {
-  double: { 'fr-FR': '1 lit double', 'en-US': '1 double bed', css: 'picto-equipement_chambre_lit_double' },
-  simple: { 'fr-FR': '1 lit simple', 'en-US': '1 simple bed', css: 'picto-equipement_chambre_lit_double' },
-  sofa: { 'fr-FR': '1 canapé-lit', 'en-US': '1 sofa bed', css: 'picto-equipement_chambre_canape_ou_canape_lit' },
-  'double+sofa': { 'fr-FR': '1 lit double et un canapé-lit', 'en-US': '1 double bed and a sofa bed', css: 'picto-equipement_chambre_lit_double' },
-  'simple+sofa': { 'fr-FR': '1 lit simple et un canapé-lit', 'en-US': '1 simple bed and a sofa bed', css: 'picto-equipement_chambre_lit_double'  },
-  'simple+simple': { 'fr-FR': '2 lits simple', 'en-US': '2 simple beds', css: 'picto-equipement_chambre_lit_double' },
+  double: { 'fr-FR': '1 lit double', 'en-US': '1 double bed', 'es-ES': '1 cama doble', css: 'picto-equipement_chambre_lit_double' },
+  simple: { 'fr-FR': '1 lit simple', 'en-US': '1 simple bed', 'es-ES': '1 cama individual', css: 'picto-equipement_chambre_lit_double' },
+  sofa: { 'fr-FR': '1 canapé-lit', 'en-US': '1 sofa bed', 'es-ES': '1 sofá cama', css: 'picto-equipement_chambre_canape_ou_canape_lit' },
+  'double+sofa': { 'fr-FR': '1 lit double et un canapé-lit', 'en-US': '1 double bed and a sofa bed', 'es-ES': '1 cama doble y un sofá cama', css: 'picto-equipement_chambre_lit_double' },
+  'simple+sofa': { 'fr-FR': '1 lit simple et un canapé-lit', 'en-US': '1 simple bed and a sofa bed', 'es-ES': '1 cama individual y un sofá cama', css: 'picto-equipement_chambre_lit_double'  },
+  'simple+simple': { 'fr-FR': '2 lits simple', 'en-US': '2 simple beds', 'es-ES': '2 camas simples', css: 'picto-equipement_chambre_lit_double' },
 };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
