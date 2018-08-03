@@ -82,12 +82,21 @@ function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount })
   );
 }
 
-const definition = { 'fr-FR': {
+const definition = { 
+
+ 'fr-FR': {
   overview: 'Aperçu',
   housemates: 'Colocataires',
   location: 'Localisation',
   viewsCount: '{{viewsCount}} personnes ont consulté cette annonce cette semaine.',
-} };
+ },
+ 'fr-FR': {
+  overview: 'Panorama general',
+  housemates: 'Compañeros de cuarto',
+  location: 'Localización',
+  viewsCount: '{{viewsCount}} personas vieron este anuncio esta semana.',
+ },
+};
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
   const room = rooms[roomId];
