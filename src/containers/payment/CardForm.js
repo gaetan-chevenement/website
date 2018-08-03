@@ -232,7 +232,8 @@ function mapStateToProps({ route: { lang }, orders, payment }) {
   };
 }
 
-const definition = { 'fr-FR': {
+const definition = {
+ 'fr-FR': {
   errors: {
     paid: 'Cette facture a déjà été payée',
     orderCancelled: 'Cette facture a été annulée',
@@ -269,7 +270,47 @@ const definition = { 'fr-FR': {
 } };
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actions, dispatch) };
-}
+  return { actions: bindActionCreators(actions, dispatch)
+ },
+'es-ES': {
+  errors: {
+    paid: 'Esta factura ya ha sido pagada',
+    orderCancelled: 'Esta factura ha sido anulada',
+    doNotHonor: 'El pago fue rechazado por su banco.',
+    roomUnavailable: 'Esta habitación ya no está disponible.',
+    balanceMismatch: `
+      El precio de esta factura ha sido modificado.
+      Por favor, compruebe el nuevo precio e intente el pago de nuevo.
+    `,
+    detailsMismatch: `
+      Los detalles de esta factura han sido modificados.
+      Por favor, actualice la página o regrese a su
+      para comprobar si hay cambios antes de realizar un pedido.
+      intente el pago de nuevo.
+    `,
+    cardExpired: 'Esta tarjeta parece haber caducado.',
+    unexpected: 'Se ha producido un error inesperado.',
+    retry: 'Inténtalo de nuevo',
+    support: 'Póngase en contacto con el servicio de asistencia',
+  },
+  payment: {
+    success: 'Su pago ha sido hecho.',
+  },
+  card: {
+    number: 'Número de tarjeta de crédito',
+    holder: 'titular de la tarjeta de crédito',
+    expiry: {
+      month: 'mes de vencimiento',
+      year: 'año de expiración',
+    },
+    cvv: 'criptograma',
+  },
+  downloadInvoice: 'Cargue su factura',
+} };
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actions, dispatch)
+ },
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardForm);
