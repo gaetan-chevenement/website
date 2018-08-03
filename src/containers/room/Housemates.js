@@ -56,13 +56,23 @@ function Housemate({ lang, housemate, roomId, index }) {
   );
 }
 
-const definition = { 'fr-FR': {
+const definition = { 
+
+  'fr-FR': {
   title: 'Colocataires',
   available: 'Disponible',
   booked: 'Réservé',
   view: 'voir',
   room: 'Chambre',
-} };
+  },
+  'fr-FR': {
+  title: 'Compañeros de cuarto',
+  available: 'Disponible',
+  booked: 'Reservado',
+  view: 'decir',
+  room: 'Habitación',
+  },
+};
 
 function mapStateToProps({ route: { lang, roomId }, apartments, rooms }, { apartmentId }) {
   const apartment = apartments[apartmentId];
