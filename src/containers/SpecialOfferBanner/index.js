@@ -57,6 +57,12 @@ const definition = {
       '→ Contact us with the code SUMMER :)',
     ].join(' '),
   },
+  'es-ES': {
+    specialOffer: [
+      'Oferta especial en habitaciones disponibles antes del 31/07',
+      '→ Contáctenos con el código SUMMER :)',
+    ].join(' '),
+  },
 };
 
 function mapStateToProps({ route: { lang }, session }) {
