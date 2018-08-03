@@ -131,6 +131,16 @@ const definition = {
       multiple: '{{count}} beddings',
     },
   },
+ 'es-ES': {
+    bedrooms: 'Habitaciones',
+    rooms: 'Cuartos',
+    beds: {
+      double: 'Cama doble',
+      simple: 'Cama individual',
+      sofa: 'Sofá cama',
+      multiple: '{{count}} amarraderos',
+    },
+  },
 };
 
 // /!\ This component cannot used the state because it's used inside leaflet
