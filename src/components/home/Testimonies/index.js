@@ -79,6 +79,30 @@ const definition = {
     `,
     author: 'Émilie, 23 ans, Française',
   }],
+  'fr-FR': [{
+    title: 'Servicio perfecto',
+    comment: `
+      El equipo fue muy servicial y agradable durante mi estancia. 
+      Mi instalación fue rápida y fácil. 
+      El mantenimiento de la casa era impecable. Gracias :)
+    `,
+    author: 'Anna, 22 años, Australiana',
+  }, {
+    title: 'Apartamento muy confortable',
+    comment: `
+      Disfruté mucho descubriendo la ciudad con mis compañeros de cuarto y
+      concentrándome en mis estudios: todo está listo en el alojamiento,
+        no hay nada más que cuidar.
+    author: 'Max, 25, Alemán',
+  }, {
+    title: 'Super simple !',
+    comment: `
+      La réservation est super simple, et j'ai adoré avoir des colocataires
+      internationaux. J'ai déjà testé le service dans 3 villes depuis 2 ans
+      pour des stages et semestres.
+    `,
+    author: 'Émilie, 23 ans, Française',
+  }],
 };
 
 export default Utils.connectLang(Testimonies);
