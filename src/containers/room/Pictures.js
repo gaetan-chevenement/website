@@ -116,10 +116,17 @@ class Pictures extends PureComponent {
   }
 }
 
-const definition = { 'fr-FR': {
+const definition = { 
+
+  'fr-FR': {
   virtualVisit: 'Visite 3D',
   floorplans: 'Plans',
-} };
+  },
+  'fr-FR': {
+  virtualVisit: 'Tour 3D',
+  floorplans: 'Planes',
+  },
+};
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
   const room = rooms[roomId];
