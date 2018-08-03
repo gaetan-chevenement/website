@@ -16,8 +16,14 @@ function SameSearchCount({ lang, count }) {
   );
 }
 
-const definition = { 'fr-FR': {
+const definition = { 
+
+ 'fr-FR': {
   count: '{{count}} personnes ont fait la même recherche cette semaine.',
-} };
+ },
+ 'es-ES': {
+  count: '{{count}} personas hicieron la misma busqueda esta semana.',
+ },
+};
 
 export default Utils.connectLang(SameSearchCount);
