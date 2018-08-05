@@ -26,9 +26,10 @@ class Page extends Component {
       await actions.getPage(fullSlug);
     }
     catch (e) {
-      console.error(e);
-      if (!this.props.noRedirect) {
+      if (!this.props.noRedirect && e.error.isNotFound) {
         route(`/${this.props.lang}/404`);
+      } else {
+        throw e;
       }
     }
   }

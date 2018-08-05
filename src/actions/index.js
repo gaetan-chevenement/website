@@ -189,8 +189,15 @@ export const savePayment =
     } } },
   );
 
+
+
 function throwIfNotFound(modelName, id) {
   return (response) => {
+    if (modelName === 'Page' && response.length === 0 ) {
+      let error = new Error(`${modelName} ${id} not found`);
+      error.isNotFound = true;
+      throw error;
+    }
     // we used to just check meta.count but it is sometimes wrong
     // (e.g. when we query a room, as we have a hook to modify the select query
     // but not the count one)
