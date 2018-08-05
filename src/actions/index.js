@@ -195,7 +195,9 @@ function throwIfNotFound(modelName, id) {
     // (e.g. when we query a room, as we have a hook to modify the select query
     // but not the count one)
     if ( Array.isArray(response.data) && response.data.length === 0 ) {
-      throw new Error(`${modelName} ${id} not found`);
+      let error = new Error(`${modelName} ${id} not found`);
+      error.isNotFound = true;
+      throw error;
     }
 
     return response;

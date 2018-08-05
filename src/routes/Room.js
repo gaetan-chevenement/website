@@ -27,7 +27,12 @@ class Room extends PureComponent {
       return actions.getDistrict(districtId);
     }
     catch (e) {
-      route(`/${this.props.lang}/404`);
+      if (e.isNotFound) {
+        route(`/${this.props.lang}/404`);
+      }
+      else {
+        throw e;
+      }
     }
 
   }
