@@ -1,0 +1,10 @@
+.snackbar {
+  background-color: var(--color-primary);
+  text-align: center;
+  font-weight: bold;
+  flex-direction: row-reverse;
+}
+
+.button {
+  margin: -7px 48px -7px -12px;
+}
