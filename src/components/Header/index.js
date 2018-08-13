@@ -74,15 +74,9 @@ class Header extends Component {
 
   render({ lang, path }) {
     let show = true;
-    if (this.isRoomPage()) {
-      const $el = document.getElementById('room-anchors');
-      if ( $el !== null ) {
-        show = $el.getBoundingClientRect().bottom > 0;
-      }
-    }
     return (
       <IntlProvider definition={definition[lang]}>
-        <header class={[style.header, !show ? style.headerHidden : null].join( ' ')}>
+        <header class={[style.header, this.isRoomPage() ? style.headerNotFixed : null].join( ' ')}>
           <div class={[style.wrapper, this.isSearchPage() ? style.wrapperLite : null].join(' ')}>
 
 

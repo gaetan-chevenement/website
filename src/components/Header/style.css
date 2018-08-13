@@ -12,6 +12,10 @@
 
 }
 
+.headerNotFixed {
+  position: absolute;
+}
+
 .header .wrapper {
 	width: 100%;
 	max-width: 1024px;

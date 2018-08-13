@@ -23,12 +23,20 @@ class Header extends Component {
   @autobind
   handleScroll() {
     // This function will never get called server-side
-    const $el = document.getElementById('bookBtn');
+    let $el = document.getElementById('bookBtn');
     if ( $el !== null ) {
       const maxPos = $el.offsetTop + window.innerHeight;
       const showBookBtn = getDocumentScrollTop() > maxPos;
       if (this.state.showBookBtn !== showBookBtn) {
         this.setState({ showBookBtn });
+      }
+    }
+    $el = document.getElementById('room-anchors');
+    if ( $el !== null ) {
+      const maxPos = $el.offsetTop + window.innerHeight;
+      const showLinks = getDocumentScrollTop() > maxPos;
+      if (this.state.showLinks !== showLinks) {
+        this.setState({ showLinks });
       }
     }
   }
@@ -43,6 +51,7 @@ class Header extends Component {
     this.state = {
       showBookBtn: false,
       showSlideshow: false,
+      showLinks: false,
     };
   }
 
@@ -67,19 +76,21 @@ class Header extends Component {
     return (
       <IntlProvider definition={definition[lang]}>
         <div>
-          <div className={[style.links, style.fixedLinks].join(' ')}>
-            <ul>
-              <li>
-                <AnchorLink href="overview"><Text id="overview">Overview</Text></AnchorLink>
-              </li>
-              <li>
-                <AnchorLink href="housemates"><Text id="housemates">Housemates</Text></AnchorLink>
-              </li>
-              <li>
-                <AnchorLink href="location"><Text id="location">Location</Text></AnchorLink>
-              </li>
-            </ul>
-          </div>
+          {this.state.showLinks ? (
+            <div className={[style.links, style.fixedLinks].join(' ')}>
+              <ul>
+                <li>
+                  <AnchorLink href="overview"><Text id="overview">Overview</Text></AnchorLink>
+                </li>
+                <li>
+                  <AnchorLink href="housemates"><Text id="housemates">Housemates</Text></AnchorLink>
+                </li>
+                <li>
+                  <AnchorLink href="location"><Text id="location">Location</Text></AnchorLink>
+                </li>
+              </ul>
+            </div>
+          ): null }
           {this.state.showSlideshow ? (
             <Portal into="body">
               <div className={style.carouselOverlay} onClick={this.toggleSlideshow}>
