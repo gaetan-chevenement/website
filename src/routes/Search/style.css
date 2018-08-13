@@ -1,10 +1,11 @@
 .viewport {
+  margin-top: 130px;
 }
 
 .mobileShow, .mobileHide {
   @media screen and (max-width: 990px) {
     position: fixed;
-    top: 80px;
+    top: 130px;
     left: 0;
     right: 0;
   }
@@ -27,7 +28,7 @@
   width: 35%;
   right: 0;
   position: fixed;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 130px);
 
   @media screen and (max-width: 990px) {
     width: 100%;
@@ -46,7 +47,7 @@
     box-sizing: border-box;
     margin-left: 0;
     width: 100%;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 130px);
     overflow: scroll;
   }
 }

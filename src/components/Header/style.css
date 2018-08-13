@@ -9,7 +9,10 @@
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 	z-index: 200;
   transition: opacity 300ms ease-in;
+}
 
+.headerMultiLine {
+  height: 130px;
 }
 
 .headerNotFixed {
@@ -61,8 +64,7 @@
 }
 
 .headerOptionalPart {
-  max-width: 600px;
-  min-width: 400px;
+  width: 500px;
 }
 
 .headerOptionalPart > div {
@@ -88,4 +90,36 @@
 
 .drawerWrapper {
   z-index: 2000000; /* Crisp z-index is 10^6... */
+}
+
+.searchLine {
+  left: 0;
+  top: 60px;
+  height: 70px;
+  width: 100%;
+  position: fixed;
+  z-index: 201;
+  margin-left: 115px;
+}
+
+.searchLine > div {
+  width: 410px;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.searchLine form {
+  margin-top: 0 !important;
+}
+
+.searchLine a[data-react-toolbox="button"] {
+  margin-top: 0;
+}
+
+@media screen and (max-width: 550px) {
+  .searchLine > div {
+    width: calc(100% - 115px);
+  }
 }

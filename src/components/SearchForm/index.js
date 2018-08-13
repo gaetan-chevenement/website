@@ -47,7 +47,7 @@ class SearchForm extends PureComponent {
 
     this.setState(
       { city: value, error: false },
-      (this.props.mode === 'noSubmit' || this.props.mode === 'header')  && this.updateRoute
+      (this.props.mode !== 'home')  && this.updateRoute
     );
   }
 
@@ -55,7 +55,7 @@ class SearchForm extends PureComponent {
   handleDateChange(value) {
     this.setState(
       { date: value },
-      (this.props.mode === 'noSubmit' || this.props.mode === 'header') && this.updateRoute
+      (this.props.mode !== 'home' ) && this.updateRoute
     );
   }
 
@@ -84,47 +84,41 @@ class SearchForm extends PureComponent {
       <IntlProvider definition={definition[lang]}>
         <form class={`${form} ${this.props.mode === 'noSubmit' ? noSubmit : ''}`} 
           style={this.props.mode === 'home' ? {flexWrap: 'wrap'} : null}> 
-          <div> 
-            <i class="material-icons">location_city</i>
-            <Dropdown
-              id={this.props.mode === 'header' ? null : 'city-select'}
-              onChange={this.handleCityChange}
-              label={<Text id="city">City *</Text>}
-              value={this.state.city}
-              source={
-                SEARCHABLE_CITIES.map(({ name }) => ({ value: name, label: name }))
-              }
-              floating={false}
-              error={this.state.error}
-            />
-          </div>
-          <div>
-            <i class="material-icons">date_range</i>
-            <DatePicker
-              locale={lang.substring(0,2)}
-              label={<Text id="arrival">Arrival date</Text>}
-              floating={false}
-              value={this.state.date}
-              onChange={this.handleDateChange}
-              autoOk
-            />
-          </div>
-          {this.props.mode === 'noSubmit' || this.props.mode === 'header' ?
-            { /*<div>
-              <i class="material-icons">attach_money</i>
-              <Input
-                type="text"
-                label="Tous les loyers"
-                disabled
+          { this.props.mode !== 'secondline' ? (
+            <div>
+              <i class="material-icons">location_city</i>
+              <Dropdown
+                id={this.props.mode === 'header' ? null : 'city-select'}
+                onChange={this.handleCityChange}
+                label={<Text id="city">City *</Text>}
+                value={this.state.city}
+                source={
+                  SEARCHABLE_CITIES.map(({ name }) => ({ value: name, label: name }))
+                }
                 floating={false}
+                error={this.state.error}
               />
-            </div> */} :
+            </div> ) : null }
+          { this.props.mode !== 'firstline' ? (
+            <div>
+              <i className="material-icons">date_range</i>
+              <DatePicker
+                locale={lang.substring(0, 2)}
+                label={<Text id="arrival">Arrival date</Text>}
+                floating={false}
+                value={this.state.date}
+                onChange={this.handleDateChange}
+                autoOk
+              />
+            </div>
+          ) : null }
+          {this.props.mode === 'home' ? (
             <div class={buttonContainer}>
               <Button
                 label={<Text id="submit">Search</Text>}
                 onClick={this.handleSubmit}
               />
-            </div>
+            </div> ) : null
           }
         </form>
       </IntlProvider>

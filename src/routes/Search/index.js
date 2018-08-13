@@ -94,10 +94,6 @@ export class Search extends PureComponent {
           className={this.state.mobilePane !== 'list' ? mobileHide : mobileShow}
         >
           <div className={leftPane}>
-            <div className={searchEngineAndAlerts}>
-              <SearchForm mode="noSubmit" />
-              <CreateAlertButton />
-            </div>
             { isLoading ? (
               <div class="text-center">
                 <ProgressBar type="circular" mode="indeterminate" />

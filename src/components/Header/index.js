@@ -10,6 +10,7 @@ import appbarTheme            from 'react-toolbox/components/app_bar/theme.css';
 import Utils                  from '~/utils';
 import style                  from './style';
 import SearchForm             from '../SearchForm';
+import CreateAlertButton from "../CreateAlertButton";
 
 // https://stackoverflow.com/questions/20514596/document-documentelement-scrolltop-return-value-differs-in-chrome
 function getDocumentScrollTop() {
@@ -33,7 +34,7 @@ class Header extends Component {
       isDrawerActive: false,
       scrollPx: getDocumentScrollTop()
     };
-  } 
+  }
 
   @autobind
   handleScroll() {
@@ -66,33 +67,56 @@ class Header extends Component {
       <div class={style.headerLeftPart}>
         <AppBarTitle lang={this.props.lang} isLite={headerIsLite} handleToggle={this.handleToggle} />
         <div class={style.headerOptionalPart}>
-          { this.isSearchPage() ? <SearchPageAddon scrollPx={this.state.scrollPx} /> : null}
+          { this.isSearchPage() ? (
+              <SearchForm mode="firstline"/> ) : null
+          }
         </div>
       </div>
     );
   }
 
   render({ lang, path }) {
+    const headerClasses = [
+      style.header,
+      this.isRoomPage() ? style.headerNotFixed : null,
+      this.isSearchPage() ? style.headerMultiLine : null,
+    ]
     return (
       <IntlProvider definition={definition[lang]}>
-        <header class={[style.header, this.isRoomPage() ? style.headerNotFixed : null].join( ' ')}>
-          <div class={[style.wrapper].join(' ')}>
-            <AppBar
-              title={this.renderLeftPart()}
-              flat
-              theme={style}
-            >
-              <AppNavigation className="hide-md-down" type="horizontal" {...{ lang, path }} />
-            </AppBar>
-          </div>
-          <Drawer type="left"
-            active={this.state.isDrawerActive}
-            onOverlayClick={this.handleToggle}
-            theme={{wrapper: style.drawerWrapper}}
-          >
-            <AppNavigation type="vertical" {...{ lang, path }} />
-          </Drawer>
-        </header>
+        <div>
+          <header className={headerClasses.join(' ')}>
+            <div>
+              <div className={[style.wrapper].join(' ')}>
+                <AppBar
+                  title={this.renderLeftPart()}
+                  flat
+                  theme={style}
+                >
+                  <AppNavigation className="hide-md-down" type="horizontal" {...{lang, path}} />
+                </AppBar>
+              </div>
+              <Drawer type="left"
+                      active={this.state.isDrawerActive}
+                      onOverlayClick={this.handleToggle}
+                      theme={{wrapper: style.drawerWrapper}}
+              >
+                <AppNavigation type="vertical" {...{lang, path}} />
+              </Drawer>
+            </div>
+
+          </header>
+
+          {this.isSearchPage() ? (
+            <div className={style.searchLine}>
+              <div>
+                <SearchForm mode="secondline" />
+                <CreateAlertButton />
+              </div>
+
+            </div>
+          ) : null
+          }
+        </div>
       </IntlProvider>
     );
   }
@@ -142,20 +166,6 @@ function AppNavigation({ lang, path, type, className }) {
       }
     </Navigation>
   );
-}
-
-function SearchPageAddon({ scrollPx }) {
-  const $el = document.getElementById('city-select');
-  if ( $el !== null ) {
-    const show = $el.getBoundingClientRect().bottom < 0;
-    return (
-      <div class={show ? style.showAdditionalPart : null}>
-        <SearchForm  mode="header" />
-      </div>
-    );
-  }
-
-  return null;
 }
 
 function handleClickContact() {
