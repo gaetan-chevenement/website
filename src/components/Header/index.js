@@ -73,11 +73,10 @@ class Header extends Component {
   }
 
   render({ lang, path }) {
-    let show = true;
     return (
       <IntlProvider definition={definition[lang]}>
         <header class={[style.header, this.isRoomPage() ? style.headerNotFixed : null].join( ' ')}>
-          <div class={[style.wrapper, this.isSearchPage() ? style.wrapperLite : null].join(' ')}>
+          <div class={[style.wrapper].join(' ')}>
 
 
             <AppBar
@@ -104,11 +103,11 @@ class Header extends Component {
 
 function AppBarTitle({ lang, isLite = false }) {
   return (
-    <h1 class={appbarTheme.title} style={{ margin: '0 0 0 -44px' }}>
+    <h1 class={appbarTheme.title} style={{ margin: '0 0 0 -22px' }}>
       <div>
         <Link href={`/${lang}`}>
           { isLite ?
-            <img src="/assets/logo.png" alt="Chez Nestor" className={style.logoLite}/>
+            <img src="/assets/logo.png" alt="Chez Nestor" className={style.logoLite} />
             : <img src="/assets/logo370x130.png" alt="Chez Nestor" />
           }
 

@@ -18,7 +18,6 @@
 
 .header .wrapper {
 	width: 100%;
-	max-width: 1024px;
 	margin: 0 auto;
 }
 
@@ -55,10 +54,6 @@
 .logoLite {
   padding: 7px;
   padding-left: 10px;
-}
-
-.wrapperLite  {
-  max-width: 1280px !important;
 }
 
 .headerLeftPart {
