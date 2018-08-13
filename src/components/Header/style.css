@@ -81,3 +81,11 @@
 .headerHidden {
   opacity: 0;
 }
+
+.mobileLeftPart {
+  cursor: pointer;
+}
+
+.drawerWrapper {
+  z-index: 2000000; /* Crisp z-index is 10^6... */
+}

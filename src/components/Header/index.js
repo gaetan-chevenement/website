@@ -64,7 +64,7 @@ class Header extends Component {
     const headerIsLite = this.isSearchPage() || this.isRoomPage();
     return (
       <div class={style.headerLeftPart}>
-        <AppBarTitle lang={this.props.lang} isLite={headerIsLite} />
+        <AppBarTitle lang={this.props.lang} isLite={headerIsLite} handleToggle={this.handleToggle} />
         <div class={style.headerOptionalPart}>
           { this.isSearchPage() ? <SearchPageAddon scrollPx={this.state.scrollPx} /> : null}
         </div>
@@ -77,19 +77,18 @@ class Header extends Component {
       <IntlProvider definition={definition[lang]}>
         <header class={[style.header, this.isRoomPage() ? style.headerNotFixed : null].join( ' ')}>
           <div class={[style.wrapper].join(' ')}>
-
-
             <AppBar
               title={this.renderLeftPart()}
               flat
               theme={style}
             >
-              <AppNavigation className="hide-sm-down" type="horizontal" {...{ lang, path }} />
+              <AppNavigation className="hide-md-down" type="horizontal" {...{ lang, path }} />
             </AppBar>
           </div>
-          <Drawer type="right"
+          <Drawer type="left"
             active={this.state.isDrawerActive}
             onOverlayClick={this.handleToggle}
+            theme={{wrapper: style.drawerWrapper}}
           >
             <AppNavigation type="vertical" {...{ lang, path }} />
           </Drawer>
@@ -99,16 +98,22 @@ class Header extends Component {
   }
 }
 
-function AppBarTitle({ lang, isLite = false }) {
+function AppBarTitle({ lang, isLite = false, handleToggle }) {
+  const logo = isLite ?
+    <img src="/assets/logo.png" alt="Chez Nestor" className={style.logoLite} />
+    : <img src="/assets/logo370x130.png" alt="Chez Nestor" />;
+
   return (
     <h1 class={appbarTheme.title} style={{ margin: '0 0 0 -22px' }}>
-      <div>
-        <Link href={`/${lang}`}>
-          { isLite ?
-            <img src="/assets/logo.png" alt="Chez Nestor" className={style.logoLite} />
-            : <img src="/assets/logo370x130.png" alt="Chez Nestor" />
-          }
-
+      <div className="hide-lg-up">
+        <div onClick={handleToggle}>
+          { logo }
+          >
+        </div>
+      </div>
+      <div className="hide-md-down">
+        <Link href={`/${lang}`} >
+          { logo }
         </Link>
       </div>
     </h1>
