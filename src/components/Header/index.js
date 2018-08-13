@@ -81,8 +81,6 @@ class Header extends Component {
 
             <AppBar
               title={this.renderLeftPart()}
-              rightIcon="menu"
-              onRightIconClick={this.handleToggle}
               flat
               theme={style}
             >
