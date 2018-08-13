@@ -1,12 +1,9 @@
 import { IntlProvider, Text } from 'preact-i18n';
 import Utils                  from '~/utils';
-import _const                 from '~/const';
 import {
   footer,
   social,
 }                             from './style';
-
-const { SALES_EMAIL } = _const;
 
 function Footer({ lang }) {
   return (

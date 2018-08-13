@@ -26,10 +26,10 @@ body {
 }
 
 #app > header + div {
-  margin-top: var(--header-height);
+  margin-top: calc(var(--header-height) + 0px);
   min-height: 100vh;
 }
-header + .content {
+#app > header + .content {
   margin-top: calc(var(--header-height) + 20px);
 }
 header + footer {
@@ -73,6 +73,11 @@ section {
 
 [class^="grid-"] > dd {
   margin-bottom: 0;
+}
+
+.text-small .material-icons {
+  font-size: 120% !important;
+  vertical-align: -2px;
 }
 
 /* Leaflet specific classes */

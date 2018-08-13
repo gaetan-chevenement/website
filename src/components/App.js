@@ -18,6 +18,7 @@ import BookingSummary   from '~/routes/BookingSummary';
 import BookingConfirmed from '~/routes/BookingConfirmed';
 import Payment          from '~/routes/Payment';
 import Invoice          from '~/routes/Invoice';
+
 import {
   updateRoute,
 }                       from '~/actions';
@@ -30,7 +31,7 @@ import Page             from '~/routes/Page';
 export default class App extends Component {
   // Store route parameters in the state when route changes
   @autobind
-  handleRoute(e) {
+  handleRoute(e = { current: {} }) {
     const {
       lang = this.state.lang,
       minPack,
@@ -103,7 +104,7 @@ export default class App extends Component {
           <Match path="/">
             { // No header on invoices
               ({ matches, path, url }) =>
-                rInvoice.test(path) ?
+                [rInvoice].some((regex) => regex.test(path)) ?
                   '' : <Header {...{ path }} />
             }
           </Match>
@@ -127,7 +128,7 @@ export default class App extends Component {
             <NotFound default />
           </Router>
           <Match path="/">
-            { // No footer on invoice, home
+            { // No footer on invoice or search
               ({ matches, path, url }) =>
                 [rInvoice, rSearch].some((regex) => regex.test(path)) ?
                   '' : <Footer />
@@ -142,6 +143,9 @@ export default class App extends Component {
 const store = configureStore({
   route: {
     lang: 'en-US',
+  },
+  session: {
+    isSpecialOfferBannerActive: null,
   },
   booking: {
     minPack: 'basic',
