@@ -50,12 +50,13 @@ function Description({ lang, room, apartment }) {
   );
 }
 
+// TODO: this should be refactored with getBedDetails
+// in ~/components/search/room
 function BedDetail({ lang, room }) {
   return (
     <li>
       <i className={`icon-24 ${bedDetails[room.beds].css}`} />
-      <span>{bedDetails[room.beds][lang]}
-      </span>
+      <span>{bedDetails[room.beds][lang]}</span>
     </li>
   );
 }

@@ -133,6 +133,6 @@ const definition = {
   },
 };
 
-// /!\ This component cannot used the state because it's used inside leaflet
+// /!\ This component cannot use the state because it's used inside leaflet
 // and apparently these things are incompatible.
 export default Room;
