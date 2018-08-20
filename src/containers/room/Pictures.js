@@ -60,8 +60,12 @@ class Pictures extends PureComponent {
           <div className={style.carouselOverlay} onClick={this.handleSlideshowClick}>
             <div className={style.carouselClose}>🗙</div>
             <Carousel lazy slide arrows>
-              {pictures.map(({ url }) => (
-                <div className={style.slideshowImg} style={`background-image: url(${url})`} title="Mon image" />
+              {pictures.map(({ url, alt }) => (
+                <div
+                  className={style.slideshowImg}
+                  style={`background-image: url(${url})`}
+                  alt={alt}
+                />
               ))}
             </Carousel>
           </div>
@@ -75,7 +79,11 @@ class Pictures extends PureComponent {
             <div className={style.carouselClose}>🗙</div>
             <Carousel lazy slide arrows>
               {floorplans.map(({ url }) => (
-                <div className={style.slideshowImg} style={`background-image: url(${url})`} />
+                <div
+                  className={style.slideshowImg}
+                  style={`background-image: url(${url})`}
+                  title={definition[lang].floorplanDisclaimer}
+                />
               ))}
             </Carousel>
           </div>
@@ -117,10 +125,22 @@ class Pictures extends PureComponent {
   }
 }
 
-const definition = { 'fr-FR': {
-  virtualVisit: 'Visite 3D',
-  floorplans: 'Plan',
-} };
+const definition = {
+  'en-US': {
+    floorplanDisclaimer: `
+      Note: All surface (closet, balcony, area under slope...) is taking into
+      account in the surface area of each room.
+    `,
+  },
+  'fr-FR': {
+    virtualVisit: 'Visite 3D',
+    floorplans: 'Plan',
+    floorplanDisclaimer: `
+      Note : les surfaces des chambres comprennent toutes les surfaces
+      privatives au sol (placard, balcon, sous-pente...).
+    `,
+  },
+};
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
   const room = rooms[roomId];

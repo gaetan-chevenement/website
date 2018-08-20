@@ -68,7 +68,7 @@ class Carousel extends PureComponent {
 
     return (
       <div className={`${className} carousel-wrapper`}>
-        { arrows ? this.renderArrows() : '' }
+        { arrows && children.length > 1 ? this.renderArrows() : '' }
         <div className={`carousel ${fade ? 'fade' : 'slide'}`}>
           {(Array.isArray(children) ? children : [children]).map((child, i) => {
             if ( !child ) {
