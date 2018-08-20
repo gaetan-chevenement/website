@@ -59,14 +59,8 @@ function ApartmentDescription({ lang, isLoading, apartment, district, floorPlan 
 }
 
 const definition = { 'fr-FR': {
-  nearbySchool: 'Écoles à proximité',
-  floorPlan: 'Plan du logement',
-  floorPlanInfo: `
-    La surface au sol de chaque chambre inclut ses placards
-    balcons, loggias, salle de bain, WC, espaces sous pentes…
-    avec accès privatif
-  `,
   district: 'Quartier',
+  nearbySchool: 'Écoles à proximité',
 } };
 
 // function Transport({ apartmentFeatures, lang }) {
