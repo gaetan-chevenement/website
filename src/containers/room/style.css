@@ -341,7 +341,7 @@
 }
 
 .picturesCont {
-  background-color: lightgrey;
+  background-color: var(--color-primary);
   background-size: 48px !important;
   background-position: center 10px;
   background-repeat: no-repeat;
@@ -605,7 +605,7 @@
 }
 
 .visitCont {
-  background-color: lightgrey;
+  background-color: var(--color-primary);
   text-indent: 0 !important;
   color: white;
   font-weight: bold;
@@ -614,11 +614,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.visitContAlt {
-  background-color: var(--color-primary);
-  color: white;
 }
 
 .visitCont a, .visitCont a:hover {
@@ -640,4 +635,3 @@
 .buttonsDivide > div {
   flex: 0 0 48%;
 }
-
