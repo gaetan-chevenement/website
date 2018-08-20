@@ -147,16 +147,6 @@ section {
   position: relative;
 }
 
-.slideshow-full:before {
-  content: 'X';
-  font-weight: bold;
-  pointer-events: none;
-  color: white;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-
 .carousel-arrows {
   color: white;
   font-weight: bold;

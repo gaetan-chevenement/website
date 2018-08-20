@@ -61,7 +61,7 @@ class Pictures extends PureComponent {
             <div className={style.carouselClose}>🗙</div>
             <Carousel lazy slide arrows>
               {pictures.map(({ url }) => (
-                <div class={style.slideshowImg} style={`background-image: url(${url})`} title="Mon image" />
+                <div className={style.slideshowImg} style={`background-image: url(${url})`} title="Mon image" />
               ))}
             </Carousel>
           </div>
@@ -75,7 +75,7 @@ class Pictures extends PureComponent {
             <div className={style.carouselClose}>🗙</div>
             <Carousel lazy slide arrows>
               {floorplans.map(({ url }) => (
-                <div class={style.slideshowImg} style={`background-image: url(${url})`} />
+                <div className={style.slideshowImg} style={`background-image: url(${url})`} />
               ))}
             </Carousel>
           </div>
