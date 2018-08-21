@@ -106,8 +106,8 @@ const definition = {
     services: 'Servicios Incluidos',
     booking: 'Reservar',
     about: 'A propósito de Chez Nestor',
-    career: 'Travailler Chez Nestor',
-    terms: 'CGV et mentions légales',
+    career: 'Trabajar en Nestor',
+    terms: 'Términos y Condiciones Generales y Avisos Legales',
   },
 };
 

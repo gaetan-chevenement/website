@@ -110,8 +110,7 @@ export default class App extends Component {
           </Match>
           <Router onChange={this.handleRoute}>
             <Home path="/" />
-            <Home path="/en-US" />
-            <Home path="/fr-FR" />
+            <Home path="/:lang" />
             <Search path="/:lang/search/:city/:page?" />
             <BookingForm path="/:lang/booking/:roomId" />
             <BookingSummary path="/:lang/summary/:rentingId" />
