@@ -79,9 +79,15 @@ function checkOverflow(el) {
   return isOverflowing;
 }
 
-const definition = { 'fr-FR': {
-  less: 'Voir moins ↑',
-  more: 'Voir plus ↓',
-} };
+const definition = {
+  'fr-FR': {
+    less: 'Voir moins ↑',
+    more: 'Voir plus ↓',
+  },
+  'es-ES': {
+    less: 'Ver menos ↑',
+    more: 'Ver más ↓',
+  },
+};
 
 export default Utils.connectLang(CroppedContainer);

@@ -56,13 +56,23 @@ function Guide({ lang }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  guide: 'Mon Guide logement offert',
-  where: 'Où chercher son logement',
-  agency: 'Agences, résidences…',
-  traps: 'Les pièges à éviter',
-  fees: 'Les frais à prévoir',
-  download: 'Je télécharge mon Guide Logement',
-} };
+const definition = {
+  'fr-FR': {
+    guide: 'Mon Guide logement offert',
+    where: 'Où chercher son logement',
+    agency: 'Agences, résidences…',
+    traps: 'Les pièges à éviter',
+    fees: 'Les frais à prévoir',
+    download: 'Je télécharge mon Guide Logement',
+  },
+  'es-ES': {
+    guide: 'Una guía gratuita de vivienda',
+    where: 'Dónde buscar alojamiento',
+    agency: 'Agencias, residencias...',
+    traps: 'Obstáculos que hay que evitar',
+    fees: 'Gastos a prever',
+    download: 'Descargo mi guía de Vivienda',
+  },
+};
 
 export default Utils.connectLang(Guide);

@@ -86,10 +86,17 @@ function Sublist({ header, features }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  basic: 'Basique',
-  comfort: 'Confort',
-  privilege: 'Privilège',
-} };
+const definition = {
+  'fr-FR': {
+    basic: 'Basique',
+    comfort: 'Confort',
+    privilege: 'Privilège',
+  },
+  'es-ES': {
+    basic: 'Básico',
+    comfort: 'Confort',
+    privilege: 'Privilegio',
+  },
+};
 
 export default Utils.connectLang(FeatureList);

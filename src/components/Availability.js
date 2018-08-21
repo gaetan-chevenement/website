@@ -33,11 +33,18 @@ function Availability({ lang, className, availableAt, arrivalDate }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  availableFrom: 'Dispo. le {{date}}',
-  unavailable: 'Plus disponible',
-  availableNow: 'Dispo. immédiatement',
-} };
+const definition = {
+  'fr-FR': {
+    availableFrom: 'Dispo. le {{date}}',
+    unavailable: 'Plus disponible',
+    availableNow: 'Dispo. immédiatement',
+  },
+  'es-ES': {
+    availableFrom: 'Disponible en {{date}}',
+    unavailable: 'Ya no está disponible',
+    availableNow: 'Disponible inmediatamente',
+  },
+};
 
 // /!\ This component cannot used the state because it's used inside leaflet
 // and apparently these things are incompatible.

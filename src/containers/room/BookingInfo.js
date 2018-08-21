@@ -160,35 +160,66 @@ const BookingInfo = ({ lang, roomId, room }) => {
   );
 };
 
-const definition = { 'fr-FR': {
-  oneTime: 'Paiements ponctuels',
-  mensuel: 'Paiements mensuels',
-  rent: 'Loyer',
-  month: 'mois',
-  serviceFees: 'Charges',
-  caf: 'Aide au logement (CAF)',
-  cafInfo: `
-    Ce logement est éligible aux APL. Le versement de cette aide n'est
-    pas systématique et son montant, aléatoire, dépend du loyer et de
-    votre situation personnelle. Contactez la CAF.
-  `,
-  deposit: 'Dépôt de garantie',
-  depositInfo: 'Remboursé après votre séjour.',
-  pack: 'Pack Logement',
-  packInfo: 'Basique, Confort ou Privilège. Son paiement finalise votre réservation.',
-  included: 'Inclus',
-  wifi: 'Wifi haut débit illimité',
-  elec: 'Électricité',
-  water: 'Eau',
-  gaz: 'Gaz',
-  insurance: 'Assurance Habitation',
-  condo: 'Charges de copropriété',
-  maintenance: 'Maintenance technique',
-  waste: 'Taxes sur les ordures',
-  booking: 'Réserver ce logement',
-  visit: 'Visite',
-  enquire: 'Renseignements',
-} };
+const definition = {
+  'fr-FR': {
+    oneTime: 'Paiements ponctuels',
+    mensuel: 'Paiements mensuels',
+    rent: 'Loyer',
+    month: 'mois',
+    serviceFees: 'Charges',
+    caf: 'Aide au logement (CAF)',
+    cafInfo: `
+      Ce logement est éligible aux APL. Le versement de cette aide n'est
+      pas systématique et son montant, aléatoire, dépend du loyer et de
+      votre situation personnelle. Contactez la CAF.
+    `,
+    deposit: 'Dépôt de garantie',
+    depositInfo: 'Remboursé après votre séjour.',
+    pack: 'Pack Logement',
+    packInfo: 'Basique, Confort ou Privilège. Son paiement finalise votre réservation.',
+    included: 'Inclus',
+    wifi: 'Wifi haut débit illimité',
+    elec: 'Électricité',
+    water: 'Eau',
+    gaz: 'Gaz',
+    insurance: 'Assurance Habitation',
+    condo: 'Charges de copropriété',
+    maintenance: 'Maintenance technique',
+    waste: 'Taxes sur les ordures',
+    booking: 'Réserver ce logement',
+    visit: 'Visite',
+    enquire: 'Renseignements',
+  },
+  'es-ES': {
+    oneTime: 'Pagos únicos',
+    mensuel: 'Pagos mensuales',
+    rent: 'Alquiler',
+    month: 'meses',
+    serviceFees: 'Gastos',
+    caf: 'Asistencia para la vivienda (CAF)',
+    cafInfo: `
+      Este alojamiento es elegible para el APL. El pago de esta ayuda se limita a
+      no sistemático y su importe, aleatorio, depende del alquiler y de la
+      su situación personal. Contacte con CAF.
+    `,
+    deposit: 'Depósito de seguridad',
+    depositInfo: 'Reembolsado después de su estancia.',
+    pack: 'Housing Pack',
+    packInfo: 'Básico, Confort o Privilegio. Su pago finaliza su reserva.',
+    included: 'Incluido',
+    wifi: 'Wifi de alta velocidad ilimitada',
+    elec: 'Electricidad',
+    water: 'Agua',
+    gaz: 'Gas',
+    insurance: 'Seguro del Hogar',
+    condo: 'Cargos de condominio',
+    maintenance: 'Mantenimiento técnico',
+    waste: 'Impuestos sobre la basura',
+    booking: 'Reservar este alojamiento',
+    visit: 'Visita',
+    enquire: 'Información',
+  },
+};
 
 function mapStateToProps({ route: { lang }, rooms }, { roomId }) {
   const room = rooms[roomId];

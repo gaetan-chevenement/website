@@ -56,13 +56,23 @@ function OrderItem({ label, unitPrice, quantity }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  item: 'Produits',
-  unitPrice: 'Prix Unitaire',
-  quantity: 'Quantité',
-  ref: 'Réference de facture',
-  paid: 'Payé à ce jour',
-  balance: 'Montant dû',
-} };
+const definition = {
+  'fr-FR': {
+    item: 'Produits',
+    unitPrice: 'Prix Unitaire',
+    quantity: 'Quantité',
+    ref: 'Réference de facture',
+    paid: 'Payé à ce jour',
+    balance: 'Montant dû',
+  },
+  'es-ES': {
+    item: 'Productos',
+    unitPrice: 'Precio unitario',
+    quantity: 'Cantidad',
+    ref: 'Referencia a factura',
+    paid: 'Pagado hasta la fecha',
+    balance: 'Importe adeudado',
+  },
+};
 
 export default Utils.connectLang(OrderDetails);

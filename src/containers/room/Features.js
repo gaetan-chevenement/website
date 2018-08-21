@@ -81,17 +81,30 @@ function Feature({ label, className }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  title: 'Équipements',
-  room: 'Chambre',
-  apartment: 'Appartement',
-  sleep: 'Dormir',
-  dress: 'S\'habiller',
-  work: 'Travailler',
-  general: 'Général',
-  kitchen: 'Cuisine',
-  bathroom: 'Salle de Bain',
-} };
+const definition = {
+  'fr-FR': {
+    title: 'Équipements',
+    room: 'Chambre',
+    apartment: 'Appartement',
+    sleep: 'Dormir',
+    dress: 'S\'habiller',
+    work: 'Travailler',
+    general: 'Général',
+    kitchen: 'Cuisine',
+    bathroom: 'Salle de Bain',
+  },
+  'es-ES': {
+    title: 'Equipo',
+    room: 'Habitación',
+    apartment: 'Apartamento',
+    sleep: 'Dormir',
+    dress: 'Vestirse',
+    work: 'Trabajo',
+    general: 'General',
+    kitchen: 'Cocina',
+    bathroom: 'Baño',
+  },
+};
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
   const room = rooms[roomId];

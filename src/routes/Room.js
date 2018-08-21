@@ -1,4 +1,3 @@
-import { IntlProvider }       from 'preact-i18n';
 import { PureComponent }      from 'react';
 import { connect }            from 'react-redux';
 import { route }              from 'preact-router';
@@ -46,7 +45,6 @@ class Room extends PureComponent {
 
   render() {
     const {
-      lang,
       roomId,
       room,
       isLoading,
@@ -61,21 +59,15 @@ class Room extends PureComponent {
     }
 
     return (
-      <IntlProvider definition={definition[lang]}>
-        <div>
-          <Header roomId={roomId} apartmentId={room.ApartmentId} />
-          <RoomContent roomId={roomId} apartmentId={room.ApartmentId} />
-        </div>
-      </IntlProvider>
+      <div>
+        <Header roomId={roomId} apartmentId={room.ApartmentId} />
+        <RoomContent roomId={roomId} apartmentId={room.ApartmentId} />
+      </div>
     );
   }
 }
 
-const definition = { 'fr-FR': {
-
-} };
-
-function mapStateToProps({ route: { lang }, apartments, rooms }, { roomId }) {
+function mapStateToProps({ apartments, rooms }, { roomId }) {
   const room = rooms[roomId];
 
   if ( !room || room.isLoading || !('pic 0 url' in room) ) {
@@ -83,7 +75,6 @@ function mapStateToProps({ route: { lang }, apartments, rooms }, { roomId }) {
   }
 
   return {
-    lang,
     roomId,
     room,
   };

@@ -27,10 +27,17 @@ function BookingFormSections({ lang }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  housingPack: 'Choisissez Votre Pack Logement',
-  detail: 'Comparaison Détaillée',
-  personal: 'Infos personnelles',
-} };
+const definition = {
+  'fr-FR': {
+    housingPack: 'Choisissez Votre Pack Logement',
+    detail: 'Comparaison Détaillée',
+    personal: 'Infos personnelles',
+  },
+  'es-ES': {
+    housingPack: 'Elija su paquete de alojamiento',
+    detail: 'Comparación detallada',
+    personal: 'Datos personales',
+  },
+};
 
 export default Utils.connectLang(BookingFormSections);

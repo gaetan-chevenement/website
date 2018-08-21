@@ -84,6 +84,28 @@ const definition = {
       subtitle: 'Pour réserver',
     }],
   },
+  'es-ES': {
+    discover: 'Descubra nuestros servicios incluidos',
+    list: [{
+      title: 'Centro de la ciudad',
+      subtitle: 'En pleno centro de la ciudad',
+    }, {
+      title: 'Amueblado',
+      subtitle: 'De la A a la Z',
+    }, {
+      title: 'Equipado',
+      subtitle: 'Del suelo al techo',
+    }, {
+      title: 'Todo Incluido',
+      subtitle: 'Seguro, agua, gas...',
+    }, {
+      title: 'Wifi',
+      subtitle: 'Alta velocidad',
+    }, {
+      title: '3 clicks',
+      subtitle: 'Para reservar',
+    }],
+  },
 };
 
 export default Utils.connectLang(Services);

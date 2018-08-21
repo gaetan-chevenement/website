@@ -18,8 +18,13 @@ function CreateAlertButton({ lang }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  create: 'Créer une alerte',
-} };
+const definition = {
+  'fr-FR': {
+    create: 'Créer une alerte',
+  },
+  'es-ES': {
+    create: 'Crear una alerta',
+  },
+};
 
 export default Utils.connectLang(CreateAlertButton);

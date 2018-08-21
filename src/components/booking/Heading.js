@@ -37,6 +37,13 @@ const definition = {
     confirmed: 'Confirmation de la réservation',
     alt: 'Photo de couverture de la chambre',
   },
+  'es-ES': {
+    forRoom: 'de',
+    details: 'Detalles de la reserva',
+    summary: 'Resumen de la reserva',
+    confirmed: 'Confirmación de la reserva',
+    alt: 'Photo de couverture de la chambre',
+  },
 };
 
 export default Utils.connectLang(Heading);

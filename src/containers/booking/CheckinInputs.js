@@ -52,10 +52,16 @@ class CheckinInputs extends PureComponent {
   }
 }
 
-const definition = { 'fr-FR': {
-  checkinDate: 'Jour Du Checkin',
-  checkinTime: 'Heure Du Checkin',
-} };
+const definition = {
+  'fr-FR': {
+    checkinDate: 'Jour Du Checkin',
+    checkinTime: 'Heure Du Checkin',
+  },
+  'es-ES': {
+    checkinDate: 'Día de Check-in',
+    checkinTime: 'Hora de Check-in',
+  },
+};
 
 function mapStateToProps({ route: { lang }, booking, rooms }) {
   const { checkinDate, errors, roomId } = booking;

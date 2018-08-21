@@ -33,7 +33,7 @@ class Header extends Component {
       isDrawerActive: false,
       scrollPx: getDocumentScrollTop()
     };
-  } 
+  }
 
   @autobind
   handleScroll() {
@@ -166,9 +166,15 @@ function handleClickContact() {
   window.$crisp.push(['do', 'chat:open']);
 }
 
-const definition = { 'fr-FR': {
-  included: 'Services Inclus',
-  booking: 'Réserver',
-} };
+const definition = {
+  'fr-FR': {
+    included: 'Services Inclus',
+    booking: 'Réserver',
+  },
+  'es-ES': {
+    included: 'Servicios Incluidos',
+    booking: 'Reservar',
+  },
+};
 
 export default Utils.connectLang(Header);

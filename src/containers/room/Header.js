@@ -111,10 +111,16 @@ class Header extends Component {
   }
 }
 
-const definition = { 'fr-FR': {
-  book: 'Réserver ce logement',
-  galery: 'Voir toutes les photos',
-} };
+const definition = {
+  'fr-FR': {
+    book: 'Réserver ce logement',
+    galery: 'Voir toutes les photos',
+  },
+  'es-ES': {
+    book: 'Reservar este alojamiento',
+    galery: 'Ver todas las fotos',
+  },
+};
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {
   const room = rooms[roomId];

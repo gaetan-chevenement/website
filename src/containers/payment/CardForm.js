@@ -232,41 +232,78 @@ function mapStateToProps({ route: { lang }, orders, payment }) {
   };
 }
 
-const definition = { 'fr-FR': {
-  errors: {
-    paid: 'Cette facture a déjà été payée',
-    orderCancelled: 'Cette facture a été annulée',
-    doNotHonor: 'Le paiement a été refusé par votre banque.',
-    roomUnavailable: 'Cette chambre n\'est plus disponible.',
-    balanceMismatch: `
-      Le prix de cette facture a été modifié.
-      Merci de vérifier le nouveau prix et de retenter le paiement.
-    `,
-    detailsMismatch: `
-      Les détails de cette facture ont été modifiés.
-      Merci de rafraîchir la page ou de retourner à votre récapitulatif de
-      commande pour prendre connaissance de modifications avant de
-      retenter le paiement.
-    `,
-    cardExpired: 'Cette carte semble avoir expiré.',
-    unexpected: 'Une erreur inatendue est survenue.',
-    retry: 'Réessayer',
-    support: 'Contacter le support',
-  },
-  payment: {
-    success: 'Votre paiement a bien été effectué.',
-  },
-  card: {
-    number: 'Numéro de carte bleue',
-    holder: 'titulaire de la carte bleue',
-    expiry: {
-      month: 'mois d\'expiration',
-      year: 'année d\'expiration',
+const definition = {
+  'fr-FR': {
+    errors: {
+      paid: 'Cette facture a déjà été payée',
+      orderCancelled: 'Cette facture a été annulée',
+      doNotHonor: 'Le paiement a été refusé par votre banque.',
+      roomUnavailable: 'Cette chambre n\'est plus disponible.',
+      balanceMismatch: `
+        Le prix de cette facture a été modifié.
+        Merci de vérifier le nouveau prix et de retenter le paiement.
+      `,
+      detailsMismatch: `
+        Les détails de cette facture ont été modifiés.
+        Merci de rafraîchir la page ou de retourner à votre récapitulatif de
+        commande pour prendre connaissance de modifications avant de
+        retenter le paiement.
+      `,
+      cardExpired: 'Cette carte semble avoir expiré.',
+      unexpected: 'Une erreur inatendue est survenue.',
+      retry: 'Réessayer',
+      support: 'Contacter le support',
     },
-    cvv: 'cryptogramme',
+    payment: {
+      success: 'Votre paiement a bien été effectué.',
+    },
+    card: {
+      number: 'Numéro de carte bleue',
+      holder: 'titulaire de la carte bleue',
+      expiry: {
+        month: 'mois d\'expiration',
+        year: 'année d\'expiration',
+      },
+      cvv: 'cryptogramme',
+    },
+    downloadInvoice: 'Télécharger votre facture',
   },
-  downloadInvoice: 'Télécharger votre facture',
-} };
+  'es-ES': {
+    errors: {
+      paid: 'Esta factura ya ha sido pagada',
+      orderCancelled: 'Esta factura ha sido anulada',
+      doNotHonor: 'El pago fue rechazado por su banco.',
+      roomUnavailable: 'Esta habitación ya no está disponible.',
+      balanceMismatch: `
+        El precio de esta factura ha sido modificado.
+        Por favor, compruebe el nuevo precio e intente el pago de nuevo.
+      `,
+      detailsMismatch: `
+        Los detalles de esta factura han sido modificados.
+        Por favor, actualice la página o regrese a su
+        para comprobar si hay cambios antes de realizar un pedido.
+        intente el pago de nuevo.
+      `,
+      cardExpired: 'Esta tarjeta parece haber caducado.',
+      unexpected: 'Se ha producido un error inesperado.',
+      retry: 'Inténtalo de nuevo',
+      support: 'Póngase en contacto con el servicio de asistencia',
+    },
+    payment: {
+      success: 'Su pago ha sido hecho.',
+    },
+    card: {
+      number: 'Número de tarjeta de crédito',
+      holder: 'titular de la tarjeta de crédito',
+      expiry: {
+        month: 'mes de vencimiento',
+        year: 'año de expiración',
+      },
+      cvv: 'criptograma',
+    },
+    downloadInvoice: 'Cargue su factura',
+  },
+};
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };

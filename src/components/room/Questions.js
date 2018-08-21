@@ -40,6 +40,9 @@ function Questions({ lang }) {
 }
 
 const definition = {
+  'en-US': {
+    visitMsg: 'I wish to visit this room',
+  },
   'fr-FR': {
     title: 'Une question ?',
     subtitle: 'Notre équipe sera ravie de vous aider !',
@@ -47,8 +50,12 @@ const definition = {
     visit: 'Demander une visite',
     visitMsg: 'Je souhaite visiter cette chambre',
   },
-  'en-US': {
-    visitMsg: 'I wish to visit this room',
+  'es-ES': {
+    title: '¿Una pregunta?',
+    subtitle: 'Nuestro equipo estará encantado de ayudarle!',
+    question: 'Haga una pregunta',
+    visit: 'Solicitar una visita',
+    visitMsg: 'Deseo visitar esta habitación',
   },
 };
 

@@ -58,10 +58,16 @@ function ApartmentDescription({ lang, isLoading, apartment, district, floorPlan 
   );
 }
 
-const definition = { 'fr-FR': {
-  district: 'Quartier',
-  nearbySchool: 'Écoles à proximité',
-} };
+const definition = {
+  'fr-FR': {
+    nearbySchool: 'Écoles à proximité',
+    district: 'Quartier',
+  },
+  'es-ES': {
+    nearbySchool: 'Escuelas próximas',
+    district: 'Barrio',
+  },
+};
 
 // function Transport({ apartmentFeatures, lang }) {
 //   const transports = ['subway', 'tramway', 'bus', 'rer', 'transilien', 'nearbyBike']
@@ -90,12 +96,12 @@ const definition = { 'fr-FR': {
 // }
 
 // const transportName = {
-//   subway: { 'fr-FR': 'Métro', 'en-US': 'Subway' },
-//   tramway: { 'fr-FR': 'Tramway', 'en-US': 'Tramway' },
-//   bus: { 'fr-FR': 'Bus', 'en-US': 'Bus' },
-//   rer: { 'fr-FR': 'Rer', 'en-US': 'Rer' },
-//   transilien: { 'fr-FR': 'Transilien', 'en-US': 'Transilien' },
-//   nearbyBike: { 'fr-FR': 'Vélos', 'en-US': 'Bikes' },
+//   subway: { 'fr-FR': 'Métro', 'en-US': 'Subway', 'es-ES': 'Metro' },
+//   tramway: { 'fr-FR': 'Tramway', 'en-US': 'Tramway', 'es-ES': 'Tranvía' },
+//   bus: { 'fr-FR': 'Bus', 'en-US': 'Bus', 'es-ES': 'Autobús' },
+//   rer: { 'fr-FR': 'Rer', 'en-US': 'Rer', 'es-ES': 'Rer' },
+//   transilien: { 'fr-FR': 'Transilien', 'en-US': 'Transilien', 'es-ES': 'Transilien' },
+//   nearbyBike: { 'fr-FR': 'Vélos', 'en-US': 'Bikes', 'es-ES': 'Bicicletas' },
 // };
 
 function mapStateToProps({ route: { lang, roomId }, rooms, apartments, districts }) {

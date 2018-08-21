@@ -82,9 +82,10 @@ class SearchForm extends PureComponent {
   render({ lang, mode }) {
     return (
       <IntlProvider definition={definition[lang]}>
-        <form class={`${form} ${this.props.mode === 'noSubmit' ? noSubmit : ''}`} 
-          style={this.props.mode === 'home' ? {flexWrap: 'wrap'} : null}> 
-          <div> 
+        <form class={`${form} ${this.props.mode === 'noSubmit' ? noSubmit : ''}`}
+          style={this.props.mode === 'home' ? { flexWrap: 'wrap' } : null}
+        >
+          <div>
             <i class="material-icons">location_city</i>
             <Dropdown
               id={this.props.mode === 'header' ? null : 'city-select'}
@@ -132,11 +133,18 @@ class SearchForm extends PureComponent {
   }
 }
 
-const definition = { 'fr-FR': {
-  arrival: 'Date d\'arrivée',
-  city: 'Ville *',
-  submit: 'Rechercher',
-} };
+const definition = {
+  'fr-FR': {
+    arrival: 'Date d\'arrivée',
+    city: 'Ville *',
+    submit: 'Rechercher',
+  },
+  'es-ES': {
+    arrival: 'Fecha de llegada',
+    city: 'Ciudad *',
+    submit: 'Buscar',
+  },
+};
 
 
 function mapStateToProps({ route: { date, lang, city } }) {

@@ -140,6 +140,14 @@ const definition = {
       privatives au sol (placard, balcon, sous-pente...).
     `,
   },
+  'es-ES': {
+    virtualVisit: 'Tour 3D',
+    floorplans: 'Planes',
+    floorplanDisclaimer: `
+      Nota: Toda la superficie (armario, balcón, área bajo pendiente...) se
+      tiene en cuenta en la superficie de cada habitación.
+    `,
+  },
 };
 
 function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apartmentId }) {

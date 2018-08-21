@@ -17,9 +17,15 @@ function Questions({ lang }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  phoneNumber: '0 972 323 102',
-  opening: 'Du lundi au vendredi de 9h à 18h',
-} };
+const definition = {
+  'fr-FR': {
+    phoneNumber: '0 972 323 102',
+    opening: 'Du lundi au vendredi de 9h à 18h',
+  },
+  'es-ES': {
+    phoneNumber: '+33 972 323 102',
+    opening: 'Lunes a Viernes de 9am a 6pm',
+  },
+};
 
 export default Utils.connectLang(Questions);

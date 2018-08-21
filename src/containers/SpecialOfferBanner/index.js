@@ -45,16 +45,22 @@ class Banner extends Component {
 }
 
 const definition = {
+  'en-US': {
+    specialOffer: [
+      'Special discount on rooms available before 07/31',
+      '→ Contact us with the code SUMMER :)',
+    ].join(' '),
+  },
   'fr-FR': {
     specialOffer: [
       'Offre spéciale sur les chambres disponibles avant le 31/07',
       '→ Contactez nous avec le code SUMMER :)',
     ].join(' '),
   },
-  'en-US': {
+  'es-ES': {
     specialOffer: [
-      'Special discount on rooms available before 07/31',
-      '→ Contact us with the code SUMMER :)',
+      'Oferta especial en habitaciones disponibles antes del 31/07',
+      '→ Contáctenos con el código SUMMER :)',
     ].join(' '),
   },
 };

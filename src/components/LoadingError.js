@@ -36,11 +36,19 @@ function LoadingError({ lang, label, error }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  error: 'Une erreur s\'est produite pendant le chargement',
-  try: 'Essayez de',
-  link: 'Recharger la page',
-  contact: 'Si l\'erreur persiste, contactez le support',
-} };
+const definition = {
+  'fr-FR': {
+    error: 'Une erreur s\'est produite pendant le chargement',
+    try: 'Essayez de',
+    link: 'Recharger la page',
+    contact: 'Si l\'erreur persiste, contactez le support',
+  },
+  'es-ES': {
+    error: 'Se ha producido un error durante la carga',
+    try: 'Trate de',
+    link: 'Recargar página',
+    contact: 'Si el error persiste, póngase en contacto con el servicio de asistencia técnica',
+  },
+};
 
 export default Utils.connectLang(LoadingError);
