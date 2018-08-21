@@ -29,10 +29,16 @@ export default function Services({ lang }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  title: 'Services inclus avec votre logement',
-  subtitle: 'Chez Nestor, tout est inclus : nous veillons à ce que vous n\'ayez à vous soucier de rien pour profiter de votre appartement !',
-} };
+const definition = {
+  'fr-FR': {
+    title: 'Services inclus avec votre logement',
+    subtitle: 'Chez Nestor, tout est inclus : nous veillons à ce que vous n\'ayez à vous soucier de rien pour profiter de votre appartement !',
+  },
+  'es-ES': {
+    title: 'Servicios incluidos en su alojamiento',
+    subtitle: 'En Chez Nestor, todo está incluido: ¡nos aseguramos de que no tengas que preocuparte de nada para disfrutar de tu apartamento!',
+  },
+};
 
 const services = [{
   image: 'wifi.png',

@@ -124,13 +124,22 @@ function mapStateToProps({ route: { lang }, rooms, booking }, { roomId }) {
   };
 }
 
-const definition = { 'fr-FR': {
-  errors: {
-    unavailable: 'Désolé, cette chambre n\'est plus disponible.',
-    room: 'Désolé, une erreur est survenue lors de la préparation de votre réservation.',
+const definition = {
+  'fr-FR': {
+    errors: {
+      unavailable: 'Désolé, cette chambre n\'est plus disponible.',
+      room: 'Désolé, une erreur est survenue lors de la préparation de votre réservation.',
+    },
+    button: 'Continuer',
   },
-  button: 'Continuer',
-} };
+  'es-ES': {
+    errors: {
+      unavailable: 'Lo siento, esta habitación ya no está disponible.',
+      room: 'Lo sentimos, se ha producido un error durante la preparación de su reserva.',
+    },
+    button: 'Continúa',
+  },
+};
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };

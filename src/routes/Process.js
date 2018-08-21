@@ -42,13 +42,22 @@ export default function Services({ lang }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  steps: 'Réservez votre appartement en moins d\'une minute',
-  choose: 'Choisissez votre pack logement',
-  subtitle: 'Différentes gammes de services pour votre appartement, tout au long du séjour, selon le pack choisi :',
-  comparison: 'Comparaison détaillée des différents packs',
-  deposit: 'La caution et le pack logement sont deux montants différents. La caution est remboursable, pas le pack logement.',
-} };
+const definition = {
+  'fr-FR': {
+    steps: 'Réservez votre appartement en moins d\'une minute',
+    choose: 'Choisissez votre pack logement',
+    subtitle: 'Différentes gammes de services pour votre appartement, tout au long du séjour, selon le pack choisi :',
+    comparison: 'Comparaison détaillée des différents packs',
+    deposit: 'La caution et le pack logement sont deux montants différents. La caution est remboursable, pas le pack logement.',
+  },
+  'es-ES': {
+    steps: 'Reserva tu apartamento en menos de un minuto',
+    choose: 'Elija su paquete de alojamiento',
+    subtitle: 'Diferentes gamas de servicios para su apartamento, durante toda la estancia, según el pack elegido :',
+    comparison: 'Comparación detallada de los diferentes envases',
+    deposit: 'El depósito y el paquete de alojamiento son dos cantidades diferentes. El depósito es reembolsable, no el paquete de alojamiento.',
+  },
+};
 
 const steps = [{
   image: 'step-one.png',
@@ -60,6 +69,10 @@ const steps = [{
     title: 'Trouvez',
     content: 'Votre appartement idéal parmi nos centaines d\'offres de colocations et studios.',
   },
+  'es-ES': {
+    title: 'Encuentre',
+    content: 'su apartamento ideal entre cientos de pisos compartidos y estudios.',
+  },
 }, {
   image: 'step-two.png',
   'en-US': {
@@ -69,6 +82,10 @@ const steps = [{
   'fr-FR': {
     title: 'Choisissez',
     content: 'Votre Pack Logement parmi la liste ci-dessous. Nos services sont inclus dedans et son paiement finalise votre réservation.',
+  },
+  'es-ES': {
+    title: 'Elija',
+    content: 'Su paquete de vivienda de la siguiente lista. Todos nuestros servicios están incluidos en el paquete y el pago nos permite completar su reserva.',
   },
 }, {
   image: 'step-three.png',
@@ -80,6 +97,10 @@ const steps = [{
     title: 'Venez',
     content: 'Dans votre nouvelle ville avec vos bagages pour récupérer vos clefs.',
   },
+  'es-ES': {
+    title: 'Llegue',
+    content: 'A su nueva ciudad con su equipaje y recoger sus llaves.',
+  },
 }, {
   image: 'step-four.png',
   'en-US': {
@@ -89,5 +110,9 @@ const steps = [{
   'fr-FR': {
     title: 'Emmenagez',
     content: 'Dans votre nouvel appartement et profitez de nos services tout au long de votre séjour.',
+  },
+  'es-ES': {
+    title: 'Múdate',
+    content: 'A su nuevo hogar y disfruta de nuestros servicios durante toda su estancia!',
   },
 }];

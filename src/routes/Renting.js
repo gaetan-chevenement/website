@@ -93,9 +93,14 @@ class Renting extends PureComponent {
   }
 }
 
-const definition = { 'fr-FR': {
-  title: 'Complétez votre réservation de la chambre',
-} };
+const definition = {
+  'fr-FR': {
+    title: 'Complétez votre réservation de la chambre',
+  },
+  'es-ES': {
+    title: 'Complete su reserva de habitación',
+  },
+};
 
 function mapStateToProps({ route: { lang }, rentings, orders, rooms }, { rentingId }) {
   const renting = rentings[rentingId];

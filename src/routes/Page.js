@@ -58,12 +58,8 @@ class Page extends Component {
   }
 }
 
-function mapStateToProps(args) {
-  const { pages } = args;
-
-  return {
-    pages,
-  };
+function mapStateToProps({ pages }) {
+  return { pages };
 }
 
 function mapDispatchToProps(dispatch) {

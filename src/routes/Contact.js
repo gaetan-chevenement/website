@@ -52,11 +52,21 @@ export default function Services({ lang }) {
   );
 }
 
-const definition = { 'fr-FR': {
-  title: 'Prenons contact !',
-  address: 'Adresse',
-  sales: 'Demande d\'informations',
-  support: 'Support client',
-  phone: 'Numéro de téléphone',
-  openChat: 'Ouvrir la messagerie',
-} };
+const definition = {
+  'fr-FR': {
+    title: 'Prenons contact !',
+    address: 'Adresse',
+    sales: 'Demande d\'informations',
+    support: 'Support client',
+    phone: 'Numéro de téléphone',
+    openChat: 'Ouvrir la messagerie',
+  },
+  'es-ES': {
+    title: 'Hagamos contacto!',
+    address: 'Dirección',
+    sales: 'Solicitud de información',
+    support: 'Soporte al cliente',
+    phone: 'Número de teléfono',
+    openChat: 'Abrir el buzón de correo',
+  },
+};

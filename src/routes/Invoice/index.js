@@ -61,7 +61,7 @@ export default class Invoice extends PureComponent {
         <th class="text-left">
           <p>Total</p>
           <p><Text id="paid">Paid</Text></p>
-          <p><Text id="balance">Balance</Text></p>
+          <p><Text id="due.amount">Balance</Text></p>
           <p><Text id="state">Status</Text></p>
         </th>
         <th class="text-right">
@@ -200,26 +200,49 @@ export default class Invoice extends PureComponent {
   }
 }
 
-const definition = { 'fr-FR': {
-  title: 'Facture',
-  address: {
-    billing: 'Addresse de facturation',
-    property: 'Addresse du bien',
+const definition = {
+  'fr-FR': {
+    title: 'Facture',
+    address: {
+      billing: 'Addresse de facturation',
+      property: 'Addresse du bien',
+    },
+    due: {
+      date: 'Date d\'échéance',
+      amount: 'Montant dû',
+    },
+    item: 'Produits',
+    unitPrice: 'Prix Unitaire',
+    vat: 'TVA',
+    quantity: 'Quantité',
+    paid: 'Payé à ce jour',
+    state: 'État',
+    conditions:
+      `La présente quittance ne libère l'occupant que pour la période
+      indiquée et annule tout reçu à valoir. Elle n'est pas libératoire des
+      loyers antérieurs impayés et est délivrée sous réserve de toutes instances
+      judiciaires en cours.`,
   },
-  due: {
-    date: 'Date d\'échéance',
-    amount: 'Montant dû',
+  'es-ES': {
+    title: 'Fractura',
+    address: {
+      billing: 'Dirección de facturación',
+      property: 'Dirección de la propiedad',
+    },
+    due: {
+      date: 'Fecha de vencimiento',
+      amount: 'Importe adeudado',
+    },
+    item: 'Productos',
+    unitPrice: 'Precio unitario',
+    vat: 'IVA',
+    quantity: 'cuantía',
+    paid: 'Pagado hasta la fecha',
+    state: 'Estado',
+    conditions: `
+      Esta liberación libera al ocupante sólo durante el período indicado y
+      anula cualquier recibo válido. No liquida las rentas impagadas anteriores
+      y se emite sin perjuicio de las acciones judiciales en curso.
+    `,
   },
-  item: 'Produits',
-  unitPrice: 'Prix Unitaire',
-  vat: 'TVA',
-  quantity: 'Quantité',
-  paid: 'Payé à ce jour',
-  balance: 'Montant dû',
-  state: 'État',
-  conditions:
-    `La présente quittance ne libère l'occupant que pour la période
-    indiquée et annule tout reçu à valoir. Elle n'est pas libératoire des
-    loyers antérieurs impayés et est délivrée sous réserve de toutes instances
-    judiciaires en cours.`,
-} };
+};

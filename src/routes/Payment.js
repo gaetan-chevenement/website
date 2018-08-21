@@ -124,13 +124,22 @@ class Payment extends PureComponent {
   }
 }
 
-const definition = { 'fr-FR': {
-  title: 'Paiement sécurisé pour la facture de',
-  payment: {
-    title: 'Le paiement peut s\'effectuer avec une Mastercard ou une Visa.',
-    button: 'Payer {{amount}}€',
+const definition = {
+  'fr-FR': {
+    title: 'Paiement sécurisé pour la facture de',
+    payment: {
+      title: 'Le paiement peut s\'effectuer avec une Mastercard ou une Visa.',
+      button: 'Payer {{amount}}€',
+    },
   },
-} };
+  'es-ES': {
+    title: 'Pago seguro de la factura de',
+    payment: {
+      title: 'El pago se puede realizar con tarjeta de crédito Mastercard o Visa.',
+      button: 'Pagador {{amount}}€',
+    },
+  },
+};
 
 function mapStateToProps({ route: { lang, returnUrl, rentingPrice }, orders, payment }, { orderId }) {
   const order = orders[orderId];
