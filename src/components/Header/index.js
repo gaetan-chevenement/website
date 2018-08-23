@@ -1,3 +1,4 @@
+import fp                     from 'lodash/fp';
 import { Component }          from 'react';
 import { IntlProvider, Text } from 'preact-i18n';
 import { Link }               from 'preact-router/match';
@@ -11,6 +12,12 @@ import Utils                  from '~/utils';
 import style                  from './style';
 import SearchForm             from '../SearchForm';
 
+const languages = [
+  { value: 'en-US', label: '🇺🇸' },
+  { value: 'fr-FR', label: '🇫🇷' },
+  { value: 'es-ES', label: '🇪🇸' },
+];
+
 // https://stackoverflow.com/questions/20514596/document-documentelement-scrolltop-return-value-differs-in-chrome
 function getDocumentScrollTop() {
   return window.scrollY
@@ -19,11 +26,25 @@ function getDocumentScrollTop() {
       && document.documentElement.scrollTop || 0);
 }
 
-
 class Header extends Component {
   @autobind
   handleToggle() {
     this.setState({ isDrawerActive: !this.state.isDrawerActive });
+  }
+
+  @autobind
+  handleScroll() {
+    this.setState({
+      scrollPx: getDocumentScrollTop(),
+    });
+  }
+
+  isSearchPage() {
+    return /\/[^/]*\/search/.test(this.props.path);
+  }
+
+  isRoomPage() {
+    return /\/[^/]*\/room/.test(this.props.path);
   }
 
   constructor(props) {
@@ -31,15 +52,8 @@ class Header extends Component {
 
     this.state = {
       isDrawerActive: false,
-      scrollPx: getDocumentScrollTop()
+      scrollPx: getDocumentScrollTop(),
     };
-  }
-
-  @autobind
-  handleScroll() {
-    this.setState({
-      scrollPx: getDocumentScrollTop()
-    })
   }
 
   componentDidMount() {
@@ -50,14 +64,6 @@ class Header extends Component {
   componentWillUnmount() {
     typeof window !== 'undefined' && window.document.body.removeEventListener('touchmove', this.handleScroll);
     typeof window !== 'undefined' && window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  isSearchPage() {
-    return /\/[^/]*\/search/.test(this.props.path);
-  }
-
-  isRoomPage() {
-    return /\/[^/]*\/room/.test(this.props.path);
   }
 
   renderLeftPart() {
@@ -114,7 +120,7 @@ function AppBarTitle({ lang, isLite = false }) {
       <div>
         <Link href={`/${lang}`}>
           { isLite ?
-            <img src="/assets/logo.png" alt="Chez Nestor" className={style.logoLite}/>
+            <img src="/assets/logo.png" alt="Chez Nestor" className={style.logoLite} />
             : <img src="/assets/logo370x130.png" alt="Chez Nestor" />
           }
 
@@ -136,14 +142,14 @@ function AppNavigation({ lang, path, type, className }) {
       <a onClick={handleClickContact} theme={style}>
         Contact
       </a>
-      {['en-US', 'fr-FR']
-        .filter((val) => lang !== val)
-        .map((val) => (
-          <NavLink href={path.replace(/^\/[^/]{0,5}/, `/${val}`)} theme={style}>
-            {val.split('-')[0].toUpperCase()}
+      {fp.flow(
+        fp.filter(({ value }) => lang !== value),
+        fp.map(({ value, label }) => (
+          <NavLink href={path.replace(/^\/[^/]{0,5}/, `/${value}`)} theme={style}>
+            {label}
           </NavLink>
         ))
-      }
+      )(languages)}
     </Navigation>
   );
 }
