@@ -117,7 +117,7 @@ class Summary extends PureComponent {
                 <Text id="rent.subtitle.1">
                   (date of availability of the room), regardless of your
                   moving-in date. Your rent, all charges and utilities included
-                  (interner, water, gas, electricity, insurance, etc.), will
+                  (internet, water, gas, electricity, insurance, etc.), will
                   come to:
                 </Text>
               </p>

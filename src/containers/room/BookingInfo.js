@@ -32,7 +32,7 @@ const BookingInfo = ({ lang, roomId, room }) => {
         </div>
         <div className={priceLineClasses}>
           <div className="one-half">
-            <Text id="serviceFees">Service Fees</Text>
+            <Text id="serviceFees">Utilities & charges</Text>
           </div>
           <div className="one-half text-right">
             {serviceFees / 100}€/<Text id="month">month</Text>
