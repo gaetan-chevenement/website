@@ -155,7 +155,7 @@ const packs = {
       listItems: [
         'Sábanas, almohadas y fundas nórdicas',
         'Paquete de comida',
-        'Ayuda con las teclas',
+        'Asistencia de llaves',
         'Seguro de cancelación - 1 mes',
        ],
     },
