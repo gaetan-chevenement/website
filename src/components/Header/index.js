@@ -15,7 +15,7 @@ import SearchForm             from '../SearchForm';
 const languages = [
   { value: 'en-US', label: '🇺🇸' },
   { value: 'fr-FR', label: '🇫🇷' },
-  { value: 'es-ES', label: '🇪🇸' },
+  // { value: 'es-ES', label: '🇪🇸' },
 ];
 
 // https://stackoverflow.com/questions/20514596/document-documentelement-scrolltop-return-value-differs-in-chrome
