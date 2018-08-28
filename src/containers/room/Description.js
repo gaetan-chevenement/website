@@ -70,7 +70,7 @@ function ElevatorDetail({ lang, apartment }) {
       ) : (
         <span>
           <Text id="floor">floor</Text>{' '}
-          {apartment.floor + (lang === 'en-US' ? 1 : 0)}{' '}
+          {apartment.floor}{' '}
           {apartment.elevator ?
             <Text id="with">with</Text> :
             <Text id="without">without</Text>
