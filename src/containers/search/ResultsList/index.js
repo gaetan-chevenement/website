@@ -89,7 +89,7 @@ class ResultsList extends PureComponent {
   }
 }
 
-const definition = { 
+const definition = {
   'fr-FR': {
     title: 'Colocations à {{city}}',
     content: `
@@ -134,6 +134,7 @@ const mapStateToProps = ({ route: { lang, city, date }, rooms, apartments }) => 
     .filter((room) => typeof room === 'object')
     .map((room) => ({
       ...room,
+      roomName: Utils.localizeRoomName(room.name, lang),
       latLng: Utils.getApartmentLatLng(apartments[room.ApartmentId]),
       roomCount: apartments[room.ApartmentId].roomCount,
       pictures: [].concat(

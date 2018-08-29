@@ -46,7 +46,7 @@ class Room extends PureComponent {
   render() {
     const {
       roomId,
-      room,
+      apartmentId,
       isLoading,
     } = this.props;
 
@@ -60,14 +60,14 @@ class Room extends PureComponent {
 
     return (
       <div>
-        <Header roomId={roomId} apartmentId={room.ApartmentId} />
-        <RoomContent roomId={roomId} apartmentId={room.ApartmentId} />
+        <Header roomId={roomId} apartmentId={apartmentId} />
+        <RoomContent roomId={roomId} apartmentId={apartmentId} />
       </div>
     );
   }
 }
 
-function mapStateToProps({ apartments, rooms }, { roomId }) {
+function mapStateToProps({ route: { lang }, apartments, rooms }, { roomId }) {
   const room = rooms[roomId];
 
   if ( !room || room.isLoading || !('pic 0 url' in room) ) {
@@ -76,7 +76,7 @@ function mapStateToProps({ apartments, rooms }, { roomId }) {
 
   return {
     roomId,
-    room,
+    apartmentId: room.ApartmentId,
   };
 }
 

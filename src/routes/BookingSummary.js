@@ -131,7 +131,7 @@ function mapStateToProps(state, { lang, rentingId }) {
     summary,
     rentingId,
     renting,
-    room,
+    room: { ...room, name: Utils.localizeRoomName(room.name, lang) },
     bookingDate,
     packOrderId: packOrder && packOrder.id,
   };

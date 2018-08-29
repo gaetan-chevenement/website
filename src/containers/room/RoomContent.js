@@ -13,6 +13,7 @@ import Availability           from '~/components/Availability';
 import RoomServices           from '~/components/room/RoomServices';
 import Questions              from '~/components/room/Questions';
 import Guide                  from '~/components/room/Guide';
+import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 import style                  from './style.css';
 import { AnchorLink, AnchorElement }         from 'react-spy-scroll';
@@ -103,7 +104,7 @@ function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apart
 
   return {
     lang,
-    room,
+    room: { ...room, name: Utils.localizeRoomName(room.name, lang) },
     apartment,
     viewsCount: _.random(350, 550),
   };

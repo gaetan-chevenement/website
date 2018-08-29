@@ -25,12 +25,12 @@ function Room(args) {
       availableAt,
       _currentPrice,
       beds,
-      name,
       floorArea,
       createdAt,
       id,
       roomCount,
       galery,
+      roomName,
     },
     isThumbnail,
   } = args;
@@ -49,7 +49,7 @@ function Room(args) {
         </Carousel>
         <div className={style.roomAttributes}>
           <h4 className={style.roomName}>
-            {name}
+            {roomName}
           </h4>
           <Availability
             {...{ lang, arrivalDate, className: style.availability, availableAt }}

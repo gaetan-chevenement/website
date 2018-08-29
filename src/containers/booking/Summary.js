@@ -682,7 +682,7 @@ function mapStateToProps(args) {
 
   return {
     lang,
-    room,
+    room: { ...room, name: Utils.localizeRoomName(room.name, lang) },
     apartment,
     packLevel: packOrder && Utils.getPackLevel(packOrder) || booking.pack,
     packPrice: packOrder.amount,

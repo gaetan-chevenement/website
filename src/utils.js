@@ -201,6 +201,7 @@ const pureUtils = {
     const definition = {
       'fr-FR': 'Je souhaite visiter cette chambre',
       'en-US': 'I wish to visit this room',
+      'es-ES': 'Deseo visitar esta habitación',
     };
 
     return () => {
@@ -230,6 +231,16 @@ const pureUtils = {
         .format(new Date(value * 24 * 60 * 60 * 1000))
         .toUpperCase()
     );
+  },
+  localizeRoomName(roomName, lang) {
+    switch ( lang ) {
+    case 'fr-FR':
+      return roomName.replace('#', 'Chambre ');
+    case 'es-ES':
+      return roomName.replace('#', 'Habitación ');
+    default:
+      return roomName.replace('#', 'Room ');
+    }
   },
 };
 

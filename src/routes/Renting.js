@@ -122,7 +122,7 @@ function mapStateToProps({ route: { lang }, rentings, orders, rooms }, { renting
     rentingId,
     identityFormUrl:
       `https://${IDENTITY_FORM_URLS[packLevel]}?clientId=${renting.ClientId}`,
-    roomName: room && room.name,
+    roomName: room && Utils.localizeRoomName(room.name, lang),
     packOrder,
   };
 }

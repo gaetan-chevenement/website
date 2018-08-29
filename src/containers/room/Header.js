@@ -130,7 +130,7 @@ function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apart
     lang,
     pictures,
     roomId,
-    roomName: room.name,
+    roomName: Utils.localizeRoomName(room.name, lang),
   };
 }
 
