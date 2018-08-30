@@ -5,6 +5,7 @@ import { connect }            from 'react-redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import { Button }             from 'react-toolbox/lib/button';
 import Heading                from '~/components/booking/Heading';
+import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 import _const                 from '~/const';
 
@@ -92,6 +93,7 @@ const definition = {
 
 function mapStateToProps({ route: { lang }, rentings, rooms, client }, { rentingId }) {
   const renting = rentings[rentingId];
+  const room = renting && rooms[renting.RoomId];
 
   if ( !renting || renting.isLoading ) {
     return { isLoading: true };
@@ -99,7 +101,7 @@ function mapStateToProps({ route: { lang }, rentings, rooms, client }, { renting
 
   return {
     lang,
-    room: rooms[renting.RoomId],
+    room: { ...room, name: Utils.localizeRoomName(room.name, lang) },
     email: client.email,
   };
 }
