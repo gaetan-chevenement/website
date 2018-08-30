@@ -90,6 +90,8 @@ const definition = {
     floor: 'étage',
     elevator: 'ascenseur',
     room: 'chambre',
+    with: 'avec',
+    without: 'sans',
   },
   'es-ES': {
     title: 'Descripción',
@@ -98,6 +100,8 @@ const definition = {
     floor: 'planta',
     elevator: 'ascensor',
     room: 'habitación ',
+    with: 'con',
+    without: 'sin',
   },
 };
 
