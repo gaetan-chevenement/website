@@ -8,6 +8,7 @@ import { Button }             from 'react-toolbox/lib/button';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import BookingFormSections    from '~/components/booking/BookingFormSections';
 import Heading                from '~/components/booking/Heading';
+import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 
 class BookingForm extends PureComponent {
@@ -119,7 +120,7 @@ function mapStateToProps({ route: { lang }, rooms, booking }, { roomId }) {
   return {
     lang,
     roomId,
-    room,
+    room: { ...room, name: Utils.localizeRoomName(room.name, lang) },
     booking,
   };
 }
