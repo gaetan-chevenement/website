@@ -57,7 +57,7 @@ function Footer({ lang }) {
                   &nbsp;&nbsp;&nbsp;
                 </li>
                 <li>
-                  <a href={`/${lang}/contact`}>
+                  <a href="#nogo" onClick={handleClickContact}>
                     Contact
                   </a>
                 </li>
@@ -91,6 +91,10 @@ function Footer({ lang }) {
       </footer>
     </IntlProvider>
   );
+}
+
+function handleClickContact() {
+  window.$crisp.push(['do', 'chat:open']);
 }
 
 const definition = {
