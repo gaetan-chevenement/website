@@ -3,8 +3,7 @@ import { Router }       from 'preact-router';
 import Match            from 'preact-router/match';
 import { Provider }     from 'react-redux';
 import autobind         from 'autobind-decorator';
-import Helmet           from 'preact-helmet';;
-
+import Helmet           from 'preact-helmet';
 import Services         from 'async!../routes/Services';
 import Process          from 'async!../routes/Process';
 import About            from 'async!../routes/About';
@@ -24,14 +23,15 @@ import NotFound         from '~/routes/NotFound';
 import Page             from '~/routes/Page';
 import defaultState     from '~/defaultState';
 import configureStore   from '~/stores';
-import {
-  CRISP_SCRIPT,
-  GTM_SCRIPT,
-  PIXEL_SCRIPT,
-}                       from '~/const';
+import _const           from '~/const';
 import Header           from './Header';
 import Footer           from './Footer';
 
+const {
+  CRISP_SCRIPT,
+  GTM_SCRIPT,
+  PIXEL_SCRIPT,
+} = _const;
 const store = configureStore(
   typeof window === 'object' && window.__STATE__
   || defaultState

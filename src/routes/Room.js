@@ -12,7 +12,7 @@ class Room extends PureComponent {
   static async prefetch(lang, roomId, dispatch) {
     return Room.loadData(lang, roomId, {
       getRoom: (roomId) => dispatch(actions.getRoom(roomId)),
-      getDistrict: (districtId) => dispatch(actions.getDisplayMedia(districtId)),
+      getDistrict: (districtId) => dispatch(actions.getDistrict(districtId)),
     });
   }
 
@@ -32,8 +32,12 @@ class Room extends PureComponent {
       return actions.getDistrict(districtId);
     }
     catch (e) {
-      console.error(e);
-      route(`/${lang}/404`);
+      if (e.error.isNotFound) {
+        route(`/${lang}/404`);
+      }
+      else {
+        throw e;
+      }
     }
 
   }

@@ -12,7 +12,7 @@ function CreateAlertButton({ lang }) {
       <Button className={CSS.createAlertButton} icon="add_alert" theme={CSS}
         href={ALERT_FORM_URL} target="_blank"
       >
-        <Text id="create">Create an alert</Text>
+        <Text id="create">Alert</Text>
       </Button>
     </IntlProvider>
   );
@@ -20,10 +20,10 @@ function CreateAlertButton({ lang }) {
 
 const definition = {
   'fr-FR': {
-    create: 'Créer une alerte',
+    create: 'Alerte',
   },
   'es-ES': {
-    create: 'Crear una alerta',
+    create: 'Alerta',
   },
 };
 

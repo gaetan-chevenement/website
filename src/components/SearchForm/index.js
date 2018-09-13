@@ -4,7 +4,6 @@ import autobind               from 'autobind-decorator';
 import { IntlProvider, Text } from 'preact-i18n';
 import { Dropdown }           from 'react-toolbox/lib/dropdown';
 import { DatePicker }         from 'react-toolbox/lib/date_picker';
-// import { Input }              from 'react-toolbox/lib/input';
 import { Button }             from 'react-toolbox/lib/button';
 import _const                 from '~/const';
 import {
@@ -47,7 +46,7 @@ class SearchForm extends PureComponent {
 
     this.setState(
       { city: value, error: false },
-      (this.props.mode === 'noSubmit' || this.props.mode === 'header')  && this.updateRoute
+      (this.props.mode !== 'home')  && this.updateRoute
     );
   }
 
@@ -55,7 +54,7 @@ class SearchForm extends PureComponent {
   handleDateChange(value) {
     this.setState(
       { date: value },
-      (this.props.mode === 'noSubmit' || this.props.mode === 'header') && this.updateRoute
+      (this.props.mode !== 'home' ) && this.updateRoute
     );
   }
 
@@ -82,52 +81,47 @@ class SearchForm extends PureComponent {
   render({ lang, mode }) {
     return (
       <IntlProvider definition={definition[lang]}>
-        <form class={`${form} ${this.props.mode === 'noSubmit' ? noSubmit : ''}`}
+        <form
+          class={`${form} ${this.props.mode === 'noSubmit' ? noSubmit : ''}`}
           style={this.props.mode === 'home' ? { flexWrap: 'wrap' } : null}
         >
-          <div>
-            <i class="material-icons">location_city</i>
-            <Dropdown
-              id={this.props.mode === 'header' ? null : 'city-select'}
-              onChange={this.handleCityChange}
-              label={<Text id="city">City *</Text>}
-              value={this.state.city}
-              source={
-                SEARCHABLE_CITIES.map(({ name }) => ({ value: name, label: name }))
-              }
-              floating={false}
-              error={this.state.error}
-            />
-          </div>
-          <div>
-            <i class="material-icons">date_range</i>
-            { typeof window !== 'object' ? null : (
-              <DatePicker
-                locale={lang.substring(0,2)}
-                label={<Text id="arrival">Arrival date</Text>}
+          { this.props.mode !== 'secondline' ? (
+            <div>
+              <i class="material-icons">location_city</i>
+              <Dropdown
+                id={this.props.mode === 'header' ? null : 'city-select'}
+                onChange={this.handleCityChange}
+                label={<Text id="city">City *</Text>}
+                value={this.state.city}
+                source={
+                  SEARCHABLE_CITIES.map(({ name }) => ({ value: name, label: name }))
+                }
                 floating={false}
-                value={this.state.date}
-                onChange={this.handleDateChange}
-                autoOk
+                error={this.state.error}
               />
-            )}
-          </div>
-          {this.props.mode === 'noSubmit' || this.props.mode === 'header' ?
-            { /*<div>
-              <i class="material-icons">attach_money</i>
-              <Input
-                type="text"
-                label="Tous les loyers"
-                disabled
-                floating={false}
-              />
-            </div> */} :
+            </div> ) : null }
+          { this.props.mode !== 'firstline' ? (
+            <div>
+              <i className="material-icons">date_range</i>
+              { typeof window === 'object' ? (
+                <DatePicker
+                  locale={lang.substring(0, 2)}
+                  label={<Text id="arrival">Arrival</Text>}
+                  floating={false}
+                  value={this.state.date}
+                  onChange={this.handleDateChange}
+                  autoOk
+                />
+              ) : null }
+            </div>
+          ) : null }
+          {this.props.mode === 'home' ? (
             <div class={buttonContainer}>
               <Button
                 label={<Text id="submit">Search</Text>}
                 onClick={this.handleSubmit}
               />
-            </div>
+            </div> ) : null
           }
         </form>
       </IntlProvider>
@@ -137,12 +131,12 @@ class SearchForm extends PureComponent {
 
 const definition = {
   'fr-FR': {
-    arrival: 'Date d\'arrivée',
+    arrival: 'Arrivée',
     city: 'Ville *',
     submit: 'Rechercher',
   },
   'es-ES': {
-    arrival: 'Fecha de llegada',
+    arrival: 'Llegada',
     city: 'Ciudad *',
     submit: 'Buscar',
   },
