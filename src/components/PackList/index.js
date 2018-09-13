@@ -121,7 +121,7 @@ const packs = {
         'Almohada y edredón',
         'Activación de servicios',
         'Mantenimiento y asistencia ilimitados',
-       ],
+      ],
     },
   },
   comfort: {
@@ -148,7 +148,7 @@ const packs = {
         'Cancellation insurance - 1 month',
       ],
     },
-     'es-ES': {
+    'es-ES': {
       title: 'Comfort',
       subtitle: 'Una entrada más fácil para más comodidad y serenidad',
       listHeader: 'Todos los servicios básicos más:',
@@ -157,7 +157,7 @@ const packs = {
         'Paquete de comida',
         'Asistencia de llaves',
         'Seguro de cancelación - 1 mes',
-       ],
+      ],
     },
   },
   privilege: {

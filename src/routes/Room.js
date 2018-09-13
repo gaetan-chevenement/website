@@ -8,9 +8,15 @@ import * as actions           from '~/actions';
 import Header                 from '~/containers/room/Header';
 
 class Room extends PureComponent {
-  async loadData(roomId) {
-    const { actions } = this.props;
 
+  static async prefetch(lang, roomId, dispatch) {
+    return Room.loadData(lang, roomId, {
+      getRoom: (roomId) => dispatch(actions.getRoom(roomId)),
+      getDistrict: (districtId) => dispatch(actions.getDisplayMedia(districtId)),
+    });
+  }
+
+  static async loadData(lang, roomId, actions) {
     try {
       const { response: {
         // data: [roomData],
@@ -26,20 +32,21 @@ class Room extends PureComponent {
       return actions.getDistrict(districtId);
     }
     catch (e) {
-      route(`/${this.props.lang}/404`);
+      console.error(e);
+      route(`/${lang}/404`);
     }
 
   }
 
   componentWillMount() {
     if ( !this.props.room ) {
-      return this.loadData(this.props.roomId);
+      return Room.loadData(this.props.lang, this.props.roomId, this.props.actions);
     }
   }
 
   componentWillReceiveProps({ roomId }) {
     if ( roomId !== this.props.roomId ) {
-      this.loadData(roomId);
+      Room.loadData(roomId, this.props.actions);
     }
   }
 

@@ -203,7 +203,7 @@ const reducers = {
   rentings: rentingsReducer,
   orders: ordersReducer,
   client: clientReducer,
-  pages: pagesReducer
+  pages: pagesReducer,
 };
 
 const memoizedIdentity = memoize((state) => ( state ), { cache: new NamedTupleMap() });

@@ -3,9 +3,8 @@ import { Router }       from 'preact-router';
 import Match            from 'preact-router/match';
 import { Provider }     from 'react-redux';
 import autobind         from 'autobind-decorator';
-// import { ThemeProvider } from 'react-css-themr';
+import Helmet           from 'preact-helmet';;
 
-import configureStore   from '~/stores';
 import Services         from 'async!../routes/Services';
 import Process          from 'async!../routes/Process';
 import About            from 'async!../routes/About';
@@ -19,17 +18,27 @@ import BookingConfirmed from '~/routes/BookingConfirmed';
 import Payment          from '~/routes/Payment';
 import Invoice          from '~/routes/Invoice';
 
-import {
-  updateRoute,
-}                       from '~/actions';
+import { updateRoute }  from '~/actions';
 import Utils            from '~/utils';
-import Header           from './Header';
-import Footer           from './Footer';
 import NotFound         from '~/routes/NotFound';
 import Page             from '~/routes/Page';
+import defaultState     from '~/defaultState';
+import configureStore   from '~/stores';
+import {
+  CRISP_SCRIPT,
+  GTM_SCRIPT,
+  PIXEL_SCRIPT,
+}                       from '~/const';
+import Header           from './Header';
+import Footer           from './Footer';
+
+const store = configureStore(
+  typeof window === 'object' && window.__STATE__
+  || defaultState
+);
+const rLang = /^\/[a-z]{2}[A-Z]{2}\//;
 
 export default class App extends Component {
-  // Store route parameters in the state when route changes
   @autobind
   handleRoute(e = { current: {} }) {
     const {
@@ -47,7 +56,7 @@ export default class App extends Component {
 
     // route params are only relevant when they're defined, so we'll filter-out
     // all undefined values.
-    store.dispatch(updateRoute(Object.assign(
+    (this.props.store || store).dispatch(updateRoute(Object.assign(
       Utils.filterOutUndef({
         lang,
         minPack,
@@ -64,7 +73,7 @@ export default class App extends Component {
 
     this.setState({ lang });
 
-    if ( typeof window === 'object' ) {
+    if (typeof window === 'object') {
       // Make sure GTM is aware of pageviews
       window.dataLayer && window.dataLayer.push({
         event: 'Pageview',
@@ -78,18 +87,18 @@ export default class App extends Component {
         // - clicked on a link that programmatically calls `history.goBack()`
         // - manually changed the URL in the address bar (here we might want
         // to scroll to top, but we can't differentiate it from the others)
-        if ( location.action === 'POP' ) {
+        if (location.action === 'POP') {
           return;
         }
         // In all other cases, scroll to top
-        window.scrollTo(0, 0);
+        window && window.scrollTo(0, 0);
       });
     }
   }
 
+  // Store route parameters in the state when route changes
   constructor(props) {
     super(props);
-
     // We used to set the initial lang based on navigator.language, but we no
     // longer use that as root url shoud never be reached by visitors:
     // they are redirected by Cloudflare based on their user-agent
@@ -98,9 +107,52 @@ export default class App extends Component {
   }
 
   render() {
+    const { lang } = this.state;
+
     return (
-      <Provider store={store}>
+      <Provider store={this.props.store || store}>
         <div id="app">
+          <Match path="/">
+            {({ path }) => (
+              <Helmet
+                htmlAttributes={{ lang: lang.split('-')[0] }}
+                defaultTitle={definition[lang].appTitle}
+                titleTemplate={`${definition[lang].appTitle} - %s`}
+                meta={[
+                  { name: 'description', content: definition[lang].appDescription },
+                  { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+                  { name: 'mobile-web-app-capable', content: 'yes' },
+                  { name: 'apple-mobile-web-app-capable', content: 'yes' },
+                  { name: 'theme-color', content: '#1C2B4A' },
+                  { charset: 'utf-8' },
+                  { name: 'language', content: lang },
+
+                ]}
+                link={[
+                  { rel: 'manifest', href: '/manifest.json' },
+                  { rel: 'canonical', href: path },
+                  { rel: 'alternate', href: path.replace(rLang, '/en-US/'), hrefLang: 'en' },
+                  { rel: 'alternate', href: path.replace(rLang, '/fr-FR/'), hrefLang: 'fr' },
+                  { rel: 'alternate', href: path.replace(rLang, '/es-ES/'), hrefLang: 'es' },
+                  {
+                    rel: 'stylesheet',
+                    href: '//fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:700|Material+Icons',
+                    media: 'none',
+                    onload: "if(media!='all')media='all'",
+                  },
+                ]}
+                script={[
+                  { type: 'javascript', innerHTML: CRISP_SCRIPT },
+                  { type: 'javascript', innerHTML: GTM_SCRIPT },
+                  { type: 'javascript', innerHTML: PIXEL_SCRIPT },
+                ]}
+                noscript={[
+                  { innerHTML: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCRQV25" height="0" width="0" style="display:none;visibility:hidden"></iframe>` },
+                  { innerHTML: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=410162552777679&ev=PageView&noscript=1" />` },
+                ]}
+              />
+            )}
+          </Match>
           <Match path="/">
             { // No header on invoices
               ({ matches, path, url }) =>
@@ -108,7 +160,7 @@ export default class App extends Component {
                   '' : <Header {...{ path }} />
             }
           </Match>
-          <Router onChange={this.handleRoute}>
+          <Router onChange={this.handleRoute} url={this.props.url || undefined}>
             <Home path="/" />
             <Home path="/:lang" />
             <Search path="/:lang/search/:city/:page?" />
@@ -123,6 +175,8 @@ export default class App extends Component {
             <Page path="/:lang/page/:slug" />
             <About path="/:lang/about" />
             <Contact path="/:lang/contact" />
+            <NotFound path="/:lang/:path" />
+            <NotFound default />
           </Router>
           <Match path="/">
             { // No footer on invoice or search
@@ -137,29 +191,63 @@ export default class App extends Component {
   }
 }
 
-const store = configureStore({
-  route: {
-    lang: 'en-US',
+const definition = {
+  'en-US': {
+    appTitle: 'Chez Nestor, Your ready-to-live-in flatshares',
+    appDescription: `
+      Chez Nestor is the leader in furnished shared accommodation in France.
+      Present in many cities, we offer you brand new, equipped and furnished
+      apartments in the heart of the city centre! Discover and book your room
+      on our website!
+    `,
   },
-  session: {
-    isSpecialOfferBannerActive: null,
+  'fr-FR': {
+    appTitle: `
+      Chez Nestor, spécialiste de la colocation meublée et équipée en
+      centre-ville
+    `,
+    appDescription: `
+      Chez Nestor est le leader de la colocation meublée en France. Présent
+      dans de nombreuses villes, nous vous proposons des appartements refaits
+      à neufs, équipés et meublés en plein centre-ville ! Découvrez et réservez
+      votre chambre sur notre site !
+    `,
   },
-  booking: {
-    minPack: 'basic',
-    pack: 'comfort',
-    errors: {},
+  'es-ES': {
+    appTitle: 'Chez Nestor, sus pisos compartidos listos para vivir',
+    appDescription: `
+      Chez Nestor es el líder de los alojamientos compartidos amueblados en
+      Francia. Presente en muchas ciudades, le ofrecemos apartamentos nuevos,
+      equipados y amueblados en el corazón del centro de la ciudad! Descubre y
+      reserva tu habitación en nuestra página web!
+    `,
   },
-  client: {},
-  payment: {
-    errors: {},
-  },
-  search: {
-    errors: {},
-  },
-  orders: {},
-  rooms: {},
-  apartments: {},
-  districts: {},
-});
+};
+
+App.Helmet = Helmet;
+App.configureStore = configureStore;
+App.defaultState = defaultState;
+
+App.prefetchRoutes = (url, dispatch) => {
+  const roomMatch = url.match(/(.+)\/room\/(.+)/);
+
+  if ( roomMatch !== null ) {
+    return Room.prefetch(roomMatch[1], roomMatch[2], dispatch);
+  }
+
+  const searchMatch = url.match(/(.+)\/search\/(.+)/);
+
+  if (searchMatch !== null) {
+    return Search.prefetch(searchMatch[2], dispatch);
+  }
+
+  const pageMatch = url.match(/(.+)\/page\/(.+)/);
+
+  if (pageMatch !== null) {
+    return Page.prefetch(pageMatch[1], pageMatch[2], dispatch);
+  }
+  return Promise.resolve();
+};
+
 const rSearch = /^\/[\w-]{5}\/search/;
 const rInvoice = /^\/[\w-]{5}\/invoice/;

@@ -25,6 +25,7 @@ export const deleteApartmentPicture = createAction('delete picture from apartmen
 export const updateApartmentPicture = createAction('update picture from apartment');
 export const showSpecialOfferBanner = createAction('show special offer banner');
 export const hideSpecialOfferBanner = createAction('hide special offer banner');
+export const updateSSRStatus = createAction('trigger me once ssr async fetch is done');
 
 export const {
   updateBooking,

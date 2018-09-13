@@ -10,7 +10,6 @@ import { Drawer }             from 'react-toolbox/lib/drawer';
 import appbarTheme            from 'react-toolbox/components/app_bar/theme.css';
 import Utils                  from '~/utils';
 import style                  from './style';
-import SearchForm             from '../SearchForm';
 
 const languages = [
   { value: 'en-US', label: '🇺🇸' },
@@ -20,11 +19,16 @@ const languages = [
 
 // https://stackoverflow.com/questions/20514596/document-documentelement-scrolltop-return-value-differs-in-chrome
 function getDocumentScrollTop() {
+  if ( typeof window !== 'object' ) {
+    return 0;
+  }
+
   return window.scrollY
     || window.pageYOffset
     || document.body.scrollTop + (document.documentElement
       && document.documentElement.scrollTop || 0);
 }
+
 
 class Header extends Component {
   @autobind
@@ -79,18 +83,12 @@ class Header extends Component {
   }
 
   render({ lang, path }) {
-    let show = true;
-    if (this.isRoomPage()) {
-      const $el = document.getElementById('room-anchors');
-      if ( $el !== null ) {
-        show = $el.getBoundingClientRect().bottom > 0;
-      }
-    }
     return (
       <IntlProvider definition={definition[lang]}>
-        <header class={[style.header, !show ? style.headerHidden : null].join( ' ')}>
+        <header class={style.header}>
           <div class={[style.wrapper, this.isSearchPage() ? style.wrapperLite : null].join(' ')}>
-
+            { this.isSearchPage() ? <SearchPageAddon scrollPx={this.state.scrollPx} /> : null}
+            { this.isRoomPage() ? <RoomPageAddon scrollPx={this.state.scrollPx} /> : null}
 
             <AppBar
               title={this.renderLeftPart()}
@@ -158,18 +156,26 @@ function SearchPageAddon({ scrollPx }) {
   const $el = document.getElementById('city-select');
   if ( $el !== null ) {
     const show = $el.getBoundingClientRect().bottom < 0;
-    return (
-      <div class={show ? style.showAdditionalPart : null}>
-        <SearchForm  mode="header" />
-      </div>
-    );
+    console.log('should show search header', show);
+  }
+
+  return null;
+}
+
+function RoomPageAddon({ scrollPx }) {
+  const $el = document.getElementById('room-anchors');
+  if ( $el !== null ) {
+    const showSearchHeader = $el.getBoundingClientRect().bottom < 0;
+    console.log('should show anchors header', showSearchHeader);
   }
 
   return null;
 }
 
 function handleClickContact() {
-  window.$crisp.push(['do', 'chat:open']);
+  if (typeof window === 'object') {
+    window.$crisp.push(['do', 'chat:open']);
+  }
 }
 
 const definition = {

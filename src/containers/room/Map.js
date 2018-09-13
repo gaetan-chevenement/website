@@ -1,47 +1,78 @@
 import { PureComponent }      from 'react';
-import {
-  Map,
-  TileLayer,
-  Marker,
-}                             from 'react-leaflet';
-import L                      from 'leaflet';
 import _const                 from '~/const';
 import Utils                  from '~/utils';
 
 import 'leaflet/dist/leaflet.css';
 
 const { MAPBOX_TOKEN } = _const;
-const HIGHLIGHT_ICON = new L.Icon({
-  iconUrl: require('~/assets/search/map-marker-highlight.png'),
-  iconSize: [45, 66],
-});
+
 const tileLayerUrl =
   `https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${MAPBOX_TOKEN}`;
 
 class SingleMap extends PureComponent {
-  componentDidMount() {
-    let map = this._map.leafletElement;
+  constructor(props) {
+    super(props);
+    this.state = {
+      libReactLeaflet: null,
+      libLeaflet: null,
+    };
 
-    map.dragging.disable();
-    map.touchZoom.disable();
-    map.doubleClickZoom.disable();
-    map.scrollWheelZoom.disable();
-    map.boxZoom.disable();
-    map.keyboard.disable();
-    if ( map.tap ) {
-      map.tap.disable();
+    if (typeof window === 'object') {
+      import('react-leaflet')
+        .then(reactLeaflet => {
+          this.setState({
+            libReactLeaflet: reactLeaflet,
+          });
+          return true;
+        })
+        .catch(() => {
+          console.error('leaflet loading failed');
+        });
+      import('leaflet')
+        .then(leaflet => {
+          this.setState({
+            libLeaflet: leaflet,
+          });
+          return true;
+        })
+        .catch(() => {
+          console.error('leaflet loading failed');
+        });
     }
+
   }
 
   componentDidUpdate() {
     // Force l'actualisation de la carte si les propriétés sont mises à jour
-    if (this._map) {
+    if (this._map && this._map.leafletElement) {
+      let map = this._map.leafletElement;
+
+      map.dragging.disable();
+      map.touchZoom.disable();
+      map.doubleClickZoom.disable();
+      map.scrollWheelZoom.disable();
+      map.boxZoom.disable();
+      map.keyboard.disable();
+      if ( map.tap ) {
+        map.tap.disable();
+      }
       this._map.leafletElement.invalidateSize();
     }
   }
 
   render({ apartment }) {
     const latLng = Utils.getApartmentLatLng(apartment);
+
+    if (this.state.libReactLeaflet === null || this.state.libLeaflet === null) {
+      return <div>...</div>;
+    }
+
+    const { Map, TileLayer, Marker } = this.state.libReactLeaflet;
+    const L = this.state.libLeaflet;
+    const HIGHLIGHT_ICON = new L.Icon({
+      iconUrl: require('~/assets/search/map-marker-highlight.png'),
+      iconSize: [45, 66],
+    });
 
     return (
       <Map

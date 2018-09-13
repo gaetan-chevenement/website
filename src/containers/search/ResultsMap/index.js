@@ -1,18 +1,10 @@
-import { Component }      from 'react';
-import { connect }        from 'react-redux';
-import {
-  Map,
-  TileLayer,
-  Marker,
-  Popup,
-}                         from 'react-leaflet';
-import L                  from 'leaflet';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
-import filter             from 'lodash/filter';
-import orderBy            from 'lodash/orderBy';
-import Room               from '~/components/search/Room';
-import _const             from '~/const';
-import Utils              from '~/utils';
+import { Component }          from 'react';
+import filter                 from 'lodash/filter';
+import orderBy                from 'lodash/orderBy';
+import Room                   from '~/components/search/Room';
+import _const                 from '~/const';
+import Utils                  from '~/utils';
+import { connect }            from 'react-redux';
 
 import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
@@ -20,21 +12,11 @@ import 'react-leaflet-markercluster/dist/styles.min.css';
 const _ = { filter, orderBy };
 const { MAPBOX_TOKEN } = _const;
 
-const DEFAULT_ICON = new L.Icon({
-  iconUrl: require('~/assets/search/map-marker-default.png'),
-  iconSize: [45, 66],
-});
-
-const HIGHLIGHT_ICON = new L.Icon({
-  iconUrl: require('~/assets/search/map-marker-highlight.png'),
-  iconSize: [45, 66],
-});
-
 // We only want to cluster at the street address level.
 // that should do the trick
 const maxClusterRadius = 1;
 
-function iconCreateFunction (cluster) {
+function iconCreateFunctionUnbound(L, cluster) {
   return L.divIcon({
     className: 'map-rooms-cluster',
     html: (`
@@ -51,17 +33,83 @@ const tileLayerUrl =
   `https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${MAPBOX_TOKEN}`;
 
 class ResultsMap extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      libReactLeaflet: null,
+      libLeaflet: null,
+      libReactLeafletMarkerCluster: null,
+    };
+
+    if (typeof window === 'object') {
+      import('react-leaflet')
+        .then(reactLeaflet => {
+          this.setState({
+            libReactLeaflet: reactLeaflet,
+          });
+          return true;
+        })
+        .catch(() => {
+          console.error('leaflet loading failed');
+        });
+      import('leaflet')
+        .then(leaflet => {
+          this.setState({
+            libLeaflet: leaflet,
+          });
+          return true;
+        })
+        .catch(() => {
+          console.error('leaflet loading failed');
+        });
+      import('react-leaflet-markercluster')
+        .then(reactLeafletMarkerCluster => {
+          this.setState({
+            libReactLeafletMarkerCluster: reactLeafletMarkerCluster,
+          });
+          return true;
+        })
+        .catch(() => {
+          console.error('leaflet loading failed');
+        });
+    }
+  }
+
   // invalidate the size of the map every time it has been re-rendered
-  componentDidUpdate () {
-    if ( this._map ) {
+  componentDidUpdate() {
+    if ( this._map && this._map.leafletElement) {
       this._map.leafletElement.invalidateSize();
     }
   }
 
-  render ({ lang, arrivalDate, highlightedRoomId, arrRooms }) {
-    const bounds = arrRooms.length > 0
-      ? new L.LatLngBounds(arrRooms.map(({ latLng }) => (latLng))).pad(0.2)
-      : DEFAULT_BBOX;
+  render({ lang, arrivalDate, highlightedRoomId, arrRooms }) {
+    if (this.state.libReactLeaflet === null || this.state.libLeaflet === null ||
+      this.state.libReactLeafletMarkerCluster === null
+    ) {
+      return <div>...</div>;
+    }
+
+    const L = this.state.libLeaflet;
+    const MarkerClusterGroup = this.state.libReactLeafletMarkerCluster.default;
+
+    const bounds = arrRooms.length > 0 ?
+      new L.LatLngBounds( arrRooms.map(({ latLng }) => (latLng)) ).pad(0.2) :
+      DEFAULT_BBOX;
+
+    const { Map, TileLayer, Marker, Popup } = this.state.libReactLeaflet;
+
+    const DEFAULT_ICON = new L.Icon({
+      iconUrl: require('~/assets/search/map-marker-default.png'),
+      iconSize: [45, 66],
+    });
+
+    const HIGHLIGHT_ICON = new L.Icon({
+      iconUrl: require('~/assets/search/map-marker-highlight.png'),
+      iconSize: [45, 66],
+    });
+
+    const iconCreateFunction = iconCreateFunctionUnbound.bind(null, L);
 
     return (
       <Map

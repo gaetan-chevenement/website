@@ -1,4 +1,5 @@
 import random                 from 'lodash/random';
+import { Component }          from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import { IntlProvider, Text } from 'preact-i18n';
@@ -16,71 +17,99 @@ import Guide                  from '~/components/room/Guide';
 import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 import style                  from './style.css';
-import { AnchorLink, AnchorElement }         from 'react-spy-scroll';
 const _ = { random };
 
-function RoomContent({ lang, roomId, apartmentId, room, apartment, viewsCount }) {
-  const { availableAt } = room;
+class RoomContent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      libSpyScroll: null,
+    };
 
-  return (
-    <IntlProvider definition={definition[lang]}>
-      <div className={style.roomPage}>
-        <div className={`${style.roomContent} content content-wide`}>
-          <div className={style.mainColumns}>
-            <div>
-              <div className={[style.leftHeader]}>
-                {room.name}
-              </div>
-              <div className={style.links} id="room-anchors">
-                <ul>
-                  <li>
-                    <AnchorLink href="overview"><Text id="overview">Overview</Text></AnchorLink>
-                  </li>
-                  <li>
-                    <AnchorLink href="housemates"><Text id="housemates">Housemates</Text></AnchorLink>
-                  </li>
-                  <li>
-                    <AnchorLink href="location"><Text id="location">Location</Text></AnchorLink>
-                  </li>
-                </ul>
-              </div>
-              <AnchorElement id="overview" className={style.roomAnchor}>
-                <div>
-                  <Pictures roomId={roomId} apartmentId={apartmentId} />
-                  <Description roomId={roomId} apartmentId={apartmentId} />
-                  <Features roomId={roomId} apartmentId={apartmentId} />
+    if ( typeof window === 'object' ) {
+      import('react-spy-scroll')
+        .then(spyScroll => {
+          this.setState({ libSpyScroll: spyScroll });
+
+          return true;
+        })
+        .catch(() => console.error('leaflet loading failed'));
+    }
+  }
+
+  render({ lang, roomId, apartmentId, room, apartment, viewsCount }) {
+    const { availableAt } = room;
+    let AnchorLink = 'a';
+    let AnchorElement = 'div';
+
+    if ( this.state.libSpyScroll ) {
+      AnchorElement = this.state.libSpyScroll.AnchorElement;
+      AnchorLink = this.state.libSpyScroll.AnchorLink;
+    }
+
+    return (
+      <IntlProvider definition={definition[lang]}>
+        <div className={style.roomPage}>
+          <div className={`${style.roomContent} content content-wide`}>
+            <div className={style.mainColumns}>
+              <div>
+                <div className={[style.leftHeader]}>
+                  {room.name}
                 </div>
-              </AnchorElement>
-              <AnchorElement id="housemates" className={style.roomAnchor}>
-                <Housemates apartmentId={apartmentId} />
-              </AnchorElement>
-              <AnchorElement id="location" className={style.roomAnchor}>
-                <ApartmentDescription />
-              </AnchorElement>
-            </div>
-            <div>
-              <div className={style.rightHeader}>
-                <Availability
-                  {...{ lang, availableAt }}
-                />
+                <div className={style.links} id="room-anchors">
+                  <ul>
+                    <li>
+                      <AnchorLink href="overview"><Text id="overview">Overview</Text></AnchorLink>
+                    </li>
+                    <li>
+                      <AnchorLink href="housemates"><Text id="housemates">Housemates</Text></AnchorLink>
+                    </li>
+                    <li>
+                      <AnchorLink href="location"><Text id="location">Location</Text></AnchorLink>
+                    </li>
+                  </ul>
+                </div>
+                <AnchorElement id="overview" className={style.roomAnchor}>
+                  <div>
+                    <Pictures roomId={roomId} apartmentId={apartmentId} />
+                    <Description roomId={roomId} apartmentId={apartmentId} />
+                    <Features roomId={roomId} apartmentId={apartmentId} />
+                  </div>
+                </AnchorElement>
+                <AnchorElement id="housemates" className={style.roomAnchor}>
+                  <Housemates apartmentId={apartmentId} />
+                </AnchorElement>
+                <AnchorElement id="location" className={style.roomAnchor}>
+                  <ApartmentDescription />
+                </AnchorElement>
               </div>
-              <BookingInfo roomId={roomId} apartmentId={apartmentId} />
-              <div className={style.sameRoomCount}>
-                <Text id="viewsCount" fields={{ viewsCount }}>
-                  {`${viewsCount} visitors viewed this room this week.`}
-                </Text>
+              <div>
+                <div className={style.rightHeader}>
+                  <Availability
+                    {...{ lang, availableAt }}
+                  />
+                </div>
+                <BookingInfo roomId={roomId} apartmentId={apartmentId} />
+                <div className={style.sameRoomCount}>
+                  <Text id="viewsCount" fields={{ viewsCount }}>
+                    {`${viewsCount} visitors viewed this room this week.`}
+                  </Text>
+                </div>
               </div>
             </div>
           </div>
+          <a id="map" className={style.roomAnchor} />
+          { typeof window !== 'object' ? null :
+            <SingleMap apartment={apartment} />
+          }
+
+          <RoomServices />
+          <Questions />
+          <Guide />
         </div>
-        <a id="map" className={style.roomAnchor} />
-        <SingleMap apartment={apartment} />
-        <RoomServices />
-        <Questions />
-        <Guide />
-      </div>
-    </IntlProvider>
-  );
+      </IntlProvider>
+    );
+  }
 }
 
 const definition = {
