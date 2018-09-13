@@ -143,9 +143,9 @@ function AppBarTitle({ lang, isLite = false, handleToggle }) {
   return (
     <h1 class={appbarTheme.title} style={{ margin: '0 0 0 -22px' }}>
       <div className="hide-lg-up">
-        <div onClick={handleToggle}>
+        <div onClick={handleToggle} style={{ color: '#aaa' }}>
           { logo }
-          >
+          ▸
         </div>
       </div>
       <div className="hide-md-down">
@@ -160,6 +160,9 @@ function AppBarTitle({ lang, isLite = false, handleToggle }) {
 function AppNavigation({ lang, path, type, className }) {
   return (
     <Navigation className={className} type={type} theme={style}>
+      <NavLink href={`/${lang}/`} theme={style}>
+        <Text id="home">Home</Text>
+      </NavLink>
       <NavLink href={`/${lang}/services`} theme={style}>
         <Text id="included">Included Services</Text>
       </NavLink>

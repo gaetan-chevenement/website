@@ -36,7 +36,7 @@
 
 .appBar {
   height: var(--header-height);
-  color: white;
+  color: var(--color-greyish);
   background-color: var(--color-primary);
 }
 
