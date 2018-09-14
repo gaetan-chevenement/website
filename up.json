@@ -1,0 +1,24 @@
+{
+  "name": "cheznestor-website",
+  "regions": ["eu-west-1"],
+  "lambda": {
+    "memory": 256
+  },
+  "hooks": {
+    "build": [
+      "npm run build:holidays",
+      "npm run build:preact",
+      "mv node_modules .node_modules",
+      "npm install --only=prod",
+      "yarn autoclean --force"
+    ],
+    "clean": "[ -d .node_modules ] && rm -rf node_modules && mv .node_modules node_modules"
+  },
+  "proxy": {
+    "command": "node server.js",
+    "listen_timeout": 5
+  },
+  "error_pages": {
+    "disable": true
+  }
+}
