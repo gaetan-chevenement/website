@@ -57,7 +57,7 @@ export default { 'es-ES': [
   ['Check-out en casa', 'Nuestro equipo se reunirá con usted en su casa',
                                                                       1, 1, 1],
   ['Check-out 24/7', 'Noches, noches, fines de semana, festivos incluidos',
-                                                                      0, 0, 1],
+                                                        '149€', '149€', '79€'],
   ['Servicio de equipaje', 'Viaje con las manos libres dejando su equipaje en la agencia (2 maletas para 10 días máximo)',
                                                                  '129€', 1, 1],
   ['Reembolso de la garantía', 'Máximo retraso (excepto daños en el apartamento)',

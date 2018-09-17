@@ -4,6 +4,7 @@
   "lambda": {
     "memory": 256
   },
+  "environment":
   "hooks": {
     "build": [
       "npm run build:holidays",

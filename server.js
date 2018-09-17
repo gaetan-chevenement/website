@@ -9,7 +9,7 @@ global.fetch = fetch;
 
 const App = bundle.default;
 const { defaultState, Helmet, configureStore, prefetchRoutes } = App;
-const { PORT = 3001, NODE_ENV } = process.env;
+const { PORT = 3001, NO_STATIC } = process.env;
 const { style, scripts } = parseBuiltTemplate();
 const assetsExtensions = [
   '.jpg',
@@ -25,7 +25,7 @@ const app = express();
 
 // Static assets should only be served by this file in development
 // Cloudflare should take care of routing static assets requests to Netlify
-if ( NODE_ENV !== 'production' && NODE_ENV !== 'staging' ) {
+if ( NO_STATIC !== 'false' ) {
   app.use((req, res, next) => {
     const isAsset = assetsExtensions.some((ext) =>
       req.url.toLowerCase().endsWith(ext)
