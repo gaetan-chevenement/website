@@ -93,8 +93,8 @@ class Header extends Component {
 
     return (
       <IntlProvider definition={definition[lang]}>
-        <div>
-          <header className={headerClasses.join(' ')}>
+        <header className={headerClasses.join(' ')}>
+          <div>
             <div>
               <div className={[style.wrapper].join(' ')}>
                 <AppBar
@@ -116,20 +116,16 @@ class Header extends Component {
                 <AppNavigation type="vertical" {...{ lang, path }} />
               </Drawer>
             </div>
-
-          </header>
-
-          {this.isSearchPage() ? (
-            <div className={style.searchLine}>
-              <div>
-                <SearchForm mode="secondline" />
-                <CreateAlertButton />
+            {this.isSearchPage() ? (
+              <div className={style.searchLine}>
+                <div>
+                  <SearchForm mode="secondline" />
+                  <CreateAlertButton />
+                </div>
               </div>
-
-            </div>
-          ) : null
-          }
-        </div>
+            ) : null}
+          </div>
+        </header>
       </IntlProvider>
     );
   }
