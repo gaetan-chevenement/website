@@ -35,7 +35,7 @@ function Paging({ lang, count, city, page }) {
         </nav>
         <p>
           <Text id="paging" fields={{ startsAt, endsAt, count }}>
-            {`Rooms ${startsAt} to ${endsAt} of ${count}`}
+            {`Bedrooms ${startsAt} to ${endsAt} of ${count}`}
           </Text>
         </p>
       </div>

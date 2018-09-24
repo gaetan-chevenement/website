@@ -241,7 +241,7 @@ const pureUtils = {
     case 'es-ES':
       return roomName.replace('#', 'Habitación ');
     default:
-      return roomName.replace('#', 'Room ');
+      return roomName.replace('#', 'Bedroom ');
     }
   },
 };

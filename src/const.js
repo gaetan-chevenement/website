@@ -48,7 +48,7 @@ export default Object.assign({}, common, {
   },
 
   SEARCH_PAGE_TITLE_TEMPLATE: {
-    'en-US': 'Rooms in {city} on {date}',
+    'en-US': 'Bedooms in {city} on {date}',
     'fr-FR': 'Chambres à {city} le {date}',
     'es-ES': 'Habitaciones en {city} el {date}',
   },
