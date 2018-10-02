@@ -93,7 +93,9 @@ function Footer({ lang }) {
   );
 }
 
-function handleClickContact() {
+function handleClickContact(e) {
+  e.preventDefault();
+
   window.$crisp.push(['do', 'chat:open']);
 }
 

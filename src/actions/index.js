@@ -198,6 +198,16 @@ export const savePayment =
     } } },
   );
 
+export const addCoupon =
+  createActionAsync(
+    'add Coupon to order',
+    // We need a list query to use a segment
+    (args) => Utils.fetchJson(`/actions/add-coupon`, {
+      method: 'post',
+      body: args,
+    })
+  );
+
 function throwIfNotFound(modelName, id) {
   return (response) => {
     if (modelName === 'Page' && response.length === 0 ) {

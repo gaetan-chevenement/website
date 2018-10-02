@@ -9,6 +9,7 @@ import { Button }             from 'react-toolbox/lib/button';
 import OrderDetails           from '~/components/OrderDetails';
 import LoadingError           from '~/components/LoadingError';
 import CardForm               from '~/containers/payment/CardForm';
+import CouponField            from '~/containers/payment/CouponField';
 import * as actions           from '~/actions';
 
 class Payment extends PureComponent {
@@ -57,6 +58,7 @@ class Payment extends PureComponent {
       order,
       payment,
       isLoading,
+      isPackOrder,
     } = this.props;
 
     if ( isLoading ) {
@@ -87,6 +89,7 @@ class Payment extends PureComponent {
 
           <section>
             <OrderDetails order={order} />
+            { isPackOrder ? <CouponField {...{ orderId }} /> : ''}
           </section>
           <section>
             { !isValidated && !errors.payment && order.balance !== 0 ?
@@ -148,6 +151,9 @@ function mapStateToProps({ route: { lang, returnUrl, rentingPrice }, orders, pay
     return { isLoading: true };
   }
 
+  const isPackOrder =
+    order.OrderItems.some(({ ProductId }) => /-pack$/.test(ProductId));
+
   return {
     lang,
     returnUrl,
@@ -160,6 +166,7 @@ function mapStateToProps({ route: { lang, returnUrl, rentingPrice }, orders, pay
     // instead, since that is the most likely to have been updated without the
     // user noticing
     rentingPrice,
+    isPackOrder,
   };
 }
 
