@@ -93,7 +93,7 @@ class CouponField extends PureComponent {
             />
             <Button raised primary class="one-sixth" style={{ marginTop: '20px' }}
               icon={isCouponValidated ? 'done' : 'send'}
-              label={isCouponValidated ? '' : <Text id="submit">Apply</Text>}
+              label={isCouponValidated ? '' : <Text id="apply">Apply</Text>}
               onClick={this.handleSubmitCoupon}
               disabled={isInputDisabled}
             />
@@ -115,6 +115,14 @@ class CouponField extends PureComponent {
 
 const definition = {
   'fr-FR': {
+    holder: 'Code promo',
+    apply: 'Valider',
+    showInput: 'Utiliser un code promo',
+  },
+  'es-ES': {
+    holder: 'Código de promoción',
+    apply: 'convalidar',
+    showInput: 'Usar un código de promoción',
   },
 };
 
