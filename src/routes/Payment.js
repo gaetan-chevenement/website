@@ -81,6 +81,7 @@ class Payment extends PureComponent {
 
     const { isValidated, errors } = payment;
     const amount = order.balance / -100;
+    const isPaid = order.balance === 0;
 
     return (
       <IntlProvider definition={definition[lang]}>
@@ -89,10 +90,13 @@ class Payment extends PureComponent {
 
           <section>
             <OrderDetails order={order} />
-            { isPackOrder ? <CouponField {...{ orderId }} /> : ''}
+            { !isValidated && !isPaid && isPackOrder ?
+              <CouponField {...{ orderId }} />
+              : ''
+            }
           </section>
           <section>
-            { !isValidated && !errors.payment && order.balance !== 0 ?
+            { !isValidated && !errors.payment && !isPaid ?
               <h3>
                 <Text id="payment.title">Payment can be made by Mastercard or Visa.</Text>
               </h3>
@@ -101,7 +105,7 @@ class Payment extends PureComponent {
             <CardForm />
           </section>
 
-          { !isValidated && !errors.payment && order.balance !== 0 ?
+          { !isValidated && !errors.payment && !isPaid ?
             <nav class="text-center">
               { payment.isValidating || payment.isSaving ?
                 <ProgressBar type="circular" mode="indeterminate" /> :
