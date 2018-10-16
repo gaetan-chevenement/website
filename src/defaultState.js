@@ -3,7 +3,7 @@ module.exports = {
     lang: 'en-US',
   },
   session: {
-    isSpecialOfferBannerActive: null,
+    isSpecialOfferBannerActive: true,
   },
   booking: {
     minPack: 'basic',

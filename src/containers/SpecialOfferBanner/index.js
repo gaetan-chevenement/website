@@ -47,28 +47,30 @@ class Banner extends Component {
 const definition = {
   'en-US': {
     specialOffer: [
-      'Special discount on rooms available before 07/31',
-      '→ Contact us with the code SUMMER :)',
+      '72 Saxe apartment: No wifi until October 23rd',
     ].join(' '),
   },
   'fr-FR': {
     specialOffer: [
-      'Offre spéciale sur les chambres disponibles avant le 31/07',
-      '→ Contactez nous avec le code SUMMER :)',
+      'Appartement du 72 Saxe : Pas de wifi avant le 23/10',
     ].join(' '),
   },
   'es-ES': {
     specialOffer: [
-      'Oferta especial en habitaciones disponibles antes del 31/07',
-      '→ Contáctenos con el código SUMMER :)',
+      '72 Saxe apartment: No wifi until October 23rd',
     ].join(' '),
   },
 };
 
-function mapStateToProps({ route: { lang }, session }) {
+function mapStateToProps({ route: { lang, roomId }, rooms, session }) {
+  const isActive =
+    roomId && rooms[roomId] &&
+    rooms[roomId].ApartmentId === '23b64fa6-79db-4e09-b880-6c7fe80c9c97' &&
+    session.isSpecialOfferBannerActive;
+
   return {
     lang,
-    isActive: session.isSpecialOfferBannerActive,
+    isActive,
   };
 }
 

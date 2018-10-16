@@ -6,6 +6,7 @@ import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import RoomContent            from '~/containers/room/RoomContent';
 import * as actions           from '~/actions';
 import Header                 from '~/containers/room/Header';
+import SpecialOfferBanner     from '~/containers/SpecialOfferBanner';
 
 class Room extends PureComponent {
 
@@ -73,6 +74,7 @@ class Room extends PureComponent {
       <div>
         <Header roomId={roomId} apartmentId={apartmentId} />
         <RoomContent roomId={roomId} apartmentId={apartmentId} />
+        <SpecialOfferBanner />
       </div>
     );
   }
