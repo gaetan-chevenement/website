@@ -60,7 +60,7 @@ const definition = {
   'fr-FR': {
     title: 'Colocataires',
     available: 'Disponible',
-    booked: 'Réservé',
+    booked: 'Réservée',
     view: 'voir',
     bedroom: 'Chambre',
   },
@@ -68,7 +68,7 @@ const definition = {
     title: 'Compañeros de cuarto',
     available: 'Disponible',
     booked: 'Reservado',
-    view: 'decir',
+    view: 'ver',
     bedroom: 'Habitación',
   },
 };
