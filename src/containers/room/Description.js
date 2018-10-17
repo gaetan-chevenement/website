@@ -115,25 +115,25 @@ const bedDetails = {
   simple: {
     'fr-FR': '1 lit simple',
     'en-US': '1 simple bed',
-    'es-ES': '1 cama individual',
+    'es-ES': '1 cama simple',
     css: 'picto-equipement_chambre_lit_double',
   },
   sofa: {
     'fr-FR': '1 canapé-lit',
     'en-US': '1 sofa bed',
-    'es-ES': '1 sofá cama',
+    'es-ES': '1 sofá-cama',
     css: 'picto-equipement_chambre_canape_ou_canape_lit',
   },
   'double+sofa': {
     'fr-FR': '1 lit double et un canapé-lit',
     'en-US': '1 double bed and a sofa bed',
-    'es-ES': '1 cama doble y un sofá cama',
+    'es-ES': '1 cama doble y un sofá-cama',
     css: 'picto-equipement_chambre_lit_double',
   },
   'simple+sofa': {
     'fr-FR': '1 lit simple et un canapé-lit',
     'en-US': '1 simple bed and a sofa bed',
-    'es-ES': '1 cama individual y un sofá cama',
+    'es-ES': '1 cama simple y un sofá-cama',
     css: 'picto-equipement_chambre_lit_double' ,
   },
   'simple+simple': {
