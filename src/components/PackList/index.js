@@ -114,12 +114,12 @@ const packs = {
     },
     'es-ES': {
       title: 'Básico',
-      subtitle: 'Todos los servicios esenciales para una estancia sin estrés en su apartamento',
-      listHeader: 'Los principales servicios incluyen',
+      subtitle: 'Los principales servicios para una estancia sin estrés en su apartamento',
+      listHeader: 'Principales servicios',
       listItems: [
         'Contrato individual personalizado',
         'Almohada y edredón',
-        'Activación de servicios',
+        'Activación de los servicios',
         'Mantenimiento y asistencia ilimitados',
       ],
     },
@@ -150,12 +150,12 @@ const packs = {
     },
     'es-ES': {
       title: 'Comfort',
-      subtitle: 'Una entrada más fácil para más comodidad y serenidad',
+      subtitle: 'Una mudanza facilitada para más confort y serenidad',
       listHeader: 'Todos los servicios básicos más:',
       listItems: [
-        'Sábanas, almohadas y fundas nórdicas',
-        'Paquete de comida',
-        'Asistencia de llaves',
+        'Sábanas, almohadas y cubiertas de edredón',
+        'Food pack',
+        'Asistencia en caso de perdida de las llaves',
         'Seguro de cancelación - 1 mes',
       ],
     },
@@ -186,10 +186,10 @@ const packs = {
     },
     'es-ES': {
       title: 'Privilegio',
-      subtitle: 'Servicios personalizados para un soporte completo y cuidadoso',
-      listHeader: 'Todos los servicios Comfort plus:',
+      subtitle: 'Servicios personalizados para una asistencia al cliente completa y cuidadosa',
+      listHeader: 'Todos los servicios del pack Confort a los que se añaden :',
       listItems: [
-        'Conductor privado desde el aeropuerto/estación de tren',
+        'Conductor privado desde el aeropuerto/ la estación',
         'Servicio de equipaje',
         'Agente dedicado',
         'Seguro de cancelación - 7 días',
