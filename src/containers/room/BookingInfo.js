@@ -194,27 +194,27 @@ const definition = {
     oneTime: 'Pagos únicos',
     mensuel: 'Pagos mensuales',
     rent: 'Alquiler',
-    month: 'meses',
+    month: 'mes',
     serviceFees: 'Gastos',
-    caf: 'Asistencia para la vivienda (CAF)',
+    caf: 'Ayuda de vivienda (CAF)',
     cafInfo: `
-      Este alojamiento es elegible para el APL. El pago de esta ayuda se limita a
-      no sistemático y su importe, aleatorio, depende del alquiler y de la
-      su situación personal. Contacte con CAF.
+      Este alojamiento es elegible para obtener la APL. El desembolso de esta ayuda 
+      no es sistemático y su importe, aleatorio, varía en función del alquiler y 
+      depende de su situación personal. Póngase en contacto con la CAF.
     `,
     deposit: 'Depósito de seguridad',
     depositInfo: 'Reembolsado después de su estancia.',
     pack: 'Housing Pack',
     packInfo: 'Básico, Confort o Privilegio. Su pago finaliza su reserva.',
     included: 'Incluido',
-    wifi: 'Wifi de alta velocidad ilimitada',
+    wifi: 'Wifi de banda ancha ilimitado',
     elec: 'Electricidad',
     water: 'Agua',
     gaz: 'Gas',
     insurance: 'Seguro del Hogar',
-    condo: 'Cargos de condominio',
+    condo: 'Gastos de copropriedad',
     maintenance: 'Mantenimiento técnico',
-    waste: 'Impuestos sobre la basura',
+    waste: 'Impuestos sobre la recogida de basuras domésticas',
     booking: 'Reservar este alojamiento',
     visit: 'Visita',
     enquire: 'Información',
