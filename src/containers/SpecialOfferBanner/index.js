@@ -57,7 +57,7 @@ const definition = {
   },
   'es-ES': {
     specialOffer: [
-      '72 Saxe apartment: No wifi until October 23rd',
+      'Apartamento del 72 Saxe : No wifi antes del 23/10',
     ].join(' '),
   },
 };
