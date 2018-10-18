@@ -224,10 +224,10 @@ const definition = {
       judiciaires en cours.`,
   },
   'es-ES': {
-    title: 'Fractura',
+    title: 'Factura',
     address: {
       billing: 'Dirección de facturación',
-      property: 'Dirección de la propiedad',
+      property: 'Dirección del inmueble',
     },
     due: {
       date: 'Fecha de vencimiento',
@@ -236,13 +236,13 @@ const definition = {
     item: 'Productos',
     unitPrice: 'Precio unitario',
     vat: 'IVA',
-    quantity: 'cuantía',
-    paid: 'Pagado hasta la fecha',
+    quantity: 'Cantidad',
+    paid: 'Pagado hasta ahora',
     state: 'Estado',
     conditions: `
-      Esta liberación libera al ocupante sólo durante el período indicado y
-      anula cualquier recibo válido. No liquida las rentas impagadas anteriores
-      y se emite sin perjuicio de las acciones judiciales en curso.
+      El presente recibo de pago de arrendamiento solo libera el ocupante para el período especificado y anula todo recibo exigible. 
+      No se acompaña de ningún carácter liberatorio en cuanto a los alquileres anteriores pendientes 
+      y será entregada sin perjuicio de todo procedimiento judicial en curso.
     `,
   },
 };
