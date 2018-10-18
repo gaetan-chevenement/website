@@ -42,7 +42,7 @@ const definition = {
     details: 'Detalles de la reserva',
     summary: 'Resumen de la reserva',
     confirmed: 'Confirmación de la reserva',
-    alt: 'Photo de couverture de la chambre',
+    alt: 'Fotografía de portada de la habitación',
   },
 };
 
