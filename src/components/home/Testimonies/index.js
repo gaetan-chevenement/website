@@ -82,25 +82,24 @@ const definition = {
   'es-ES': [{
     title: 'Servicio perfecto',
     comment: `
-      El equipo fue muy servicial y agradable durante mi estancia.
-      Mi instalación fue rápida y fácil.
-      El mantenimiento de la casa era impecable. Gracias :)
+      El equipo ha sido muy eficaz y agradable a lo largo de mi estancia.
+      Mi mudanza ha sido rápida y sencilla,
+      y el mantenimiento de la casa era impecable. Gracias :)
     `,
     author: 'Anna, 22 años, Australiana',
   }, {
     title: 'Apartamento muy confortable',
     comment: `
-      Disfruté mucho descubriendo la ciudad con mis compañeros de cuarto y
-      concentrándome en mis estudios: todo está listo en el alojamiento,
-      no hay nada más que cuidar.
+      Me encantó descubrir la ciudad con mis compañeros de cuarto y
+      concentrarme en mis estudios: todo está ya preinstalado en el alojamiento. Un verdadero placer.
     `,
     author: 'Max, 25 años, Alemán',
   }, {
-    title: 'Súper simple !',
+    title: 'Muy sencillo !',
     comment: `
-      La reservación es súper simple, y me encantó tener compañeros de cuarto
-      internacionales. Ya he probado el servicio en 3 ciudades durante 2 años
-      para pasantías y semestres.
+      El proceso de reserva es sencillo, y me encantó tener compañeros de cuarto
+      internacionales. Ya he probado el servicio en 3 diferentes ciudades durante 2 años
+      para pasantías y semestres universitarios.
     `,
     author: 'Émilie, 23 años, francesa',
   }],
