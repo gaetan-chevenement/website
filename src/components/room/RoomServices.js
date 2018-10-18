@@ -58,20 +58,20 @@ const definition = {
   }],
   'es-ES': [{
     imgIndex: 2,
-    title: '100% Amueblado',
-    desc: 'Nuestras viviendas están cuidadosamente amuebladas para ofrecer diseño y confort.',
+    title: 'Amueblados al 100%',
+    desc: 'Nuestros apartamentos son cuidadosamente amueblados para ofrecer diseño y comodidad.',
   }, {
     imgIndex: 3,
-    title: 'Equipado de la A a la Z',
-    desc: 'Traiga su maleta, nosotros nos encargaremos del resto!',
+    title: 'Totalmente equipados',
+    desc: 'Solamente traiga su maleta, nos encargamos del resto!',
   }, {
     imgIndex: 4,
     title: 'Todo Incluido',
-    desc: 'Seguro, wifi, gasolina... Sin cargos ocultos',
+    desc: 'Seguro de vivienda, wifi, gas... Sin gastos adicionales',
   }, {
     imgIndex: 6,
-    title: 'Reservas rápidas',
-    desc: 'Un par de clics: reservar nunca ha sido tan fácil!',
+    title: 'Reserva rápida',
+    desc: 'En pocos clics. Reservar nunca ha sido tan fácil!',
   }],
 };
 
