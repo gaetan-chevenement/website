@@ -47,25 +47,25 @@ class Banner extends Component {
 const definition = {
   'en-US': {
     specialOffer: [
-      '72 Saxe apartment: No wifi until October 23rd',
+      '75 Gambetta bedroom 3: AC below, background noise and vibrations',
     ].join(' '),
   },
   'fr-FR': {
     specialOffer: [
-      'Appartement du 72 Saxe : Pas de wifi avant le 23/10',
+      '75 Gambetta chambre 3: clim à l\'étage inférieur, bruit de fond et vibrations',
     ].join(' '),
   },
   'es-ES': {
     specialOffer: [
-      '72 Saxe apartment: No wifi until October 23rd',
+      '75 Gambetta bedroom 3: AC below, background noise and vibrations',
     ].join(' '),
   },
 };
 
 function mapStateToProps({ route: { lang, roomId }, rooms, session }) {
   const isActive =
-    roomId && rooms[roomId] &&
-    rooms[roomId].ApartmentId === '23b64fa6-79db-4e09-b880-6c7fe80c9c97' &&
+    roomId &&
+    roomId === '6ff5327f-27b8-461e-9b81-be6281f6a691' &&
     session.isSpecialOfferBannerActive;
 
   return {

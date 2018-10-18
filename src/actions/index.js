@@ -48,8 +48,7 @@ export const {
 export const resetPayment = createAction('reset payment data and errors');
 
 export const getRoom =
-  createActionAsync(
-    'get Room by id',
+  createActionAsync('get Room by id',
     // We need a list query to use a segment
     (id) => Utils.fetchJson(`/Room?filterType=and&filter[id]=${id}&segment=default`)
       .then(throwIfNotFound('Room', id)),
@@ -57,8 +56,7 @@ export const getRoom =
   );
 
 export const getPage =
-  createActionAsync(
-    'get WP Page by slug',
+  createActionAsync('get WP Page by slug',
     (slug) => Utils.fetchJson(`${_const.BLOG_URL}/wp-json/wp/v2/pages?slug=${slug}`)
       .then(throwIfNotFound('Page', slug)),
     { ok: { payloadReducer: ({ response }) => response[0] } }
@@ -82,9 +80,24 @@ export const [
   }) } }
 ) );
 
+export const getBanner =
+  createActionAsync('get the banner associated with a MetadatableId, if any',
+    (id, lang) => Utils.fetchJson(
+      `/Metadata/filter[MetadatableId]=${id}&filter[name]='i18n-${lang}-banner'`
+    ),
+    { ok: { payloadReducer: ({ response }) => ({
+      ...response.data.attributes,
+      ...(response.included || []).reduce((attributes, value) => {
+        attributes[`${value.type}Id`] = value.id;
+        attributes[`_${value.type}`] = value.attributes;
+        return attributes;
+      }, {}),
+    }) } }
+  );
+
+
 export const getOrder =
-  createActionAsync(
-    'get Order and associated OrderItems by Order id',
+  createActionAsync('get Order and associated OrderItems by Order id',
     (id) => Utils.fetchJson(`/OrderItem?filterType=and&filter[OrderId]=${id}`)
       .then(throwIfNotFound('Order', id)),
     {
@@ -96,8 +109,7 @@ export const getOrder =
     }
   );
 export const listOrders =
-  createActionAsync(
-    'list Orders and associated OrderItems',
+  createActionAsync('list Orders and associated OrderItems',
     ({ rentingId }) => {
       if ( rentingId === undefined ) {
         return Promise.reject('Can only fetch by rentingId for now');
@@ -119,8 +131,7 @@ export const listOrders =
   );
 
 export const listRooms =
-  createActionAsync(
-    'List Rooms',
+  createActionAsync('List Rooms',
     ({ city, date, page }) => {
       if ( city === undefined ) {
         return Promise.reject('Can only list Rooms by city for now');
@@ -144,8 +155,7 @@ export const listRooms =
   );
 
 export const saveBooking =
-  createActionAsync(
-    'save Renting and associated Client in the backoffice',
+  createActionAsync('save Renting and associated Client in the backoffice',
     ({ room, booking }) => (
       Utils.fetchJson(
         '/actions/public/create-client-and-renting',
@@ -172,8 +182,7 @@ export const saveBooking =
   );
 
 export const savePayment =
-  createActionAsync(
-    'save Payment and associated Order in the backoffice',
+  createActionAsync('save Payment and associated Order in the backoffice',
     (payment, rentingPrice) => {
       const pickKeys =
         'cardNumber,cvv,expiryMonth,expiryYear,holderName,orderId,balance'
@@ -199,8 +208,7 @@ export const savePayment =
   );
 
 export const addCoupon =
-  createActionAsync(
-    'add Coupon to order',
+  createActionAsync('add Coupon to order',
     // We need a list query to use a segment
     (args) => Utils.fetchJson(`/actions/add-coupon`, {
       method: 'post',
