@@ -40,9 +40,9 @@ const definition = {
     availableNow: 'Dispo. immédiatement',
   },
   'es-ES': {
-    availableFrom: 'Disponible en {{date}}',
-    unavailable: 'Ya no está disponible',
-    availableNow: 'Disponible inmediatamente',
+    availableFrom: 'Disponible a partir de {{date}}',
+    unavailable: 'Indisponible',
+    availableNow: 'Inmediatamente disponible',
   },
 };
 
