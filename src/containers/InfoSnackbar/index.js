@@ -9,7 +9,7 @@ import style                  from './style.css';
 class Banner extends Component {
   @autobind
   handleClick() {
-    this.props.actions.hideSpecialOfferBanner();
+    this.props.actions.hideInfoSnackbar();
   }
 
   constructor(props) {
@@ -19,15 +19,41 @@ class Banner extends Component {
     };
   }
 
+  componentWillMount() {
+    const { actions, lang, roomId, cityId, cityInfo, roomInfo } = this.props;
+    const name = 'banner';
+
+    if ( roomId && roomInfo == null ) {
+      actions.getI18n({ id: roomId, lang, name });
+    }
+
+    if ( cityId && cityInfo == null ) {
+      actions.getI18n({ id: cityId, lang, name });
+    }
+  }
+
   componentDidMount() {
     setTimeout(() => {
       if ( this.state.isActive !== false ) {
-        this.props.actions.showSpecialOfferBanner();
+        this.props.actions.showInfoSnackbar();
       }
     }, 2000);
   }
 
-  render({ lang, isActive, children }) {
+  componentWillReceiveProps({ lang, roomId, cityId }) {
+    const { actions } = this.props;
+    const name = 'banner';
+
+    if ( roomId !== this.props.roomId || lang !== this.props.lang ) {
+      actions.getI18n({ id: roomId, lang, name });
+    }
+
+    if ( cityId !== this.props.cityId || lang !== this.props.lang ) {
+      actions.getI18n({ id: cityId, lang, name });
+    }
+  }
+
+  render({ lang, isActive }) {
     return (
       <IntlProvider definition={definition[lang]}>
         <Snackbar
@@ -62,15 +88,20 @@ const definition = {
   },
 };
 
-function mapStateToProps({ route: { lang, roomId }, rooms, session }) {
-  const isActive =
-    roomId &&
-    roomId === '6ff5327f-27b8-461e-9b81-be6281f6a691' &&
-    session.isSpecialOfferBannerActive;
+function mapStateToProps({ route: { lang, roomId, city }, session, i18ns }) {
+  const roomInfo = roomId && i18ns[`${roomId}-i18n-${lang}-banner`];
+  const cityInfo = roomId && i18ns[`${roomId}-i18n-${lang}-banner`];
+  const isActive = (cityInfo || roomInfo) && session.isInfoSnackbarActive;
+  const info = cityInfo || roomInfo;
 
   return {
     lang,
     isActive,
+    roomInfo,
+    cityInfo,
+    info,
+    roomId,
+    cityId: city && city.toLowerCase(),
   };
 }
 

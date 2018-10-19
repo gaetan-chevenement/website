@@ -6,10 +6,8 @@ import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import RoomContent            from '~/containers/room/RoomContent';
 import * as actions           from '~/actions';
 import Header                 from '~/containers/room/Header';
-import SpecialOfferBanner     from '~/containers/SpecialOfferBanner';
 
 class Room extends PureComponent {
-
   static async prefetch(lang, roomId, dispatch) {
     return Room.loadData(lang, roomId, {
       getRoom: (roomId) => dispatch(actions.getRoom(roomId)),
@@ -20,15 +18,9 @@ class Room extends PureComponent {
   static async loadData(lang, roomId, actions) {
     try {
       const { response: {
-        // data: [roomData],
         included: [apartmentData],
       } } = await actions.getRoom(roomId);
       const districtId = apartmentData.attributes._DistrictId;
-
-      // This trick was used to allow linking from WordPress to the new website
-      // if ( roomData.id !== roomId && typeof window !== 'undefined' ) {
-      //   return route(window.location.pathname.replace(/[\w-]+$/, roomData.id));
-      // }
 
       return actions.getDistrict(districtId);
     }
@@ -74,7 +66,6 @@ class Room extends PureComponent {
       <div>
         <Header roomId={roomId} apartmentId={apartmentId} />
         <RoomContent roomId={roomId} apartmentId={apartmentId} />
-        <SpecialOfferBanner />
       </div>
     );
   }

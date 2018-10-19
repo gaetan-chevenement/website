@@ -16,6 +16,7 @@ import BookingSummary   from '~/routes/BookingSummary';
 import BookingConfirmed from '~/routes/BookingConfirmed';
 import Payment          from '~/routes/Payment';
 import Invoice          from '~/routes/Invoice';
+import InfoSnackbar     from '~/containers/InfoSnackbar';
 
 import { updateRoute }  from '~/actions';
 import Utils            from '~/utils';
@@ -77,7 +78,8 @@ export default class App extends Component {
       // Make sure GTM is aware of pageviews
       window.dataLayer && window.dataLayer.push({
         event: 'Pageview',
-        url: window.location.toString(),
+        url: e.url,
+        previous: e.previous,
       });
 
       // Use setTimeout to make sure this runs after React Router's own listener
@@ -178,6 +180,13 @@ export default class App extends Component {
             <NotFound path="/:lang/:path" />
             <NotFound default />
           </Router>
+          <Match path="/">
+            { // No footer on invoice or search
+              ({ matches, path, url }) =>
+                /\/(search|booking|summary|room)\//.test(path) ?
+                  <InfoSnackbar /> : ''
+            }
+          </Match>
           <Match path="/">
             { // No footer on invoice or search
               ({ matches, path, url }) =>

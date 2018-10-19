@@ -30,8 +30,9 @@ import {
   getOrder,
   listOrders,
   getRenting,
-  hideSpecialOfferBanner,
-  showSpecialOfferBanner,
+  getI18n,
+  hideInfoSnackbar,
+  showInfoSnackbar,
 }                           from '~/actions';
 
 const _ = { pickBy, forEach };
@@ -44,13 +45,13 @@ const routeReducer = createReducer({
   }),
 }, {});
 const sessionReducer = createReducer({
-  [hideSpecialOfferBanner]: (state, payload) => ({
+  [hideInfoSnackbar]: (state, payload) => ({
     ...state,
-    isSpecialOfferBannerActive: false,
+    isInfoSnackbarActive: false,
   }),
-  [showSpecialOfferBanner]: (state, payload) => ({
+  [showInfoSnackbar]: (state, payload) => ({
     ...state,
-    isSpecialOfferBannerActive: true,
+    isInfoSnackbarActive: true,
   }),
 }, {});
 const searchReducer = createReducer({
@@ -180,6 +181,13 @@ const ordersReducer = createReducer({
   ...createListReducer(listOrders, 'order'),
 }, {});
 
+const i18nsReducer = createReducer({
+  [getI18n.ok]: (state, { MetadatableId, name, value }) => ({
+    ...state,
+    [`${MetadatableId}-${name}`]: value,
+  }),
+}, {});
+
 const clientReducer = createReducer({
   [getRenting.ok]: (state, { _Client: client }) => client,
 }, {});
@@ -204,6 +212,7 @@ const reducers = {
   orders: ordersReducer,
   client: clientReducer,
   pages: pagesReducer,
+  i18ns: i18nsReducer,
 };
 
 const memoizedIdentity = memoize((state) => ( state ), { cache: new NamedTupleMap() });

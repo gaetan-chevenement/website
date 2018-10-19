@@ -9,7 +9,6 @@ import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 import Summary                from '~/containers/booking/Summary';
-import SpecialOfferBanner     from '~/containers/SpecialOfferBanner';
 import Heading                from '~/components/booking/Heading';
 
 class BookingSummary extends PureComponent {
@@ -97,7 +96,6 @@ class BookingSummary extends PureComponent {
               />
             </section>
           </nav>
-          <SpecialOfferBanner />
         </div>
       </IntlProvider>
     );

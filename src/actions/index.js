@@ -23,8 +23,8 @@ export const deleteApartmentFeature = createAction('delete feature from apartmen
 export const addApartmentPicture = createAction('add picture to apartment');
 export const deleteApartmentPicture = createAction('delete picture from apartment');
 export const updateApartmentPicture = createAction('update picture from apartment');
-export const showSpecialOfferBanner = createAction('show special offer banner');
-export const hideSpecialOfferBanner = createAction('hide special offer banner');
+export const showInfoSnackbar = createAction('show info snackbar');
+export const hideInfoSnackbar = createAction('hide info snackbar');
 export const updateSSRStatus = createAction('trigger me once ssr async fetch is done');
 
 export const {
@@ -80,21 +80,16 @@ export const [
   }) } }
 ) );
 
-export const getBanner =
+export const getI18n =
   createActionAsync('get the banner associated with a MetadatableId, if any',
-    (id, lang) => Utils.fetchJson(
-      `/Metadata/filter[MetadatableId]=${id}&filter[name]='i18n-${lang}-banner'`
-    ),
-    { ok: { payloadReducer: ({ response }) => ({
-      ...response.data.attributes,
-      ...(response.included || []).reduce((attributes, value) => {
-        attributes[`${value.type}Id`] = value.id;
-        attributes[`_${value.type}`] = value.attributes;
-        return attributes;
-      }, {}),
-    }) } }
+    ({ id, lang, name }) => Utils.fetchJson([
+      `/Metadata?filter[MetadatableId]=${id}&filter[name]=i18n-${lang}-${name}`,
+      '&fields[Metadata]=MetadatableId,name,value',
+    ].join('')),
+    { ok: { payloadReducer: ({ response: { data } }) => (
+      data[0] && data[0].attributes
+    ) } }
   );
-
 
 export const getOrder =
   createActionAsync('get Order and associated OrderItems by Order id',
