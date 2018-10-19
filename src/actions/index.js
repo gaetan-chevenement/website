@@ -83,12 +83,14 @@ export const [
 export const getI18n =
   createActionAsync('get the banner associated with a MetadatableId, if any',
     ({ id, lang, name }) => Utils.fetchJson([
-      `/Metadata?filter[MetadatableId]=${id}&filter[name]=i18n-${lang}-${name}`,
-      '&fields[Metadata]=MetadatableId,name,value',
+      '/Metadata?filterType=and',
+      `&filter[MetadatableId]=${id}&filter[name]=i18n-${lang}-${name}`,
+      '&fields[Metadata]=value',
     ].join('')),
-    { ok: { payloadReducer: ({ response: { data } }) => (
-      data[0] && data[0].attributes
-    ) } }
+    { ok: { payloadReducer: ({ request: [{ id, lang, name }], response: { data } }) => ({
+      key: `${id}-${lang}-${name}`,
+      value: data[0] ? data[0].attributes.value : false,
+    }) } }
   );
 
 export const getOrder =

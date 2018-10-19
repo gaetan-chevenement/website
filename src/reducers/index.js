@@ -182,9 +182,9 @@ const ordersReducer = createReducer({
 }, {});
 
 const i18nsReducer = createReducer({
-  [getI18n.ok]: (state, { MetadatableId, name, value }) => ({
+  [getI18n.ok]: (state, { key, value }) => ({
     ...state,
-    [`${MetadatableId}-${name}`]: value,
+    [key]: value,
   }),
 }, {});
 

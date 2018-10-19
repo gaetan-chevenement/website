@@ -1,6 +1,5 @@
 import { Component }          from 'preact';
 import { connect }            from 'react-redux';
-import { IntlProvider, Text } from 'preact-i18n';
 import autobind               from 'autobind-decorator';
 import mapDispatchToProps     from '~/actions/mapDispatchToProps';
 import { Snackbar }           from 'react-toolbox/lib/snackbar';
@@ -44,53 +43,34 @@ class Banner extends Component {
     const { actions } = this.props;
     const name = 'banner';
 
-    if ( roomId !== this.props.roomId || lang !== this.props.lang ) {
+    if ( roomId && roomId !== this.props.roomId || lang !== this.props.lang ) {
       actions.getI18n({ id: roomId, lang, name });
     }
 
-    if ( cityId !== this.props.cityId || lang !== this.props.lang ) {
+    if ( cityId && cityId !== this.props.cityId || lang !== this.props.lang ) {
       actions.getI18n({ id: cityId, lang, name });
     }
   }
 
-  render({ lang, isActive }) {
+  render({ lang, isActive, info }) {
     return (
-      <IntlProvider definition={definition[lang]}>
-        <Snackbar
-          action="❌"
-          active={isActive}
-          label={<Text id="specialOffer" />}
-          timeout={999999}
-          onClick={this.handleClick}
-          type="cancel"
-          theme={style}
-        />
-      </IntlProvider>
+      <Snackbar
+        action="❌"
+        active={isActive}
+        label={info}
+        timeout={999999}
+        onClick={this.handleClick}
+        type="cancel"
+        theme={style}
+      />
     );
   }
 }
 
-const definition = {
-  'en-US': {
-    specialOffer: [
-      '75 Gambetta bedroom 3: AC below, background noise and vibrations',
-    ].join(' '),
-  },
-  'fr-FR': {
-    specialOffer: [
-      '75 Gambetta chambre 3: clim à l\'étage inférieur, bruit de fond et vibrations',
-    ].join(' '),
-  },
-  'es-ES': {
-    specialOffer: [
-      '75 Gambetta bedroom 3: AC below, background noise and vibrations',
-    ].join(' '),
-  },
-};
-
 function mapStateToProps({ route: { lang, roomId, city }, session, i18ns }) {
-  const roomInfo = roomId && i18ns[`${roomId}-i18n-${lang}-banner`];
-  const cityInfo = roomId && i18ns[`${roomId}-i18n-${lang}-banner`];
+  const cityId = city && city.toLowerCase();
+  const roomInfo = roomId && i18ns[`${roomId}-${lang}-banner`];
+  const cityInfo = cityId && i18ns[`${cityId}-${lang}-banner`];
   const isActive = (cityInfo || roomInfo) && session.isInfoSnackbarActive;
   const info = cityInfo || roomInfo;
 
@@ -101,7 +81,7 @@ function mapStateToProps({ route: { lang, roomId, city }, session, i18ns }) {
     cityInfo,
     info,
     roomId,
-    cityId: city && city.toLowerCase(),
+    cityId,
   };
 }
 
