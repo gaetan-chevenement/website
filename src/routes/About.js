@@ -17,6 +17,6 @@ const definition = {
     title: 'À propos',
   },
   'es-ES': {
-    title: 'A proposito',
+    title: 'Empresa Chez Nestor',
   },
 };
