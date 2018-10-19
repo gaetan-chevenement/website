@@ -36,7 +36,7 @@ const definition = {
   },
   'es-ES': {
     title: 'Servicios incluidos en su alojamiento',
-    subtitle: 'En Chez Nestor, todo está incluido: ¡nos aseguramos de que no tengas que preocuparte de nada para disfrutar de tu apartamento!',
+    subtitle: 'Chez Nestor, todo está incluido : Nos encargamos de todo para que pueda disfrutar de tu apartamento sin tener que preocuparse de nada.',
   },
 };
 
@@ -52,7 +52,7 @@ const services = [{
   },
   'es-ES': {
     title: 'Wifi',
-    content: 'Conexión wifi y banda ancha ilimitada en tu apartamento!',
+    content: 'Conexión wifi de banda ancha y ilimitada en tu apartamento!',
   },
 }, {
   image: 'electricity.png',
@@ -66,7 +66,7 @@ const services = [{
   },
   'es-ES': {
     title: 'Electricidad',
-    content: '¿Por qué esperar en la oscuridad durante dos semanas? Llegue y conéctese - todo está listo!',
+    content: 'No es necesario esperar a los técnicos de EDF dos semanas en la oscuridad. Entra, conecta  - todo está listo!',
   },
 }, {
   image: 'water.png',
@@ -80,7 +80,7 @@ const services = [{
   },
   'es-ES': {
     title: 'Agua',
-    content: 'Dúchate y haz una taza de té a tu llegada… El agua está incluida.',
+    content: 'Tan pronto como llegue, toma una ducha y preparate un té… Los gastos de agua son incluidos.',
   },
 }, {
   image: 'gas.png',
@@ -93,8 +93,8 @@ const services = [{
     content: 'Chauffage ou cuisinière, le gaz et la révision obligatoire de votre chaudière sont inclus !',
   },
   'es-ES': {
-    title: 'Gaz',
-    content: 'El gas para la calefacción y la cocina y el mantenimiento obligatorio de su caldera están incluidos!',
+    title: 'Gas',
+    content: 'Calefacción o horno, el gas y la revisión obligatoria de su caldera son incluidos!',
   },
 }, {
   image: 'repairs.png',
@@ -108,7 +108,7 @@ const services = [{
   },
   'es-ES': {
     title: 'Servicio postventa',
-    content: '¿Fugas o mal funcionamiento? Nuestro equipo estará allí tan pronto como sea posible - y es gratis!',
+    content: '¿Fuga, avería ? No te preocupes, nuestro equipo interviene lo más rápidamente posible. Y es gratis!',
   },
 }, {
   image: 'building.png',
@@ -121,8 +121,8 @@ const services = [{
     content: 'Ascenseur, lumière, ménage de l\'immeuble… tout est inclus !',
   },
   'es-ES': {
-    title: 'Edificio',
-    content: 'Ascensor, iluminación y limpieza de su edificio… ¡todo incluido!',
+    title: 'Copropriedad',
+    content: 'Ascensor, iluminación, limpieza del edificio… ¡Todo está incluido!',
   },
 }, {
   image: 'tax.png',
@@ -135,8 +135,8 @@ const services = [{
     content: 'La taxe sur les ordures ménagères ? On s\'en occupe aussi !',
   },
   'es-ES': {
-    title: 'Impuestos',
-    content: '¿Impuesto a los Desechos Domésticos? Nosotros también nos encargamos de eso!',
+    title: 'Impuesto',
+    content: '¿El impuesto sobre la retirada de basura? Nosotros también nos encargamos de eso!',
   },
 }, {
   image: 'insurance.png',
@@ -149,8 +149,8 @@ const services = [{
     content: 'Votre assurance multirisque habitation est incluse pour l\'appartement.',
   },
   'es-ES': {
-    title: 'Assurance',
-    content: 'Seguro de Hogar a todo riesgo incluido para el apartamento.',
+    title: 'Seguro de vivienda',
+    content: 'El precio de su seguro multirriesgo de vivienda está incluido para el apartamento.',
   },
 }, {
   image: 'support.png',
@@ -164,7 +164,7 @@ const services = [{
   },
   'es-ES': {
     title: 'Asistencia',
-    content: 'Nuestro equipo está a su servicio durante toda su estancia!',
+    content: 'Nuestro equipo está a su disposición a lo largo de su estancia!',
   },
 }, {
   image: 'subsidies.png',
@@ -174,11 +174,11 @@ const services = [{
   },
   'fr-FR': {
     title: 'APL',
-    content: '100% de nos appartements sont éligibles aux APL de la CAF.',
+    content: '100% de nos appartements sont éligibles aux APL de la CAF sous réserve de conditions de: loyer, revenus....',
   },
   'es-ES': {
-    title: 'Subvenciones',
-    content: 'Todos nuestros apartamentos son elegibles para el subsidio de alquiler de la CAF.',
+    title: 'APL',
+    content: 'Todos nuestros apartamentos son elegibles para el subsidio de alquiler (APL) de la CAF, con sujeción a condiciones de: arrendamiento, ingresos...',
   },
 }, {
   image: 'flexibility.png',
@@ -192,7 +192,7 @@ const services = [{
   },
   'es-ES': {
     title: 'Flexibilidad',
-    content: 'Usted tiene un alquiler individual y personalizado. Su estancia es flexible en uno de nuestros pisos compartidos!',
+    content: 'Tienes un contrato de arrendamiento individual y personalizado. Su estancia es flexible en nuestros pisos compartidos !',
   },
 }, {
   image: 'furniture.png',
@@ -206,7 +206,7 @@ const services = [{
   },
   'es-ES': {
     title: 'Muebles',
-    content: 'Hemos tenido mucho cuidado en amueblar su apartamento con buen gusto.',
+    content: 'Se ha tomado el máximo cuidado para amueblar su apartamento con gusto.',
   },
 }, {
   image: 'fittings.png',
@@ -219,8 +219,8 @@ const services = [{
     content: 'Lave-linge, lave-vaisselle, micro-ondes... Vous êtes équipé(e) du sol au plafond !',
   },
   'es-ES': {
-    title: 'Accesorios',
-    content: 'Lavadora, lavavajillas, microondas... ¡Estás equipado de arriba a abajo!',
+    title: 'Equipamientos',
+    content: 'Lavadora, lavavajilla, microondas... ¡Usted está totalmente equipado!',
   },
 }, {
   image: 'bedding.png',
@@ -233,8 +233,8 @@ const services = [{
     content: 'Couette, oreiller, draps... nous avons même pensé à votre première nuit.',
   },
   'es-ES': {
-    title: 'Ropa de cama',
-    content: 'Edredón, almohada, sábanas... incluso te damos ropa de cama tempoary para tu primera noche.',
+    title: 'Cama',
+    content: 'Edredón, almohada, sábanas... hemos previsto todo para tu primera noche.',
   },
 }, {
   image: 'kitchen.png',
@@ -247,7 +247,7 @@ const services = [{
     content: 'Casseroles, poêles, couverts, ustensiles... Tous est là pour vous faire de bons petits plats !',
   },
   'es-ES': {
-    title: 'Cocina',
-    content: 'Ollas, sartenes, cubiertos, utensilios... Hay todo lo que necesitas para cocinar!',
+    title: 'Vajilla',
+    content: 'Cazos, sartenes, cubiertos, utensilios... Ponemos a su disposición todo lo necesario para cocinar!',
   },
 }];
