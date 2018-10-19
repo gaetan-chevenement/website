@@ -140,10 +140,10 @@ const definition = {
     },
   },
   'es-ES': {
-    title: 'Pago seguro de la factura de',
+    title: 'Pago seguro para la factura de',
     payment: {
-      title: 'El pago se puede realizar con tarjeta de crédito Mastercard o Visa.',
-      button: 'Pagador {{amount}}€',
+      title: 'El pago se puede realizar con una tarjeta bancaria Mastercard o Visa.',
+      button: 'Pagar {{amount}}€',
     },
   },
 };
