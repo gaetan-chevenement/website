@@ -18,10 +18,12 @@ class BookingForm extends PureComponent {
       room,
       booking,
       actions,
+      lang,
     } = this.props;
 
     await actions.validateBooking(booking);
-    const { response: { rentingId } } = await actions.saveBooking({ room, booking });
+    const { response: { rentingId } } =
+      await actions.saveBooking({ room, booking, lang });
 
     route(`/${this.props.lang}/summary/${rentingId}`);
   }

@@ -173,7 +173,7 @@ export const listProducts =
 
 export const saveBooking =
   createActionAsync('save Renting and associated Client in the backoffice',
-    ({ room, booking }) => (
+    ({ room, booking, lang }) => (
       Utils.fetchJson(
         '/actions/public/create-client-and-renting',
         {
@@ -182,6 +182,7 @@ export const saveBooking =
             roomId: room.id,
             pack: booking.pack,
             booking,
+            lang,
           },
         },
       )
