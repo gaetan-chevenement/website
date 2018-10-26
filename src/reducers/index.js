@@ -33,6 +33,7 @@ import {
   getI18n,
   hideInfoSnackbar,
   showInfoSnackbar,
+  listProducts,
 }                           from '~/actions';
 
 const _ = { pickBy, forEach };
@@ -145,7 +146,11 @@ const roomsReducer = createReducer({
     ...state,
     [room.id]: room,
   }),
-  ...createListReducer(listRooms, 'room'),
+  ...createListReducer({
+    action: listRooms,
+    modelName: 'room',
+    requestShouldEmptyState: true,
+  }),
 }, {});
 
 const pagesReducer = createReducer({
@@ -178,13 +183,24 @@ const rentingsReducer = createReducer({
 
 const ordersReducer = createReducer({
   ...createGetReducer(getOrder),
-  ...createListReducer(listOrders, 'order'),
+  ...createListReducer({
+    action: listOrders,
+    modelName: 'order',
+    requestShouldEmptyState: true,
+  }),
 }, {});
 
 const i18nsReducer = createReducer({
   [getI18n.ok]: (state, { key, value }) => ({
     ...state,
     [key]: value,
+  }),
+}, {});
+
+const productsReducer = createReducer({
+  ...createListReducer({
+    action: listProducts,
+    modelName: 'product',
   }),
 }, {});
 
@@ -213,6 +229,7 @@ const reducers = {
   client: clientReducer,
   pages: pagesReducer,
   i18ns: i18nsReducer,
+  products: productsReducer,
 };
 
 const memoizedIdentity = memoize((state) => ( state ), { cache: new NamedTupleMap() });
@@ -251,18 +268,20 @@ export function createGetReducer(actionAsync) {
   };
 }
 
-export function createListReducer(actionAsync, modelName) {
+export function createListReducer({ action, modelName, requestShouldEmptyState }) {
   return {
-    [actionAsync.request]: (state) => ({
+    [action.request]: (state) => ({
+      ...(requestShouldEmptyState ? {} : state),
       isLoading: true,
       error: false,
     }),
-    [actionAsync.ok]: (state, payload) => ({
+    [action.ok]: (state, payload) => ({
+      ...state,
       isLoading: false,
       error: false,
       ...payload[`${modelName}s`],
     }),
-    [actionAsync.error]: (state, payload) => ({
+    [action.error]: (state, payload) => ({
       ...state,
       isLoading: false,
       error: payload,

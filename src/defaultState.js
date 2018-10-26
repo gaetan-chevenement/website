@@ -22,4 +22,5 @@ module.exports = {
   apartments: {},
   districts: {},
   i18ns: {},
+  products: {},
 };

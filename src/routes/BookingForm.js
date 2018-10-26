@@ -32,24 +32,36 @@ class BookingForm extends PureComponent {
     actions.updateBooking({ roomId });
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const {
       roomId,
       room,
+      city,
+      packPrices,
       actions,
     } = this.props;
+    const promises = [];
 
     if ( !room ) {
-      return actions.getRoom(roomId)
-        .then(({ response: { data: [roomData] } }) => {
-          // This trick was used to allow linking from WordPress to the new website
-          if (typeof window !== 'object') {
-            return Promise.resolve();
-          }
-          return  roomData.id !== roomId &&
-            route(window.location.pathname.replace(/[\w-]+$/, roomData.id)) &&
-            actions.updateBooking({ roomId: roomData.id });
-        });
+      promises.push(actions.getRoom(roomId));
+    }
+
+    if ( (!packPrices || Object.keys(packPrices).length === 0) && city ) {
+      promises.push(actions.listProducts({ id: `${city}-*` }));
+    }
+
+    return promises;
+  }
+
+  componentWillReceiveProps({ roomId, city }) {
+    const { actions } = this.props;
+
+    if ( roomId && roomId !== this.props.roomId ) {
+      actions.getRoom(roomId);
+    }
+
+    if ( city && city !== this.props.city ) {
+      actions.listProducts({ id: `${city}-*` });
     }
   }
 
@@ -113,18 +125,24 @@ class BookingForm extends PureComponent {
   }
 }
 
-function mapStateToProps({ route: { lang }, rooms, booking }, { roomId }) {
+function mapStateToProps(state, { roomId }) {
+  const { route: { lang }, rooms, apartments, products, booking } = state;
   const room = rooms[roomId];
 
   if ( !room || room.isLoading ) {
     return { isLoading: true };
   }
 
+  const city = apartments[room.ApartmentId].addressCity;
+  const packPrices = Utils.getPackPrices({ products, city });
+
   return {
     lang,
     roomId,
     room: { ...room, name: Utils.localizeRoomName(room.name, lang) },
     booking,
+    city,
+    packPrices,
   };
 }
 

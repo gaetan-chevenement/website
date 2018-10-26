@@ -3,8 +3,8 @@ import { connect }            from 'react-redux';
 import { route }              from 'preact-router';
 import { bindActionCreators } from 'redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
-import RoomContent            from '~/containers/room/RoomContent';
 import * as actions           from '~/actions';
+import RoomContent            from '~/containers/room/RoomContent';
 import Header                 from '~/containers/room/Header';
 
 class Room extends PureComponent {
@@ -25,7 +25,7 @@ class Room extends PureComponent {
       return actions.getDistrict(districtId);
     }
     catch (e) {
-      if (e.error.isNotFound) {
+      if ( e.error.isNotFound ) {
         route(`/${lang}/404`);
       }
       else {
@@ -80,6 +80,7 @@ function mapStateToProps({ route: { lang }, apartments, rooms }, { roomId }) {
 
   return {
     roomId,
+    room,
     apartmentId: room.ApartmentId,
   };
 }

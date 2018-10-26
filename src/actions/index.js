@@ -151,6 +151,26 @@ export const listRooms =
     { ok: { payloadReducer: reduceRooms } }
   );
 
+export const listProducts =
+  createActionAsync('List Products',
+    ({ id }) => {
+      const filters = `filter[id]=${id}`;
+      const fields = 'fields[Product]=id,price';
+      const size = `page[number]=1&page[size]=30`;
+
+      return Utils.fetchJson(
+        `/Product?filterType=and&${filters}&${fields}&${size}`
+      );
+    },
+    { ok: { payloadReducer: ({ response: { data } }) => ({
+      products: data.reduce((acc, { id, attributes }) => {
+        acc[id] = attributes;
+
+        return acc;
+      }, {}),
+    }) } }
+  );
+
 export const saveBooking =
   createActionAsync('save Renting and associated Client in the backoffice',
     ({ room, booking }) => (

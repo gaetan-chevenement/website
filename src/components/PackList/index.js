@@ -11,14 +11,11 @@ import {
   ListSubHeader,
 }                             from 'react-toolbox/lib/list';
 import { Button }             from 'react-toolbox/lib/button';
-import _const                 from '~/const';
 import Utils                  from '~/utils';
 import style                  from './style.css';
 
-const { PACK_PRICES } = _const;
-
 function PackList(args) {
-  const { handlePackChange, lang, isPriceHidden, city, pack, minPack } = args;
+  const { handlePackChange, lang, isPriceHidden, packPrices, pack, minPack } = args;
   // limit the list of choice depending on minPack in URL
   const packCardArgs = [
     minPack !== 'comfort' && minPack !== 'privilege' && 'basic',
@@ -34,7 +31,7 @@ function PackList(args) {
             {...{
               ...packs[name][lang],
               stars: packs[name].stars,
-              price: !isPriceHidden && city && PACK_PRICES[city][name],
+              price: !isPriceHidden && packPrices[name],
               isActive: pack === name,
               name,
               handlePackChange,

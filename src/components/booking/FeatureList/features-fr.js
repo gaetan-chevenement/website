@@ -1,7 +1,5 @@
-import Utils from '~/utils';
-
 /* eslint-disable indent */
-export default { 'fr-FR': [
+export default { 'fr-FR': ({ depositLines, packLines }) => ([
   ['Mon arrivée'],
   ['Welcome bag', 'Carte des transport, cadeau de bienvenue…',        1, 1, 1],
   ['Couette & oreiller', 'Fournis pour votre séjour',                 1, 1, 1],
@@ -59,15 +57,8 @@ export default { 'fr-FR': [
   ['Remboursement de caution', 'Délai maximum (sauf dégats dans l\'appartment)',
                                            '60 jours', '40 jours', '20 jours'],
   ['Caution (remboursée en fin de séjour)'],
-  Utils.getDepositLine('paris'),
-  Utils.getDepositLine('lyon'),
-  Utils.getDepositLine('montpellier'),
-  Utils.getDepositLine('lille'),
-  Utils.getDepositLine('toulouse'),
+  ...depositLines,
+
   ['Pack logement'],
-  Utils.getPackLine('paris'),
-  Utils.getPackLine('lyon'),
-  Utils.getPackLine('montpellier'),
-  Utils.getPackLine('lille'),
-  Utils.getPackLine('toulouse'),
-] };
+  ...packLines,
+]) };
