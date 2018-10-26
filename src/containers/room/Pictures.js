@@ -162,7 +162,7 @@ function mapStateToProps({ route: { lang }, rooms, apartments }, { roomId, apart
   const { virtualVisitUrl } = room;
 
   return {
-    virtualVisitUrl,
+    virtualVisitUrl: `${virtualVisitUrl}&lang=${lang.split('-')[0]}`,
     floorplans,
     lang,
     pictures,
