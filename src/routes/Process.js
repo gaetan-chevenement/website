@@ -147,22 +147,30 @@ function mapStateToProps({ route: { lang }, products }) {
   return {
     lang,
     products,
-    packLines: SEARCHABLE_CITIES.map(({ name }) => {
-      const city = name.toLowerCase();
-      const prices = ['basic', 'comfort', 'privilege'].map((level) =>
-        `${(products[`${city}-${level}-pack`] || {}).price / 100}€`
-      );
+    packLines:
+      SEARCHABLE_CITIES
+        .map(({ name }) => {
+          const city = name.toLowerCase();
+          const prices = ['basic', 'comfort', 'privilege'].map((level) =>
+            `${(products[`${city}-${level}-pack`] || {}).price / 100}€`
+          );
 
-      return [name, ''].concat(prices);
-    }),
-    depositLines: SEARCHABLE_CITIES.map(({ name }) => {
-      const city = name.toLowerCase();
-      const prices = [1,2,3].map(() =>
-        `${(products[`${city}-deposit`] || {}).price / 100}€`
-      );
+          // make sure the product has been loaded before displaying the line
+          return `${city}-basic-pack` in products && [name, ''].concat(prices);
+        })
+        .filter(Boolean),
+    depositLines:
+      SEARCHABLE_CITIES
+        .map(({ name }) => {
+          const city = name.toLowerCase();
+          const prices = [1,2,3].map(() =>
+            `${(products[`${city}-deposit`] || {}).price / 100}€`
+          );
 
-      return [name, ''].concat(prices);
-    }),
+          // make sure the product has been loaded before displaying the line
+          return `${city}-deposit` in products && [name, ''].concat(prices);
+        })
+        .filter(Boolean),
   };
 }
 
