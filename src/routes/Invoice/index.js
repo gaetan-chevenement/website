@@ -240,7 +240,8 @@ const definition = {
     paid: 'Pagado hasta ahora',
     state: 'Estado',
     conditions: `
-      El presente recibo de pago de arrendamiento solo libera el ocupante para el período especificado y anula todo recibo exigible. 
+      El presente recibo de pago de arrendamiento solo libera el ocupante para el período especificado
+      y anula todo recibo exigible.
       No se acompaña de ningún carácter liberatorio en cuanto a los alquileres anteriores pendientes 
       y será entregada sin perjuicio de todo procedimiento judicial en curso.
     `,
