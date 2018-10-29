@@ -98,7 +98,7 @@ class Summary extends PureComponent {
                 </span>,
               ])}</p>
               <p class="text-small">
-                <i class="text-small material-icons">warning</i>
+                <i class="text-small material-icons">warning</i>{' '}
                 <Text id="housingPack.condition">
                   Please note: this bedroom remains available and can be booked
                   by someone else at any point as long as the Housing Pack is
@@ -193,7 +193,7 @@ class Summary extends PureComponent {
               <p>{this.renderDetails([
                 <Text id="payment">Payment:</Text>,
                 <span>
-                  <b>{depositPrice / 100}€ </b>
+                  <b>{depositPrice}€ </b>
                   <Text id="deposit.dueDate">to be paid before your check-in (only once)</Text>
                 </span>,
               ])}</p>
