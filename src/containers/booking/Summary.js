@@ -552,7 +552,7 @@ const definition = {
         subtitle: [
           'Usted ha elegido un Housing Pack ',
           ' ',
-          ', para pagar para validar su reserva.',
+          ', deberá ser pagado para validar su reserva.',
         ],
         basic: 'básico',
         comfort: 'comfort',
@@ -560,99 +560,96 @@ const definition = {
         dueDate: ' pagar inmediatamente (sólo una vez)',
         condition: `
           Nota: la habitación permanece disponible y puede ser reservada por
-          cualquier otra persona en cualquier momento, siempre y cuando su Housing Pack no sea
-          no pagada.
+          cualquier otra persona en todo momento, en tanto no se haya procedido
+          al pago de su Housing Pack.
         `,
       },
       rent: {
         title: 'renta mensual',
         subtitle: [
           'Su alquiler comenzará el',
-          `(fecha de disponibilidad de la habitación), cualquiera que sea tu cita
-          de mudarme aquí. El precio del alquiler está incluido (wifi, agua, electricidad),
-          Gasolina, seguros...) será..:`,
+          `(fecha de disponibilidad de la habitación), cualquiera que sea tu fecha
+          de mudanza. El pago de sus alquileres, gastos incluidos (wifi, agua, electricidad),
+          Gasolina, seguros...) deberá realizarse..:`,
         ],
-        dueDate: 'que deberá pagarse a más tardar el',
+        dueDate: 'a más tardar el',
         condition: [
-          ' Por favor, tenga en cuenta:',
+          ' Por favor, tenga en cuenta que:',
           `Estos alquileres sólo son válidos si usted finaliza su
-          reserva inmediatamente pagando tu Housing Pack. De lo contrario,
-            los alquileres están sujetos a cambios según la oferta y la demanda`,
-          `En caso de retraso en el pago de su alquiler, una penalización automática
-          a partir de 10€/día`,
-          `Si son dos (ej: pareja) para ocupar esta habitación,
-          90€/mes se añaden al alquiler. Antes de reservar, póngase en contacto con nuestro
-          a través de hello@chez-nestor.com para comprobar la posibilidad de
-          para vivir juntos. De lo contrario, su reserva puede ser cancelada.`,
+          reserva inmediatamente pagando su Housing Pack. En caso contrario,
+          los alquileres están sujetos a cambios en función de la oferta y la demanda`,
+          `En caso de retraso del pago de sus alquileres, se aplica una penalización automática de 10€/día`,
+          `Si son dos (ej: pareja) a ocupar esta habitación,
+          90€/mes se añaden al alquiler. Antes de reservar, póngase en contacto con nuestro equipo
+          a través de hello@chez-nestor.com para comprobar la posibilidad de mudarse con otra persona. 
+          Si no lo hace, su reserva podría ser cancelada.`,
         ],
       },
       deposit: {
         title: 'Depósito de seguridad',
         subtitle: `
          El depósito es 100% reembolsable después de su estancia,
-           si ninguna de las siguientes condiciones se aplican
-          no hay que deducir los costes (daños, consumo excesivo...).
+           si no es necesario retener ningún gasto (daños, consumo excesivo...).
         `,
-        dueDate: 'para pagar antes de su checkin (una sola vez)',
+        dueDate: 'a pagar antes de su checkin (una sola vez)',
       },
       checkin: {
-        title: 'Étapes du checkin',
+        title: 'Etapas del checkin',
         subtitle: `
-          Para recuperar sus llaves, realice las siguientes 5 acciones en línea,
+          Para recoger sus llaves, realice las 5 siguientes acciones, en línea,
           con un mínimo de 1 día laborable de antelación
-          (de lunes a viernes, excluidos los días festivos) :`,
+          (de lunes a viernes, excluidos los días feriados) :`,
         option: [
-          'Su formulario de identidad (y archivo, si es necesario) está completo.',
-          'Su formulario de registro (elección de fecha y hora) está completo.',
+          'Su formulario de identidad (y archivo, si es necesario) está rellenado.',
+          'Su formulario de mudanza (elección de la fecha y de la hora) está rellenado.',
           'Su contrato de arrendamiento está firmado (y por su garante, si es necesario).',
           'Su depósito de seguridad está pagado.',
-          'Su primera renta está pagada.',
+          'Su primer alquiler está pagado.',
         ],
-        condition: ' Por favor, tenga en cuenta:',
-        delay: 'Para mudarse, {{checkin}},  todo debe estar listo para {{before}} el mediodía.',
+        condition: ' Por favor, tenga en cuenta que:',
+        delay: 'Para mudarse, {{checkin}},  todo debe estar listo antes {{before}} del mediodía.',
         goThrough: 'Realizar mi checkin',
         options: `
-          Hay tres opciones disponibles para el check-in (entrega de llaves) :
+          Hay tres opciones disponibles para su check-in (entrega de llaves) :
         `,
-        self: ['Autoservicio, 24 horas al día, 7 días a la semana en el distribuidor de la agencia'],
-        home: ['En casa', 'de lunes a viernes excepto festivos de 9 a 18 horas'],
-        special: 'En casa 24/7',
+        self: ['Autoservicio, 24 horas al día, todos los días de la semana en el distribuidor de la agencia'],
+        home: ['A domicilio', 'de lunes a viernes salvo días festivos de las 9 a las 18 horas'],
+        special: 'A domicilio 24/7',
       },
       checkout: {
-        title: 'Programar el checkout',
+        title: 'Planear el checkout',
         subtitle: `
-          No hace falta que nos lo digas hoy, cuando te vayas.
-           totalmente flexible! Sólo ten en cuenta que vamos a necesitar
-           indicar la fecha de salida con al menos 30 días de antelación.
+          No es necesario decirnos hoy, cuando te vayas, tu eres totalmente flexible! Sólo ten en
+          cuenta que vamos a necesitar tu fecha de salida con una antelacion mínima de 30 días.
         `,
       },
       letsGo: {
         title: '¡Vamos!',
         subtitle: [`
-          Antes de reservar, debe asegurarse de que es elegible para
-          alojamiento en Nestor's:
+          Antes de reservar, debes asegurarte que es elegible para
+          un alojamiento Chez Nestor :
         `,`
          Comprobar mi elegibilidad
         `],
         checks: [`
-        Confirmo que cumplo con los requisitos y que puedo proporcionar todas las
+        Confirmo que cumplo con los requisitos y que soy capaz de proporcionar todos los
           documentos requeridos.
         `,`
-          Quiero que mi reserva entre en vigor inmediatamente,
+          Quiero que mi reserva sea válida inmediatamente,
           que sea tratada administrativamente y que la habitación sea bloqueada
-          en mi nombre. Por lo tanto, renuncio expresamente a mi derecho de desistimiento,
-          para que el servicio se inicie antes de que finalice el período legal de
-          retirada, de conformidad con el artículo L121-21-8 del Código de
+          en mi nombre. Así, renuncio expresamente a mi derecho de retractación,
+          para que el servicio comienza antes de que finalice el plazo legal de retractación,
+          de conformidad con el artículo L121-21-8 del Código de
           Consumo.
         `, `
           Entiendo que mis alquileres y su pago comenzarán a partir de
-          de
+          del
         `, `
           He leído y acepto los términos de mi
         `, `
           contrato de alquiler de vivienda
         `, `
-          He leído y acepto el
+          He leído y acepto las
         `, `
           condiciones generales de venta
         `],
