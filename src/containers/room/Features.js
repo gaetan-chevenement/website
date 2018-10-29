@@ -94,7 +94,7 @@ const definition = {
     bathroom: 'Salle de Bain',
   },
   'es-ES': {
-    title: 'Equipo',
+    title: 'Equipamiento',
     bedroom: 'Habitación',
     apartment: 'Apartamento',
     sleep: 'Dormir',
