@@ -158,10 +158,10 @@ const definition = {
   },
   'es-ES': {
     errors: {
-      unavailable: 'Lo siento, esta habitación ya no está disponible.',
+      unavailable: 'Lo sentimos, esta habitación ya no está disponible.',
       room: 'Lo sentimos, se ha producido un error durante la preparación de su reserva.',
     },
-    button: 'Continúa',
+    button: 'Continuar',
   },
 };
 
