@@ -138,7 +138,7 @@ const definition = {
       double: 'Cama doble',
       simple: 'Cama individual',
       sofa: 'Sofá cama',
-      multiple: '{{count}} amarraderos',
+      multiple: '{{count}} descanso',
     },
   },
 };
