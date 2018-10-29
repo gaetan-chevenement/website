@@ -41,13 +41,13 @@ const definition = {
     download: 'Téléchargez votre guide logement gratuit',
   },
   'es-ES': {
-    title: 'Guía gratuita de alojamiento',
+    title: 'Guía de alojamiento gratuito',
     text: [
-      '¿Dónde buscar alojamiento?',
-      '¿Qué archivo proporcionar para un estudiante?',
-      '¿Cuáles son los costes de un alquiler?',
+      '¿Dónde buscar un alojamiento?',
+      '¿Qué documentos son necesarios para un estudiante?',
+      '¿Cuáles son los gastos que es necesario prever para alquilar ?',
     ],
-    download: 'Descarga tu guía gratuita de alojamientos',
+    download: 'Descarga tu guía de alojamiento gratuito',
   },
 };
 
