@@ -66,12 +66,12 @@ const definition = {
     download: 'Je télécharge mon Guide Logement',
   },
   'es-ES': {
-    guide: 'Una guía gratuita de vivienda',
-    where: 'Dónde buscar alojamiento',
+    guide: 'Mi Guía gratuita de alojamiento',
+    where: 'Dónde buscar su alojamiento',
     agency: 'Agencias, residencias...',
-    traps: 'Obstáculos que hay que evitar',
-    fees: 'Gastos a prever',
-    download: 'Descargo mi guía de Vivienda',
+    traps: 'Los errores a evitar',
+    fees: 'Prever los gastos necesarios',
+    download: 'Yo descargo mi Guía de alojamiento',
   },
 };
 
