@@ -223,12 +223,12 @@ const definition = {
     `,
   },
   'es-ES': {
-    appTitle: 'Chez Nestor, sus pisos compartidos listos para vivir',
+    appTitle: 'Chez Nestor, el líder de la vivienda compartida amueblada.',
     appDescription: `
-      Chez Nestor es el líder de los alojamientos compartidos amueblados en
-      Francia. Presente en muchas ciudades, le ofrecemos apartamentos nuevos,
-      equipados y amueblados en el corazón del centro de la ciudad! Descubre y
-      reserva tu habitación en nuestra página web!
+      Chez Nestor es el líder de la vivienda compartida amueblada en
+      Francia. Estamos presentes en numerosas ciudades, le ofrecemos apartamentos completamente renovados,
+      equipados y amueblados en el corazón de la ciudad! Descubre y
+      reserva tu habitación desde nuestra página web!
     `,
   },
 };
