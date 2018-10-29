@@ -144,7 +144,8 @@ const definition = {
     virtualVisit: 'Tour 3D',
     floorplans: 'Planes',
     floorplanDisclaimer: `
-      Nota: Las superficies de las habitaciones incluyen todas las superficies privativas al suelo (aparador, balcón, techo inclinado...).
+      Nota: Las superficies de las habitaciones incluyen todas las superficies
+      privativas al suelo (aparador, balcón, techo inclinado...).
     `,
   },
 };
