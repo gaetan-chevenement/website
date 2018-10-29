@@ -146,7 +146,7 @@ const definition = {
   },
   'es-ES': {
     book: 'Reservar este alojamiento',
-    galery: 'Ver todas las fotos',
+    galery: 'Ver todas las fotografías',
   },
 };
 

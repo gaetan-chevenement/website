@@ -69,8 +69,8 @@ const definition = {
     item: 'Productos',
     unitPrice: 'Precio unitario',
     quantity: 'Cantidad',
-    ref: 'Referencia a factura',
-    paid: 'Pagado hasta la fecha',
+    ref: 'Referencia de factura',
+    paid: 'Pagado hasta ahora',
     balance: 'Importe adeudado',
   },
 };

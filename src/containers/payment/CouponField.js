@@ -120,9 +120,9 @@ const definition = {
     showInput: 'Utiliser un code promo',
   },
   'es-ES': {
-    holder: 'Código de promoción',
-    apply: 'convalidar',
-    showInput: 'Usar un código de promoción',
+    holder: 'Código promocional',
+    apply: 'Validar',
+    showInput: 'Utilizar un código promocional',
   },
 };
 

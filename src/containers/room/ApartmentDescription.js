@@ -64,7 +64,7 @@ const definition = {
     district: 'Quartier',
   },
   'es-ES': {
-    nearbySchool: 'Escuelas próximas',
+    nearbySchool: 'Escuelas cercanas',
     district: 'Barrio',
   },
 };

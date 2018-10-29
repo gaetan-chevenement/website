@@ -69,14 +69,14 @@ const definition = {
   },
   'es-ES': {
     search: {
-      title: 'Tu compañero de cuarto listo para vivir',
+      title: 'Tu vivienda compartida, lista para vivir',
       subtitle: `
-        Encuentre hoy su piso amueblado, equipado, todo incluido en el centro.
+        Encuentre hoy tu vivienda compartida amueblada, equipada, todo incluido, en el corazón de la ciudad.
       `,
     },
-    cities: 'Descubra las ciudades de Chez Nestor',
-    services: 'Una nueva experiencia de colocación',
-    testimonies: 'Nuestros compañeros de habitación nos recomiendan',
+    cities: 'Descubra las ciudades Chez Nestor',
+    services: 'Una nueva experiencia de vivienda compartida',
+    testimonies: 'Nuestros compañeros de piso nos recomiendan',
   },
 };
 

@@ -45,9 +45,9 @@ const definition = {
   },
   'es-ES': {
     error: 'Se ha producido un error durante la carga',
-    try: 'Trate de',
-    link: 'Recargar página',
-    contact: 'Si el error persiste, póngase en contacto con el servicio de asistencia técnica',
+    try: 'Intente de',
+    link: 'Recargar la página',
+    contact: 'Si el error persiste, póngase en contacto con el servicio de asistencia al cliente',
   },
 };
 

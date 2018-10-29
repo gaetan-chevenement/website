@@ -120,7 +120,7 @@ const definition = {
     viewsCount: '{{viewsCount}} personnes ont consulté cette annonce cette semaine.',
   },
   'es-ES': {
-    overview: 'Panorama general',
+    overview: 'Vista previa',
     housemates: 'Compañeros de cuarto',
     location: 'Localización',
     viewsCount: '{{viewsCount}} personas vieron este anuncio esta semana.',

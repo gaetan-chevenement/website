@@ -9,7 +9,6 @@ import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
 import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 import Summary                from '~/containers/booking/Summary';
-import SpecialOfferBanner     from '~/containers/SpecialOfferBanner';
 import Heading                from '~/components/booking/Heading';
 
 class BookingSummary extends PureComponent {
@@ -97,18 +96,24 @@ class BookingSummary extends PureComponent {
               />
             </section>
           </nav>
-          <SpecialOfferBanner />
         </div>
       </IntlProvider>
     );
   }
 }
 
-const definition = { 'fr-FR': {
-  title: 'Récapitulatif de la réservation pour la chambre',
-  back: 'Retour',
-  forward: 'Réserver la chambre',
-} };
+const definition = {
+  'fr-FR': {
+    title: 'Récapitulatif de la réservation pour la chambre',
+    back: 'Retour',
+    forward: 'Réserver la chambre',
+  },
+  'es-ES': {
+    title: 'Resumen de la reserva para la habitación',
+    back: 'Atrás',
+    forward: 'Réservar la habitación',
+  },
+};
 
 function mapStateToProps(state, { lang, rentingId }) {
   const { rentings, rooms, apartments, orders, summary } = state;

@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
 import autobind               from 'autobind-decorator';
 import PackList               from '~/components/PackList';
+import Utils                  from '~/utils';
 import * as actions           from '~/actions';
 
 class PackPicker extends PureComponent {
@@ -11,13 +12,13 @@ class PackPicker extends PureComponent {
     this.props.actions.updateBooking({ [name]: value });
   }
 
-  render({ lang, pack, minPack, city }) {
+  render({ lang, packPrices, pack, minPack }) {
     return (
       <PackList
         {...{
           handlePackChange: this.handlePackChange,
           lang,
-          city,
+          packPrices,
           pack,
           minPack,
         }}
@@ -26,17 +27,18 @@ class PackPicker extends PureComponent {
   }
 }
 
-function mapStateToProps({ route, booking, rooms, apartments }) {
+function mapStateToProps({ route, booking, rooms, apartments, products }) {
   const { lang, minPack } = route;
   const { roomId, pack } = booking;
   const room = rooms[roomId];
-  const isLoading = !room || room.isLoading;
+  const city = apartments[room.ApartmentId].addressCity;
+  const packPrices = Utils.getPackPrices({ products, city });
 
   return {
     lang,
     pack,
+    packPrices,
     minPack,
-    city: !isLoading && apartments[room.ApartmentId].addressCity,
   };
 }
 
