@@ -58,7 +58,7 @@ const services = [{
   image: 'electricity.png',
   'en-US': {
     title: 'Electricity',
-    content: '',
+    content: 'Why wait two weeks in the dark for your electricity provider to come by? Come in, plug in, it\'s ready!',
   },
   'fr-FR': {
     title: 'Électricité',
@@ -170,15 +170,15 @@ const services = [{
   image: 'subsidies.png',
   'en-US': {
     title: 'Subsidies',
-    content: 'All of our apartments are eligible for the rent subsidy from the CAF.',
+    content: 'All of our apartments are eligible for the rent subsidy from the CAF (rent and revenue conditions apply).',
   },
   'fr-FR': {
     title: 'APL',
-    content: '100% de nos appartements sont éligibles aux APL de la CAF sous réserve de conditions de: loyer, revenus....',
+    content: '100% de nos appartements sont éligibles aux APL de la CAF (sous conditions de loyer et revenus).',
   },
   'es-ES': {
     title: 'APL',
-    content: 'Todos nuestros apartamentos son elegibles para el subsidio de alquiler (APL) de la CAF, con sujeción a condiciones de: arrendamiento, ingresos...',
+    content: 'Todos nuestros apartamentos son elegibles para el subsidio de alquiler (APL) de la CAF (con sujeción a condiciones de arrendamiento and ingresos).',
   },
 }, {
   image: 'flexibility.png',
