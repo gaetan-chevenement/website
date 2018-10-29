@@ -52,10 +52,10 @@ const definition = {
   },
   'es-ES': {
     title: '¿Una pregunta?',
-    subtitle: 'Nuestro equipo estará encantado de ayudarle!',
-    question: 'Haga una pregunta',
+    subtitle: 'Nuestro equipo está lista para responder tus dudas!',
+    question: 'Hacer una pregunta',
     visit: 'Solicitar una visita',
-    visitMsg: 'Deseo visitar esta habitación',
+    visitMsg: 'Quiero visitar esta habitación',
   },
 };
 
