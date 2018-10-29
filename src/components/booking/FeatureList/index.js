@@ -95,7 +95,7 @@ const definition = {
   },
   'es-ES': {
     basic: 'Básico',
-    comfort: 'Confort',
+    comfort: 'Comodidad',
     privilege: 'Privilegio',
   },
 };
