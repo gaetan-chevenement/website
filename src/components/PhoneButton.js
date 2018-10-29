@@ -24,7 +24,7 @@ const definition = {
   },
   'es-ES': {
     phoneNumber: '+33 972 323 102',
-    opening: 'Lunes a Viernes de 9am a 6pm',
+    opening: 'De lunes a viernes, de las 9 a las 18 horas',
   },
 };
 
