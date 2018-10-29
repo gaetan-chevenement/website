@@ -1,7 +1,5 @@
-import Utils from '~/utils';
-
 /* eslint-disable indent */
-export default { 'es-ES': [
+export default { 'es-ES': ({ depositLines, packLines }) => ([
   ['Mi llegada'],
   ['Welcome bag', 'Tarjeta de transporte, regalo de bienvenida...',
                                                                       1, 1, 1],
@@ -63,15 +61,8 @@ export default { 'es-ES': [
   ['Reembolso de la fianza', 'Plazo máximo (salvo en caso de daños en el apartamento)',
                                            '60 días', '40 días', '20 días'],
   ['Fianza (reembolsada al final de su estancia)'],
-  Utils.getDepositLine('paris'),
-  Utils.getDepositLine('lyon'),
-  Utils.getDepositLine('montpellier'),
-  Utils.getDepositLine('lille'),
-  Utils.getDepositLine('toulouse'),
+  ...depositLines,
+
   ['Pack morada'],
-  Utils.getPackLine('paris'),
-  Utils.getPackLine('lyon'),
-  Utils.getPackLine('montpellier'),
-  Utils.getPackLine('lille'),
-  Utils.getPackLine('toulouse'),
-] };
+  ...packLines,
+]) };

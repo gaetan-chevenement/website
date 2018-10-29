@@ -34,7 +34,7 @@ const definition = {
     personal: 'Infos personnelles',
   },
   'es-ES': {
-    housingPack: 'Elija su paquete de alojamiento',
+    housingPack: 'Elija su Housing Pack',
     detail: 'Comparación detallada',
     personal: 'Datos personales',
   },

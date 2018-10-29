@@ -3,13 +3,11 @@ import { connect }            from 'react-redux';
 import { route }              from 'preact-router';
 import { bindActionCreators } from 'redux';
 import { ProgressBar }        from 'react-toolbox/lib/progress_bar';
-import RoomContent            from '~/containers/room/RoomContent';
 import * as actions           from '~/actions';
+import RoomContent            from '~/containers/room/RoomContent';
 import Header                 from '~/containers/room/Header';
-import SpecialOfferBanner     from '~/containers/SpecialOfferBanner';
 
 class Room extends PureComponent {
-
   static async prefetch(lang, roomId, dispatch) {
     return Room.loadData(lang, roomId, {
       getRoom: (roomId) => dispatch(actions.getRoom(roomId)),
@@ -20,20 +18,14 @@ class Room extends PureComponent {
   static async loadData(lang, roomId, actions) {
     try {
       const { response: {
-        // data: [roomData],
         included: [apartmentData],
       } } = await actions.getRoom(roomId);
       const districtId = apartmentData.attributes._DistrictId;
 
-      // This trick was used to allow linking from WordPress to the new website
-      // if ( roomData.id !== roomId && typeof window !== 'undefined' ) {
-      //   return route(window.location.pathname.replace(/[\w-]+$/, roomData.id));
-      // }
-
       return actions.getDistrict(districtId);
     }
     catch (e) {
-      if (e.error.isNotFound) {
+      if ( e.error.isNotFound ) {
         route(`/${lang}/404`);
       }
       else {
@@ -74,7 +66,6 @@ class Room extends PureComponent {
       <div>
         <Header roomId={roomId} apartmentId={apartmentId} />
         <RoomContent roomId={roomId} apartmentId={apartmentId} />
-        <SpecialOfferBanner />
       </div>
     );
   }
@@ -89,6 +80,7 @@ function mapStateToProps({ route: { lang }, apartments, rooms }, { roomId }) {
 
   return {
     roomId,
+    room,
     apartmentId: room.ApartmentId,
   };
 }

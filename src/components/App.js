@@ -16,6 +16,7 @@ import BookingSummary   from '~/routes/BookingSummary';
 import BookingConfirmed from '~/routes/BookingConfirmed';
 import Payment          from '~/routes/Payment';
 import Invoice          from '~/routes/Invoice';
+import InfoSnackbar     from '~/containers/InfoSnackbar';
 
 import { updateRoute }  from '~/actions';
 import Utils            from '~/utils';
@@ -77,7 +78,8 @@ export default class App extends Component {
       // Make sure GTM is aware of pageviews
       window.dataLayer && window.dataLayer.push({
         event: 'Pageview',
-        url: window.location.toString(),
+        url: e.url,
+        previous: e.previous,
       });
 
       // Use setTimeout to make sure this runs after React Router's own listener
@@ -181,6 +183,13 @@ export default class App extends Component {
           <Match path="/">
             { // No footer on invoice or search
               ({ matches, path, url }) =>
+                /\/(search|booking|summary|room)\//.test(path) ?
+                  <InfoSnackbar /> : ''
+            }
+          </Match>
+          <Match path="/">
+            { // No footer on invoice or search
+              ({ matches, path, url }) =>
                 [rInvoice, rSearch].some((regex) => regex.test(path)) ?
                   '' : <Footer />
             }
@@ -214,12 +223,12 @@ const definition = {
     `,
   },
   'es-ES': {
-    appTitle: 'Chez Nestor, sus pisos compartidos listos para vivir',
+    appTitle: 'Chez Nestor, el líder de la vivienda compartida amueblada.',
     appDescription: `
-      Chez Nestor es el líder de los alojamientos compartidos amueblados en
-      Francia. Presente en muchas ciudades, le ofrecemos apartamentos nuevos,
-      equipados y amueblados en el corazón del centro de la ciudad! Descubre y
-      reserva tu habitación en nuestra página web!
+      Chez Nestor es el líder de la vivienda compartida amueblada en
+      Francia. Estamos presentes en numerosas ciudades, le ofrecemos apartamentos completamente renovados,
+      equipados y amueblados en el corazón de la ciudad! Descubre y
+      reserva tu habitación desde nuestra página web!
     `,
   },
 };

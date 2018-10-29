@@ -1,7 +1,5 @@
-import Utils from '~/utils';
-
 /* eslint-disable indent */
-export default { 'en-US': [
+export default { 'en-US': ({ depositLines, packLines }) => ([
   ['My arrival'],
   ['Welcome Bag', 'Transport map, welcome gifts…',                    1, 1, 1],
   ['Pillow & duvet', 'Provided during your stay',                     1, 1, 1],
@@ -57,16 +55,8 @@ export default { 'en-US': [
   ['Deposit refund', 'Maximum delay (except in case of damages)',
                                               '60 days', '40 days', '20 days'],
   ['Deposit (refunded at the end of your stay)'],
-  Utils.getDepositLine('paris'),
-  Utils.getDepositLine('lyon'),
-  Utils.getDepositLine('montpellier'),
-  Utils.getDepositLine('lille'),
-  Utils.getDepositLine('toulouse'),
+  ...depositLines,
 
   ['Housing pack'],
-  Utils.getPackLine('paris'),
-  Utils.getPackLine('lyon'),
-  Utils.getPackLine('montpellier'),
-  Utils.getPackLine('lille'),
-  Utils.getPackLine('toulouse'),
-] };
+  ...packLines,
+]) };

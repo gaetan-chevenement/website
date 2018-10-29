@@ -83,11 +83,11 @@ const definition = {
   },
   'es-ES': {
     instructions: `
-      Recibirá un correo electrónico de confirmación con más instrucciones.
-      El primer paso es proporcionar sus datos personales para que podamos editar
-      el contrato de alquiler.
+      Usted recibirá un correo electrónico de confirmación con instrucciones adicionales.
+      El primer paso consiste en proporcionar sus datos personales para que podamos establecer
+      el contrato de arrendamiento.
     `,
-    fill: 'Rellene el formulario',
+    fill: 'Rellenar el formulario',
   },
 };
 

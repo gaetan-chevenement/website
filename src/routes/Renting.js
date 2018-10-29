@@ -98,7 +98,7 @@ const definition = {
     title: 'Complétez votre réservation de la chambre',
   },
   'es-ES': {
-    title: 'Complete su reserva de habitación',
+    title: 'Complete la reserva de la habitación',
   },
 };
 

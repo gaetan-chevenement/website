@@ -62,11 +62,11 @@ const definition = {
     openChat: 'Ouvrir la messagerie',
   },
   'es-ES': {
-    title: 'Hagamos contacto!',
+    title: 'Contacte con nosotros!',
     address: 'Dirección',
     sales: 'Solicitud de información',
-    support: 'Soporte al cliente',
+    support: 'Servicio de atención al cliente',
     phone: 'Número de teléfono',
-    openChat: 'Abrir el buzón de correo',
+    openChat: 'Abrir el chat',
   },
 };

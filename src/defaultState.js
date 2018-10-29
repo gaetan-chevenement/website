@@ -3,7 +3,7 @@ module.exports = {
     lang: 'en-US',
   },
   session: {
-    isSpecialOfferBannerActive: true,
+    isInfoSnackbarActive: false,
   },
   booking: {
     minPack: 'basic',
@@ -21,4 +21,6 @@ module.exports = {
   rooms: {},
   apartments: {},
   districts: {},
+  i18ns: {},
+  products: {},
 };

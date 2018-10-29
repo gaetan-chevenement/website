@@ -15,7 +15,6 @@ import theme                  from './theme';
 const _ = { capitalize };
 const {
   ELIGIBILITY_FORM_URL,
-  DEPOSIT_PRICES,
   HOME_CHECKIN_FEES,
   SPECIAL_CHECKIN_FEES,
 } = _const;
@@ -52,6 +51,7 @@ class Summary extends PureComponent {
       apartment,
       packLevel,
       packPrice,
+      depositPrice,
       client: {
         firstName,
         lastName,
@@ -98,7 +98,7 @@ class Summary extends PureComponent {
                 </span>,
               ])}</p>
               <p class="text-small">
-                <i class="text-small material-icons">warning</i>
+                <i class="text-small material-icons">warning</i>{' '}
                 <Text id="housingPack.condition">
                   Please note: this bedroom remains available and can be booked
                   by someone else at any point as long as the Housing Pack is
@@ -193,7 +193,7 @@ class Summary extends PureComponent {
               <p>{this.renderDetails([
                 <Text id="payment">Payment:</Text>,
                 <span>
-                  <b>{DEPOSIT_PRICES[apartment.addressCity] / 100}€ </b>
+                  <b>{depositPrice}€ </b>
                   <Text id="deposit.dueDate">to be paid before your check-in (only once)</Text>
                 </span>,
               ])}</p>
@@ -676,7 +676,10 @@ function mapStateToProps(args) {
   const renting = rentings[rentingId];
   const room = rooms[renting.RoomId];
   const totalRent = room._currentPrice + room._serviceFees;
-  const packOrder = Utils.classifyRentingOrders({ rentingId, orders }).pack;
+  const {
+    pack: packOrder,
+    deposit: depositOrder,
+  } = Utils.classifyRentingOrders({ rentingId, orders });
   const bookingDate = Utils.getBookingDate(room);
   const apartment = apartments[room.ApartmentId];
 
@@ -685,7 +688,8 @@ function mapStateToProps(args) {
     room: { ...room, name: Utils.localizeRoomName(room.name, lang) },
     apartment,
     packLevel: packOrder && Utils.getPackLevel(packOrder) || booking.pack,
-    packPrice: packOrder.amount,
+    packPrice: packOrder && packOrder.amount,
+    depositPrice: depositOrder && depositOrder.amount,
     client,
     bookingDate,
     totalRent,

@@ -23,8 +23,8 @@ const TooltipButton = Tooltip(Button);
 const features = Object.assign({}, featuresEn, featuresFr, featuresEs);
 const colorClasses = [colorBasic, colorComfort, colorPrivilege];
 
-function FeatureList({ lang, isPriceHidden }) {
-  const sublists = features[lang]
+function FeatureList({ lang, isPriceHidden, packLines = [], depositLines = [] }) {
+  const sublists = features[lang]({ packLines, depositLines })
     .reduce((acc, curr) => (
       curr.length === 1 ?
         acc.unshift([curr[0], []]) && acc :
@@ -95,7 +95,7 @@ const definition = {
   },
   'es-ES': {
     basic: 'Básico',
-    comfort: 'Confort',
+    comfort: 'Comodidad',
     privilege: 'Privilegio',
   },
 };

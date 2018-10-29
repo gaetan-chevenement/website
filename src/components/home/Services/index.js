@@ -87,22 +87,22 @@ const definition = {
   'es-ES': {
     discover: 'Descubra nuestros servicios incluidos',
     list: [{
-      title: 'Centro de la ciudad',
-      subtitle: 'En pleno centro de la ciudad',
+      title: 'Pleno centro',
+      subtitle: 'En el corazón de la ciudad',
     }, {
       title: 'Amueblado',
-      subtitle: 'De la A a la Z',
+      subtitle: 'De manera completa',
     }, {
       title: 'Equipado',
-      subtitle: 'Del suelo al techo',
+      subtitle: 'De suelo a techo',
     }, {
       title: 'Todo Incluido',
       subtitle: 'Seguro, agua, gas...',
     }, {
       title: 'Wifi',
-      subtitle: 'Alta velocidad',
+      subtitle: 'De banda ancha',
     }, {
-      title: '3 clicks',
+      title: '3 clics',
       subtitle: 'Para reservar',
     }],
   },
