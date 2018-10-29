@@ -273,7 +273,7 @@ const definition = {
       paid: 'Esta factura ya ha sido pagada',
       orderCancelled: 'Esta factura ha sido anulada',
       doNotHonor: 'El pago ha sido rechazado por su banco.',
-      roomUnavailable: 'Esta habitación ya no está disponible.',il semble que
+      roomUnavailable: 'Esta habitación ya no está disponible.',
       balanceMismatch: `
         El precio de esta factura ha sido modificado.
         Por favor, compruebe el nuevo precio e intente pagar de nuevo.
