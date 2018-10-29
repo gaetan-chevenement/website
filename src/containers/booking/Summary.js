@@ -560,14 +560,16 @@ const definition = {
         dueDate: ' pagar inmediatamente (sólo una vez)',
         condition: `
           Nota: la habitación permanece disponible y puede ser reservada por
-          cualquier otra persona en todo momento, en tanto no se haya procedido al pago de su Housing Pack.
+          cualquier otra persona en todo momento, en tanto no se haya procedido
+          al pago de su Housing Pack.
         `,
       },
       rent: {
         title: 'renta mensual',
         subtitle: [
           'Su alquiler comenzará el',
-          `(fecha de disponibilidad de la habitación), cualquiera que sea tu fecha de mudanza. El pago de sus alquileres, gastos incluidos (wifi, agua, electricidad),
+          `(fecha de disponibilidad de la habitación), cualquiera que sea tu fecha
+          de mudanza. El pago de sus alquileres, gastos incluidos (wifi, agua, electricidad),
           Gasolina, seguros...) deberá realizarse..:`,
         ],
         dueDate: 'a más tardar el',
@@ -617,7 +619,8 @@ const definition = {
       checkout: {
         title: 'Planear el checkout',
         subtitle: `
-          No es necesario decirnos hoy, cuando te vayas, tu eres totalmente flexible! Sólo ten en cuenta que vamos a necesitar tu fecha de salida con una antelacion mínima de 30 días.
+          No es necesario decirnos hoy, cuando te vayas, tu eres totalmente flexible! Sólo ten en
+          cuenta que vamos a necesitar tu fecha de salida con una antelacion mínima de 30 días.
         `,
       },
       letsGo: {
