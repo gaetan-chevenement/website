@@ -73,11 +73,11 @@ const definition = {
     deposit: 'La caution et le pack logement sont deux montants différents. La caution est remboursable, pas le pack logement.',
   },
   'es-ES': {
-    steps: 'Reserva tu apartamento en menos de un minuto',
-    choose: 'Elija su paquete de alojamiento',
-    subtitle: 'Diferentes gamas de servicios para su apartamento, durante toda la estancia, según el pack elegido :',
-    comparison: 'Comparación detallada de los diferentes envases',
-    deposit: 'El depósito y el paquete de alojamiento son dos cantidades diferentes. El depósito es reembolsable, no el paquete de alojamiento.',
+    steps: 'Reserva su apartamento en menos de un minuto',
+    choose: 'Elija su Housing Pack',
+    subtitle: 'Distintas gamas de servicios para su apartamento, a lo largo de su estancia, según el pack elegido :',
+    comparison: 'Comparación detallada de los diferentes Packs',
+    deposit: 'La fianza y el Housing Pack son dos distintos importes. La fianza es un importe reembolsable pero no el Housing Pack.',
   },
 };
 
@@ -85,15 +85,15 @@ const steps = [{
   image: 'step-one.png',
   'en-US': {
     title: 'Find',
-    content: 'Your ideal apartment from hundreds of flat shares and studios.',
+    content: 'Your ideal apartment from hundreds of flat shares.',
   },
   'fr-FR': {
     title: 'Trouvez',
-    content: 'Votre appartement idéal parmi nos centaines d\'offres de colocations et studios.',
+    content: 'Votre appartement idéal parmi nos centaines d\'offres de colocations.',
   },
   'es-ES': {
     title: 'Encuentre',
-    content: 'su apartamento ideal entre cientos de pisos compartidos y estudios.',
+    content: 'el apartamento de sus sueños entre nuestras centenas de viviendas compartidas.',
   },
 }, {
   image: 'step-two.png',
@@ -107,7 +107,7 @@ const steps = [{
   },
   'es-ES': {
     title: 'Elija',
-    content: 'Su paquete de vivienda de la siguiente lista. Todos nuestros servicios están incluidos en el paquete y el pago nos permite completar su reserva.',
+    content: 'su Housing Pack en la siguiente lista. Todos nuestros servicios están incluidos en el Housing Pack y su pago finaliza su reserva.',
   },
 }, {
   image: 'step-three.png',
@@ -121,7 +121,7 @@ const steps = [{
   },
   'es-ES': {
     title: 'Llegue',
-    content: 'A su nueva ciudad con su equipaje y recoger sus llaves.',
+    content: 'A su nueva ciudad con su equipaje para recoger sus llaves.',
   },
 }, {
   image: 'step-four.png',
@@ -134,8 +134,8 @@ const steps = [{
     content: 'Dans votre nouvel appartement et profitez de nos services tout au long de votre séjour.',
   },
   'es-ES': {
-    title: 'Múdate',
-    content: 'A su nuevo hogar y disfruta de nuestros servicios durante toda su estancia!',
+    title: 'Múdense',
+    content: 'A su nuevo apartamento y disfruta de nuestros servicios durante toda su estancia!',
   },
 }];
 
